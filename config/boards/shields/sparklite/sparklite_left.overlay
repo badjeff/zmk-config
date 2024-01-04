@@ -1,0 +1,37 @@
+/*
+ * Copyright (c) 2020 Pete Johanson
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include "sparklite.dtsi"
+
+// &kscan0 {
+// 	// col-gpios
+// 	// 	= <&gpio1 15 GPIO_ACTIVE_HIGH>
+// 	// 	, <&gpio1 14 GPIO_ACTIVE_HIGH>
+// 	// 	, <&gpio1 13 GPIO_ACTIVE_HIGH>
+// 	// 	, <&gpio1 12 GPIO_ACTIVE_HIGH>
+// 	// 	, <&gpio1 11 GPIO_ACTIVE_HIGH>
+// 	// 	;
+// 	col-gpios
+// 		// = <&gpio0 28 GPIO_ACTIVE_HIGH>
+// 		// , <&gpio0 29 GPIO_ACTIVE_HIGH>
+// 		// ;
+// 		= <&gpio0 28 GPIO_ACTIVE_HIGH>;
+// };
+
+// / {
+// 	trackballs {
+// 		compatible = "zmk,keymap-trackballs";
+// 		trackballs = <&trackball>;
+// 	};
+// };
+// &spi2 {
+// 	status = "disabled";
+// 	trackball: trackball@0 {
+// 		status = "disabled";
+// 		reg = <0>;
+// 	};
+// };
+#include "sparklite_trackball.dtsi"

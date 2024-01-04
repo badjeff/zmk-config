@@ -1,0 +1,123 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/rgb.h>
+#include <dt-bindings/zmk/ext_power.h>
+#include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/mouse.h>
+
+#define DEFAULT 0
+#define LOWER   1
+#define RAISE   2
+#define MKP     3
+#define MSL     4
+
+// #define U_MOUSE_MOVE_MAX 2900
+// #undef MOVE_UP
+// #undef MOVE_DOWN
+// #undef MOVE_LEFT
+// #undef MOVE_RIGHT
+// #define MOVE_UP MOVE_VERT(-U_MOUSE_MOVE_MAX)
+// #define MOVE_DOWN MOVE_VERT(U_MOUSE_MOVE_MAX)
+// #define MOVE_LEFT MOVE_HOR(-U_MOUSE_MOVE_MAX)
+// #define MOVE_RIGHT MOVE_HOR(U_MOUSE_MOVE_MAX)
+// &mmv {
+//   time-to-max-speed-ms = <700>;
+// };
+
+// #define U_MOUSE_SCROLL_MAX 20
+// #undef SCROLL_UP
+// #undef SCROLL_DOWN
+// #undef SCROLL_LEFT
+// #undef SCROLL_RIGHT
+// #define SCROLL_UP SCROLL_VERT(U_MOUSE_SCROLL_MAX)
+// #define SCROLL_DOWN SCROLL_VERT(-U_MOUSE_SCROLL_MAX)
+// #define SCROLL_LEFT SCROLL_HOR(-U_MOUSE_SCROLL_MAX)
+// #define SCROLL_RIGHT SCROLL_HOR(U_MOUSE_SCROLL_MAX)
+// &mwh {
+//   time-to-max-speed-ms = <400>;
+// };
+
+/ {
+        keymap {
+                compatible = "zmk,keymap";
+                default_layer {
+// +------------------------------------------------------+     +-----------------------------------------------------+
+// |     Q    |     W    |     E    |     R    |     T    |     |    Y    |     U    |    I     |     O    |     P    |
+// |     A    |     S    |     D    |     F    |     G    |     |    H    |     J    |    K     |     L    |   GUI ;: |
+// |  SHFT Z  |     X    |     C    |     V    |     B    |     |    N    |     M    |   ,<     |    .>    |  SHFT /? |
+//                       |  RSE:ESC |    GUI   | CTRL:TAB |     | ALT:ENT |  LWR:SPC | MKP:BKSP |
+                        bindings = <
+   &kp Q        &kp W  &kp E          &kp R     &kp T              &kp Y         &kp U            &kp I          &kp O    &kp P
+   &kp A        &kp S  &kp D          &kp F     &kp G              &kp H         &kp J            &kp K          &kp L    &mt LGUI SEMI
+   &mt LSHFT Z  &kp X  &kp C          &kp V     &kp B              &kp N         &kp M            &kp COMMA      &kp DOT  &mt RSHFT FSLH
+                       &lt RAISE ESC  &kp LGUI  &mt LCTRL TAB      &mt LALT RET  &lt LOWER SPACE  &lt MKP BKSP
+                        >;
+                        trackball-bindings = <&tmv>;
+                        // sensor-bindings = <&xy_mm>;
+                        // sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+                };
+                lower_layer {
+// +------------------------------------------------------+     +------------------------------------------------------+
+// |    1!    |    2@    |    3#    |    4$    |    5%    |     |    6^    |    7&    |    8&    |    9(    |    0)    |
+// |  ALT `~  |    [     |    (     |    {     |    =     |     |    LFT   |   DWN    |    UP    |   RGT    |   GUI '" |
+// | SHFT TAB |    ]     |    )     |    }     |    _     |     |   BKSP   |    -     |    +     |   SPC    |  SHFT \| |
+//                       |          |          |          |     |          |    (H)   |          |
+                        bindings = <
+   &kp N1          &kp N2    &kp N3    &kp N4    &kp N5        &kp N6    &kp N7     &kp N8    &kp N9     &kp N0
+   &mt LALT GRAVE  &kp LBKT  &kp LPAR  &kp LBRC  &kp EQUAL     &kp LEFT  &kp DOWN   &kp UP    &kp RIGHT  &mt RGUI SQT
+   &mt LSHFT TAB   &kp RBKT  &kp RPAR  &kp RBRC  &kp UNDER     &kp BKSP  &kp MINUS  &kp PLUS  &kp SPACE  &mt RSHFT BSLH
+                             &trans    &trans    &trans        &trans    &trans    &trans
+                        >;
+                        trackball-bindings = <&tsl>;
+                };
+                raise_layer {
+// +------------------------------------------------------+     +------------------------------------------------------+
+// |    F1    |    F2    |    F3    |    F4    |    F5    |     |    F6    |    F7    |    F8    |    F9    |   F10    |
+// |   MSL    |   RCLK   |   MCLK   |   LCLK   |   VOLU   |     |   MLFT   |   MDWN   |    MUP   |   MRGT   |   F11    |
+// |   BT_0   |   BT_1   |   BRID   |   BRIU   |   VOLD   |     |   SLFT   |   SDWN   |    SUP   |   SRGT   |   F12    |
+//                       |    (H)   |          |          |     |          |          |  BT_C   |
+                        bindings = <
+   &kp F1             &kp F2        &kp F3        &kp F4        &kp F5            &kp F6            &kp F7            &kp F8          &kp F9             &kp F10
+   &tog MSL           &mkp RCLK     &mkp MCLK     &mkp LCLK     &kp C_VOL_UP      &mmv MOVE_LEFT    &mmv MOVE_DOWN    &mmv MOVE_UP    &mmv MOVE_RIGHT    &kp F11
+   &bt BT_SEL 0       &bt BT_SEL 1  &kp C_BRI_DN  &kp C_BRI_UP  &kp C_VOL_DN      &mwh SCROLL_LEFT  &mwh SCROLL_DOWN  &mwh SCROLL_UP  &mwh SCROLL_RIGHT  &kp F12
+                                    &trans        &trans        &trans            &trans            &trans            &bt BT_CLR
+                        >;
+                        trackball-bindings = <&tmv>;
+                };
+                mkp_layer {
+// +-----------------------------------------------------+     +-----------------------------------------------------+
+// |         |          |          |          |          |     |          |          |          |          |         |
+// |   MSL   |   RCLK   |   MCLK   |   LCLK   |          |     |          |   LCLK   |   MCLK   |   RCLK   |   MSL   |
+// |         |          |          |          |          |     |          |          |          |          |         |
+//                      |          |          |          |     |          |          |          |
+                        bindings = <
+   &trans        &trans        &trans        &trans        &trans          &trans      &trans        &trans        &trans         &trans 
+   &tog MSL      &mkp RCLK     &mkp MCLK     &mkp LCLK     &trans          &trans      &mkp LCLK     &mkp MCLK     &mkp RCLK      &tog MSL
+   &trans        &trans        &trans        &trans        &trans          &trans      &trans        &trans        &trans         &trans
+                               &trans        &trans        &trans          &trans      &trans        &trans
+                        >;
+                        trackball-bindings = <&tmv>;
+                };
+                msl_layer {
+// +-----------------------------------------------------+     +-----------------------------------------------------+
+// |         |          |          |          |          |     |          |          |          |          |         |
+// |   MSL   |   RCLK   |   MCLK   |   LCLK   |          |     |          |   LCLK   |   MCLK   |   RCLK   |   MSL   |
+// |         |          |          |          |          |     |          |          |          |          |         |
+//                      |          |          |          |     |          |          |          |
+                        bindings = <
+   &trans        &trans        &trans        &trans        &trans          &trans      &trans        &trans        &trans         &trans 
+   &tog MSL      &mkp RCLK     &mkp MCLK     &mkp LCLK     &trans          &trans      &mkp LCLK     &mkp MCLK     &mkp RCLK      &tog MSL
+   &trans        &trans        &trans        &trans        &trans          &trans      &trans        &trans        &trans         &trans
+                               &trans        &trans        &trans          &trans      &trans        &trans
+                        >;
+                        trackball-bindings = <&tsl>;
+                };
+       };
+};
