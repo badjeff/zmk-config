@@ -55,7 +55,7 @@
 	// };
 
 	kscan0: kscan {
-		status = "disabled";
+		// status = "disabled";
 		compatible = "zmk,kscan-gpio-matrix";
 		// label = "KSCAN";
 		diode-direction = "col2row";
