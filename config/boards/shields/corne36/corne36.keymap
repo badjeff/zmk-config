@@ -53,7 +53,7 @@
                         mode = "scroll-mode";
                         flavor = "default";
                         scale_mode = "dividor";
-                        scale_factor = <5>;
+                        scale_factor = <10>;
                 };
         };
 
@@ -107,12 +107,12 @@
 // +-----------------------------------------------------+     +-----------------------------------------------------+
 // |         |          |          |          |          |     |          |          |          |          |         |
 // |   MSL   |   RCLK   |   MCLK   |   LCLK   |          |     |          |   LCLK   |   MCLK   |   RCLK   |   MSL   |
-// |         |          |          |          |          |     |          |          |          |          |         |
+// |         |          |          |    MB4   |          |     |          |    MB4   |          |          |         |
 //                      |          |          |          |     |          |          |          |
                         bindings = <
    &trans        &trans        &trans        &trans        &trans          &trans      &trans        &trans        &trans         &trans 
    &tog MSL      &mkp RCLK     &mkp MCLK     &mkp LCLK     &trans          &trans      &mkp LCLK     &mkp MCLK     &mkp RCLK      &tog MSL
-   &trans        &trans        &trans        &trans        &trans          &trans      &trans        &trans        &trans         &trans
+   &trans        &trans        &trans        &mkp MB4      &trans          &trans      &mkp MB4      &trans        &trans         &trans
                                &trans        &trans        &trans          &trans      &trans        &trans
                         >;
                         trackball-bindings = <&tmv>;
@@ -121,12 +121,12 @@
 // +-----------------------------------------------------+     +-----------------------------------------------------+
 // |         |          |          |          |          |     |          |          |          |          |         |
 // |   MSL   |   RCLK   |   MCLK   |   LCLK   |          |     |          |   LCLK   |   MCLK   |   RCLK   |   MSL   |
-// |         |          |          |          |          |     |          |          |          |          |         |
+// |         |          |          |    MB4   |          |     |          |    MB4   |          |          |         |
 //                      |          |          |          |     |          |          |          |
                         bindings = <
    &trans        &trans        &trans        &trans        &trans          &trans      &trans        &trans        &trans         &trans 
    &tog MSL      &mkp RCLK     &mkp MCLK     &mkp LCLK     &trans          &trans      &mkp LCLK     &mkp MCLK     &mkp RCLK      &tog MSL
-   &trans        &trans        &trans        &trans        &trans          &trans      &trans        &trans        &trans         &trans
+   &trans        &trans        &trans        &mkp MB4      &trans          &trans      &mkp MB4      &trans        &trans         &trans
                                &trans        &trans        &trans          &trans      &trans        &trans
                         >;
                         trackball-bindings = <&tsl_cus>;
