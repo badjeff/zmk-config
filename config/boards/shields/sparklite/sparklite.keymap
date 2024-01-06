@@ -45,6 +45,18 @@
 // };
 
 // / {
+//         behaviors {
+//                 tsl_cus: behavior_trackball_scroll_cus {
+//                         compatible = "zmk,behavior-point-device-incremental";
+//                         label = "TRACKBALL_SCROLL_CUS";
+//                         #trackball-binding-cells = <0>;
+//                         mode = "scroll-mode";
+//                         flavor = "default";
+//                         scale_mode = "dividor";
+//                         scale_factor = <5>;
+//                 };
+//         };
+// 
 //         keymap {
 //                 compatible = "zmk,keymap";
 //                 default_layer {
@@ -75,7 +87,7 @@
 //    &mt LSHFT TAB   &kp RBKT  &kp RPAR  &kp RBRC  &kp UNDER     &kp BKSP  &kp MINUS  &kp PLUS  &kp SPACE  &mt RSHFT BSLH
 //                              &trans    &trans    &trans        &trans    &trans    &trans
 //                         >;
-//                         trackball-bindings = <&tsl>;
+//                         trackball-bindings = <&tsl_cus>;
 //                 };
 //                 raise_layer {
 // // +------------------------------------------------------+     +------------------------------------------------------+
@@ -117,13 +129,26 @@
 //    &trans        &trans        &trans        &trans        &trans          &trans      &trans        &trans        &trans         &trans
 //                                &trans        &trans        &trans          &trans      &trans        &trans
 //                         >;
-//                         trackball-bindings = <&tsl>;
+//                         trackball-bindings = <&tsl_cus>;
 //                 };
 //        };
 // };
 
 / {
-        keymap {                compatible = "zmk,keymap";
+        behaviors {
+                tsl_cus: behavior_trackball_scroll_cus {
+                        compatible = "zmk,behavior-point-device-incremental";
+                        label = "TRACKBALL_SCROLL_CUS";
+                        #trackball-binding-cells = <0>;
+                        mode = "scroll-mode";
+                        flavor = "default";
+                        scale_mode = "dividor";
+                        scale_factor = <5>;
+                };
+        };
+
+        keymap {
+                compatible = "zmk,keymap";
                 default_layer {
                         bindings = <
 //    &bt BT_CLR   &out OUT_TOG      &trans         &kp B
@@ -138,7 +163,7 @@
 //    &trans         &trans          &trans         &trans
       &bt BT_CLR
                         >;
-                        trackball-bindings = <&tsl>;
+                        trackball-bindings = <&tsl_cus>;
                 };
                 raise_layer {
                         bindings = <
@@ -146,7 +171,7 @@
 //    &trans         &trans          &trans         &trans
       &bt BT_CLR
                         >;
-                        trackball-bindings = <&tmv_fine>;
+                        trackball-bindings = <&tmv>;
                 };
        };
 };
