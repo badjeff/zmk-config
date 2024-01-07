@@ -36,41 +36,36 @@
                 compatible = "zmk,keymap";
                 default_layer {
                         bindings = <
-//    &bt BT_CLR   &out OUT_TOG      &trans         &kp B
-//    &mkp LCLK    &mkp RCLK         &trans         &trans
-      &bt BT_CLR
+   &bt BT_CLR   &out OUT_TOG      &trans         &kp B
+   &mkp LCLK    &mkp RCLK         &trans         &trans
                         >;
                         trackball-bindings = <&tmv>;
                 };
                 lower_layer {
                         bindings = <
-//    &trans         &trans          &trans         &trans
-//    &trans         &trans          &trans         &trans
-      &bt BT_CLR
+   &trans         &trans          &trans         &trans
+   &trans         &trans          &trans         &trans
                         >;
                         trackball-bindings = <&tsl_cus>;
                 };
                 raise_layer {
                         bindings = <
-//    &trans         &trans          &trans         &trans
-//    &trans         &trans          &trans         &trans
-      &bt BT_CLR
+   &trans         &trans          &trans         &trans
+   &trans         &trans          &trans         &trans
                         >;
                         trackball-bindings = <&tmv>;
                 };
                 mkp_layer {
                         bindings = <
-//    &trans         &trans          &trans         &trans
-//    &trans         &trans          &trans         &trans
-      &bt BT_CLR
+   &trans         &trans          &trans         &trans
+   &trans         &trans          &trans         &trans
                         >;
                         trackball-bindings = <&tmv>;
                 };
                 msl_layer {
                         bindings = <
-//    &trans         &trans          &trans         &trans
-//    &trans         &trans          &trans         &trans
-      &bt BT_CLR
+   &trans         &trans          &trans         &trans
+   &trans         &trans          &trans         &trans
                         >;
                         trackball-bindings = <&tsl_cus>;
                 };

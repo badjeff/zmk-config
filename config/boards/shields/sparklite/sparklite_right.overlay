@@ -20,10 +20,9 @@
 // 	// 	, <&gpio1 15 GPIO_ACTIVE_HIGH>
 // 	// 	;
 // 	col-gpios
-// 		// = <&gpio0 28 GPIO_ACTIVE_HIGH>
-// 		// , <&gpio0 29 GPIO_ACTIVE_HIGH>
-// 		// ;
-// 		= <&gpio0 28 GPIO_ACTIVE_HIGH>;
+// 		= <&gpio0 28 GPIO_ACTIVE_HIGH>
+// 		, <&gpio0 29 GPIO_ACTIVE_HIGH>
+// 		;
 // };
 
 #include "sparklite_trackball.dtsi"
