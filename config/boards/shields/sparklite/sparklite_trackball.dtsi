@@ -80,6 +80,10 @@
 &trackball {
   status = "okay";
   irq-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-	// scroll-layer = <1>; // deprecapted
+
+	// scroll-layers = <1 4>;
+	// snipe-layers = <1>;
+	// automouse-layer = <3>;
+
 };
 

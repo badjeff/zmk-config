@@ -6,19 +6,19 @@
 
 #include "sparklite.dtsi"
 
-// &kscan0 {
-// 	// col-gpios
-// 	// 	= <&gpio1 15 GPIO_ACTIVE_HIGH>
-// 	// 	, <&gpio1 14 GPIO_ACTIVE_HIGH>
-// 	// 	, <&gpio1 13 GPIO_ACTIVE_HIGH>
-// 	// 	, <&gpio1 12 GPIO_ACTIVE_HIGH>
-// 	// 	, <&gpio1 11 GPIO_ACTIVE_HIGH>
-// 	// 	;
-// 	col-gpios
-// 		= <&gpio0 28 GPIO_ACTIVE_HIGH>
-// 		, <&gpio0 29 GPIO_ACTIVE_HIGH>
-// 		;
-// };
+&kscan0 {
+	// col-gpios
+	// 	= <&gpio1 15 GPIO_ACTIVE_HIGH>
+	// 	, <&gpio1 14 GPIO_ACTIVE_HIGH>
+	// 	, <&gpio1 13 GPIO_ACTIVE_HIGH>
+	// 	, <&gpio1 12 GPIO_ACTIVE_HIGH>
+	// 	, <&gpio1 11 GPIO_ACTIVE_HIGH>
+	// 	;
+	col-gpios
+		= <&gpio0 28 GPIO_ACTIVE_HIGH>
+		, <&gpio0 29 GPIO_ACTIVE_HIGH>
+		;
+};
 
 // / {
 // 	trackballs {
@@ -33,4 +33,4 @@
 // 		reg = <0>;
 // 	};
 // };
-#include "sparklite_trackball.dtsi"
+// #include "sparklite_trackball.dtsi"

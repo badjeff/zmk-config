@@ -16,16 +16,16 @@
 		;
 };
 
-/ {
-	trackballs {
-		compatible = "zmk,keymap-trackballs";
-		trackballs = <&trackball>;
-	};
-};
-&spi2 {
-	status = "disabled";
-	trackball: trackball@0 {
-		status = "disabled";
-		reg = <0>;
-	};
-};
+// / {
+// 	trackballs {
+// 		compatible = "zmk,keymap-trackballs";
+// 		trackballs = <&trackball>;
+// 	};
+// };
+// &spi2 {
+// 	status = "disabled";
+// 	trackball: trackball@0 {
+// 		status = "disabled";
+// 		reg = <0>;
+// 	};
+// };

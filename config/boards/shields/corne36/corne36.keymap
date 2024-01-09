@@ -18,44 +18,36 @@
 #define MKP     3
 #define MSL     4
 
-// #define U_MOUSE_MOVE_MAX 2900
-// #undef MOVE_UP
-// #undef MOVE_DOWN
-// #undef MOVE_LEFT
-// #undef MOVE_RIGHT
-// #define MOVE_UP MOVE_VERT(-U_MOUSE_MOVE_MAX)
-// #define MOVE_DOWN MOVE_VERT(U_MOUSE_MOVE_MAX)
-// #define MOVE_LEFT MOVE_HOR(-U_MOUSE_MOVE_MAX)
-// #define MOVE_RIGHT MOVE_HOR(U_MOUSE_MOVE_MAX)
-// &mmv {
-//   time-to-max-speed-ms = <700>;
-// };
+#define U_MOUSE_MOVE_MAX 2900
+#define MOU_U MOVE_Y(-U_MOUSE_MOVE_MAX)
+#define MOU_D MOVE_Y(U_MOUSE_MOVE_MAX)
+#define MOU_L MOVE_X(-U_MOUSE_MOVE_MAX)
+#define MOU_R MOVE_X(U_MOUSE_MOVE_MAX)
+&mmv {
+  time-to-max-speed-ms = <700>;
+};
 
-// #define U_MOUSE_SCROLL_MAX 20
-// #undef SCROLL_UP
-// #undef SCROLL_DOWN
-// #undef SCROLL_LEFT
-// #undef SCROLL_RIGHT
-// #define SCROLL_UP SCROLL_VERT(U_MOUSE_SCROLL_MAX)
-// #define SCROLL_DOWN SCROLL_VERT(-U_MOUSE_SCROLL_MAX)
-// #define SCROLL_LEFT SCROLL_HOR(-U_MOUSE_SCROLL_MAX)
-// #define SCROLL_RIGHT SCROLL_HOR(U_MOUSE_SCROLL_MAX)
-// &mwh {
-//   time-to-max-speed-ms = <400>;
-// };
+#define U_MOUSE_SCROLL_MAX 20
+#define SCL_U MOVE_Y(U_MOUSE_SCROLL_MAX)
+#define SCL_D MOVE_Y(-U_MOUSE_SCROLL_MAX)
+#define SCL_L MOVE_X(-U_MOUSE_SCROLL_MAX)
+#define SCL_R MOVE_X(U_MOUSE_SCROLL_MAX)
+&msc {
+  time-to-max-speed-ms = <400>;
+};
 
 / {
-        behaviors {
-                tsl_cus: behavior_trackball_scroll_cus {
-                        compatible = "zmk,behavior-point-device-incremental";
-                        label = "TRACKBALL_SCROLL_CUS";
-                        #trackball-binding-cells = <0>;
-                        mode = "scroll-mode";
-                        flavor = "default";
-                        scale_mode = "dividor";
-                        scale_factor = <10>;
-                };
-        };
+        // behaviors {
+        //         tsl_cus: behavior_trackball_scroll_cus {
+        //                 compatible = "zmk,behavior-point-device-incremental";
+        //                 label = "TRACKBALL_SCROLL_CUS";
+        //                 #trackball-binding-cells = <0>;
+        //                 mode = "scroll-mode";
+        //                 flavor = "default";
+        //                 scale_mode = "dividor";
+        //                 scale_factor = <10>;
+        //         };
+        // };
 
         keymap {
                 compatible = "zmk,keymap";
@@ -71,7 +63,7 @@
    &mt LSHFT Z  &kp X  &kp C          &kp V     &kp B              &kp N         &kp M            &kp COMMA      &kp DOT  &mt RSHFT FSLH
                        &lt RAISE ESC  &kp LGUI  &mt LCTRL TAB      &mt LALT RET  &lt LOWER SPACE  &lt MKP BKSP
                         >;
-                        trackball-bindings = <&tmv>;
+                        // trackball-bindings = <&tmv>;
                         // sensor-bindings = <&xy_mm>;
                         // sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
                 };
@@ -87,7 +79,7 @@
    &mt LSHFT TAB   &kp RBKT  &kp RPAR  &kp RBRC  &kp UNDER     &kp BKSP  &kp MINUS  &kp PLUS  &kp SPACE  &mt RSHFT BSLH
                              &trans    &trans    &trans        &trans    &trans    &trans
                         >;
-                        trackball-bindings = <&tsl_cus>;
+                        // trackball-bindings = <&tsl_cus>;
                 };
                 raise_layer {
 // +------------------------------------------------------+     +------------------------------------------------------+
@@ -96,12 +88,12 @@
 // |   BT_0   |   BT_1   |   BRID   |   BRIU   |   VOLD   |     |   SLFT   |   SDWN   |    SUP   |   SRGT   |   F12    |
 //                       |    (H)   |          |          |     |          |          |  BT_C   |
                         bindings = <
-   &kp F1             &kp F2        &kp F3        &kp F4        &kp F5            &kp F6            &kp F7            &kp F8          &kp F9             &kp F10
-   &tog MSL           &mkp RCLK     &mkp MCLK     &mkp LCLK     &kp C_VOL_UP      &mmv MOVE_LEFT    &mmv MOVE_DOWN    &mmv MOVE_UP    &mmv MOVE_RIGHT    &kp F11
-   &bt BT_SEL 0       &bt BT_SEL 1  &kp C_BRI_DN  &kp C_BRI_UP  &kp C_VOL_DN      &mwh SCROLL_LEFT  &mwh SCROLL_DOWN  &mwh SCROLL_UP  &mwh SCROLL_RIGHT  &kp F12
-                                    &trans        &trans        &trans            &trans            &trans            &bt BT_CLR
+   &kp F1         &kp F2        &kp F3        &kp F4        &kp F5            &kp F6      &kp F7      &kp F8       &kp F9      &kp F10
+   &tog MSL       &mkp RCLK     &mkp MCLK     &mkp LCLK     &kp C_VOL_UP      &mmv MOU_L  &mmv MOU_D  &mmv MOU_U   &mmv MOU_R  &kp F11
+   &bt BT_SEL 0   &bt BT_SEL 1  &kp C_BRI_DN  &kp C_BRI_UP  &kp C_VOL_DN      &msc SCL_L  &msc SCL_D  &msc SCL_U   &msc SCL_R  &kp F12
+                                &trans        &trans        &trans            &trans      &trans      &bt BT_CLR
                         >;
-                        trackball-bindings = <&tmv>;
+                        // trackball-bindings = <&tmv>;
                 };
                 mkp_layer {
 // +-----------------------------------------------------+     +-----------------------------------------------------+
@@ -115,7 +107,7 @@
    &trans        &trans        &trans        &mkp MB4      &trans          &trans      &mkp MB4      &trans        &trans         &trans
                                &trans        &trans        &trans          &trans      &trans        &trans
                         >;
-                        trackball-bindings = <&tmv>;
+                        // trackball-bindings = <&tmv>;
                 };
                 msl_layer {
 // +-----------------------------------------------------+     +-----------------------------------------------------+
@@ -129,7 +121,7 @@
    &trans        &trans        &trans        &mkp MB4      &trans          &trans      &mkp MB4      &trans        &trans         &trans
                                &trans        &trans        &trans          &trans      &trans        &trans
                         >;
-                        trackball-bindings = <&tsl_cus>;
+                        // trackball-bindings = <&tsl_cus>;
                 };
        };
 };
