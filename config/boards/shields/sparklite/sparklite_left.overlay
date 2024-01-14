@@ -7,30 +7,37 @@
 #include "sparklite.dtsi"
 
 &kscan0 {
-	// col-gpios
-	// 	= <&gpio1 15 GPIO_ACTIVE_HIGH>
-	// 	, <&gpio1 14 GPIO_ACTIVE_HIGH>
-	// 	, <&gpio1 13 GPIO_ACTIVE_HIGH>
-	// 	, <&gpio1 12 GPIO_ACTIVE_HIGH>
-	// 	, <&gpio1 11 GPIO_ACTIVE_HIGH>
-	// 	;
 	col-gpios
 		= <&gpio0 28 GPIO_ACTIVE_HIGH>
 		, <&gpio0 29 GPIO_ACTIVE_HIGH>
 		;
 };
 
-// / {
-// 	trackballs {
-// 		compatible = "zmk,keymap-trackballs";
-// 		trackballs = <&trackball>;
-// 	};
-// };
-// &spi2 {
-// 	status = "disabled";
-// 	trackball: trackball@0 {
-// 		status = "disabled";
-// 		reg = <0>;
-// 	};
-// };
-// #include "sparklite_trackball.dtsi"
+#include "sparklite_trackball.dtsi"
+
+&pd0 {
+  status = "okay";
+  irq-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+	evt-type = <INPUT_EV_REL>;
+	x-input-code = <INPUT_REL_X>;
+	y-input-code = <INPUT_REL_Y>;
+	input-channel = <101>;
+};
+
+/ {
+	/* Define virtual input, shall be resurrected for binding in input_channels */
+	pd1: virtual_input {
+		compatible = "zmk,virtual-input";
+		input-channel = <102>;
+	};
+	/* Define (input-channel)-to-(virtual-device) mapping */
+	input_channels {
+		compatible = "zmk,input-channels";
+		inch102 {
+			/* input-channel defined in peripheral dts */
+			input-channel = <102>;
+			/* the virtual-input device, which will be resurrected on central */
+			binding = <&pd1>;
+		};
+	};
+};

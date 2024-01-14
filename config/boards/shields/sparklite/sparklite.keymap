@@ -14,60 +14,83 @@
 #include <dt-bindings/zmk/outputs.h>
 
 #define DEFAULT 0
-#define LOWER   1
-#define RAISE   2
-#define MKP     3
-#define MSL     4
+#define RAISE   1
+
+#define INPUT_EV_KEY 0x01               /**< Key event */
+#define INPUT_EV_REL 0x02               /**< Relative coordinate event */
+#define INPUT_EV_ABS 0x03               /**< Absolute coordinate event */
+#define INPUT_EV_MSC 0x04               /**< Miscellaneous event */
+#define INPUT_EV_VENDOR_START 0xf0      /**< Vendor specific event start */
+#define INPUT_EV_VENDOR_STOP 0xff       /**< Vendor specific event stop */
+
+#define INPUT_REL_X 0x00                /**< Relative X coordinate */
+#define INPUT_REL_Y 0x01                /**< Relative Y coordinate */
+#define INPUT_REL_WHEEL 0x08            /**< Relative wheel coordinate */
+#define INPUT_REL_HWHEEL 0x06           /**< Relative horizontal wheel coordinate */
+#define INPUT_REL_MISC 0x09             /**< Relative misc coordinate */
 
 / {
-        // behaviors {
-        //         tsl_cus: behavior_trackball_scroll_cus {
-        //                 compatible = "zmk,behavior-point-device-incremental";
-        //                 label = "TRACKBALL_SCROLL_CUS";
-        //                 #trackball-binding-cells = <0>;
-        //                 mode = "scroll-mode";
-        //                 flavor = "default";
-        //                 scale_mode = "dividor";
-        //                 scale_factor = <10>;
-        //         };
-        // };
+        behaviors {
+                tb0_mmv: behavior_input_config_tb0_move {
+                        compatible = "zmk,behavior-input-config";
+                        #input-config-binding-cells = <0>; 
+                        device = <&pd0>;
+			evt-type = <INPUT_EV_REL>;
+			x-input-code = <INPUT_REL_X>;
+			y-input-code = <INPUT_REL_Y>;
+			scale-multiplier = <1>;
+			scale-divisor = <1>;
+                };
+                tb0_msl: behavior_input_config_tb0_scroll {
+                        compatible = "zmk,behavior-input-config";
+                        #input-config-binding-cells = <0>; 
+                        device = <&pd0>;
+			evt-type = <INPUT_EV_REL>;
+			x-input-code = <INPUT_REL_MISC>;
+			y-input-code = <INPUT_REL_WHEEL>;
+			scale-multiplier = <1>;
+			scale-divisor = <4>;
+                        y-invert;
+                };
+
+                tb1_mmv: behavior_input_config_tb1_move {
+                        compatible = "zmk,behavior-input-config";
+                        #input-config-binding-cells = <0>; 
+                        device = <&pd1>;
+			evt-type = <INPUT_EV_REL>;
+			x-input-code = <INPUT_REL_X>;
+			y-input-code = <INPUT_REL_Y>;
+			scale-multiplier = <1>;
+			scale-divisor = <1>;
+                };
+                tb1_msl: behavior_input_config_tb1_scroll {
+                        compatible = "zmk,behavior-input-config";
+                        #input-config-binding-cells = <0>; 
+                        device = <&pd1>;
+			evt-type = <INPUT_EV_REL>;
+			x-input-code = <INPUT_REL_MISC>;
+			y-input-code = <INPUT_REL_WHEEL>;
+			scale-multiplier = <1>;
+			scale-divisor = <4>;
+                        y-invert;
+                };
+        };
 
         keymap {
                 compatible = "zmk,keymap";
                 default_layer {
                         bindings = <
    &bt BT_CLR   &out OUT_TOG      &bt BT_CLR   &out OUT_TOG
-   &mkp LCLK    &mkp RCLK         &mkp LCLK    &mkp RCLK
+   &mkp LCLK    &mo RAISE         &mkp LCLK    &mo RAISE
                         >;
-                        // trackball-bindings = <&tmv>;
-                };
-                lower_layer {
-                        bindings = <
-   &trans         &trans          &trans         &trans
-   &trans         &trans          &trans         &trans
-                        >;
-                        // trackball-bindings = <&tsl_cus>;
+                        input-config-bindings = <&tb0_mmv &tb1_mmv>;
                 };
                 raise_layer {
                         bindings = <
-   &trans         &trans          &trans         &trans
-   &trans         &trans          &trans         &trans
+   &trans       &trans            &trans       &trans
+   &trans       &trans            &trans       &trans
                         >;
-                        // trackball-bindings = <&tmv>;
-                };
-                mkp_layer {
-                        bindings = <
-   &trans         &trans          &trans         &trans
-   &trans         &trans          &trans         &trans
-                        >;
-                        // trackball-bindings = <&tmv>;
-                };
-                msl_layer {
-                        bindings = <
-   &trans         &trans          &trans         &trans
-   &trans         &trans          &trans         &trans
-                        >;
-                        // trackball-bindings = <&tsl_cus>;
+                        input-config-bindings = <&tb0_msl &tb1_msl>;
                 };
        };
 };

@@ -13,24 +13,24 @@
 // / {
 // 	trackballs {
 // 		compatible = "zmk,keymap-trackballs";
-// 		trackballs = <&trackball>;
+// 		trackballs = <&pd0>;
 // 	};
 // };
 // &spi2 {
 // 	status = "disabled";
-// 	trackball: trackball@0 {
+// 	pd0: pd@0 {
 // 		status = "disabled";
 // 		reg = <0>;
 // 	};
 // };
 //--------------------------------------------------------
 
-/ {
-	trackballs {
-		compatible = "zmk,keymap-trackballs";
-		trackballs = <&trackball>;
-	};
-};
+// / {
+// 	trackballs {
+// 		compatible = "zmk,keymap-trackballs";
+// 		trackballs = <&pd0>;
+// 	};
+// };
 
 &pinctrl {
 	spi2_default: spi2_default {
@@ -59,10 +59,10 @@
 &spi2 {
 	compatible = "nordic,nrf-spim";
 	status = "disabled"; // <<< disabled in main .dtsi, okay in .overlay
-	trackball: trackball@0 {
+	pd0: pd@0 {
 		compatible = "avago,adns9800";
 		status = "disabled";
-		label = "TRACKBALL";
+		label = "TRACKBALL0";
 		reg = <0>;
 		spi-max-frequency = <4000000>;
 	};
@@ -77,13 +77,24 @@
 	cs-gpios = <&gpio1 12 GPIO_ACTIVE_LOW>;
 };
 
-&trackball {
+#define INPUT_EV_KEY 0x01               /**< Key event */
+#define INPUT_EV_REL 0x02               /**< Relative coordinate event */
+#define INPUT_EV_ABS 0x03               /**< Absolute coordinate event */
+#define INPUT_EV_MSC 0x04               /**< Miscellaneous event */
+#define INPUT_EV_VENDOR_START 0xf0      /**< Vendor specific event start */
+#define INPUT_EV_VENDOR_STOP 0xff       /**< Vendor specific event stop */
+
+#define INPUT_REL_X 0x00                /**< Relative X coordinate */
+#define INPUT_REL_Y 0x01                /**< Relative Y coordinate */
+#define INPUT_REL_WHEEL 0x08            /**< Relative wheel coordinate */
+#define INPUT_REL_HWHEEL 0x06           /**< Relative horizontal wheel coordinate */
+#define INPUT_REL_MISC 0x09             /**< Relative misc coordinate */
+
+&pd0 {
   status = "okay";
   irq-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-
-	// scroll-layers = <1 4>;
-	// snipe-layers = <1>;
-	// automouse-layer = <3>;
-
+	evt-type = <INPUT_EV_REL>;
+	x-input-code = <INPUT_REL_X>;
+	y-input-code = <INPUT_REL_Y>;
 };
 
