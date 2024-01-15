@@ -15,17 +15,3 @@
 		, <&pro_micro 14 GPIO_ACTIVE_HIGH>
 		;
 };
-
-// / {
-// 	trackballs {
-// 		compatible = "zmk,keymap-trackballs";
-// 		trackballs = <&trackball>;
-// 	};
-// };
-// &spi2 {
-// 	status = "disabled";
-// 	trackball: trackball@0 {
-// 		status = "disabled";
-// 		reg = <0>;
-// 	};
-// };
