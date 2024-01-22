@@ -85,6 +85,13 @@
                         // source = "transport";
                 };
 
+                lar0_hid: behavior_output_config_lar0_transport {
+                        compatible = "zmk,behavior-output-config";
+                        #output-config-binding-cells = <0>; 
+                        device = <&lra0>;
+                        source = "transport";
+                };
+
         };
 
         keymap {
@@ -95,7 +102,7 @@
    &mkp LCLK    &mo RAISE         &mkp LCLK    &mo RAISE
                         >;
                         input-config-bindings = <&tb0_mmv &tb1_mmv>;
-                        output-config-bindings = <&lar0_haptic>;
+                        output-config-bindings = <&lar0_haptic &lar0_hid>;
                 };
                 raise_layer {
                         bindings = <
@@ -103,7 +110,7 @@
    &trans       &trans            &trans       &trans
                         >;
                         input-config-bindings = <&tb0_msl &tb1_msl>;
-                        output-config-bindings = <&lar0_haptic>;
+                        output-config-bindings = <&lar0_haptic &lar0_hid>;
                 };
        };
 };
