@@ -38,90 +38,148 @@
 
 / {
         // behaviors {
-        //         tsl_cus: behavior_trackball_scroll_cus {
-        //                 compatible = "zmk,behavior-point-device-incremental";
-        //                 label = "TRACKBALL_SCROLL_CUS";
-        //                 #trackball-binding-cells = <0>;
-        //                 mode = "scroll-mode";
-        //                 flavor = "default";
-        //                 scale_mode = "dividor";
-        //                 scale_factor = <10>;
+        //         tb0_mmv: behavior_input_config_tb0_move {
+        //                 compatible = "zmk,behavior-input-config";
+        //                 #input-config-binding-cells = <0>; 
+        //                 device = <&pd0>;
+	// 		evt-type = <INPUT_EV_REL>;
+	// 		x-input-code = <INPUT_REL_X>;
+	// 		y-input-code = <INPUT_REL_Y>;
+	// 		scale-multiplier = <1>;
+	// 		scale-divisor = <1>;
         //         };
+        //         tb0_msl: behavior_input_config_tb0_scroll {
+        //                 compatible = "zmk,behavior-input-config";
+        //                 #input-config-binding-cells = <0>; 
+        //                 device = <&pd0>;
+	// 		evt-type = <INPUT_EV_REL>;
+	// 		x-input-code = <INPUT_REL_MISC>;
+	// 		y-input-code = <INPUT_REL_WHEEL>;
+	// 		scale-multiplier = <1>;
+	// 		scale-divisor = <4>;
+        //                 y-invert;
+        //         };
+
+        //         tb1_mmv: behavior_input_config_tb1_move {
+        //                 compatible = "zmk,behavior-input-config";
+        //                 #input-config-binding-cells = <0>; 
+        //                 device = <&pd1>;
+	// 		evt-type = <INPUT_EV_REL>;
+	// 		x-input-code = <INPUT_REL_X>;
+	// 		y-input-code = <INPUT_REL_Y>;
+	// 		scale-multiplier = <1>;
+	// 		scale-divisor = <1>;
+        //         };
+        //         tb1_msl: behavior_input_config_tb1_scroll {
+        //                 compatible = "zmk,behavior-input-config";
+        //                 #input-config-binding-cells = <0>; 
+        //                 device = <&pd1>;
+	// 		evt-type = <INPUT_EV_REL>;
+	// 		x-input-code = <INPUT_REL_MISC>;
+	// 		y-input-code = <INPUT_REL_WHEEL>;
+	// 		scale-multiplier = <1>;
+	// 		scale-divisor = <4>;
+        //                 y-invert;
+        //         };
+
+        //         lar0_haptic: behavior_output_config_lar0_haptic {
+        //                 compatible = "zmk,behavior-output-config";
+        //                 #output-config-binding-cells = <0>; 
+        //                 device = <&lra0>;
+        //                 source = "layer-state-change";
+        //                 // source = "position-state-change";
+        //                 // source = "keycode-state-change";
+        //                 // source = "mouse-button-state-change";
+        //                 // source = "transport";
+        //         };
+
+        //         lar0_hid: behavior_output_config_lar0_transport {
+        //                 compatible = "zmk,behavior-output-config";
+        //                 #output-config-binding-cells = <0>; 
+        //                 device = <&lra0>;
+        //                 source = "transport";
+        //         };
+
         // };
 
         keymap {
                 compatible = "zmk,keymap";
                 default_layer {
-// +------------------------------------------------------+     +-----------------------------------------------------+
-// |     Q    |     W    |     E    |     R    |     T    |     |    Y    |     U    |    I     |     O    |     P    |
-// |     A    |     S    |     D    |     F    |     G    |     |    H    |     J    |    K     |     L    |   GUI ;: |
-// |  SHFT Z  |     X    |     C    |     V    |     B    |     |    N    |     M    |   ,<     |    .>    |  SHFT /? |
-//                       |  RSE:ESC |    GUI   | CTRL:TAB |     | ALT:ENT |  LWR:SPC | MKP:BKSP |
+// +------------------------------------------------------+     +-------------------------------------------------------+
+// |     Q    |     W    |     E    |     R    |     T    |     |    Y     |     U    |    I      |     O    |     P    |
+// |     A    |     S    |     D    |     F    |     G    |     |    H     |     J    |    K      |     L    |   GUI ;: |
+// |  SHFT Z  |     X    |     C    |     V    |     B    |     |    N     |     M    |  CTRL ,<  |  ALT .>  |  SHFT /? |
+//                       | CTRL:TAB |    GUI   |  RSE:ESC |     | MKP:BKSP |  LWR:SPC | ALT:ENT |
                         bindings = <
-   &kp Q        &kp W  &kp E          &kp R     &kp T              &kp Y         &kp U            &kp I          &kp O    &kp P
-   &kp A        &kp S  &kp D          &kp F     &kp G              &kp H         &kp J            &kp K          &kp L    &mt LGUI SEMI
-   &mt LSHFT Z  &kp X  &kp C          &kp V     &kp B              &kp N         &kp M            &kp COMMA      &kp DOT  &mt RSHFT FSLH
-                       &lt RAISE ESC  &kp LGUI  &mt LCTRL TAB      &mt LALT RET  &lt LOWER SPACE  &lt MKP BKSP
+   &kp Q        &kp W  &kp E          &kp R     &kp T              &kp Y         &kp U            &kp I            &kp O         &kp P
+   &kp A        &kp S  &kp D          &kp F     &kp G              &kp H         &kp J            &kp K            &kp L         &mt LGUI SEMI
+   &mt LSHFT Z  &kp X  &kp C          &kp V     &kp B              &kp N         &kp M            &mt RCTRL COMMA  &mt RALT DOT  &mt RSHFT FSLH
+                       &mt LCTRL TAB  &kp LGUI  &lt RAISE ESC      &lt MKP BKSP  &lt LOWER SPACE  &mt LALT RET
                         >;
-                        // trackball-bindings = <&tmv>;
+                        // input-config-bindings = <&tb0_mmv &tb1_mmv>;
+                        // output-config-bindings = <&lar0_haptic &lar0_hid>;
                         // sensor-bindings = <&xy_mm>;
                         // sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
                 };
                 lower_layer {
 // +------------------------------------------------------+     +------------------------------------------------------+
-// |    1!    |    2@    |    3#    |    4$    |    5%    |     |    6^    |    7&    |    8&    |    9(    |    0)    |
-// |  ALT `~  |    [     |    (     |    {     |    =     |     |    LFT   |   DWN    |    UP    |   RGT    |   GUI '" |
-// | SHFT TAB |    ]     |    )     |    }     |    _     |     |   BKSP   |    -     |    +     |   SPC    |  SHFT \| |
+// |  GUI 1!  |    2@    |    3#    |    4$    |    5%    |     |    6^    |    7&    |    8&    |    9(    |   ALT 0) |
+// |  ALT `~  |          |    {[    |    ]}    |          |     |    LFT   |   DWN    |    UP    |   RGT    |   GUI '" |
+// | SHFT TAB |          |          |          |          |     |   BKSP   |    -_    |    =+    |   SPC    |  SHFT \| |
 //                       |          |          |          |     |          |    (H)   |          |
                         bindings = <
-   &kp N1          &kp N2    &kp N3    &kp N4    &kp N5        &kp N6    &kp N7     &kp N8    &kp N9     &kp N0
-   &mt LALT GRAVE  &kp LBKT  &kp LPAR  &kp LBRC  &kp EQUAL     &kp LEFT  &kp DOWN   &kp UP    &kp RIGHT  &mt RGUI SQT
-   &mt LSHFT TAB   &kp RBKT  &kp RPAR  &kp RBRC  &kp UNDER     &kp BKSP  &kp MINUS  &kp PLUS  &kp SPACE  &mt RSHFT BSLH
+   &mt RGUI N1     &kp N2    &kp N3    &kp N4    &kp N5        &kp N6    &kp N7     &kp N8    &kp N9     &mt RALT N0
+   &mt LALT GRAVE  &trans    &kp LBKT  &kp RBKT  &trans        &kp LEFT  &kp DOWN   &kp UP    &kp RIGHT  &mt RGUI SQT
+   &mt LSHFT TAB   &trans    &trans    &trans    &trans        &kp BKSP  &kp MINUS  &kp EQUAL &kp SPACE  &mt RSHFT BSLH
                              &trans    &trans    &trans        &trans    &trans    &trans
                         >;
-                        // trackball-bindings = <&tsl_cus>;
+                        // input-config-bindings = <&tb0_mmv &tb1_mmv>;
+                        // output-config-bindings = <&lar0_haptic &lar0_hid>;
                 };
                 raise_layer {
 // +------------------------------------------------------+     +------------------------------------------------------+
 // |    F1    |    F2    |    F3    |    F4    |    F5    |     |    F6    |    F7    |    F8    |    F9    |   F10    |
-// |   MSL    |   RCLK   |   MCLK   |   LCLK   |   VOLU   |     |   MLFT   |   MDWN   |    MUP   |   MRGT   |   F11    |
-// |   BT_0   |   BT_1   |   BRID   |   BRIU   |   VOLD   |     |   SLFT   |   SDWN   |    SUP   |   SRGT   |   F12    |
-//                       |    (H)   |          |          |     |          |          |  BT_C   |
+// |   BT_1   |   VOLD   |   VOLU   |   RCLK   |   LCLK   |     |   MLFT   |   MDWN   |    MUP   |   MRGT   |   F11    |
+// |   BT_0   |   BRID   |   BRIU   |    MSL   |   MCLK   |     |   SLFT   |   SDWN   |    SUP   |   SRGT   |   F12    |
+//                       |          |          |   (H)    |     |          |          |  BT_C   |
                         bindings = <
    &kp F1         &kp F2        &kp F3        &kp F4        &kp F5            &kp F6      &kp F7      &kp F8       &kp F9      &kp F10
-   &tog MSL       &mkp RCLK     &mkp MCLK     &mkp LCLK     &kp C_VOL_UP      &mmv MOU_L  &mmv MOU_D  &mmv MOU_U   &mmv MOU_R  &kp F11
-   &bt BT_SEL 0   &bt BT_SEL 1  &kp C_BRI_DN  &kp C_BRI_UP  &kp C_VOL_DN      &msc SCL_L  &msc SCL_D  &msc SCL_U   &msc SCL_R  &kp F12
+   &bt BT_SEL 1   &kp C_BRI_DN  &kp C_BRI_UP   &mkp RCLK    &mkp LCLK         &mmv MOU_L  &mmv MOU_D  &mmv MOU_U   &mmv MOU_R  &kp F11
+   &bt BT_SEL 0   &kp C_VOL_DN  &kp C_VOL_UP   &tog MSL     &mkp MCLK         &msc SCL_L  &msc SCL_D  &msc SCL_U   &msc SCL_R  &kp F12
                                 &trans        &trans        &trans            &trans      &trans      &bt BT_CLR
                         >;
-                        // trackball-bindings = <&tmv>;
+                        // trackball-bindings = <&tb0_mmv &tb1_mmv>;
+                        // output-config-bindings = <&lar0_haptic &lar0_hid>;
                 };
                 mkp_layer {
 // +-----------------------------------------------------+     +-----------------------------------------------------+
 // |         |          |          |          |          |     |          |          |          |          |         |
-// |   MSL   |   RCLK   |   MCLK   |   LCLK   |          |     |          |   LCLK   |   MCLK   |   RCLK   |   MSL   |
-// |         |          |          |    MB4   |          |     |          |    MB4   |          |          |         |
-//                      |          |          |          |     |          |          |          |
+// |         |          |          |   RCLK   |   LCLK   |     |   LCLK   |   RCLK   |          |          |         |
+// |         |          |          |    MSL   |   MCLK   |     |   MCLK   |    MSL   |          |          |         |
+//                      |          |          |          |     |   (H)    |          |          |
                         bindings = <
-   &trans        &trans        &trans        &trans        &trans          &trans      &trans        &trans        &trans         &trans 
-   &tog MSL      &mkp RCLK     &mkp MCLK     &mkp LCLK     &trans          &trans      &mkp LCLK     &mkp MCLK     &mkp RCLK      &tog MSL
-   &trans        &trans        &trans        &mkp MB4      &trans          &trans      &mkp MB4      &trans        &trans         &trans
-                               &trans        &trans        &trans          &trans      &trans        &trans
+   &trans  &trans  &trans  &trans     &trans          &trans      &trans     &trans  &trans  &trans 
+   &trans  &trans  &trans  &mkp RCLK  &mkp LCLK       &mkp LCLK   &mkp RCLK  &trans  &trans  &trans
+   &trans  &trans  &trans  &tog MSL   &mkp MCLK       &mkp MCLK   &tog MSL   &trans  &trans  &trans
+                   &trans  &trans     &trans          &trans      &trans     &trans
                         >;
-                        // trackball-bindings = <&tmv>;
+                        // input-config-bindings = <&tb0_mmv &tb1_mmv>;
+                        // output-config-bindings = <&lar0_haptic &lar0_hid>;
                 };
                 msl_layer {
 // +-----------------------------------------------------+     +-----------------------------------------------------+
 // |         |          |          |          |          |     |          |          |          |          |         |
-// |   MSL   |   RCLK   |   MCLK   |   LCLK   |          |     |          |   LCLK   |   MCLK   |   RCLK   |   MSL   |
-// |         |          |          |    MB4   |          |     |          |    MB4   |          |          |         |
+// |         |          |          |   RCLK   |   LCLK   |     |   LCLK   |   RCLK   |          |          |         |
+// |         |          |          |    MSL   |   MCLK   |     |   MCLK   |    MSL   |          |          |         |
 //                      |          |          |          |     |          |          |          |
                         bindings = <
-   &trans        &trans        &trans        &trans        &trans          &trans      &trans        &trans        &trans         &trans 
-   &tog MSL      &mkp RCLK     &mkp MCLK     &mkp LCLK     &trans          &trans      &mkp LCLK     &mkp MCLK     &mkp RCLK      &tog MSL
-   &trans        &trans        &trans        &mkp MB4      &trans          &trans      &mkp MB4      &trans        &trans         &trans
-                               &trans        &trans        &trans          &trans      &trans        &trans
+   &trans  &trans  &trans  &trans     &trans          &trans      &trans     &trans  &trans  &trans 
+   &trans  &trans  &trans  &mkp RCLK  &mkp LCLK       &mkp LCLK   &mkp RCLK  &trans  &trans  &trans
+   &trans  &trans  &trans  &tog MSL   &mkp MCLK       &mkp MCLK   &tog MSL   &trans  &trans  &trans
+                   &trans  &trans     &trans          &trans      &trans     &trans
                         >;
-                        // trackball-bindings = <&tsl_cus>;
+                        // input-config-bindings = <&tb0_mmv &tb1_mmv>;
+                        // output-config-bindings = <&lar0_haptic &lar0_hid>;
                 };
        };
 };

@@ -16,10 +16,10 @@ include:
   # - board: nice_nano_v2
   #   shield: settings_reset
 
-  # - board: nice_nano_v2
-  #   shield: corne36_left
-  # - board: nice_nano_v2
-  #   shield: corne36_right
+  - board: nice_nano_v2
+    shield: corne36_left
+  - board: nice_nano_v2
+    shield: corne36_right
 
   - board: seeeduino_xiao_ble
     shield: sparklite_left
