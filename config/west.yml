@@ -16,5 +16,8 @@ manifest:
     - name: zmk-adns9800-driver
       remote: badjeff
       revision: main
+    - name: zmk-behavior-key-tempo
+      remote: badjeff
+      revision: main
   self:
     path: config

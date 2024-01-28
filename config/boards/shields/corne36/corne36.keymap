@@ -103,6 +103,15 @@
 
         // };
 
+        behaviors {
+                 tempo: key_tempo {
+                        compatible = "zmk,behavior-key-tempo";
+                        #binding-cells = <0>;
+                        // usage-pages = <HID_USAGE_KEY>;
+                        usage-pages = <HID_USAGE_KEY HID_USAGE_CONSUMER>;
+                };
+        };
+
         keymap {
                 compatible = "zmk,keymap";
                 default_layer {
@@ -126,12 +135,12 @@
 // +-------------------------------------------------------+     +-------------------------------------------------------+
 // | LALT 1!  | LCTRL 2@  |    3#    |    4$    |    5%    |     |    6^    |    7&    |    8&    |  RCTRL 9( |  RALT 0) |
 // | LGUI `~  |    ESC    |    {[    |    ]}    |   TAB    |     |    LFT   |   DWN    |    UP    |    RGT    |  RGUI '" |
-// | SHFT TAB |           |          |          |   RET    |     |   BKSP   |    -_    |    =+    |    SPC    |  SHFT \| |
+// | SHFT TAB |           |          |  TEMPO   |   RET    |     |   BKSP   |    -_    |    =+    |    SPC    |  SHFT \| |
 //                        |          |          |          |     |          |    (H)   |  ^MSK    |
                         bindings = <
    &mt LALT N1     &mt LCTRL N2  &kp N3    &kp N4     &kp N5        &kp N6    &kp N7     &kp N8     &mt RCTRL N9  &mt RALT N0
    &mt LGUI GRAVE  &kp ESC       &kp LBKT  &kp RBKT   &kp TAB       &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT     &mt RGUI SQT
-   &mt LSHFT TAB   &trans        &trans    &trans     &kp RET       &kp BKSP  &kp MINUS  &kp EQUAL  &kp SPACE     &mt RSHFT BSLH
+   &mt LSHFT TAB   &trans        &trans    &tempo     &kp RET       &kp BKSP  &kp MINUS  &kp EQUAL  &kp SPACE     &mt RSHFT BSLH
                                  &trans    &trans     &trans        &trans    &trans     &tog MSK
                         >;
                         // input-config-bindings = <&tb0_mmv &tb1_mmv>;
