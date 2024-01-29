@@ -16,8 +16,6 @@
 #define LOW     1
 #define MSK     2
 #define MSC     3
-#define MKL     4
-#define MSL     5
 
 #define U_MOUSE_MOVE_MAX 2900
 #define MOU_U MOVE_Y(-U_MOUSE_MOVE_MAX)
@@ -103,107 +101,78 @@
 
         // };
 
-        behaviors {
-                 tempo: key_tempo {
-                        compatible = "zmk,behavior-key-tempo";
-                        #binding-cells = <0>;
-                        // usage-pages = <HID_USAGE_KEY>;
-                        usage-pages = <HID_USAGE_KEY HID_USAGE_CONSUMER>;
-                };
-        };
+        // behaviors {
+        //          tempo: key_tempo {
+        //                 compatible = "zmk,behavior-key-tempo";
+        //                 #binding-cells = <0>;
+        //                 // usage-pages = <HID_USAGE_KEY>;
+        //                 usage-pages = <HID_USAGE_KEY HID_USAGE_CONSUMER>;
+        //         };
+        // };
 
         keymap {
                 compatible = "zmk,keymap";
-                default_layer {
+                DEFAULT_layer {
 // +------------------------------------------------------+     +--------------------------------------------------------+
 // |     Q    |     W    |     E    |     R    |     T    |     |     Y     |     U    |    I      |     O    |     P    |
 // |     A    |     S    |     D    |     F    |     G    |     |     H     |     J    |    K      |     L    |   GUI ;: |
 // |  SHFT Z  |     X    |     C    |     V    |     B    |     |     N     |     M    |  CTRL ,<  |  ALT .>  |  SHFT /? |
-//                       | CTRL:TAB |    GUI   | _MSK:ESC |     | _MKL:BKSP | _LWR:SPC | ALT:ENT |
+//                       | _MSK:ESC |    GUI   | CTRL:TAB |     |  ALT:ENT  | _LWR:SPC | _MSK:BKSP |
                         bindings = <
    &kp Q        &kp W  &kp E          &kp R     &kp T             &kp Y         &kp U          &kp I            &kp O         &kp P
    &kp A        &kp S  &kp D          &kp F     &kp G             &kp H         &kp J          &kp K            &kp L         &mt LGUI SEMI
    &mt LSHFT Z  &kp X  &kp C          &kp V     &kp B             &kp N         &kp M          &mt RCTRL COMMA  &mt RALT DOT  &mt RSHFT FSLH
-                       &mt LCTRL TAB  &kp LGUI  &lt MSK ESC       &lt MKL BKSP  &lt LOW SPACE  &mt LALT RET
+                       &lt MSK ESC    &kp LGUI  &mt LCTRL TAB     &mt LALT RET  &lt LOW SPACE  &lt MSK BKSP
                         >;
                         // input-config-bindings = <&tb0_mmv &tb1_mmv>;
                         // output-config-bindings = <&lar0_haptic &lar0_hid>;
                         // sensor-bindings = <&xy_mm>;
                         // sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
                 };
-                lower_layer {
-// +-------------------------------------------------------+     +-------------------------------------------------------+
-// | LALT 1!  | LCTRL 2@  |    3#    |    4$    |    5%    |     |    6^    |    7&    |    8&    |  RCTRL 9( |  RALT 0) |
-// | LGUI `~  |    ESC    |    {[    |    ]}    |   TAB    |     |    LFT   |   DWN    |    UP    |    RGT    |  RGUI '" |
-// | SHFT TAB |           |          |  TEMPO   |   RET    |     |   BKSP   |    -_    |    =+    |    SPC    |  SHFT \| |
-//                        |          |          |          |     |          |    (H)   |  ^MSK    |
+                LOW_layer {
+// +------------------------------------------------------+     +-------------------------------------------------------+
+// | LALT 1!  | LCTRL 2@  |    3#    |    4$    |    5%   |     |    6^    |    7&    |    8&    |  RCTRL 9( |  RALT 0) |
+// | LGUI `~  |    ESC    |    {[    |    ]}    |   TAB   |     |    LFT   |   DWN    |    UP    |    RGT    |  RGUI '" |
+// | SHFT TAB |           |          |          |   RET   |     |   BKSP   |    -_    |    =+    |    SPC    |  SHFT \| |
+//                        |          |          |         |     |   ^MSK   |    (H)   |          |
                         bindings = <
    &mt LALT N1     &mt LCTRL N2  &kp N3    &kp N4     &kp N5        &kp N6    &kp N7     &kp N8     &mt RCTRL N9  &mt RALT N0
    &mt LGUI GRAVE  &kp ESC       &kp LBKT  &kp RBKT   &kp TAB       &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT     &mt RGUI SQT
-   &mt LSHFT TAB   &trans        &trans    &tempo     &kp RET       &kp BKSP  &kp MINUS  &kp EQUAL  &kp SPACE     &mt RSHFT BSLH
-                                 &trans    &trans     &trans        &trans    &trans     &tog MSK
+   &mt LSHFT TAB   &trans        &trans    &trans     &kp RET       &kp BKSP  &kp MINUS  &kp EQUAL  &kp SPACE     &mt RSHFT BSLH
+                                 &trans    &trans     &trans        &tog MSK  &trans     &trans
                         >;
                         // input-config-bindings = <&tb0_mmv &tb1_mmv>;
                         // output-config-bindings = <&lar0_haptic &lar0_hid>;
                 };
-                mmv_layer {
+                MSK_layer {
 // +------------------------------------------------------+     +------------------------------------------------------+
 // |    F1    |    F2    |    F3    |    F4    |    F5    |     |    F6    |    F7    |    F8    |    F9    |   F10    |
-// |   BT_1   |   VOLD   |   VOLU   |   RCLK   |   LCLK   |     |   MLFT   |   MDWN   |    MUP   |   MRGT   | _MSC:F11 |
-// |   BT_0   |   BRID   |   BRIU   |   _MSL   |   MCLK   |     |   ^MSC   |   LCLK   |   MCLK   |   RCLK   |   F12    |
-//                       |   BT_C   |          |          |     |          |          |   ^MSK   |
+// |          |   VOLD   |   VOLU   |   BRID   |   BRIU   |     |   MLFT   |   MDWN   |    MUP   |   MRGT   | _MSC:F11 |
+// |          |   RCLK   |   MCLK   |   LCLK   |          |     |          |   LCLK   |   MCLK   |   RCLK   |   F12    |
+//                       |          |          |          |     |   ^MSK   |          |          |
                         bindings = <
-   &kp F1        &kp F2        &kp F3        &kp F4     &kp F5            &kp F6      &kp F7      &kp F8      &kp F9      &kp F10
-   &bt BT_SEL 1  &kp C_VOL_DN  &kp C_VOL_UP  &mkp RCLK  &mkp LCLK         &mmv MOU_L  &mmv MOU_D  &mmv MOU_U  &mmv MOU_R  &lt MSC F11
-   &bt BT_SEL 0  &kp C_BRI_DN  &kp C_BRI_UP  &mo MSL    &mkp MCLK         &tog MSC    &mkp LCLK   &mkp MCLK   &mkp RCLK   &kp F12
-                               &bt BT_CLR    &trans     &trans            &trans      &trans      &tog MSK
+   &kp F1  &kp F2        &kp F3        &kp F4        &kp F5            &kp F6      &kp F7      &kp F8      &kp F9      &kp F10
+   &trans  &kp C_VOL_DN  &kp C_VOL_UP  &kp C_BRI_DN  &kp C_BRI_UP      &mmv MOU_L  &mmv MOU_D  &mmv MOU_U  &mmv MOU_R  &lt MSC F11
+   &trans  &mkp RCLK     &mkp MCLK     &mkp LCLK     &trans            &trans      &mkp LCLK   &mkp MCLK   &mkp RCLK   &kp F12
+                         &trans        &trans        &bt BT_CLR        &tog MSK    &trans      &trans
                         >;
                         // trackball-bindings = <&tb0_mmv &tb1_mmv>;
                         // output-config-bindings = <&lar0_haptic &lar0_hid>;
                 };
-                msc_layer {
+                MSC_layer { 
+
 // +-----------------------------------------------------+     +------------------------------------------------------+
-// |         |          |          |          |          |     |          |          |          |          |          |
+// |  BT_0   |   BT_1   |          |          |   BT_C   |     |          |          |          |          |          |
 // |         |          |          |          |          |     |   SLFT   |   SDWN   |    SUP   |   SRGT   |          |
-// |         |          |          |          |          |     |   ^MSC   |          |          |          |          |
+// |         |          |          |          |          |     |          |          |          |          |          |
 //                      |          |          |          |     |          |          |          |
                         bindings = <
-   &trans  &trans  &trans  &trans     &trans          &trans      &trans      &trans      &trans      &trans
-   &trans  &trans  &trans  &trans     &trans          &msc SCL_L  &msc SCL_D  &msc SCL_U  &msc SCL_R  &trans
-   &trans  &trans  &trans  &trans     &trans          &tog MSC    &trans      &trans      &trans      &trans
-                   &trans  &trans     &trans          &trans      &trans      &tog MSK
+   &bt BT_SEL 0  &bt BT_SEL 1  &trans  &trans  &bt BT_CLR       &trans      &trans      &trans      &trans      &trans
+   &trans        &trans        &trans  &trans  &trans           &msc SCL_L  &msc SCL_D  &msc SCL_U  &msc SCL_R  &trans
+   &trans        &trans        &trans  &trans  &trans           &trans      &trans      &trans      &trans      &trans
+                               &trans  &trans  &trans           &trans      &trans      &tog MSK
                         >;
-                        // input-config-bindings = <&tb0_mmv &tb1_mmv>;
-                        // output-config-bindings = <&lar0_haptic &lar0_hid>;
-                };
-                mkp_layer {
-// +-----------------------------------------------------+     +-----------------------------------------------------+
-// |         |          |          |          |          |     |          |          |          |          |         |
-// |         |          |          |   RCLK   |   LCLK   |     |   LCLK   |   RCLK   |          |          |         |
-// |         |          |          |   _MSL   |   MCLK   |     |   MCLK   |   _MSL   |          |          |         |
-//                      |          |          |          |     |          |          |          |
-                        bindings = <
-   &trans  &trans  &trans  &trans     &trans          &trans      &trans     &trans  &trans  &trans
-   &trans  &trans  &trans  &mkp RCLK  &mkp LCLK       &mkp LCLK   &mkp RCLK  &trans  &trans  &trans
-   &trans  &trans  &trans  &mo MSL    &mkp MCLK       &mkp MCLK   &mo MSL    &trans  &trans  &trans
-                   &trans  &trans     &trans          &trans      &trans     &trans
-                        >;
-                        // input-config-bindings = <&tb0_mmv &tb1_mmv>;
-                        // output-config-bindings = <&lar0_haptic &lar0_hid>;
-                };
-                msl_layer {
-// +-----------------------------------------------------+     +-----------------------------------------------------+
-// |         |          |          |          |          |     |          |          |          |          |         |
-// |         |          |          |   RCLK   |   LCLK   |     |   LCLK   |   RCLK   |          |          |         |
-// |         |          |          |   _MSL   |   MCLK   |     |   MCLK   |   _MSL   |          |          |         |
-//                      |          |          |          |     |          |          |          |
-                        bindings = <
-   &trans  &trans  &trans  &trans     &trans          &trans      &trans     &trans  &trans  &trans
-   &trans  &trans  &trans  &mkp RCLK  &mkp LCLK       &mkp LCLK   &mkp RCLK  &trans  &trans  &trans
-   &trans  &trans  &trans  &mo MSL    &mkp MCLK       &mkp MCLK   &mo MSL    &trans  &trans  &trans
-                   &trans  &trans     &trans          &trans      &trans     &trans
-                        >;
-                        // input-config-bindings = <&tb0_mmv &tb1_mmv>;
+                        // input-config-bindings = <&tb0_msl &tb1_msl>;
                         // output-config-bindings = <&lar0_haptic &lar0_hid>;
                 };
        };
