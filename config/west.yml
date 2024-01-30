@@ -19,5 +19,8 @@ manifest:
     - name: zmk-behavior-key-tempo
       remote: badjeff
       revision: main
+    - name: zmk-behavior-set-default-layer
+      remote: badjeff
+      revision: main
   self:
     path: config
