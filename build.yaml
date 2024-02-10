@@ -27,4 +27,4 @@ include:
     shield: sparklite_right
 
   - board: nice_nano_v2
-    shield: pmicro34
+    shield: pmicro34_left
