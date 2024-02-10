@@ -1,0 +1,48 @@
+/*
+ * Copyright (c) 2020 Pete Johanson
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include "pmicro34.dtsi"
+
+&default_transform {
+	col-offset = <5>;
+};
+
+&kscan0 {
+	col-gpios
+		= <&pro_micro 14 GPIO_ACTIVE_HIGH>
+		, <&pro_micro 15 GPIO_ACTIVE_HIGH>
+		, <&pro_micro 18 GPIO_ACTIVE_HIGH>
+		, <&pro_micro 19 GPIO_ACTIVE_HIGH>
+		, <&pro_micro 20 GPIO_ACTIVE_HIGH>
+		;
+};
+
+#include "pmicro34_trackball.dtsi"
+
+/* keep use &pd0 on peripheral split, only input-channel will send over GATT */
+&pd0 {
+  status = "okay";
+  irq-gpios = <&gpio1 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+	evt-type = <INPUT_EV_REL>;
+	x-input-code = <INPUT_REL_X>;
+	y-input-code = <INPUT_REL_Y>;
+	input-channel = <102>;
+};
+
+/ {
+	/* Define virtual input on peripheral split for compiling keymap only */
+	pd1: virtual_input {
+		compatible = "zmk,virtual-input";
+	};
+};
+
+// / {
+// 	lra0: haptic_generic_lra {
+// 		compatible = "zmk,haptic-generic";
+// 		#haptic-binding-cells = <0>;
+// 		control-gpios = <&gpio0 5 GPIO_ACTIVE_HIGH>;
+// 	};
+// };
