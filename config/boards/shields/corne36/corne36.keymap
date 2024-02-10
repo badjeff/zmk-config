@@ -160,7 +160,7 @@
    &trans  &mkp RCLK     &mkp MCLK     &mkp LCLK     &trans            &trans      &mkp LCLK   &mkp MCLK   &mkp RCLK   &kp F12
                          &trans        &trans        &bt BT_CLR        &tog MSK    &trans      &trans
                         >;
-                        // trackball-bindings = <&tb0_mmv &tb1_mmv>;
+                        // input-config-bindings = <&tb0_mmv &tb1_mmv>;
                         // output-config-bindings = <&lar0_haptic &lar0_hid>;
                 };
                 MSC_layer {
