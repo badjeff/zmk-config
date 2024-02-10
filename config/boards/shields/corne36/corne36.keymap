@@ -106,7 +106,7 @@
                 //         compatible = "zmk,behavior-set-default-layer";
                 //         #binding-cells = <1>;
                 // };
-                //  tempo: key_tempo {
+                // tempo: key_tempo {
                 //         compatible = "zmk,behavior-key-tempo";
                 //         #binding-cells = <0>;
                 //         // usage-pages = <HID_USAGE_KEY>;
