@@ -148,14 +148,14 @@
                 MSK_layer {
 // +------------------------------------------------------+     +------------------------------------------------------+
 // |    F1    |    F2    |    F3    |    F4    |    F5    |     |    F6    |    F7    |    F8    |    F9    |   F10    |
-// |          |   VOLD   |   VOLU   |   BRID   |   BRIU   |     |   MLFT   |   MDWN   |    MUP   |   MRGT   | _MSC:F11 |
-// |          |   RCLK   |   MCLK   |   LCLK   |          |     |          |   LCLK   |   MCLK   |   RCLK   |   F12    |
+// |    F12   |   VOLD   |   VOLU   |   BRID   |   BRIU   |     |   MLFT   |   MDWN   |    MUP   |   MRGT   | _MSC:F11 |
+// |    MB4   |   RCLK   |   MCLK   |   LCLK   |          |     |          |   LCLK   |   MCLK   |   RCLK   |   MB4    |
 //                       |          |          |          |     |   ^MSK   |          |          |
                         bindings = <
-   &kp F1  &kp F2        &kp F3        &kp F4        &kp F5            &kp F6      &kp F7      &kp F8      &kp F9      &kp F10
-   &trans  &kp C_VOL_DN  &kp C_VOL_UP  &kp C_BRI_DN  &kp C_BRI_UP      &mmv MOU_L  &mmv MOU_D  &mmv MOU_U  &mmv MOU_R  &lt MSC F11
-   &trans  &mkp RCLK     &mkp MCLK     &mkp LCLK     &trans            &trans      &mkp LCLK   &mkp MCLK   &mkp RCLK   &kp F12
-                         &trans        &trans        &bt BT_CLR        &tog MSK    &trans      &trans
+   &kp F1    &kp F2        &kp F3        &kp F4        &kp F5            &kp F6      &kp F7      &kp F8      &kp F9      &kp F10
+   &kp F12   &kp C_VOL_DN  &kp C_VOL_UP  &kp C_BRI_DN  &kp C_BRI_UP      &mmv MOU_L  &mmv MOU_D  &mmv MOU_U  &mmv MOU_R  &lt MSC F11
+   &mkp MB4  &mkp RCLK     &mkp MCLK     &mkp LCLK     &trans            &trans      &mkp LCLK   &mkp MCLK   &mkp RCLK   &mkp MB4
+                           &trans        &trans        &bt BT_CLR        &tog MSK    &trans      &trans
                         >;
                         input-config-bindings = <&tb0_mmv &tb1_mmv>;
                         // output-config-bindings = <&lar0_haptic &lar0_hid>;
