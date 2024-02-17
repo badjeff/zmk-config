@@ -48,7 +48,7 @@
 			x-input-code = <INPUT_REL_MISC>;
 			y-input-code = <INPUT_REL_WHEEL>;
 			scale-multiplier = <1>;
-			scale-divisor = <4>;
+			scale-divisor = <8>;
                         y-invert;
                 };
 
@@ -70,7 +70,7 @@
 			x-input-code = <INPUT_REL_MISC>;
 			y-input-code = <INPUT_REL_WHEEL>;
 			scale-multiplier = <1>;
-			scale-divisor = <4>;
+			scale-divisor = <8>;
                         y-invert;
                 };
 
