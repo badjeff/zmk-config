@@ -30,17 +30,17 @@
 	input-channel = <102>;
 };
 
-/ {
-	/* Define virtual input on peripheral split for compiling keymap only */
-	pd1: virtual_input {
-		compatible = "zmk,virtual-input";
-	};
-};
+// / {
+// 	/* Define virtual input on peripheral split for compiling keymap only */
+// 	pd1: virtual_input {
+// 		compatible = "zmk,virtual-input";
+// 	};
+// };
 
-/ {
-	lra0: haptic_generic_lra {
-		compatible = "zmk,haptic-generic";
-		#haptic-binding-cells = <0>;
-		control-gpios = <&gpio0 5 GPIO_ACTIVE_HIGH>;
-	};
-};
+// / {
+// 	lra0: haptic_generic_lra {
+// 		compatible = "zmk,haptic-generic";
+// 		#haptic-binding-cells = <0>;
+// 		control-gpios = <&gpio0 5 GPIO_ACTIVE_HIGH>;
+// 	};
+// };

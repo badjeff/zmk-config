@@ -27,23 +27,23 @@
 	input-channel = <101>;
 };
 
-/ {
-	/* Define virtual input, shall be resurrected for binding in input_channels */
-	pd1: virtual_input {
-		compatible = "zmk,virtual-input";
-		input-channel = <102>;
-	};
-	/* Define (input-channel)-to-(virtual-device) mapping */
-	input_channels {
-		compatible = "zmk,input-channels";
-		inch102 {
-			/* input-channel defined in peripheral dts */
-			input-channel = <102>;
-			/* the virtual-input device, which will be resurrected on central */
-			binding = <&pd1>;
-		};
-	};
-};
+// / {
+// 	/* Define virtual input, shall be resurrected for binding in input_channels */
+// 	pd1: virtual_input {
+// 		compatible = "zmk,virtual-input";
+// 		input-channel = <102>;
+// 	};
+// 	/* Define (input-channel)-to-(virtual-device) mapping */
+// 	input_channels {
+// 		compatible = "zmk,input-channels";
+// 		inch102 {
+// 			/* input-channel defined in peripheral dts */
+// 			input-channel = <102>;
+// 			/* the virtual-input device, which will be resurrected on central */
+// 			binding = <&pd1>;
+// 		};
+// 	};
+// };
 
 // / {
 // 	lra0: haptic_generic_lra {

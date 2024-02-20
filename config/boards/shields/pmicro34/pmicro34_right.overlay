@@ -32,12 +32,12 @@
 	input-channel = <102>;
 };
 
-/ {
-	/* Define virtual input on peripheral split for compiling keymap only */
-	pd1: virtual_input {
-		compatible = "zmk,virtual-input";
-	};
-};
+// / {
+// 	/* Define virtual input on peripheral split for compiling keymap only */
+// 	pd1: virtual_input {
+// 		compatible = "zmk,virtual-input";
+// 	};
+// };
 
 // / {
 // 	lra0: haptic_generic_lra {

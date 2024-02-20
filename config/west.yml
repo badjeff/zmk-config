@@ -11,7 +11,7 @@ manifest:
     #   import: app/west.yml
     - name: zmk
       remote: badjeff
-      revision: dev
+      revision: feat/pointers-move-scroll
       import: app/west.yml
     - name: zmk-adns9800-driver
       remote: badjeff
@@ -20,6 +20,9 @@ manifest:
       remote: badjeff
       revision: main
     - name: zmk-behavior-set-default-layer
+      remote: badjeff
+      revision: main
+    - name: zmk-input-behavior-listener
       remote: badjeff
       revision: main
   self:
