@@ -31,6 +31,16 @@
 #define SCL_R MOVE_X(U_MOUSE_SCROLL_MAX)
 
 / {
+        behaviors {
+                tlt: toggle_layer_tap {
+                        compatible = "zmk,behavior-hold-tap";
+                        #binding-cells = <2>;
+                        flavor = "tap-preferred";
+                        tapping-term-ms = <200>;
+                        bindings = <&tog>, <&kp>;
+                };
+        };
+
         keymap {
                 compatible = "zmk,keymap";
                 DEF_layer {
@@ -38,12 +48,12 @@
 // |     Q    |     W    |     E    |     R    |     T    |     |     Y     |     U    |    I      |     O    |     P    |
 // |     A    |     S    |     D    |     F    |     G    |     |     H     |     J    |    K      |     L    |   GUI ;: |
 // |  SHFT Z  |     X    |     C    |     V    |     B    |     |     N     |     M    |   ALT ,<  |  CTRL .> |  SHFT /? |
-//                       | _MSK:ESC |    GUI   | CTRL:TAB |     |  ALT:ENT  | _LWR:SPC | _MSK:BKSP |
+//                       | ^MSK:ESC |    GUI   | CTRL:TAB |     |  ALT:ENT  | _LWR:SPC | ^MSK:BKSP |
                         bindings = <
    &kp Q        &kp W  &kp E          &kp R     &kp T             &kp Y         &kp U          &kp I           &kp O          &kp P
    &kp A        &kp S  &kp D          &kp F     &kp G             &kp H         &kp J          &kp K           &kp L          &mt LGUI SEMI
    &mt LSHFT Z  &kp X  &kp C          &kp V     &kp B             &kp N         &kp M          &mt RALT COMMA  &mt RCTRL DOT  &mt RSHFT FSLH
-                       &lt MSK ESC    &kp LGUI  &mt LCTRL TAB     &mt LALT RET  &lt NUM SPACE  &lt MSK BKSP
+                       &tlt MSK ESC   &kp LGUI  &mt LCTRL TAB     &mt LALT RET  &lt NUM SPACE  &tlt MSK BKSP
                         >;
                 };
                 NUM_layer {
@@ -62,28 +72,28 @@
                 MSK_layer {
 // +------------------------------------------------------+     +------------------------------------------------------+
 // |    F1    |    F2    |    F3    |    F4    |    F5    |     |    F6    |    F7    |    F8    |    F9    |   F10    |
-// | _MSC:F12 |   VOLD   |   VOLU   |   BRID   |   BRIU   |     |   MLFT   |   MDWN   |    MUP   |   MRGT   | _MSC:F11 |
+// |    F12   |   VOLD   |   VOLU   |   BRID   |   BRIU   |     |   MLFT   |   MDWN   |    MUP   |   MRGT   |   F11    |
 // |    MB4   |   RCLK   |   MCLK   |   LCLK   |   ^MSC   |     |   ^MSC   |   LCLK   |   MCLK   |   RCLK   |   MB4    |
-//                       |          |          |          |     |   ^MSK   |          |          |
+//                       |          |          |          |     |   ^MSK   |   _MSC   |          |
                         bindings = <
-   &kp F1       &kp F2        &kp F3        &kp F4        &kp F5            &kp F6      &kp F7      &kp F8      &kp F9      &kp F10
-   &lt MSC F12  &kp C_VOL_DN  &kp C_VOL_UP  &kp C_BRI_DN  &kp C_BRI_UP      &mmv MOU_L  &mmv MOU_D  &mmv MOU_U  &mmv MOU_R  &lt MSC F11
-   &mkp MB4     &mkp RCLK     &mkp MCLK     &mkp LCLK     &tog MSC          &tog MSC    &mkp LCLK   &mkp MCLK   &mkp RCLK   &mkp MB4
-                              &trans        &trans        &trans            &tog MSK    &trans      &trans
+   &kp F1    &kp F2        &kp F3        &kp F4        &kp F5            &kp F6      &kp F7      &kp F8      &kp F9      &kp F10
+   &kp F12   &kp C_VOL_DN  &kp C_VOL_UP  &kp C_BRI_DN  &kp C_BRI_UP      &mmv MOU_L  &mmv MOU_D  &mmv MOU_U  &mmv MOU_R  &kp F11
+   &mkp MB4  &mkp RCLK     &mkp MCLK     &mkp LCLK     &tog MSC          &tog MSC    &mkp LCLK   &mkp MCLK   &mkp RCLK   &mkp MB4
+                           &trans        &trans        &trans            &tog MSK    &mo MSC     &trans
                         >;
                 };
                 MSC_layer {
-  
+
 // +------------------------------------------------------+     +------------------------------------------------------+
 // |          |          |   BT_0   |   BT_1   |   BT_C   |     |          |          |          |          |          |
 // |          |          |          |          |          |     |   SLFT   |   SDWN   |    SUP   |   SRGT   |          |
 // |    MB4   |   RCLK   |   MCLK   |   LCLK   |   ^MSC   |     |   ^MSC   |   LCLK   |   MCLK   |   RCLK   |   MB4    |
 //                       |          |          |          |     |   ^MSK   |          |          |
                         bindings = <
-   &trans       &trans        &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_CLR        &trans      &trans      &trans      &trans      &trans
-   &trans       &trans        &trans        &trans        &trans            &msc SCL_L  &msc SCL_D  &msc SCL_U  &msc SCL_R  &trans
-   &mkp MB4     &mkp RCLK     &mkp MCLK     &mkp LCLK     &tog MSC          &tog MSC    &mkp LCLK   &mkp MCLK   &mkp RCLK   &mkp MB4
-                              &trans        &trans        &trans            &tog MSK    &trans      &trans
+   &trans    &trans        &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_CLR        &trans      &trans      &trans      &trans      &trans
+   &trans    &trans        &trans        &trans        &trans            &msc SCL_L  &msc SCL_D  &msc SCL_U  &msc SCL_R  &trans
+   &mkp MB4  &mkp RCLK     &mkp MCLK     &mkp LCLK     &tog MSC          &tog MSC    &mkp LCLK   &mkp MCLK   &mkp RCLK   &mkp MB4
+                           &trans        &trans        &trans            &tog MSK    &trans      &trans
                         >;
                 };
        };
