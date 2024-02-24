@@ -25,5 +25,8 @@ manifest:
     - name: zmk-input-behavior-listener
       remote: badjeff
       revision: main
+    - name: zmk-analog-input-driver
+      remote: badjeff
+      revision: main
   self:
     path: config

@@ -57,6 +57,12 @@
                 #binding-cells = <1>;
                 time-to-live-ms = <1000>;
         };
+        
+	anin0_ibl {
+		compatible = "zmk,input-behavior-listener";
+		device = <&anin0>;
+		layers = <DEFAULT>;
+	};
 
         behaviors {
                 // lar0_haptic: behavior_output_config_lar0_haptic {
