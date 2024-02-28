@@ -40,7 +40,7 @@
 		y-input-code = <INPUT_REL_Y>;
 		scale-multiplier = <1>;
 		scale-divisor = <1>;
-                bindings = <&ib_tog_layer MSK>;
+                // bindings = <&ib_tog_layer MSK>;
         };
         tb0_msl_ibl {
                 compatible = "zmk,input-behavior-listener";
@@ -53,21 +53,11 @@
                 scale-divisor = <8>;
                 y-invert;
         };
-        ib_tog_layer: ib_tog_layer {
-                compatible = "zmk,input-behavior-tog-layer";
-                #binding-cells = <1>;
-                time-to-live-ms = <1000>;
-        };
-
-        behaviors {
-                tlt: toggle_layer_tap {
-                        compatible = "zmk,behavior-hold-tap";
-                        #binding-cells = <2>;
-                        flavor = "tap-preferred";
-                        tapping-term-ms = <200>;
-                        bindings = <&tog>, <&kp>;
-                };
-        };
+        // ib_tog_layer: ib_tog_layer {
+        //         compatible = "zmk,input-behavior-tog-layer";
+        //         #binding-cells = <1>;
+        //         time-to-live-ms = <1000>;
+        // };
 
         keymap {
                 compatible = "zmk,keymap";
@@ -81,7 +71,7 @@
    &kp Q        &kp W  &kp E          &kp R     &kp T             &kp Y         &kp U          &kp I           &kp O          &kp P
    &kp A        &kp S  &kp D          &kp F     &kp G             &kp H         &kp J          &kp K           &kp L          &mt LGUI SEMI
    &mt LSHFT Z  &kp X  &kp C          &kp V     &kp B             &kp N         &kp M          &mt RALT COMMA  &mt RCTRL DOT  &mt RSHFT FSLH
-                       &tlt MSK ESC   &kp LGUI  &mt LCTRL TAB     &mt LALT RET  &lt NUM SPACE  &tlt MSK BKSP
+                       &lt MSK ESC    &kp LGUI  &mt LCTRL TAB     &mt LALT RET  &lt NUM SPACE  &lt MSK BKSP
                         >;
                 };
                 NUM_layer {
@@ -102,12 +92,12 @@
 // |    F1    |    F2    |    F3    |    F4    |    F5    |     |    F6    |    F7    |    F8    |    F9    |   F10    |
 // |    F12   |   VOLD   |   VOLU   |   BRID   |   BRIU   |     |   MLFT   |   MDWN   |    MUP   |   MRGT   |   F11    |
 // |    MB4   |   RCLK   |   MCLK   |   LCLK   |   ^MSC   |     |   ^MSC   |   LCLK   |   MCLK   |   RCLK   |   MB4    |
-//                       |          |          |          |     |   ^MSK   |   _MSC   |          |
+//                       |          |          |          |     |   ^MSK   |          |          |
                         bindings = <
-   &kp F1    &kp F2        &kp F3        &kp F4        &kp F5            &kp F6      &kp F7      &kp F8      &kp F9      &kp F10
-   &kp F12   &kp C_VOL_DN  &kp C_VOL_UP  &kp C_BRI_DN  &kp C_BRI_UP      &mmv MOU_L  &mmv MOU_D  &mmv MOU_U  &mmv MOU_R  &kp F11
-   &mkp MB4  &mkp RCLK     &mkp MCLK     &mkp LCLK     &tog MSC          &tog MSC    &mkp LCLK   &mkp MCLK   &mkp RCLK   &mkp MB4
-                           &trans        &trans        &trans            &tog MSK    &mo MSC     &trans
+   &kp F1       &kp F2        &kp F3        &kp F4        &kp F5            &kp F6      &kp F7      &kp F8      &kp F9      &kp F10
+   &lt MSC F12  &kp C_VOL_DN  &kp C_VOL_UP  &kp C_BRI_DN  &kp C_BRI_UP      &mmv MOU_L  &mmv MOU_D  &mmv MOU_U  &mmv MOU_R  &lt MSC F11
+   &mkp MB4     &mkp RCLK     &mkp MCLK     &mkp LCLK     &tog MSC          &tog MSC    &mkp LCLK   &mkp MCLK   &mkp RCLK   &mkp MB4
+                              &trans        &trans        &trans            &tog MSK    &trans      &trans
                         >;
                 };
                 MSC_layer {
