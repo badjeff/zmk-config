@@ -16,6 +16,9 @@ manifest:
     - name: zmk-adns9800-driver
       remote: badjeff
       revision: main
+    - name: zmk-analog-input-driver
+      remote: badjeff
+      revision: main
     - name: zmk-behavior-key-tempo
       remote: badjeff
       revision: main
@@ -25,7 +28,10 @@ manifest:
     - name: zmk-input-behavior-listener
       remote: badjeff
       revision: main
-    - name: zmk-analog-input-driver
+    - name: zmk-output-behavior-listener
+      remote: badjeff
+      revision: main
+    - name: zmk-hid-io
       remote: badjeff
       revision: main
   self:
