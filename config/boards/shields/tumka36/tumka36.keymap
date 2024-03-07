@@ -35,17 +35,17 @@
                 compatible = "zmk,keymap";
                 DEF_layer {
 //                       +--------------------------------+     +-----------------------------------+
-//                       | ^MSK:ESC | CTRL:TAB |    GUI   |     |  _NUM:SPC |  ALT:ENT  | ^MSK:BKSP |
-// +------------------------------------------------------+     +--------------------------------------------------------+
+//                       | ^MSK:ESC |    GUI   | CTRL:TAB |     |  ALT:ENT  |  _NUM:SPC | ^MSK:BKSP |
+// +------------------------------------------------------+     +---------------------------------------------------------+
 // |     Q    |     W    |     E    |     R    |     T    |     |     Y     |     U     |    I      |     O    |     P    |
 // |     A    |     S    |     D    |     F    |     G    |     |     H     |     J     |    K      |     L    |   GUI ;: |
 // |  SHFT Z  |     X    |     C    |     V    |     B    |     |     N     |     M     |   ALT ,<  |  CTRL .> |  SHFT /? |
-// +------------------------------------------------------+     +--------------------------------------------------------+
+// +------------------------------------------------------+     +---------------------------------------------------------+
                         bindings = <
-                       &lt MSK ESC  &mt LCTRL TAB  &kp LGUI       &lt NUM SPACE  &mt LALT RET  &lt MSK BKSP  
-   &kp Q        &kp W  &kp E        &kp R          &kp T          &kp Y          &kp U         &kp I           &kp O          &kp P
-   &kp A        &kp S  &kp D        &kp F          &kp G          &kp H          &kp J         &kp K           &kp L          &mt LGUI SEMI
-   &mt LSHFT Z  &kp X  &kp C        &kp V          &kp B          &kp N          &kp M         &mt RALT COMMA  &mt RCTRL DOT  &mt RSHFT FSLH
+                       &lt MSK ESC  &kp LGUI     &mt LCTRL TAB    &mt LALT RET   &lt NUM SPACE  &lt MSK BKSP  
+   &kp Q        &kp W  &kp E        &kp R        &kp T            &kp Y          &kp U          &kp I           &kp O          &kp P
+   &kp A        &kp S  &kp D        &kp F        &kp G            &kp H          &kp J          &kp K           &kp L          &mt LGUI SEMI
+   &mt LSHFT Z  &kp X  &kp C        &kp V        &kp B            &kp N          &kp M          &mt RALT COMMA  &mt RCTRL DOT  &mt RSHFT FSLH
                         >;
                 };
                 NUM_layer {
