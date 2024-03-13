@@ -31,6 +31,12 @@
 #define SCL_R MOVE_X(U_MOUSE_SCROLL_MAX)
 
 / {
+        tempo: key_tempo {
+                compatible = "zmk,behavior-key-tempo";
+                #binding-cells = <0>;
+                usage-pages = <HID_USAGE_KEY HID_USAGE_CONSUMER>;
+        };
+
         keymap {
                 compatible = "zmk,keymap";
                 DEF_layer {
@@ -68,7 +74,7 @@
 //                       |          |          |          |     |          |          |   ^MSK   |
 // +------------------------------------------------------+     +------------------------------------------------------+
 // |    F1    |    F2    |    F3    |    F4    |    F5    |     |    F6    |    F7    |    F8    |    F9    |   F10    |
-// |    F12   |   VOLD   |   VOLU   |   BRID   |   BRIU   |     |   MLFT   |   MDWN   |    MUP   |   MRGT   |   F11    |
+// | _MSC:F12 |   VOLD   |   VOLU   |   BRID   |   BRIU   |     |   MLFT   |   MDWN   |    MUP   |   MRGT   | _MSC:F11 |
 // |    MB4   |   RCLK   |   MCLK   |   LCLK   |   ^MSC   |     |   ^MSC   |   LCLK   |   MCLK   |   RCLK   |   MB4    |
 // +------------------------------------------------------+     +------------------------------------------------------+
                         bindings = <
@@ -83,15 +89,15 @@
 //                       +--------------------------------+     +--------------------------------+
 // |                     |          |          |          |     |          |          |   ^MSK   |
 // +------------------------------------------------------+     +------------------------------------------------------+
-// |          |          |   BT_0   |   BT_1   |   BT_C   |     |          |          |          |          |          |
-// |          |          |          |          |          |     |   SLFT   |   SDWN   |    SUP   |   SRGT   |          |
+// |   TEMPO  |   BT_0   |   BT_1   |   BT_C   |   DFU    |     |    DFU   |   RESET  |          |          |  TEMPO   |
+// |    (H)   |          |          |          |          |     |   SLFT   |   SDWN   |    SUP   |   SRGT   |   (H)    |
 // |    MB4   |   RCLK   |   MCLK   |   LCLK   |   ^MSC   |     |   ^MSC   |   LCLK   |   MCLK   |   RCLK   |   MB4    |
 // +------------------------------------------------------+     +------------------------------------------------------+
                         bindings = <
-                           &trans        &trans        &trans            &trans      &trans      &tog MSK
-   &trans    &trans        &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_CLR        &trans      &trans      &trans      &trans      &trans
-   &trans    &trans        &trans        &trans        &trans            &msc SCL_L  &msc SCL_D  &msc SCL_U  &msc SCL_R  &trans
-   &mkp MB4  &mkp RCLK     &mkp MCLK     &mkp LCLK     &tog MSC          &tog MSC    &mkp LCLK   &mkp MCLK   &mkp RCLK   &mkp MB4
+                           &trans        &trans        &trans            &trans        &trans      &tog MSK
+   &tempo    &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_CLR    &bootloader       &bootloader   &sys_reset  &trans      &trans      &tempo
+   &trans    &trans        &trans        &trans        &trans            &msc SCL_L    &msc SCL_D  &msc SCL_U  &msc SCL_R  &trans
+   &mkp MB4  &mkp RCLK     &mkp MCLK     &mkp LCLK     &tog MSC          &tog MSC      &mkp LCLK   &mkp MCLK   &mkp RCLK   &mkp MB4
                         >;
                 };
        };
