@@ -1,0 +1,12 @@
+file_format: "1"
+id: nano18
+name: nano18
+type: shield
+url: https://github.com/badjeff/nano18/
+requires: [pro_micro]
+exposes: []
+features:
+  - keys
+siblings:
+  - nano18_left
+  - nano18_right
