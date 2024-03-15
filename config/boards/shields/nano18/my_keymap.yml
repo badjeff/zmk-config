@@ -1,0 +1,272 @@
+layout:
+  ortho_layout:
+    split: true
+    rows: 2
+    columns: 5
+    thumbs: 2
+layers:
+  AL1:
+    # left upper five (0.0 - 0.4)
+    - { t: "", h: "", type: ghost }
+    - { t: "w", h: "CTL" }
+    - { t: "e", h: "ALT" }
+    - { t: "r", h: "GUI" }
+    - { t: "", h: "", type: ghost }
+    # right upper five (0.5 - 0.9)
+    - { t: "", h: "", type: ghost }
+    - { t: "u", h: "GUI" }
+    - { t: "i", h: "ALT" }
+    - { t: "o", h: "CTL" }
+    - { t: "", h: "", type: ghost }
+    # left home five (1.0 - 1.4)
+    - { t: "a", h: "SHFT" }
+    - { t: "s", h: "" }
+    - { t: "d", h: "NM1" }
+    - { t: "f", h: "NV1" }
+    - { t: "", h: "", type: ghost }
+    # right home five (1.5 - 1.9)
+    - { t: "", h: "", type: ghost }
+    - { t: "j", h: "NV1" }
+    - { t: "k", h: "NM1" }
+    - { t: "l", h: "" }
+    - { t: ";:", h: "SHFT" }
+    # thumbs
+    - { t: "ESC", h: "LGUI" }
+    - { t: "TAB", h: "LCTRL" }
+    - { t: "ENTER", h: "RALT" }
+    - { t: "SPC", h: "AL2" }
+
+  AL2:
+    # left upper five (0.0 - 0.4)
+    - { t: "", h: "", type: ghost }
+    - { t: "q", h: "" }
+    - { t: "{[", h: "" }
+    - { t: "]}", h: "" }
+    - { t: "", h: "", type: ghost }
+    # right upper five (0.5 - 0.9)
+    - { t: "", h: "", type: ghost }
+    - { t: "'", h: "" }
+    - { t: "BSPC", h: "" }
+    - { t: "p", h: "" }
+    - { t: "", h: "", type: ghost }
+    # left home five (1.0 - 1.4)
+    - { t: "z", h: "SHFT" }
+    - { t: "x", h: "" }
+    - { t: "c", h: "" }
+    - { t: "v", h: "" }
+    - { t: "", h: "", type: ghost }
+    # right home five (1.5 - 1.9)
+    - { t: "", h: "", type: ghost }
+    - { t: "m", h: "" }
+    - { t: ",<", h: "" }
+    - { t: ".>", h: "" }
+    - { t: "/?", h: "SHFT" }
+    # thumbs
+    - { t: "trans", h: "" }
+    - { t: "trans", h: "" }
+    - { t: "trans", h: "" }
+    - { t: "trans", h: "" }
+
+  NM1:
+    # left upper five (0.0 - 0.4)
+    - { t: "", h: "", type: ghost }
+    - { t: "4$", h: "" }
+    - { t: "5%", h: "" }
+    - { t: "6^", h: "" }
+    - { t: "", h: "", type: ghost }
+    # right upper five (0.5 - 0.9)
+    - { t: "", h: "", type: ghost }
+    - { t: "7&", h: "" }
+    - { t: "8*", h: "" }
+    - { t: "9(", h: "" }
+    - { t: "", h: "", type: ghost }
+    # left home five (1.0 - 1.4)
+    - { t: "`~", h: "SHFT" }
+    - { t: "1$", h: "" }
+    - { t: "2%", h: "", type: held }
+    - { t: "3^", h: "" }
+    - { t: "", h: "", type: ghost }
+    # right home five (1.5 - 1.9)
+    - { t: "", h: "", type: ghost }
+    - { t: "-_", h: "" }
+    - { t: "+=", h: "", type: held }
+    - { t: "\\|", h: "" }
+    - { t: "0)", h: "SHFT" }
+    # thumbs=
+    - { t: "trans", h: "" }
+    - { t: "trans", h: "" }
+    - { t: "trans", h: "" }
+    - { t: "trans", h: "" }
+
+  NV1:
+    # left upper five (0.0 - 0.4)
+    - { t: "", h: "", type: ghost }
+    - { t: "RCLK", h: "" }
+    - { t: "M-UP", h: "" }
+    - { t: "LCLK", h: "" }
+    - { t: "", h: "", type: ghost }
+    # right upper five (0.5 - 0.9)
+    - { t: "", h: "", type: ghost }
+    - { t: "HOME", h: "" }
+    - { t: "↑", h: "" }
+    - { t: "END", h: "" }
+    - { t: "", h: "", type: ghost }
+    # left home five (1.0 - 1.4)
+    - { t: "MCLK", h: "" }
+    - { t: "M-LT", h: "" }
+    - { t: "M-DN", h: "" }
+    - { t: "M-RT", h: "", type: held }
+    - { t: "", h: "", type: ghost }
+    # right home five (1.5 - 1.9)
+    - { t: "", h: "", type: ghost }
+    - { t: "←", h: "", type: held }
+    - { t: "↓", h: "" }
+    - { t: "→", h: "SCRS" }
+    - { t: "SHFT", h: "" }
+    # thumbs
+    - { t: "trans", h: "" }
+    - { t: "trans", h: "" }
+    - { t: "trans", h: "" }
+    - { t: "trans", h: "" }
+
+  ME1:
+    # left upper five (0.0 - 0.4)
+    - { t: "", h: "", type: ghost }
+    - { t: "BT0", h: "" }
+    - { t: "BT1", h: "" }
+    - { t: "BTCLR", h: "" }
+    - { t: "", h: "", type: ghost }
+    # right upper five (0.5 - 0.9)
+    - { t: "", h: "", type: ghost }
+    - { t: "", h: "" }
+    - { t: "VOL_D", h: "" }
+    - { t: "VOL_U", h: "" }
+    - { t: "", h: "", type: ghost }
+    # left home five (1.0 - 1.4)
+    - { t: "", h: "" }
+    - { t: "", h: "" }
+    - { t: "", h: "" }
+    - { t: "DFU", h: "" }
+    - { t: "", h: "", type: ghost }
+    # right home five (1.5 - 1.9)
+    - { t: "", h: "", type: ghost }
+    - { t: "DFU", h: "" }
+    - { t: "BRI_D", h: "" }
+    - { t: "BRI_U", h: "" }
+    - { t: "", h: "" }
+    # thumbs
+    - { t: "AL1", h: "" }
+    - { t: "", h: "" }
+    - { t: "", h: "" }
+    - { t: "", h: "" }
+
+combos:
+  # Operators
+  - { p: [2, 3], k: "t", layers: [AL1] }
+  - { p: [12, 13], k: "g", layers: [AL1] }
+
+  - { p: [6, 7], k: "y", layers: [AL1] }
+  - { p: [16, 17], k: "h", layers: [AL1] }
+
+  - { p: [2, 13], k: "b", layers: [AL1] }
+  - { p: [7, 16], k: "n", layers: [AL1] }
+
+  - { p: [7, 8], k: "BSPC", layers: [AL1, AL2] }
+  - { p: [17, 18], k: "SPC", layers: [AL1, AL2] }
+  - { p: [1, 2], k: "ESC", layers: [AL1, AL2] }
+  - { p: [11, 12], k: "TAB", layers: [AL1, AL2] }
+
+  # Medias
+  - { p: [16, 18], k: "ME1", a: bottom, layers: [NM1] }
+
+# this goes into the "configuration" code/text box at the bottom of the website!
+draw_config:
+  append_colon_to_layer_header: true
+  arc_radius: 6.0
+  arc_scale: 1.0
+  combo_h: 26.0
+  combo_w: 28.0
+  inner_pad_h: 2.0
+  inner_pad_w: 2.0
+  key_h: 56.0
+  key_rx: 6.0
+  key_ry: 6.0
+  key_w: 60.0
+  line_spacing: 1.2
+  outer_pad_h: 56.0
+  outer_pad_w: 30.0
+  small_pad: 5.0
+  split_gap: 30.0
+  svg_style: |
+    /* font and background color specifications */
+    svg {
+        font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+        font-size: 14px;
+        font-kerning: normal;
+        text-rendering: optimizeLegibility;
+        fill: #24292e;
+    }
+
+    /* default key styling */
+    rect {
+        fill: #f6f8fa;
+        stroke: #c9cccf;
+        stroke-width: 1;
+    }
+
+    /* color accent for combo boxes */
+    rect.combo {
+        fill: #cdf;
+    }
+
+    /* color accent for held keys */
+    rect.held, rect.combo.held {
+        fill: #fdd;
+    }
+
+    /* color accent for ghost (optional) keys */
+    rect.ghost, rect.combo.ghost {
+        fill: #fff0;
+        stroke-width: 0;
+    }
+
+    text {
+        text-anchor: middle;
+        dominant-baseline: middle;
+    }
+
+    /* styling for layer labels */
+    text.label {
+        font-weight: bold;
+        text-anchor: start;
+        stroke: white;
+        stroke-width: 2;
+        paint-order: stroke;
+    }
+
+    /* styling for combo tap, and key hold/shifted label text */
+    text.combo, text.hold, text.shifted {
+        font-size: 11px;
+    }
+
+    text.hold {
+        text-anchor: middle;
+        dominant-baseline: auto;
+    }
+
+    text.shifted {
+        text-anchor: middle;
+        dominant-baseline: hanging;
+    }
+
+    /* styling for hold/shifted label text in combo box */
+    text.combo.hold, text.combo.shifted {
+        font-size: 8px;
+    }
+
+    /* styling for combo dendrons */
+    path {
+        stroke-width: 1;
+        stroke: gray;
+        fill: none;
+    }
