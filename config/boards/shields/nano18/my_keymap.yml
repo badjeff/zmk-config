@@ -162,19 +162,30 @@ layers:
 
 combos:
   # Operators
+  - { p: [1, 2], k: "q", layers: [AL1] }
   - { p: [2, 3], k: "t", layers: [AL1] }
   - { p: [12, 13], k: "g", layers: [AL1] }
+  #- { p: [2, 13], k: "b", layers: [AL1] }
 
+  - { p: [10, 20], k: "z", a: left, layers: [AL1] }
+  - { p: [11, 20], k: "x", a: bottom, layers: [AL1] }
+  - { p: [12, 20], k: "c", layers: [AL1] }
+  - { p: [13, 20], k: "v", layers: [AL1] }
+  - { p: [12, 13, 20], k: "b", a: bottom, layers: [AL1] }
+
+  - { p: [7, 8], k: "p", layers: [AL1] }
   - { p: [6, 7], k: "y", layers: [AL1] }
   - { p: [16, 17], k: "h", layers: [AL1] }
+  #- { p: [7, 16], k: "n", layers: [AL1] }
 
-  - { p: [2, 13], k: "b", layers: [AL1] }
-  - { p: [7, 16], k: "n", layers: [AL1] }
+  - { p: [16, 23], k: "m", layers: [AL1] }
+  - { p: [17, 23], k: ",<", layers: [AL1] }
+  - { p: [18, 23], k: ".>", a: bottom, layers: [AL1] }
+  - { p: [19, 23], k: "/?", a: right, layers: [AL1] }
+  - { p: [16, 17, 23], k: "n", a: bottom, layers: [AL1] }
 
-  - { p: [7, 8], k: "BSPC", layers: [AL1, AL2] }
-  - { p: [17, 18], k: "SPC", layers: [AL1, AL2] }
-  - { p: [1, 2], k: "ESC", layers: [AL1, AL2] }
-  - { p: [11, 12], k: "TAB", layers: [AL1, AL2] }
+  - { p: [17, 18], k: "BSPC", layers: [AL1] }
+  - { p: [11, 12], k: "TAB", layers: [AL1] }
 
   # Medias
   - { p: [16, 18], k: "ME1", a: bottom, layers: [NM1] }
