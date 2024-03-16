@@ -16,224 +16,73 @@
 #define MOU_L MOVE_X(-U_MOUSE_MOVE_MAX)
 #define MOU_R MOVE_X(U_MOUSE_MOVE_MAX)
 
-// #define U_MOUSE_SCROLL_MAX 20
-// #define SCL_U MOVE_Y(U_MOUSE_SCROLL_MAX)
-// #define SCL_D MOVE_Y(-U_MOUSE_SCROLL_MAX)
-// #define SCL_L MOVE_X(-U_MOUSE_SCROLL_MAX)
-// #define SCL_R MOVE_X(U_MOUSE_SCROLL_MAX)
-
 /* Layers */
 #define ALP 0
 #define NAV 1
 #define NUM 2
 #define MED 3
 #define FUN 4
+
 / { 
 
+  //			00  01  02    03  04  05
+  //	06  07  08  09    10  11  12  13
+  //					14  15    16  17
   combos {
     compatible = "zmk,combos";
 
-  //			00  01  02    03  04  05
-  //	06  07  08  09    10  11  12  13
-  //					14  15    16  17
-    q {
-      timeout-ms = <80>;
-      key-positions = <0 1>;
-      bindings = <&kp Q>;
-      layers = <ALP>;
-    };
-    t {
-      timeout-ms = <80>;
-      key-positions = <1 2>;
-      bindings = <&kp T>;
-      layers = <ALP>;
-    };
-    g {
-      timeout-ms = <80>;
-      key-positions = <8 9>;
-      bindings = <&kp G>;
-      layers = <ALP>;
-    };
-    b {
-      timeout-ms = <100>;
-      key-positions = <1 9>;
-      bindings = <&kp B>;
-      layers = <ALP>;
-    };
+    q   { timeout-ms = <80>; key-positions = <0 1>; bindings = <&kp Q>; layers = <ALP>; };
+    t   { timeout-ms = <80>; key-positions = <1 2>; bindings = <&kp T>; layers = <ALP>; };
+    g   { timeout-ms = <80>; key-positions = <8 9>; bindings = <&kp G>; layers = <ALP>; };
+    b_d { timeout-ms = <80>; key-positions = <1 9>; bindings = <&kp B>; layers = <ALP>; };
 
-  //			00  01  02    03  04  05
-  //	06  07  08  09    10  11  12  13
-  //					14  15    16  17
-    z {
-      timeout-ms = <80>;
-      key-positions = <6 14>;
-      bindings = <&kp Z>;
-      layers = <ALP>;
-    };
-    x {
-      timeout-ms = <80>;
-      key-positions = <7 14>;
-      bindings = <&kp X>;
-      layers = <ALP>;
-    };
-    c {
-      timeout-ms = <80>;
-      key-positions = <8 14>;
-      bindings = <&kp C>;
-      layers = <ALP>;
-    };
-    v {
-      timeout-ms = <100>;
-      key-positions = <9 14>;
-      bindings = <&kp V>;
-      layers = <ALP>;
-    };
+    z   { timeout-ms = <80>; key-positions = <6 14>; bindings = <&kp Z>; layers = <ALP>; };
+    x   { timeout-ms = <80>; key-positions = <7 14>; bindings = <&kp X>; layers = <ALP>; };
+    c   { timeout-ms = <80>; key-positions = <8 14>; bindings = <&kp C>; layers = <ALP>; };
+    v   { timeout-ms = <80>; key-positions = <9 14>; bindings = <&kp V>; layers = <ALP>; };
+    b   { timeout-ms = <80>; key-positions = <9 15>; bindings = <&kp B>; layers = <ALP>; };
 
-  //			00  01  02    03  04  05
-  //	06  07  08  09    10  11  12  13
-  //					14  15    16  17
-    p {
-      timeout-ms = <80>;
-      key-positions = <4 5>;
-      bindings = <&kp P>;
-      layers = <ALP>;
-    };
-    y {
-      timeout-ms = <80>;
-      key-positions = <3 4>;
-      bindings = <&kp Y>;
-      layers = <ALP>;
-    };
-    h {
-      timeout-ms = <80>;
-      key-positions = <10 11>;
-      bindings = <&kp H>;
-      layers = <ALP>;
-    };
-    n {
-      timeout-ms = <100>;
-      key-positions = <10 4>;
-      bindings = <&kp N>;
-      layers = <ALP>;
-    };
+    p   { timeout-ms = <80>; key-positions = <4 5>; bindings = <&kp P>; layers = <ALP>; };
+    y   { timeout-ms = <80>; key-positions = <3 4>; bindings = <&kp Y>; layers = <ALP>; };
+    h   { timeout-ms = <80>; key-positions = <10 11>; bindings = <&kp H>; layers = <ALP>; };
+    n_d { timeout-ms = <80>; key-positions = <10 4>; bindings = <&kp N>; layers = <ALP>; };
 
-  //			00  01  02    03  04  05
-  //	06  07  08  09    10  11  12  13
-  //					14  15    16  17
-    m {
-      timeout-ms = <80>;
-      key-positions = <10 17>;
-      bindings = <&kp M>;
-      layers = <ALP>;
-    };
-    comma {
-      timeout-ms = <80>;
-      key-positions = <11 17>;
-      bindings = <&kp COMMA>;
-      layers = <ALP>;
-    };
-    dot {
-      timeout-ms = <80>;
-      key-positions = <12 17>;
-      bindings = <&kp DOT>;
-      layers = <ALP>;
-    };
-    flash {
-      timeout-ms = <100>;
-      key-positions = <13 17>;
-      bindings = <&kp FSLH>;
-      layers = <ALP>;
-    };
+    n     { timeout-ms = <80>; key-positions = <10 16>; bindings = <&kp N>; layers = <ALP>; };
+    m     { timeout-ms = <80>; key-positions = <10 17>; bindings = <&kp M>; layers = <ALP>; };
+    comma { timeout-ms = <80>; key-positions = <11 17>; bindings = <&kp COMMA>; layers = <ALP>; };
+    dot   { timeout-ms = <80>; key-positions = <12 17>; bindings = <&kp DOT>; layers = <ALP>; };
+    flash { timeout-ms = <80>; key-positions = <13 17>; bindings = <&kp FSLH>; layers = <ALP>; };
 
-  //			00  01  02    03  04  05
-  //	06  07  08  09    10  11  12  13
-  //					14  15    16  17
-    bksp {
-      timeout-ms = <60>;
-      key-positions = <11 12>;
-      bindings = <&kp BKSP>;
-      layers = <ALP>;
-    };
-    tab {
-      timeout-ms = <60>;
-      key-positions = <7 8>;
-      bindings = <&kp TAB>;
-      layers = <ALP>;
-    };
+    bksp { timeout-ms = <60>; key-positions = <11 12>; bindings = <&kp BKSP>; layers = <ALP>; };
+    tab { timeout-ms = <60>; key-positions = <7 8>; bindings = <&kp TAB>; layers = <ALP>; };
 
-  //			00  01  02    03  04  05
-  //	06  07  08  09    10  11  12  13
-  //					14  15    16  17
-    nav_left {
-      timeout-ms = <40>;
-      key-positions = <10 11>;
-      bindings = <&kp LEFT>;
-      layers = <NAV>;
-    };
-    nav_mou_left {
-      timeout-ms = <40>;
-      key-positions = <3 4>;
-      bindings = <&mmv MOU_L>;
-      layers = <NAV>;
-    };
+    nav_left { timeout-ms = <40>; key-positions = <10 11>; bindings = <&kp LEFT>; layers = <NAV>; };
+    mmv_left { timeout-ms = <40>; key-positions = <3 4>; bindings = <&mmv MOU_L>; layers = <NAV>; };
 
-  //			00  01  02    03  04  05
-  //	06  07  08  09    10  11  12  13
-  //					14  15    16  17
-    combo_fun {
-      timeout-ms = <40>;
-      key-positions = <3 5>;
-      bindings = <&to FUN>;
-      layers = <NUM>;
-    };
-    combo_med {
-      timeout-ms = <40>;
-      key-positions = <10 12>;
-      bindings = <&to MED>;
-      layers = <NUM>;
-    };
+    combo_fun { timeout-ms = <40>; key-positions = <3 5>; bindings = <&to FUN>; layers = <NUM>; };
+    combo_med { timeout-ms = <40>; key-positions = <10 12>; bindings = <&to MED>; layers = <NUM>; };
   };
 
   behaviors {
     hm_l: homerow_mods_left {
-      compatible = "zmk,behavior-hold-tap";
-      label = "HOMEROW_MODS_L";
-      #binding-cells = <2>;
-      tapping-term-ms = <300>;
-      quick-tap-ms = <250>;
-      flavor = "tap-preferred";
-      bindings = <&kp>, <&kp>;
-      hold-trigger-key-positions = <3 4 5 10 11 12 13>; // right hand
+      compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
+      tapping-term-ms = <300>; quick-tap-ms = <250>; flavor = "tap-preferred";
+      bindings = <&kp>, <&kp>; hold-trigger-key-positions = <3 4 5 10 11 12 13>; // right hand
     };
     hm_r: homerow_mods_right {
-      compatible = "zmk,behavior-hold-tap";
-      label = "HOMEROW_MODS_R";
-      #binding-cells = <2>;
-      tapping-term-ms = <300>;
-      quick-tap-ms = <250>;
-      flavor = "tap-preferred";
-      bindings = <&kp>, <&kp>;
-      hold-trigger-key-positions = <0 1 2 6 7 8 9>; // left hand
+      compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
+      tapping-term-ms = <300>; quick-tap-ms = <250>; flavor = "tap-preferred";
+      bindings = <&kp>, <&kp>; hold-trigger-key-positions = <0 1 2 6 7 8 9>; // left hand
     };
     hl_l: homerow_layers_left {
-      compatible = "zmk,behavior-hold-tap";
-      label = "HOMEROW_LAYERS_L";
-      #binding-cells = <2>;
-      tapping-term-ms = <220>;
-      quick-tap-ms = <250>;
-      flavor = "tap-preferred";
-      bindings = <&mo>, <&kp>;
-      hold-trigger-key-positions = <3 4 5 10 11 12 13>; // right hand
+      compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
+      tapping-term-ms = <220>; quick-tap-ms = <250>; flavor = "tap-preferred";
+      bindings = <&mo>, <&kp>; hold-trigger-key-positions = <3 4 5 10 11 12 13>; // right hand
     };
     hl_r: homerow_layers_right {
-      compatible = "zmk,behavior-hold-tap";
-      label = "HOMEROW_LAYERS_R";
-      #binding-cells = <2>;
-      tapping-term-ms = <220>;
-      quick-tap-ms = <250>;
-      flavor = "tap-preferred";
-      bindings = <&mo>, <&kp>;
-      hold-trigger-key-positions = <0 1 2 6 7 8 9>; // left hand
+      compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
+      tapping-term-ms = <220>; quick-tap-ms = <250>; flavor = "tap-preferred";
+      bindings = <&mo>, <&kp>; hold-trigger-key-positions = <0 1 2 6 7 8 9>; // left hand
     };
   };
 
@@ -242,8 +91,8 @@
 
     ALP {
       bindings = <
-                     &hm_l LCTL W    &hm_l LALT E     &hm_l LGUI R           &hm_r RGUI U       &hm_r RALT I    &hm_r RCTL O
-&mt LSHIFT A         &kp S           &hl_l NUM D      &hl_l NAV F            &hl_r NAV J        &hl_r NUM K     &kp L           &mt RSHIFT SEMI
+                     &hm_l LCTL W    &hm_l LALT E     &kp R                  &kp U              &hm_r RALT I    &hm_r RCTL O
+&hm_l LSHIFT A       &hl_l NUM S     &hl_l NAV D      &hm_l LGUI F           &hm_r RGUI J       &hl_r NAV K     &hl_r NUM L     &hm_r RSHIFT SEMI
                                      &mt LGUI ESC     &mt LCTRL TAB          &mt RALT ENTER     &lt NAV SPACE
       >;
     };
@@ -251,7 +100,7 @@
     NAV {
       bindings = <
                      &mkp RCLK       &mkp MCLK        &mkp LCLK               &mmv MOU_D        &mmv MOU_U      &mmv MOU_R
-&mt LSHIFT GRAVE     &mkp MB4        &kp LBKT         &kp RBKT                &kp DOWN          &kp UP          &kp RIGHT       &mt RSHIFT FSLH
+&hm_l LSHIFT GRAVE   &mkp MB4        &kp LBKT         &kp RBKT                &kp DOWN          &kp UP          &kp RIGHT       &hm_r RSHIFT FSLH
                                      &trans           &trans                  &trans            &trans
       >;
     };
@@ -259,7 +108,7 @@
     NUM {
       bindings = <
                      &kp N4          &kp N5           &kp N6                  &kp N7            &kp N8           &kp N9
-&mt LSHIFT GRAVE     &kp N1          &kp N2           &kp N3                  &kp MINUS         &kp EQUAL        &kp BSLH       &mt RSHIFT N0
+&hm_l LSHIFT GRAVE   &kp N1          &kp N2           &kp N3                  &kp MINUS         &kp EQUAL        &kp BSLH       &hm_r RSHIFT N0
                                      &trans           &trans                  &trans            &trans
       >;
     };
