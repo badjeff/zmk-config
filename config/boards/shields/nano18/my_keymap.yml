@@ -5,7 +5,7 @@ layout:
     columns: 5
     thumbs: 2
 layers:
-  AL1:
+  ALP:
     # left upper five (0.0 - 0.4)
     - { t: "", h: "", type: ghost }
     - { t: "w", h: "CTL" }
@@ -21,45 +21,45 @@ layers:
     # left home five (1.0 - 1.4)
     - { t: "a", h: "SHFT" }
     - { t: "s", h: "" }
-    - { t: "d", h: "NM1" }
-    - { t: "f", h: "NV1" }
+    - { t: "d", h: "NUM" }
+    - { t: "f", h: "NAV" }
     - { t: "", h: "", type: ghost }
     # right home five (1.5 - 1.9)
     - { t: "", h: "", type: ghost }
-    - { t: "j", h: "NV1" }
-    - { t: "k", h: "NM1" }
+    - { t: "j", h: "NAV" }
+    - { t: "k", h: "NUM" }
     - { t: "l", h: "" }
     - { t: ";:", h: "SHFT" }
     # thumbs
     - { t: "ESC", h: "LGUI" }
     - { t: "TAB", h: "LCTRL" }
     - { t: "ENTER", h: "RALT" }
-    - { t: "SPC", h: "AL2" }
+    - { t: "SPC", h: "NAV" }
 
-  AL2:
+  NAV:
     # left upper five (0.0 - 0.4)
     - { t: "", h: "", type: ghost }
-    - { t: "q", h: "" }
-    - { t: "{[", h: "" }
-    - { t: "]}", h: "" }
+    - { t: "RCLK", h: "" }
+    - { t: "MCLK", h: "" }
+    - { t: "LCLK", h: "" }
     - { t: "", h: "", type: ghost }
     # right upper five (0.5 - 0.9)
     - { t: "", h: "", type: ghost }
-    - { t: "'", h: "" }
-    - { t: "BSPC", h: "" }
-    - { t: "p", h: "" }
+    - { t: "M-DN", h: "" }
+    - { t: "M-UP", h: "" }
+    - { t: "M-RT", h: "" }
     - { t: "", h: "", type: ghost }
     # left home five (1.0 - 1.4)
-    - { t: "z", h: "SHFT" }
-    - { t: "x", h: "" }
-    - { t: "c", h: "" }
-    - { t: "v", h: "" }
+    - { t: "`~", h: "SHFT" }
+    - { t: "MB4", h: "" }
+    - { t: "[{", h: "" }
+    - { t: "]}", h: "", type: held }
     - { t: "", h: "", type: ghost }
     # right home five (1.5 - 1.9)
     - { t: "", h: "", type: ghost }
-    - { t: "m", h: "" }
-    - { t: ",<", h: "" }
-    - { t: ".>", h: "" }
+    - { t: "↓", h: "", type: held }
+    - { t: "↑", h: "" }
+    - { t: "→", h: "" }
     - { t: "/?", h: "SHFT" }
     # thumbs
     - { t: "trans", h: "" }
@@ -67,7 +67,7 @@ layers:
     - { t: "trans", h: "" }
     - { t: "trans", h: "" }
 
-  NM1:
+  NUM:
     # left upper five (0.0 - 0.4)
     - { t: "", h: "", type: ghost }
     - { t: "4$", h: "" }
@@ -98,38 +98,7 @@ layers:
     - { t: "trans", h: "" }
     - { t: "trans", h: "" }
 
-  NV1:
-    # left upper five (0.0 - 0.4)
-    - { t: "", h: "", type: ghost }
-    - { t: "RCLK", h: "" }
-    - { t: "M-UP", h: "" }
-    - { t: "LCLK", h: "" }
-    - { t: "", h: "", type: ghost }
-    # right upper five (0.5 - 0.9)
-    - { t: "", h: "", type: ghost }
-    - { t: "HOME", h: "" }
-    - { t: "↑", h: "" }
-    - { t: "END", h: "" }
-    - { t: "", h: "", type: ghost }
-    # left home five (1.0 - 1.4)
-    - { t: "MCLK", h: "" }
-    - { t: "M-LT", h: "" }
-    - { t: "M-DN", h: "" }
-    - { t: "M-RT", h: "", type: held }
-    - { t: "", h: "", type: ghost }
-    # right home five (1.5 - 1.9)
-    - { t: "", h: "", type: ghost }
-    - { t: "←", h: "", type: held }
-    - { t: "↓", h: "" }
-    - { t: "→", h: "SCRS" }
-    - { t: "SHFT", h: "" }
-    # thumbs
-    - { t: "trans", h: "" }
-    - { t: "trans", h: "" }
-    - { t: "trans", h: "" }
-    - { t: "trans", h: "" }
-
-  ME1:
+  MED:
     # left upper five (0.0 - 0.4)
     - { t: "", h: "", type: ghost }
     - { t: "BT0", h: "" }
@@ -155,40 +124,76 @@ layers:
     - { t: "BRI_U", h: "" }
     - { t: "", h: "" }
     # thumbs
-    - { t: "AL1", h: "" }
+    - { t: "ALP", h: "" }
+    - { t: "", h: "" }
+    - { t: "", h: "" }
+    - { t: "", h: "" }
+
+  FUN:
+    # left upper five (0.0 - 0.4)
+    - { t: "", h: "", type: ghost }
+    - { t: "F4", h: "" }
+    - { t: "F5", h: "" }
+    - { t: "F6", h: "" }
+    - { t: "", h: "", type: ghost }
+    # right upper five (0.5 - 0.9)
+    - { t: "", h: "", type: ghost }
+    - { t: "F7", h: "" }
+    - { t: "F8", h: "" }
+    - { t: "F9", h: "" }
+    - { t: "", h: "", type: ghost }
+    # left home five (1.0 - 1.4)
+    - { t: "", h: "" }
+    - { t: "F1", h: "" }
+    - { t: "F2", h: "" }
+    - { t: "F3", h: "" }
+    - { t: "", h: "", type: ghost }
+    # right home five (1.5 - 1.9)
+    - { t: "", h: "", type: ghost }
+    - { t: "F10", h: "" }
+    - { t: "F11", h: "" }
+    - { t: "F12", h: "" }
+    - { t: "", h: "" }
+    # thumbs=
+    - { t: "ALP", h: "" }
     - { t: "", h: "" }
     - { t: "", h: "" }
     - { t: "", h: "" }
 
 combos:
-  # Operators
-  - { p: [1, 2], k: "q", layers: [AL1] }
-  - { p: [2, 3], k: "t", layers: [AL1] }
-  - { p: [12, 13], k: "g", layers: [AL1] }
-  #- { p: [2, 13], k: "b", layers: [AL1] }
+  # Alpha
+  - { p: [1, 2], k: "q", layers: [ALP] }
+  - { p: [2, 3], k: "t", layers: [ALP] }
+  - { p: [12, 13], k: "g", layers: [ALP] }
+  - { p: [2, 13], k: "b", offset: 0.3, layers: [ALP] }
 
-  - { p: [10, 20], k: "z", a: left, layers: [AL1] }
-  - { p: [11, 20], k: "x", a: bottom, layers: [AL1] }
-  - { p: [12, 20], k: "c", layers: [AL1] }
-  - { p: [13, 20], k: "v", layers: [AL1] }
-  - { p: [12, 13, 20], k: "b", a: bottom, layers: [AL1] }
+  - { p: [10, 20], k: "z", a: left, layers: [ALP] }
+  - { p: [11, 20], k: "x", a: bottom, offset: 0.8, layers: [ALP] }
+  - { p: [12, 20], k: "c", a: bottom, offset: 0.3, layers: [ALP] }
+  - { p: [13, 20], k: "v", a: right, layers: [ALP] }
+  #- { p: [12, 13, 20], k: "b", a: bottom, layers: [ALP] }
 
-  - { p: [7, 8], k: "p", layers: [AL1] }
-  - { p: [6, 7], k: "y", layers: [AL1] }
-  - { p: [16, 17], k: "h", layers: [AL1] }
-  #- { p: [7, 16], k: "n", layers: [AL1] }
+  - { p: [7, 8], k: "p", layers: [ALP] }
+  - { p: [6, 7], k: "y", layers: [ALP] }
+  - { p: [16, 17], k: "h", layers: [ALP] }
+  - { p: [7, 16], k: "n", layers: [ALP] }
 
-  - { p: [16, 23], k: "m", layers: [AL1] }
-  - { p: [17, 23], k: ",<", layers: [AL1] }
-  - { p: [18, 23], k: ".>", a: bottom, layers: [AL1] }
-  - { p: [19, 23], k: "/?", a: right, layers: [AL1] }
-  - { p: [16, 17, 23], k: "n", a: bottom, layers: [AL1] }
+  - { p: [16, 23], k: "m", a: left, layers: [ALP] }
+  - { p: [17, 23], k: ",<", a: bottom, offset: 0.3, layers: [ALP] }
+  - { p: [18, 23], k: ".>", a: bottom, offset: 0.8, layers: [ALP] }
+  - { p: [19, 23], k: "/?", a: right, layers: [ALP] }
+  #- { p: [16, 17, 23], k: "n", a: bottom, layers: [ALP] }
 
-  - { p: [17, 18], k: "BSPC", layers: [AL1] }
-  - { p: [11, 12], k: "TAB", layers: [AL1] }
+  - { p: [17, 18], k: "BSPC", layers: [ALP] }
+  - { p: [11, 12], k: "TAB", layers: [ALP] }
 
-  # Medias
-  - { p: [16, 18], k: "ME1", a: bottom, layers: [NM1] }
+  # Navigation
+  - { p: [16, 17], k: "←", layers: [NAV] }
+  - { p: [6, 7], k: "M-LT", a: top, layers: [NAV] }
+
+  # Media
+  - { p: [6, 8], k: "FUN", a: top, layers: [NUM] }
+  - { p: [16, 18], k: "MED", a: bottom, layers: [NUM] }
 
 # this goes into the "configuration" code/text box at the bottom of the website!
 draw_config:
