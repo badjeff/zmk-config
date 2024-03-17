@@ -10,13 +10,13 @@ layers:
     # left upper five (0.0 - 0.4)
     - { t: "", h: "", type: ghost }
     - { t: "w", h: "CTL" }
-    - { t: "e", h: "ALT" }
-    - { t: "r", h: "" }
+    - { t: "e", h: "" }
+    - { t: "r", h: "ALT" }
     - { t: "", h: "", type: ghost }
     # right upper five (0.5 - 0.9)
     - { t: "", h: "", type: ghost }
-    - { t: "u", h: "" }
-    - { t: "i", h: "ALT" }
+    - { t: "u", h: "ALT" }
+    - { t: "i", h: "" }
     - { t: "o", h: "CTL" }
     - { t: "", h: "", type: ghost }
     # left home five (1.0 - 1.4)
