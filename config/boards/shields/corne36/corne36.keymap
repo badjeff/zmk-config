@@ -39,30 +39,30 @@
         combos {
                 compatible = "zmk,combos";
 
-                q   { timeout-ms = <80>; key-positions = <1 2>; bindings = <&kp Q>; layers = <DEF>; };
-                t   { timeout-ms = <80>; key-positions = <2 3>; bindings = <&kp T>; layers = <DEF>; };
-                g   { timeout-ms = <80>; key-positions = <12 13>; bindings = <&kp G>; layers = <DEF>; };
-                b_d { timeout-ms = <80>; key-positions = <2 13>; bindings = <&kp B>; layers = <DEF>; };
+                q   { timeout-ms = <70>; key-positions = <1 2>; bindings = <&kp Q>; layers = <DEF>; };
+                t   { timeout-ms = <70>; key-positions = <2 3>; bindings = <&kp T>; layers = <DEF>; };
+                g   { timeout-ms = <60>; key-positions = <12 13>; bindings = <&kp G>; layers = <DEF>; };
+                b_d { timeout-ms = <60>; key-positions = <2 13>; bindings = <&kp B>; layers = <DEF>; };
 
-                z   { timeout-ms = <80>; key-positions = <10 31>; bindings = <&kp Z>; layers = <DEF>; };
-                x   { timeout-ms = <80>; key-positions = <11 31>; bindings = <&kp X>; layers = <DEF>; };
-                c   { timeout-ms = <80>; key-positions = <12 31>; bindings = <&kp C>; layers = <DEF>; };
-                v   { timeout-ms = <80>; key-positions = <13 31>; bindings = <&kp V>; layers = <DEF>; };
-                b   { timeout-ms = <80>; key-positions = <13 32>; bindings = <&kp B>; layers = <DEF>; };
+                z   { timeout-ms = <60>; key-positions = <10 31>; bindings = <&kp Z>; layers = <DEF>; };
+                x   { timeout-ms = <60>; key-positions = <11 31>; bindings = <&kp X>; layers = <DEF>; };
+                c   { timeout-ms = <60>; key-positions = <12 31>; bindings = <&kp C>; layers = <DEF>; };
+                v   { timeout-ms = <60>; key-positions = <13 31>; bindings = <&kp V>; layers = <DEF>; };
+                b   { timeout-ms = <60>; key-positions = <13 32>; bindings = <&kp B>; layers = <DEF>; };
 
-                p   { timeout-ms = <80>; key-positions = <7 8>; bindings = <&kp P>; layers = <DEF>; };
-                y   { timeout-ms = <80>; key-positions = <6 7>; bindings = <&kp Y>; layers = <DEF>; };
-                h   { timeout-ms = <80>; key-positions = <16 17>; bindings = <&kp H>; layers = <DEF>; };
-                n_d { timeout-ms = <80>; key-positions = <7 16>; bindings = <&kp N>; layers = <DEF>; };
+                p   { timeout-ms = <70>; key-positions = <7 8>; bindings = <&kp P>; layers = <DEF>; };
+                y   { timeout-ms = <70>; key-positions = <6 7>; bindings = <&kp Y>; layers = <DEF>; };
+                h   { timeout-ms = <60>; key-positions = <16 17>; bindings = <&kp H>; layers = <DEF>; };
+                n_d { timeout-ms = <60>; key-positions = <7 16>; bindings = <&kp N>; layers = <DEF>; };
 
-                n     { timeout-ms = <80>; key-positions = <16 33>; bindings = <&kp N>; layers = <DEF>; };
-                m     { timeout-ms = <80>; key-positions = <16 34>; bindings = <&kp M>; layers = <DEF>; };
-                comma { timeout-ms = <80>; key-positions = <17 34>; bindings = <&kp COMMA>; layers = <DEF>; };
-                dot   { timeout-ms = <80>; key-positions = <18 34>; bindings = <&kp DOT>; layers = <DEF>; };
-                flash { timeout-ms = <80>; key-positions = <19 34>; bindings = <&kp FSLH>; layers = <DEF>; };
+                n     { timeout-ms = <60>; key-positions = <16 33>; bindings = <&kp N>; layers = <DEF>; };
+                m     { timeout-ms = <60>; key-positions = <16 34>; bindings = <&kp M>; layers = <DEF>; };
+                comma { timeout-ms = <60>; key-positions = <17 34>; bindings = <&kp COMMA>; layers = <DEF>; };
+                dot   { timeout-ms = <60>; key-positions = <18 34>; bindings = <&kp DOT>; layers = <DEF>; };
+                flash { timeout-ms = <60>; key-positions = <19 34>; bindings = <&kp FSLH>; layers = <DEF>; };
 
-                bksp { timeout-ms = <80>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <DEF>; };
-                tab  { timeout-ms = <80>; key-positions = <11 12>; bindings = <&kp TAB>; layers = <DEF>; };
+                bksp { timeout-ms = <50>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <DEF>; };
+                tab  { timeout-ms = <50>; key-positions = <11 12>; bindings = <&kp TAB>; layers = <DEF>; };
 
                 nav_left { timeout-ms = <80>; key-positions = <16 17>; bindings = <&kp LEFT>; layers = <NUM>; };
                 mmv_left { timeout-ms = <80>; key-positions = <16 17>; bindings = <&mmv MOU_L>; layers = <MSK>; };
@@ -74,25 +74,25 @@
                         compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
                         tapping-term-ms = <300>; quick-tap-ms = <250>;
                         flavor = "tap-preferred"; bindings = <&kp>, <&kp>;
-                        hold-trigger-key-positions = <5   6   7   8   9  15  16  17  18  19  25  26  27  28  29>;
+                        hold-trigger-key-positions = <5   6   7   8   9  15  16  17  18  19  25  26  27  28  29>; // right hand
                 };
                 hm_r: homerow_mods_right {
                         compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
                         tapping-term-ms = <300>; quick-tap-ms = <250>;
                         flavor = "tap-preferred"; bindings = <&kp>, <&kp>;
-                        hold-trigger-key-positions = <0   1   2   3   4  10  11  12  13  14  20  21  22  23  24>;
+                        hold-trigger-key-positions = <0   1   2   3   4  10  11  12  13  14  20  21  22  23  24>; // left hand
                 };
                 hl_l: homerow_layers_left {
                         compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
                         tapping-term-ms = <220>; quick-tap-ms = <250>;
                         flavor = "tap-preferred"; bindings = <&mo>, <&kp>;
-                        hold-trigger-key-positions = <5   6   7   8   9  15  16  17  18  19  25  26  27  28  29>;
+                        hold-trigger-key-positions = <5   6   7   8   9  15  16  17  18  19  25  26  27  28  29>; // right hand
                 };
                 hl_r: homerow_layers_right {
                         compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
                         tapping-term-ms = <220>; quick-tap-ms = <250>;
                         flavor = "tap-preferred"; bindings = <&mo>, <&kp>;
-                        hold-trigger-key-positions = <0   1   2   3   4  10  11  12  13  14  20  21  22  23  24>;
+                        hold-trigger-key-positions = <0   1   2   3   4  10  11  12  13  14  20  21  22  23  24>; // left hand
                 };
         };
 
@@ -106,28 +106,28 @@
                 compatible = "zmk,keymap";
                 DEF_layer {
 // +------------------------------------------------------+     +--------------------------------------------------------+
-// |     Q    |     W    |     E    |     R    |     T    |     |     Y     |     U    |    I      |     O    |     P    |
+// |     Q    |  LCTRL:W |  _MSK:E  |  LALT:R  |     T    |     |     Y     |  RALT:U  |  _MSK:I   |  RCTRL:O |     P    |
 // |  SHFT A  |  _NUM:S  |  _NUM:D  |  LGUI:F  |     G    |     |     H     |  RGUI:J  |  _NUM:K   |  _NUM:L  |  SHFT ;: |
-// |  SHFT Z  |     X    |     C    |     V    |     B    |     |     N     |     M    |   ALT ,<  |  CTRL .> |  SHFT /? |
+// |  SHFT Z  |     X    |     C    |     V    |     B    |     |     N     |     M    |    ,<     |    .>    |  SHFT /? |
 //                       | ^MSK:ESC |  GUI:ESC | CTRL:TAB |     |  ALT:ENT  | _NUM:SPC | ^MSK:BKSP |
                         bindings = <
-   &kp Q          &kp W        &kp E          &kp R         &kp T             &kp Y         &kp U          &kp I           &kp O          &kp P
-   &hm_l LSHFT A  &hl_l NUM S  &hl_l NUM D    &hm_l LGUI F  &kp G             &kp H         &hm_r RGUI J   &hl_r NUM K     &hl_r NUM L    &hm_r RSHFT SEMI
-   &mt LSHFT Z    &kp X        &kp C          &kp V         &kp B             &kp N         &kp M          &mt RALT COMMA  &mt RCTRL DOT  &mt RSHFT FSLH
-                             &lt MSK ESC    &mt LGUI ESC  &mt LCTRL TAB     &mt LALT RET  &lt NUM SPACE  &lt MSK BKSP
+   &kp Q          &hm_l LCTRL W  &hl_l MSK E   &hm_l LALT R  &kp T             &kp Y         &hm_r RALT U   &hl_r MSK I     &hm_r RCTRL O  &kp P
+   &hm_l LSHFT A  &hl_l NUM S    &hl_l NUM D   &hm_l LGUI F  &kp G             &kp H         &hm_r RGUI J   &hl_r NUM K     &hl_r NUM L    &hm_r RSHFT SEMI
+   &hm_l LSHFT Z  &kp X          &kp C         &kp V         &kp B             &kp N         &kp M          &kp COMMA       &kp DOT        &hm_r RSHFT FSLH
+                                 &lt MSK ESC   &mt LGUI ESC  &mt LCTRL TAB     &mt LALT RET  &lt NUM SPACE  &lt MSK BKSP
                         >;
                 };
                 NUM_layer {
 // +------------------------------------------------------+     +-------------------------------------------------------+
-// | LALT 1!  | LCTRL 2@  |    3#    |    4$    |    5%   |     |    6^    |    7&    |    8&    |  RCTRL 9( |  RALT 0) |
-// | SHFT `~  |           |    {[    |    ]}    |   TAB   |     |    LFT   |   DWN    |    UP    |    RGT    |  RGUI '" |
+// |    1!    | LCTRL:2@  |    3#    | LALT:4$  |    5%   |     |    6^    |  RALT:7& |    8&    |  RCTRL 9( |    0)    |
+// | SHFT `~  |           |    {[    |    ]}    |   TAB   |     |    LFT   |   DWN    |    UP    |    RGT    |  SHFT '" |
 // | SHFT TAB |           |          |          |   RET   |     |   BKSP   |    -_    |    =+    |    SPC    |  SHFT \| |
 //                        |          |          |         |     |   ^MSK   |    (H)   |          |
                         bindings = <
-   &mt LALT N1      &mt LCTRL N2  &kp N3    &kp N4     &kp N5        &kp N6    &kp N7     &kp N8     &mt RCTRL N9  &mt RALT N0
-   &mt LSHFT GRAVE  &trans        &kp LBKT  &kp RBKT   &kp TAB       &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT     &mt RGUI SQT
-   &mt LSHFT TAB    &trans        &trans    &trans     &kp RET       &kp BKSP  &kp MINUS  &kp EQUAL  &kp SPACE     &mt RSHFT BSLH
-                                  &trans    &trans     &trans        &tog MSK  &trans     &trans
+   &kp N1             &hm_l LCTRL N2  &kp N3    &hm_l LALT N4  &kp N5        &kp N6    &hm_r RALT N7  &kp N8     &hm_r RCTRL N9  &kp N0
+   &hm_l LSHFT GRAVE  &trans          &kp LBKT  &kp RBKT       &kp TAB       &kp LEFT  &kp DOWN       &kp UP     &kp RIGHT       &hm_r RSHFT SQT
+   &hm_l LSHFT TAB    &trans          &trans    &trans         &kp RET       &kp BKSP  &kp MINUS      &kp EQUAL  &kp SPACE       &hm_r RSHFT BSLH
+                                      &trans    &trans         &trans        &tog MSK  &trans         &trans
                         >;
                 };
                 MSK_layer {
@@ -145,15 +145,15 @@
                 };
                 MSC_layer {
 // +------------------------------------------------------+     +------------------------------------------------------+
-// |   TEMPO  |   BT_0   |   BT_1   |   BT_C   |   DFU    |     |    DFU   |   RESET  |          |          |  TEMPO   |
+// |          |   BT_0   |   BT_1   |   BT_C   |   DFU    |     |    DFU   |   RESET  |          |          |          |
 // |    (H)   |          |          |          |          |     |   SLFT   |   SDWN   |    SUP   |   SRGT   |   (H)    |
 // |    MB4   |   RCLK   |   MCLK   |   LCLK   |   ^MSC   |     |   ^MSC   |   LCLK   |   MCLK   |   RCLK   |   MB4    |
-//                       |          |          |          |     |   ^MSK   |          |          |
+//                       |          |          |  TEMPO   |     |   ^MSK   |          |          |
                         bindings = <
-   &tempo    &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_CLR    &bootloader       &bootloader   &sys_reset  &trans      &trans      &tempo
+   &trans    &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_CLR    &bootloader       &bootloader   &sys_reset  &trans      &trans      &trans
    &trans    &trans        &trans        &trans        &trans            &msc SCL_L    &msc SCL_D  &msc SCL_U  &msc SCL_R  &trans
    &mkp MB4  &mkp RCLK     &mkp MCLK     &mkp LCLK     &tog MSC          &tog MSC      &mkp LCLK   &mkp MCLK   &mkp RCLK   &mkp MB4
-                           &trans        &trans        &trans            &tog MSK      &trans      &trans
+                           &trans        &trans        &tempo            &tog MSK      &trans      &trans
                         >;
                 };
        };
