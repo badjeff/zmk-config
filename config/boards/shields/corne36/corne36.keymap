@@ -44,22 +44,22 @@
                 g   { timeout-ms = <60>; key-positions = <12 13>; bindings = <&kp G>; layers = <DEF>; };
                 b_d { timeout-ms = <60>; key-positions = <2 13>; bindings = <&kp B>; layers = <DEF>; };
 
-                z   { timeout-ms = <60>; key-positions = <10 31>; bindings = <&kp Z>; layers = <DEF>; };
-                x   { timeout-ms = <60>; key-positions = <11 31>; bindings = <&kp X>; layers = <DEF>; };
-                c   { timeout-ms = <60>; key-positions = <12 31>; bindings = <&kp C>; layers = <DEF>; };
-                v   { timeout-ms = <60>; key-positions = <13 31>; bindings = <&kp V>; layers = <DEF>; };
-                b   { timeout-ms = <60>; key-positions = <13 32>; bindings = <&kp B>; layers = <DEF>; };
+                z   { timeout-ms = <30>; key-positions = <10 31>; bindings = <&kp Z>; layers = <DEF>; };
+                x   { timeout-ms = <30>; key-positions = <11 31>; bindings = <&kp X>; layers = <DEF>; };
+                c   { timeout-ms = <30>; key-positions = <12 31>; bindings = <&kp C>; layers = <DEF>; };
+                v   { timeout-ms = <30>; key-positions = <13 31>; bindings = <&kp V>; layers = <DEF>; };
+                b   { timeout-ms = <30>; key-positions = <13 32>; bindings = <&kp B>; layers = <DEF>; };
 
                 p   { timeout-ms = <70>; key-positions = <7 8>; bindings = <&kp P>; layers = <DEF>; };
                 y   { timeout-ms = <70>; key-positions = <6 7>; bindings = <&kp Y>; layers = <DEF>; };
                 h   { timeout-ms = <60>; key-positions = <16 17>; bindings = <&kp H>; layers = <DEF>; };
                 n_d { timeout-ms = <60>; key-positions = <7 16>; bindings = <&kp N>; layers = <DEF>; };
 
-                n     { timeout-ms = <60>; key-positions = <16 33>; bindings = <&kp N>; layers = <DEF>; };
-                m     { timeout-ms = <60>; key-positions = <16 34>; bindings = <&kp M>; layers = <DEF>; };
-                comma { timeout-ms = <60>; key-positions = <17 34>; bindings = <&kp COMMA>; layers = <DEF>; };
-                dot   { timeout-ms = <60>; key-positions = <18 34>; bindings = <&kp DOT>; layers = <DEF>; };
-                flash { timeout-ms = <60>; key-positions = <19 34>; bindings = <&kp FSLH>; layers = <DEF>; };
+                n     { timeout-ms = <30>; key-positions = <16 33>; bindings = <&kp N>; layers = <DEF>; };
+                m     { timeout-ms = <30>; key-positions = <16 34>; bindings = <&kp M>; layers = <DEF>; };
+                comma { timeout-ms = <30>; key-positions = <17 34>; bindings = <&kp COMMA>; layers = <DEF>; };
+                dot   { timeout-ms = <30>; key-positions = <18 34>; bindings = <&kp DOT>; layers = <DEF>; };
+                flash { timeout-ms = <30>; key-positions = <19 34>; bindings = <&kp FSLH>; layers = <DEF>; };
 
                 bksp { timeout-ms = <50>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <DEF>; };
                 tab  { timeout-ms = <50>; key-positions = <11 12>; bindings = <&kp TAB>; layers = <DEF>; };
@@ -72,27 +72,27 @@
         behaviors {
                 hm_l: homerow_mods_left {
                         compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
-                        tapping-term-ms = <300>; quick-tap-ms = <250>;
+                        tapping-term-ms = <200>; quick-tap-ms = <200>;
                         flavor = "tap-preferred"; bindings = <&kp>, <&kp>;
-                        hold-trigger-key-positions = <5   6   7   8   9  15  16  17  18  19  25  26  27  28  29>; // right hand
+                        // hold-trigger-key-positions = <5   6   7   8   9  15  16  17  18  19  25  26  27  28  29>; // right hand
                 };
                 hm_r: homerow_mods_right {
                         compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
-                        tapping-term-ms = <300>; quick-tap-ms = <250>;
+                        tapping-term-ms = <200>; quick-tap-ms = <200>;
                         flavor = "tap-preferred"; bindings = <&kp>, <&kp>;
-                        hold-trigger-key-positions = <0   1   2   3   4  10  11  12  13  14  20  21  22  23  24>; // left hand
+                        // hold-trigger-key-positions = <0   1   2   3   4  10  11  12  13  14  20  21  22  23  24>; // left hand
                 };
                 hl_l: homerow_layers_left {
                         compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
-                        tapping-term-ms = <220>; quick-tap-ms = <250>;
+                        tapping-term-ms = <200>; quick-tap-ms = <200>;
                         flavor = "tap-preferred"; bindings = <&mo>, <&kp>;
-                        hold-trigger-key-positions = <5   6   7   8   9  15  16  17  18  19  25  26  27  28  29>; // right hand
+                        // hold-trigger-key-positions = <5   6   7   8   9  15  16  17  18  19  25  26  27  28  29>; // right hand
                 };
                 hl_r: homerow_layers_right {
                         compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
-                        tapping-term-ms = <220>; quick-tap-ms = <250>;
+                        tapping-term-ms = <200>; quick-tap-ms = <200>;
                         flavor = "tap-preferred"; bindings = <&mo>, <&kp>;
-                        hold-trigger-key-positions = <0   1   2   3   4  10  11  12  13  14  20  21  22  23  24>; // left hand
+                        // hold-trigger-key-positions = <0   1   2   3   4  10  11  12  13  14  20  21  22  23  24>; // left hand
                 };
         };
 
@@ -111,10 +111,10 @@
 // |  SHFT Z  |     X    |     C    |     V    |     B    |     |     N     |     M    |    ,<     |    .>    |  SHFT /? |
 //                       | ^MSK:ESC |  GUI:ESC | CTRL:TAB |     |  ALT:ENT  | _NUM:SPC | ^MSK:BKSP |
                         bindings = <
-   &kp Q          &hm_l LCTRL W  &hl_l MSK E   &hm_l LALT R  &kp T             &kp Y         &hm_r RALT U   &hl_r MSK I     &hm_r RCTRL O  &kp P
-   &hm_l LSHFT A  &hl_l NUM S    &hl_l NUM D   &hm_l LGUI F  &kp G             &kp H         &hm_r RGUI J   &hl_r NUM K     &hl_r NUM L    &hm_r RSHFT SEMI
-   &hm_l LSHFT Z  &kp X          &kp C         &kp V         &kp B             &kp N         &kp M          &kp COMMA       &kp DOT        &hm_r RSHFT FSLH
-                                 &lt MSK ESC   &mt LGUI ESC  &mt LCTRL TAB     &mt LALT RET  &lt NUM SPACE  &lt MSK BKSP
+   &kp Q          &hm_l LCTRL W  &hl_l MSK E    &hm_l LALT R    &kp T               &kp Y           &hm_r RALT U     &hl_r MSK I     &hm_r RCTRL O  &kp P
+   &hm_l LSHFT A  &hl_l NUM S    &hl_l NUM D    &hm_l LGUI F    &kp G               &kp H           &hm_r RGUI J     &hl_r NUM K     &hl_r NUM L    &hm_r RSHFT SEMI
+   &hm_l LSHFT Z  &kp X          &kp C          &kp V           &kp B               &kp N           &kp M            &kp COMMA       &kp DOT        &hm_r RSHFT FSLH
+                                 &hl_l MSK ESC  &hm_l LGUI ESC  &hm_l LCTRL TAB     &hm_r LALT RET  &hl_r NUM SPACE  &hl_r MSK BKSP
                         >;
                 };
                 NUM_layer {
