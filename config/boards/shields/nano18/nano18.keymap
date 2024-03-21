@@ -34,7 +34,8 @@
     q   { timeout-ms = <70>; key-positions = <0 1>; bindings = <&kp Q>; layers = <ALP>; };
     t   { timeout-ms = <70>; key-positions = <1 2>; bindings = <&kp T>; layers = <ALP>; };
     g   { timeout-ms = <60>; key-positions = <8 9>; bindings = <&kp G>; layers = <ALP>; };
-    b_d { timeout-ms = <60>; key-positions = <1 9>; bindings = <&kp B>; layers = <ALP>; };
+    b_d { timeout-ms = <70>; key-positions = <1 9>; bindings = <&kp B>; layers = <ALP>; };
+    t_v { timeout-ms = <70>; key-positions = <2 9>; bindings = <&kp T>; layers = <ALP>; };
 
     z   { timeout-ms = <30>; key-positions = <6 14>; bindings = <&kp Z>; layers = <ALP>; };
     x   { timeout-ms = <30>; key-positions = <7 14>; bindings = <&kp X>; layers = <ALP>; };
@@ -45,7 +46,8 @@
     p   { timeout-ms = <70>; key-positions = <4 5>; bindings = <&kp P>; layers = <ALP>; };
     y   { timeout-ms = <70>; key-positions = <3 4>; bindings = <&kp Y>; layers = <ALP>; };
     h   { timeout-ms = <60>; key-positions = <10 11>; bindings = <&kp H>; layers = <ALP>; };
-    n_d { timeout-ms = <60>; key-positions = <10 4>; bindings = <&kp N>; layers = <ALP>; };
+    n_d { timeout-ms = <70>; key-positions = <10 4>; bindings = <&kp N>; layers = <ALP>; };
+    y_v { timeout-ms = <70>; key-positions = <10 3>; bindings = <&kp Y>; layers = <ALP>; };
 
     n     { timeout-ms = <30>; key-positions = <10 16>; bindings = <&kp N>; layers = <ALP>; };
     m     { timeout-ms = <30>; key-positions = <10 17>; bindings = <&kp M>; layers = <ALP>; };
