@@ -39,6 +39,28 @@
         combos {
                 compatible = "zmk,combos";
 
+                q   { timeout-ms = <70>; key-positions = <1 2>; bindings = <&kp Q>; layers = <DEF>; };
+                t   { timeout-ms = <70>; key-positions = <2 3>; bindings = <&kp T>; layers = <DEF>; };
+                g   { timeout-ms = <60>; key-positions = <12 13>; bindings = <&kp G>; layers = <DEF>; };
+                b_d { timeout-ms = <60>; key-positions = <2 13>; bindings = <&kp B>; layers = <DEF>; };
+
+                z   { timeout-ms = <30>; key-positions = <10 31>; bindings = <&kp Z>; layers = <DEF>; };
+                x   { timeout-ms = <30>; key-positions = <11 31>; bindings = <&kp X>; layers = <DEF>; };
+                c   { timeout-ms = <30>; key-positions = <12 31>; bindings = <&kp C>; layers = <DEF>; };
+                v   { timeout-ms = <30>; key-positions = <13 31>; bindings = <&kp V>; layers = <DEF>; };
+                b   { timeout-ms = <30>; key-positions = <13 32>; bindings = <&kp B>; layers = <DEF>; };
+
+                p   { timeout-ms = <70>; key-positions = <7 8>; bindings = <&kp P>; layers = <DEF>; };
+                y   { timeout-ms = <70>; key-positions = <6 7>; bindings = <&kp Y>; layers = <DEF>; };
+                h   { timeout-ms = <60>; key-positions = <16 17>; bindings = <&kp H>; layers = <DEF>; };
+                n_d { timeout-ms = <60>; key-positions = <7 16>; bindings = <&kp N>; layers = <DEF>; };
+
+                n     { timeout-ms = <30>; key-positions = <16 33>; bindings = <&kp N>; layers = <DEF>; };
+                m     { timeout-ms = <30>; key-positions = <16 34>; bindings = <&kp M>; layers = <DEF>; };
+                comma { timeout-ms = <30>; key-positions = <17 34>; bindings = <&kp COMMA>; layers = <DEF>; };
+                dot   { timeout-ms = <30>; key-positions = <18 34>; bindings = <&kp DOT>; layers = <DEF>; };
+                flash { timeout-ms = <30>; key-positions = <19 34>; bindings = <&kp FSLH>; layers = <DEF>; };
+
                 bksp { timeout-ms = <50>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <DEF>; };
                 tab  { timeout-ms = <50>; key-positions = <11 12>; bindings = <&kp TAB>; layers = <DEF>; };
 
