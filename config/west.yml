@@ -34,5 +34,8 @@ manifest:
     - name: zmk-hid-io
       remote: badjeff
       revision: main
+    - name: zmk-split-peripheral-input-relay
+      remote: badjeff
+      revision: main
   self:
     path: config
