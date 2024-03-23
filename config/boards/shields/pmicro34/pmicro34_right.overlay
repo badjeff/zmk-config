@@ -22,22 +22,34 @@
 
 #include "pmicro34_trackball.dtsi"
 
-/* keep use &pd0 on peripheral split, only input-channel will send over GATT */
+/* enable &pd0 on split peripheral. typical input device for zephyr input subsystem. */
+/* NOTE 1: use the same device alias (&pd0) on central and peripheral(s) is alright. */
+/* NOTE 2: input event shall be intecepted by module `zmk-split-peripheral-input-relay`. */
 &pd0 {
   status = "okay";
-  irq-gpios = <&gpio1 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-	evt-type = <INPUT_EV_REL>;
-	x-input-code = <INPUT_REL_X>;
-	y-input-code = <INPUT_REL_Y>;
-	input-channel = <102>;
+  irq-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 };
 
-// / {
-// 	/* Define virtual input on peripheral split for compiling keymap only */
-// 	pd1: virtual_input {
-// 		compatible = "zmk,virtual-input";
-// 	};
-// };
+/ {
+	/* THIS make keymap binding happy only, nothing happen on peripheral side */
+	pd1: virtual_input {
+		compatible = "zmk,virtual-input";
+	};
+};
+
+/ {
+	/* for peripheral side, define (input-device)-to-(relay-channel) mapping */
+	input_relay_config_102 {
+		compatible = "zmk,split-peripheral-input-relay";
+
+		/* peripheral side input device, used to be intecepted and be resurrected on central */
+		device = <&pd0>;
+		
+		/* channel id, used to annotate raw input event */
+		/* NOTE: should matching relay-channel on central overlay */
+		relay-channel = <102>;
+	};
+};
 
 // / {
 // 	lra0: haptic_generic_lra {
