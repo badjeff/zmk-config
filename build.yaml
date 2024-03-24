@@ -38,3 +38,6 @@ include:
 
   - board: nice_nano_v2
     shield: tumka36
+
+  - board: waveshare_rp2040_zero
+    shield: zero36

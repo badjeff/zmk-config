@@ -1,0 +1,18 @@
+/*
+ * Copyright (c) 2021 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+
+/ {
+    chosen {
+        zephyr,console = &cdc_acm_uart;
+    };
+};
+
+&usbd {
+    cdc_acm_uart: cdc_acm_uart {
+        compatible = "zephyr,cdc-acm-uart";
+    };
+};
