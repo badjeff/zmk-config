@@ -19,3 +19,15 @@
 		, <&pro_micro 20 GPIO_ACTIVE_HIGH>
 		;
 };
+
+#include "corne36_trackball.dtsi"
+/ {
+	pd1: virtual_input {
+		compatible = "zmk,virtual-input";
+	};
+	input_relay_config_102 {
+		compatible = "zmk,split-peripheral-input-relay";
+		device = <&pd0>;
+		relay-channel = <102>;
+	};
+};

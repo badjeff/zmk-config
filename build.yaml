@@ -26,11 +26,6 @@ include:
   - board: nice_nano_v2
     shield: nano18_right
 
-  - board: nice_nano_v2
-    shield: pmicro34_left
-  - board: nice_nano_v2
-    shield: pmicro34_right
-
   - board: seeeduino_xiao_ble
     shield: sparklite_left
   - board: seeeduino_xiao_ble
