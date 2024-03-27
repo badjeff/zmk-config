@@ -6,6 +6,7 @@
 
 #include <behaviors.dtsi>
 #include <behaviors/mouse_keys.dtsi>
+#include <behaviors/mouse_key_toggle.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/rgb.h>
@@ -183,12 +184,12 @@
 // +------------------------------------------------------+     +------------------------------------------------------+
 // |    F1    |    F2    |    F3    |    F4    |    F5    |     |    F6    |    F7    |    F8    |    F9    |   F10    |
 // | _MSC:F12 |   VOLD   |   VOLU   |   BRID   |   BRIU   |     |   MLFT   |   MDWN   |    MUP   |   MRGT   | _MSC:F11 |
-// |    MB4   |   RCLK   |   MCLK   |   LCLK   |   ^MSC   |     |   ^MSC   |   LCLK   |   MCLK   |   RCLK   |   MB4    |
+// |   ^MB4   |   RCLK   |   MCLK   |   LCLK   |   ^MSC   |     |   ^MSC   |   LCLK   |   MCLK   |   RCLK   |  ^MB4    |
 //                       |   (H)    |          |          |     |   ^MSK   |          |    (H)   |
                         bindings = <
    &kp F1       &kp F2        &kp F3        &kp F4        &kp F5            &kp F6      &kp F7      &kp F8      &kp F9      &kp F10
    &lt MSC F12  &kp C_VOL_DN  &kp C_VOL_UP  &kp C_BRI_DN  &kp C_BRI_UP      &mmv MOU_L  &mmv MOU_D  &mmv MOU_U  &mmv MOU_R  &lt MSC F11
-   &mkp MB4     &mkp RCLK     &mkp MCLK     &mkp LCLK     &tog MSC          &tog MSC    &mkp LCLK   &mkp MCLK   &mkp RCLK   &mkp MB4
+   &mktg MB4    &mkp RCLK     &mkp MCLK     &mkp LCLK     &tog MSC          &tog MSC    &mkp LCLK   &mkp MCLK   &mkp RCLK   &mktg MB4
                               &trans        &trans        &trans            &tog MSK    &trans      &trans
                         >;
                 };
@@ -196,13 +197,13 @@
 // +------------------------------------------------------+     +------------------------------------------------------+
 // |          |   BT_0   |   BT_1   |   BT_C   |   DFU    |     |    DFU   |   RESET  |          |          |          |
 // |    (H)   |          |          |          |  RESET   |     |   SLFT   |   SDWN   |    SUP   |   SRGT   |   (H)    |
-// |    MB4   |   RCLK   |   MCLK   |   LCLK   |   ^MSC   |     |   ^MSC   |   LCLK   |   MCLK   |   RCLK   |   MB4    |
+// |   ^MB4   |   RCLK   |   MCLK   |   LCLK   |   ^MSC   |     |   ^MSC   |   LCLK   |   MCLK   |   RCLK   |  ^MB4    |
 //                       |          |          |  TEMPO   |     |   ^MSK   |          |          |
                         bindings = <
-   &trans    &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_CLR    &bootloader       &bootloader   &sys_reset  &trans      &trans      &trans
-   &trans    &trans        &trans        &trans        &sys_reset        &msc SCL_L    &msc SCL_D  &msc SCL_U  &msc SCL_R  &trans
-   &mkp MB4  &mkp RCLK     &mkp MCLK     &mkp LCLK     &tog MSC          &tog MSC      &mkp LCLK   &mkp MCLK   &mkp RCLK   &mkp MB4
-                           &trans        &trans        &tempo            &tog MSK      &trans      &trans
+   &trans     &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_CLR    &bootloader       &bootloader   &sys_reset  &trans      &trans      &trans
+   &trans     &trans        &trans        &trans        &sys_reset        &msc SCL_L    &msc SCL_D  &msc SCL_U  &msc SCL_R  &trans
+   &mktg MB4  &mkp RCLK     &mkp MCLK     &mkp LCLK     &tog MSC          &tog MSC      &mkp LCLK   &mkp MCLK   &mkp RCLK   &mktg MB4
+                            &trans        &trans        &tempo            &tog MSK      &trans      &trans
                         >;
                 };
        };

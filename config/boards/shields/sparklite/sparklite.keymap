@@ -6,6 +6,7 @@
 
 #include <behaviors.dtsi>
 #include <behaviors/mouse_keys.dtsi>
+#include <behaviors/mouse_key_toggle.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/rgb.h>
@@ -133,8 +134,8 @@
                 compatible = "zmk,keymap";
                 default_layer {
                         bindings = <
-   &bt BT_CLR   &out OUT_TOG      &bt BT_CLR   &out OUT_TOG
-   &mkp LCLK    &mo RAISE         &mkp LCLK    &mo RAISE
+   &bt BT_CLR   &out OUT_TOG      &mkp LCLK   &mkp RCLK
+   &mkp LCLK    &mo RAISE         &mkp MCLK   &mktg MB4
                         >;
                 };
                 raise_layer {
