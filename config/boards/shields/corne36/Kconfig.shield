@@ -6,3 +6,6 @@ config SHIELD_CORNE36_LEFT
 
 config SHIELD_CORNE36_RIGHT
 	def_bool $(shields_list_contains,corne36_right)
+
+config SHIELD_CORNE36_TBALL
+	def_bool $(shields_list_contains,corne36_tball)

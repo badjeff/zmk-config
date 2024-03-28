@@ -20,6 +20,8 @@ include:
     shield: corne36_left
   - board: nice_nano_v2
     shield: corne36_right
+  - board: seeeduino_xiao_ble
+    shield: corne36_tball
 
   - board: nice_nano_v2
     shield: nano18_left

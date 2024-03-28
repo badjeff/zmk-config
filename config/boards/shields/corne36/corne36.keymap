@@ -78,6 +78,29 @@
                 y-invert;
         };
 
+        tb2_mmv_ibl {
+                compatible = "zmk,input-behavior-listener";
+                device = <&pd2>;
+                layers = <DEF NUM MSK>;
+		evt-type = <INPUT_EV_REL>;
+		x-input-code = <INPUT_REL_X>;
+		y-input-code = <INPUT_REL_Y>;
+		scale-multiplier = <1>;
+		scale-divisor = <1>;
+                // bindings = <&ib_tog_layer MSK>;
+        };
+        tb2_msl_ibl {
+                compatible = "zmk,input-behavior-listener";
+                device = <&pd2>;
+                layers = <MSC>;
+                evt-type = <INPUT_EV_REL>;
+                x-input-code = <INPUT_REL_MISC>;
+                y-input-code = <INPUT_REL_WHEEL>;
+                scale-multiplier = <1>;
+                scale-divisor = <12>;
+                y-invert;
+        };
+
         // ib_tog_layer: ib_tog_layer {
         //         compatible = "zmk,input-behavior-tog-layer";
         //         #binding-cells = <1>;
@@ -88,6 +111,7 @@
         //  10  11  12  13  14    15  16  17  18  19
         //  20  21  22  23  24    25  26  27  28  29
         //          30  31  32    33  34  35
+        //  36 37 38
         combos {
                 compatible = "zmk,combos";
 
@@ -165,6 +189,7 @@
    &mt LSHFT A    &hl_l NUM S     &hl_l NUM D    &hm_l LGUI F    &kp G               &kp H           &hm_r RGUI J     &hl_r NUM K     &hl_r NUM L    &mt RSHFT SEMI
    &mt LSHFT Z    &kp X           &kp C          &kp V           &kp B               &kp N           &kp M            &kp COMMA       &kp DOT        &mt RSHFT FSLH
                                   &lt MSK ESC    &mt LGUI ESC    &mt LCTRL TAB       &mt LALT RET    &lt NUM SPACE    &lt MSK BKSP
+   &mkp RCLK   &mktg MB4   &mkp LCLK
                         >;
                 };
                 NUM_layer {
@@ -178,6 +203,7 @@
    &mt LSHFT GRAVE    &trans           &kp LBKT   &kp RBKT        &kp TAB             &kp LEFT    &kp DOWN        &kp UP      &kp RIGHT        &mt RSHFT SQT
    &mt LSHFT TAB      &trans           &trans     &trans          &kp RET             &kp BKSP    &kp MINUS       &kp EQUAL   &kp SPACE        &mt RSHFT BSLH
                                        &trans     &trans          &trans              &tog MSK    &trans          &trans
+   &trans   &trans   &trans
                         >;
                 };
                 MSK_layer {
@@ -191,6 +217,7 @@
    &lt MSC F12  &kp C_VOL_DN  &kp C_VOL_UP  &kp C_BRI_DN  &kp C_BRI_UP      &mmv MOU_L  &mmv MOU_D  &mmv MOU_U  &mmv MOU_R  &lt MSC F11
    &mktg MB4    &mkp RCLK     &mkp MCLK     &mkp LCLK     &tog MSC          &tog MSC    &mkp LCLK   &mkp MCLK   &mkp RCLK   &mktg MB4
                               &trans        &trans        &trans            &tog MSK    &trans      &trans
+   &trans   &trans   &trans
                         >;
                 };
                 MSC_layer {
@@ -204,6 +231,7 @@
    &trans     &trans        &trans        &trans        &sys_reset        &msc SCL_L    &msc SCL_D  &msc SCL_U  &msc SCL_R  &trans
    &mktg MB4  &mkp RCLK     &mkp MCLK     &mkp LCLK     &tog MSC          &tog MSC      &mkp LCLK   &mkp MCLK   &mkp RCLK   &mktg MB4
                             &trans        &trans        &tempo            &tog MSK      &trans      &trans
+   &trans   &trans   &trans
                         >;
                 };
        };

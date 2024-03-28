@@ -18,12 +18,20 @@
 
 #include "corne36_trackball.dtsi"
 / {
-	pd1: virtual_input {
+	pd1: virtual_input_1 {
+		compatible = "zmk,virtual-input";
+	};
+	pd2: virtual_input_2 {
 		compatible = "zmk,virtual-input";
 	};
 	input_relay_config_102 {
 		compatible = "zmk,split-peripheral-input-relay";
 		relay-channel = <102>;
 		device = <&pd1>;
+	};
+	input_relay_config_103 {
+		compatible = "zmk,split-peripheral-input-relay";
+		relay-channel = <103>;
+		device = <&pd2>;
 	};
 };

@@ -22,7 +22,10 @@
 
 #include "corne36_trackball.dtsi"
 / {
-	pd1: virtual_input {
+	pd1: virtual_input_1 {
+		compatible = "zmk,virtual-input";
+	};
+	pd2: virtual_input_2 {
 		compatible = "zmk,virtual-input";
 	};
 	input_relay_config_102 {
