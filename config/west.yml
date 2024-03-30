@@ -40,5 +40,8 @@ manifest:
     - name: zmk-split-peripheral-input-relay
       remote: badjeff
       revision: main
+    - name: zmk-insonmia
+      remote: badjeff
+      revision: main
   self:
     path: config
