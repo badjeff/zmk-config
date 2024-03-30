@@ -168,6 +168,11 @@
                         tapping-term-ms = <200>; quick-tap-ms = <200>;
                         flavor = "tap-preferred"; bindings = <&mo>, <&kp>;
                 };
+                hmkp_tg: hold_mouse_key_press_tap_toggle {
+                        compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
+                        tapping-term-ms = <200>; quick-tap-ms = <200>;
+                        flavor = "tap-preferred"; bindings = <&mkp>, <&tog>;
+                };
         };
 
         tempo: key_tempo {
@@ -189,7 +194,7 @@
    &mt LSHFT A    &hl_l NUM S     &hl_l NUM D    &hm_l LGUI F    &kp G               &kp H           &hm_r RGUI J     &hl_r NUM K     &hl_r NUM L    &mt RSHFT SEMI
    &mt LSHFT Z    &kp X           &kp C          &kp V           &kp B               &kp N           &kp M            &kp COMMA       &kp DOT        &mt RSHFT FSLH
                                   &lt MSK ESC    &mt LGUI ESC    &mt LCTRL TAB       &mt LALT RET    &lt NUM SPACE    &lt MSK BKSP
-   &mkp RCLK   &mktg MB4   &mkp LCLK
+   &mkp RCLK   &hmkp_tg MCLK MSC   &mkp LCLK
                         >;
                 };
                 NUM_layer {
