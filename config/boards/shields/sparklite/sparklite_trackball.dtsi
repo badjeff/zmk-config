@@ -38,6 +38,13 @@
 		reg = <0>;
 		spi-max-frequency = <4000000>;
 	};
+	pd0a: pd@1 {
+		compatible = "avago,adns9800";
+		status = "disabled";
+		label = "TRACKBALL2";
+		reg = <1>;
+		spi-max-frequency = <4000000>;
+	};
 };
 
 // Config custom gpios
@@ -46,7 +53,8 @@
 	pinctrl-0 = <&spi2_default>;
 	pinctrl-1 = <&spi2_sleep>;
 	pinctrl-names = "default", "sleep";
-	cs-gpios = <&gpio1 12 GPIO_ACTIVE_LOW>;
+	cs-gpios = <&gpio1 12 GPIO_ACTIVE_LOW>
+					 , <&gpio0 4 GPIO_ACTIVE_LOW>;
 };
 
 #define INPUT_EV_KEY 0x01               /**< Key event */
@@ -65,6 +73,15 @@
 &pd0 {
   status = "okay";
   irq-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+	cpi = <600>;
+	evt-type = <INPUT_EV_REL>;
+	x-input-code = <INPUT_REL_X>;
+	y-input-code = <INPUT_REL_Y>;
+};
+&pd0a {
+  status = "okay";
+  irq-gpios = <&gpio0 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+	cpi = <600>;
 	evt-type = <INPUT_EV_REL>;
 	x-input-code = <INPUT_REL_X>;
 	y-input-code = <INPUT_REL_Y>;

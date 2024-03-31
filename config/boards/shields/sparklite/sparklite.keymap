@@ -46,7 +46,19 @@
 		scale-multiplier = <1>;
 		scale-divisor = <1>;
                 // bindings = <&ib_tog_layer RAISE>;
-                // bindings = <&ib_fwd_to_hid_io>;
+                bindings = <&ib_fwd_to_hid_io>;
+        };
+        tb0a_mmv_ibl {
+                compatible = "zmk,input-behavior-listener";
+                device = <&pd0a>;
+                layers = <DEFAULT>;
+		evt-type = <INPUT_EV_REL>;
+		x-input-code = <INPUT_REL_X>;
+		y-input-code = <INPUT_REL_Y>;
+		scale-multiplier = <1>;
+		scale-divisor = <1>;
+                // bindings = <&ib_tog_layer RAISE>;
+                bindings = <&ib_fwd_to_hid_io>;
         };
         tb1_mmv_ibl {
                 compatible = "zmk,input-behavior-listener";
@@ -58,7 +70,7 @@
 		scale-multiplier = <1>;
 		scale-divisor = <1>;
                 // bindings = <&ib_tog_layer RAISE>;
-                // bindings = <&ib_fwd_to_hid_io>;
+                bindings = <&ib_fwd_to_hid_io>;
         };
 
         tb0_msl_ibl {
@@ -71,19 +83,32 @@
                 scale-multiplier = <1>;
                 scale-divisor = <12>;
                 y-invert;
+                bindings = <&ib_fwd_to_hid_io>;
         };
-        
-        // tb1_msl_ibl {
-        //         compatible = "zmk,input-behavior-listener";
-        //         device = <&pd1>;
-        //         layers = <DEFAULT RAISE>;
-        //         evt-type = <INPUT_EV_REL>;
-        //         x-input-code = <INPUT_REL_MISC>;
-        //         y-input-code = <INPUT_REL_WHEEL>;
-        //         scale-multiplier = <1>;
-        //         scale-divisor = <12>;
-        //         y-invert;
-        // };
+        t0a_msl_ibl {
+                compatible = "zmk,input-behavior-listener";
+                device = <&pd0a>;
+                layers = <RAISE>;
+                evt-type = <INPUT_EV_REL>;
+                x-input-code = <INPUT_REL_MISC>;
+                y-input-code = <INPUT_REL_WHEEL>;
+                scale-multiplier = <1>;
+                scale-divisor = <12>;
+                y-invert;
+                bindings = <&ib_fwd_to_hid_io>;
+        };
+        tb1_msl_ibl {
+                compatible = "zmk,input-behavior-listener";
+                device = <&pd1>;
+                layers = <RAISE>;
+                evt-type = <INPUT_EV_REL>;
+                x-input-code = <INPUT_REL_MISC>;
+                y-input-code = <INPUT_REL_WHEEL>;
+                scale-multiplier = <1>;
+                scale-divisor = <12>;
+                y-invert;
+                bindings = <&ib_fwd_to_hid_io>;
+        };
 
 	// anin0_ibl {
 	// 	compatible = "zmk,input-behavior-listener";
@@ -103,41 +128,41 @@
                 #binding-cells = <0>;
         };
 
-        lar0_obl__enter_raise_layer {
-                compatible = "zmk,output-behavior-listener";
-                layers = < RAISE >;
-                sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
-                bindings = < &ob_lar0_in &ob_lar0_out >;
-        };
-        lar0_obl__back_to_default_layer {
-                compatible = "zmk,output-behavior-listener";
-                layers = < DEFAULT >;
-                sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
-                invert-state;
-                bindings = < &ob_lar0_out >;
-        };
-        lar0_obl__press_position_5 {
-                compatible = "zmk,output-behavior-listener";
-                layers = < DEFAULT >;
-                sources = < OUTPUT_SOURCE_POSITION_STATE_CHANGE >;
-                position = <5>;
-                bindings = < &ob_lar0_in >;
-        };
-        lar0_obl__press_key_code_D {
-                compatible = "zmk,output-behavior-listener";
-                layers = < DEFAULT >;
-                sources = < OUTPUT_SOURCE_KEYCODE_STATE_CHANGE >;
-                position = < 0x07 >;
-                bindings = < &ob_lar0_in >;
-        };
-        ob_lar0_in: ob_generic_lar0_in {
-                compatible = "zmk,output-behavior-generic"; #binding-cells = <0>;
-                device = <&lra0>; delay = <1>; time-to-live-ms = <30>; force = <80>;
-        };
-        ob_lar0_out: ob_generic_lar0_out {
-                compatible = "zmk,output-behavior-generic"; #binding-cells = <0>;
-                device = <&lra0>; delay = <133>; time-to-live-ms = <10>; force = <30>;
-        };
+        // lar0_obl__enter_raise_layer {
+        //         compatible = "zmk,output-behavior-listener";
+        //         layers = < RAISE >;
+        //         sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+        //         bindings = < &ob_lar0_in &ob_lar0_out >;
+        // };
+        // lar0_obl__back_to_default_layer {
+        //         compatible = "zmk,output-behavior-listener";
+        //         layers = < DEFAULT >;
+        //         sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+        //         invert-state;
+        //         bindings = < &ob_lar0_out >;
+        // };
+        // lar0_obl__press_position_5 {
+        //         compatible = "zmk,output-behavior-listener";
+        //         layers = < DEFAULT >;
+        //         sources = < OUTPUT_SOURCE_POSITION_STATE_CHANGE >;
+        //         position = <5>;
+        //         bindings = < &ob_lar0_in >;
+        // };
+        // lar0_obl__press_key_code_D {
+        //         compatible = "zmk,output-behavior-listener";
+        //         layers = < DEFAULT >;
+        //         sources = < OUTPUT_SOURCE_KEYCODE_STATE_CHANGE >;
+        //         position = < 0x07 >;
+        //         bindings = < &ob_lar0_in >;
+        // };
+        // ob_lar0_in: ob_generic_lar0_in {
+        //         compatible = "zmk,output-behavior-generic"; #binding-cells = <0>;
+        //         device = <&lra0>; delay = <1>; time-to-live-ms = <30>; force = <80>;
+        // };
+        // ob_lar0_out: ob_generic_lar0_out {
+        //         compatible = "zmk,output-behavior-generic"; #binding-cells = <0>;
+        //         device = <&lra0>; delay = <133>; time-to-live-ms = <10>; force = <30>;
+        // };
 
         keymap {
                 compatible = "zmk,keymap";
