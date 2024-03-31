@@ -9,11 +9,3 @@
 #include "zero36_trackball.dtsi"
 
 // #include "zero36_analog_input.dtsi"
-
-// / {
-// 	lra0: output_generic_0 {
-// 		compatible = "zmk,output-generic";
-// 		#binding-cells = <0>;
-// 		control-gpios = <&gpio0 5 GPIO_ACTIVE_HIGH>;
-// 	};
-// };
