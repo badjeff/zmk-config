@@ -16,9 +16,10 @@
 #include <dt-bindings/zmk/mouse.h>
 
 #define DEF 0
-#define NUM 1
-#define MSK 2
-#define MSC 3
+#define LHB 1
+#define NUM 2
+#define MSK 3
+#define MSC 4
 
 #ifndef MOVE_Y
 #define MOVE_Y(n) (0)
@@ -54,7 +55,7 @@
         tb0_mmv_ibl {
                 compatible = "zmk,input-behavior-listener";
                 device = <&pd0>;
-                layers = <DEF NUM MSK>;
+                layers = <DEF NUM MSK LHB>;
 		evt-type = <INPUT_EV_REL>;
 		x-input-code = <INPUT_REL_X>;
 		y-input-code = <INPUT_REL_Y>;
@@ -77,7 +78,7 @@
         tb1_mmv_ibl {
                 compatible = "zmk,input-behavior-listener";
                 device = <&pd1>;
-                layers = <DEF NUM MSK>;
+                layers = <DEF NUM MSK LHB>;
 		evt-type = <INPUT_EV_REL>;
 		x-input-code = <INPUT_REL_X>;
 		y-input-code = <INPUT_REL_Y>;
@@ -100,7 +101,7 @@
         tb2_mmv_ibl {
                 compatible = "zmk,input-behavior-listener";
                 device = <&pd2>;
-                layers = <DEF NUM MSK>;
+                layers = <DEF NUM MSK LHB>;
 		evt-type = <INPUT_EV_REL>;
 		x-input-code = <INPUT_REL_X>;
 		y-input-code = <INPUT_REL_Y>;
@@ -134,36 +135,38 @@
         combos {
                 compatible = "zmk,combos";
 
-                q   { timeout-ms = <70>; key-positions = <1 2>; bindings = <&kp Q>; layers = <DEF>; };
-                t   { timeout-ms = <70>; key-positions = <2 3>; bindings = <&kp T>; layers = <DEF>; };
-                g   { timeout-ms = <60>; key-positions = <12 13>; bindings = <&kp G>; layers = <DEF>; };
-                b   { timeout-ms = <60>; key-positions = <22 23>; bindings = <&kp B>; layers = <DEF>; };
-                b_d { timeout-ms = <70>; key-positions = <2 13>; bindings = <&kp B>; layers = <DEF>; };
-                b_v { timeout-ms = <60>; key-positions = <23 13>; bindings = <&kp B>; layers = <DEF>; };
-                t_v { timeout-ms = <60>; key-positions = <3 13>; bindings = <&kp T>; layers = <DEF>; };
+                q   { timeout-ms = <70>; key-positions = <1 2>; bindings = <&kp Q>; layers = <DEF LHB>; };
+                t   { timeout-ms = <70>; key-positions = <2 3>; bindings = <&kp T>; layers = <DEF LHB>; };
+                g   { timeout-ms = <60>; key-positions = <12 13>; bindings = <&kp G>; layers = <DEF LHB>; };
+                b   { timeout-ms = <60>; key-positions = <22 23>; bindings = <&kp B>; layers = <DEF LHB>; };
+                b_d { timeout-ms = <70>; key-positions = <2 13>; bindings = <&kp B>; layers = <DEF LHB>; };
+                b_v { timeout-ms = <60>; key-positions = <23 13>; bindings = <&kp B>; layers = <DEF LHB>; };
+                t_v { timeout-ms = <60>; key-positions = <3 13>; bindings = <&kp T>; layers = <DEF LHB>; };
 
-                z   { timeout-ms = <30>; key-positions = <10 31>; bindings = <&kp Z>; layers = <DEF>; };
-                x   { timeout-ms = <30>; key-positions = <11 31>; bindings = <&kp X>; layers = <DEF>; };
-                c   { timeout-ms = <30>; key-positions = <12 31>; bindings = <&kp C>; layers = <DEF>; };
-                v   { timeout-ms = <30>; key-positions = <13 31>; bindings = <&kp V>; layers = <DEF>; };
-                b_t { timeout-ms = <30>; key-positions = <13 32>; bindings = <&kp B>; layers = <DEF>; };
+                z   { timeout-ms = <30>; key-positions = <10 31>; bindings = <&kp Z>; layers = <DEF LHB>; };
+                x   { timeout-ms = <30>; key-positions = <11 31>; bindings = <&kp X>; layers = <DEF LHB>; };
+                c   { timeout-ms = <30>; key-positions = <12 31>; bindings = <&kp C>; layers = <DEF LHB>; };
+                v   { timeout-ms = <30>; key-positions = <13 31>; bindings = <&kp V>; layers = <DEF LHB>; };
+                b_t { timeout-ms = <30>; key-positions = <13 32>; bindings = <&kp B>; layers = <DEF LHB>; };
 
-                p   { timeout-ms = <70>; key-positions = <7 8>; bindings = <&kp P>; layers = <DEF>; };
-                y   { timeout-ms = <70>; key-positions = <6 7>; bindings = <&kp Y>; layers = <DEF>; };
-                h   { timeout-ms = <60>; key-positions = <16 17>; bindings = <&kp H>; layers = <DEF>; };
-                n   { timeout-ms = <60>; key-positions = <26 27>; bindings = <&kp N>; layers = <DEF>; };
-                n_d { timeout-ms = <70>; key-positions = <7 16>; bindings = <&kp N>; layers = <DEF>; };
-                n_v { timeout-ms = <60>; key-positions = <26 16>; bindings = <&kp N>; layers = <DEF>; };
-                y_v { timeout-ms = <60>; key-positions = <6 16>; bindings = <&kp Y>; layers = <DEF>; };
+                p   { timeout-ms = <70>; key-positions = <7 8>; bindings = <&kp P>; layers = <DEF LHB>; };
+                y   { timeout-ms = <70>; key-positions = <6 7>; bindings = <&kp Y>; layers = <DEF LHB>; };
+                h   { timeout-ms = <60>; key-positions = <16 17>; bindings = <&kp H>; layers = <DEF LHB>; };
+                n   { timeout-ms = <60>; key-positions = <26 27>; bindings = <&kp N>; layers = <DEF LHB>; };
+                n_d { timeout-ms = <70>; key-positions = <7 16>; bindings = <&kp N>; layers = <DEF LHB>; };
+                n_v { timeout-ms = <60>; key-positions = <26 16>; bindings = <&kp N>; layers = <DEF LHB>; };
+                y_v { timeout-ms = <60>; key-positions = <6 16>; bindings = <&kp Y>; layers = <DEF LHB>; };
 
-                n_t   { timeout-ms = <30>; key-positions = <16 33>; bindings = <&kp N>; layers = <DEF>; };
-                m     { timeout-ms = <30>; key-positions = <16 34>; bindings = <&kp M>; layers = <DEF>; };
-                comma { timeout-ms = <30>; key-positions = <17 34>; bindings = <&kp COMMA>; layers = <DEF>; };
-                dot   { timeout-ms = <30>; key-positions = <18 34>; bindings = <&kp DOT>; layers = <DEF>; };
-                flash { timeout-ms = <30>; key-positions = <19 34>; bindings = <&kp FSLH>; layers = <DEF>; };
+                n_t   { timeout-ms = <30>; key-positions = <16 33>; bindings = <&kp N>; layers = <DEF LHB>; };
+                m     { timeout-ms = <30>; key-positions = <16 34>; bindings = <&kp M>; layers = <DEF LHB>; };
+                comma { timeout-ms = <30>; key-positions = <17 34>; bindings = <&kp COMMA>; layers = <DEF LHB>; };
+                dot   { timeout-ms = <30>; key-positions = <18 34>; bindings = <&kp DOT>; layers = <DEF LHB>; };
+                flash { timeout-ms = <30>; key-positions = <19 34>; bindings = <&kp FSLH>; layers = <DEF LHB>; };
 
-                bksp { timeout-ms = <50>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <DEF>; };
-                tab  { timeout-ms = <50>; key-positions = <11 12>; bindings = <&kp TAB>; layers = <DEF>; };
+                bksp { timeout-ms = <50>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <DEF LHB>; };
+                tab  { timeout-ms = <50>; key-positions = <11 12>; bindings = <&kp TAB>; layers = <DEF LHB>; };
+
+                mkp_swap { timeout-ms = <60>; key-positions = <36 37 38>; bindings = <&tog LHB>; layers = <DEF LHB>; };
 
                 nav_left { timeout-ms = <80>; key-positions = <16 17>; bindings = <&kp LEFT>; layers = <NUM>; };
                 mmv_left { timeout-ms = <80>; key-positions = <16 17>; bindings = <&mmv MOU_L>; layers = <MSK>; };
@@ -220,6 +223,15 @@
    &mkp RCLK   &hmkp_tg MCLK MSC   &mkp LCLK
                         >;
                 };
+                LHB_layer {
+                        bindings = <
+   &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
+   &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
+   &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
+                   &trans  &trans  &trans    &trans  &trans  &trans
+   &mkp LCLK   &hmkp_tg MCLK MSC   &mkp RCLK
+                        >;
+                };
                 NUM_layer {
 // +------------------------------------------------------+     +-------------------------------------------------------+
 // |    1!    | LCTRL:2@  |    3#    | LALT:4$  |    5%   |     |    6^    |  RALT:7& |    8&    |  RCTRL 9( |    0)    |
@@ -258,7 +270,7 @@
    &out OUT_TOG  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_CLR    &bootloader       &bootloader   &sys_reset  &trans      &trans      &trans
    &trans        &trans        &trans        &trans        &sys_reset        &msc SCL_L    &msc SCL_D  &msc SCL_U  &msc SCL_R  &trans
    &mktg MB4     &mkp RCLK     &mkp MCLK     &mkp LCLK     &tog MSC          &tog MSC      &mkp LCLK   &mkp MCLK   &mkp RCLK   &mktg MB4
-                            &trans        &trans        &tempo            &tog MSK      &trans      &trans
+                               &trans        &trans        &tempo            &tog MSK      &trans      &trans
    &trans   &trans   &trans
                         >;
                 };
