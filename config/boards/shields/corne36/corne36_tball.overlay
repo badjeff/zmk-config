@@ -32,6 +32,7 @@ RC(4,0) RC(4,1) RC(4,2)
 		compatible = "zmk,kscan-gpio-matrix";
 		label = "KSCAN";
 		diode-direction = "col2row";
+		wakeup-source;
 		row-gpios
 			= <&gpio0 29 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 		col-gpios

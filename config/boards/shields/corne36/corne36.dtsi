@@ -29,7 +29,7 @@ RC(4,0) RC(4,1) RC(4,2)
 	kscan0: kscan {
 		compatible = "zmk,kscan-gpio-matrix";
 		label = "KSCAN";
-
+		wakeup-source;
 		diode-direction = "col2row";
 		row-gpios
 			= <&pro_micro 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
