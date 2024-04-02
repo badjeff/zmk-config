@@ -47,7 +47,7 @@
 		scale-multiplier = <1>;
 		scale-divisor = <1>;
                 // bindings = <&ib_tog_layer RAISE>;
-                bindings = <&ib_fwd_to_hid_io>;
+                // bindings = <&ib_fwd_to_hid_io>;
         };
         tb0a_mmv_ibl {
                 compatible = "zmk,input-behavior-listener";
@@ -59,7 +59,7 @@
 		scale-multiplier = <1>;
 		scale-divisor = <1>;
                 // bindings = <&ib_tog_layer RAISE>;
-                bindings = <&ib_fwd_to_hid_io>;
+                // bindings = <&ib_fwd_to_hid_io>;
         };
         tb1_mmv_ibl {
                 compatible = "zmk,input-behavior-listener";
@@ -71,7 +71,7 @@
 		scale-multiplier = <1>;
 		scale-divisor = <1>;
                 // bindings = <&ib_tog_layer RAISE>;
-                bindings = <&ib_fwd_to_hid_io>;
+                // bindings = <&ib_fwd_to_hid_io>;
         };
 
         tb0_msl_ibl {
@@ -84,7 +84,7 @@
                 scale-multiplier = <1>;
                 scale-divisor = <12>;
                 y-invert;
-                bindings = <&ib_fwd_to_hid_io>;
+                // bindings = <&ib_fwd_to_hid_io>;
         };
         t0a_msl_ibl {
                 compatible = "zmk,input-behavior-listener";
@@ -96,7 +96,7 @@
                 scale-multiplier = <1>;
                 scale-divisor = <12>;
                 y-invert;
-                bindings = <&ib_fwd_to_hid_io>;
+                // bindings = <&ib_fwd_to_hid_io>;
         };
         tb1_msl_ibl {
                 compatible = "zmk,input-behavior-listener";
@@ -108,7 +108,7 @@
                 scale-multiplier = <1>;
                 scale-divisor = <12>;
                 y-invert;
-                bindings = <&ib_fwd_to_hid_io>;
+                // bindings = <&ib_fwd_to_hid_io>;
         };
 
 	// anin0_ibl {
