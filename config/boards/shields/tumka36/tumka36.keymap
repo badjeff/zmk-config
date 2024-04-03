@@ -5,7 +5,7 @@
  */
 
 #include <behaviors.dtsi>
-// #include <behaviors/mouse_keys.dtsi>
+#include <behaviors/mouse_keys.dtsi>
 #include <behaviors/mouse_key_press.dtsi>
 #include <behaviors/mouse_key_toggle.dtsi>
 #include <dt-bindings/zmk/keys.h>
@@ -40,16 +40,16 @@
 #define SCL_R MOVE_X(U_MOUSE_SCROLL_MAX)
 
 / {
-        behaviors {
-                /omit-if-no-ref/ mmv: mmv_dummy {
-                        compatible = "zmk,behavior-momentary-layer";
-                        #binding-cells = <1>;
-                };
-                /omit-if-no-ref/ msc: msc_dummy {
-                        compatible = "zmk,behavior-momentary-layer";
-                        #binding-cells = <1>;
-                };
-        };
+        // behaviors {
+        //         mmv: mmv_dummy {
+        //                 compatible = "zmk,behavior-momentary-layer";
+        //                 #binding-cells = <1>;
+        //         };
+        //         msc: msc_dummy {
+        //                 compatible = "zmk,behavior-momentary-layer";
+        //                 #binding-cells = <1>;
+        //         };
+        // };
 
         tempo: key_tempo {
                 compatible = "zmk,behavior-key-tempo";
