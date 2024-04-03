@@ -37,6 +37,9 @@ manifest:
     - name: zmk-split-peripheral-input-relay
       remote: badjeff
       revision: main
+    - name: zmk-split-peripheral-continuous-scan-window
+      remote: badjeff
+      revision: main
     - name: zmk-insomnia
       remote: badjeff
       revision: main
