@@ -135,7 +135,7 @@
         combos {
                 compatible = "zmk,combos";
 
-                q   { timeout-ms = <70>; key-positions = <1 2>; bindings = <&kp Q>; layers = <DEF LHB>; };
+                q   { timeout-ms = <80>; key-positions = <1 2>; bindings = <&kp Q>; layers = <DEF LHB>; };
                 t   { timeout-ms = <70>; key-positions = <2 3>; bindings = <&kp T>; layers = <DEF LHB>; };
                 g   { timeout-ms = <60>; key-positions = <12 13>; bindings = <&kp G>; layers = <DEF LHB>; };
                 b   { timeout-ms = <60>; key-positions = <22 23>; bindings = <&kp B>; layers = <DEF LHB>; };
@@ -149,7 +149,7 @@
                 v   { timeout-ms = <30>; key-positions = <13 31>; bindings = <&kp V>; layers = <DEF LHB>; };
                 b_t { timeout-ms = <30>; key-positions = <13 32>; bindings = <&kp B>; layers = <DEF LHB>; };
 
-                p   { timeout-ms = <70>; key-positions = <7 8>; bindings = <&kp P>; layers = <DEF LHB>; };
+                p   { timeout-ms = <80>; key-positions = <7 8>; bindings = <&kp P>; layers = <DEF LHB>; };
                 y   { timeout-ms = <70>; key-positions = <6 7>; bindings = <&kp Y>; layers = <DEF LHB>; };
                 h   { timeout-ms = <60>; key-positions = <16 17>; bindings = <&kp H>; layers = <DEF LHB>; };
                 n   { timeout-ms = <60>; key-positions = <26 27>; bindings = <&kp N>; layers = <DEF LHB>; };
@@ -163,10 +163,29 @@
                 dot   { timeout-ms = <30>; key-positions = <18 34>; bindings = <&kp DOT>; layers = <DEF LHB>; };
                 flash { timeout-ms = <30>; key-positions = <19 34>; bindings = <&kp FSLH>; layers = <DEF LHB>; };
 
-                bksp { timeout-ms = <50>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <DEF LHB>; };
-                tab  { timeout-ms = <50>; key-positions = <11 12>; bindings = <&kp TAB>; layers = <DEF LHB>; };
+                bksp { timeout-ms = <70>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <DEF LHB NUM>; };
+                esc  { timeout-ms = <70>; key-positions = <11 12>; bindings = <&kp ESC>; layers = <DEF LHB NUM>; };
 
-                mkp_swap { timeout-ms = <60>; key-positions = <36 37 38>; bindings = <&tog LHB>; layers = <DEF LHB>; };
+                n1   { timeout-ms = <80>; key-positions = <1 2>; bindings = <&kp N1>; layers = <NUM>; };
+                n5   { timeout-ms = <70>; key-positions = <2 3>; bindings = <&kp N5>; layers = <NUM>; };
+                n5_v { timeout-ms = <60>; key-positions = <3 13>; bindings = <&kp N5>; layers = <NUM>; };
+                
+                n0   { timeout-ms = <80>; key-positions = <7 8>; bindings = <&kp N0>; layers = <NUM>; };
+                n6   { timeout-ms = <70>; key-positions = <6 7>; bindings = <&kp N6>; layers = <NUM>; };
+                n6_v { timeout-ms = <60>; key-positions = <6 16>; bindings = <&kp N6>; layers = <NUM>; };
+
+                f1   { timeout-ms = <80>; key-positions = <1 2>; bindings = <&kp F1>; layers = <MSK>; };
+                f5   { timeout-ms = <70>; key-positions = <2 3>; bindings = <&kp F5>; layers = <MSK>; };
+                f5_v { timeout-ms = <60>; key-positions = <3 13>; bindings = <&kp F5>; layers = <MSK>; };
+
+                f10  { timeout-ms = <80>; key-positions = <7 8>; bindings = <&kp F10>; layers = <MSK>; };
+                f6   { timeout-ms = <70>; key-positions = <6 7>; bindings = <&kp F6>; layers = <MSK>; };
+                f6_v { timeout-ms = <60>; key-positions = <6 16>; bindings = <&kp F6>; layers = <MSK>; };
+
+                f11  { timeout-ms = <90>; key-positions = <6 7 8>; bindings = <&kp F11>; layers = <MSK>; };
+                f12  { timeout-ms = <90>; key-positions = <1 2 3>; bindings = <&kp F12>; layers = <MSK>; };
+
+                mkp_swap { timeout-ms = <60>; key-positions = <36 38>; bindings = <&tog LHB>; layers = <DEF LHB NUM MSK MSC>; };
 
                 nav_left { timeout-ms = <80>; key-positions = <16 17>; bindings = <&kp LEFT>; layers = <NUM>; };
                 mmv_left { timeout-ms = <80>; key-positions = <16 17>; bindings = <&mmv MOU_L>; layers = <MSK>; };
@@ -248,29 +267,29 @@
                 };
                 MSK_layer {
 // +------------------------------------------------------+     +------------------------------------------------------+
-// |    F1    |    F2    |    F3    |    F4    |    F5    |     |    F6    |    F7    |    F8    |    F9    |   F10    |
-// | _MSC:F12 |   VOLD   |   VOLU   |   BRID   |   BRIU   |     |   MLFT   |   MDWN   |    MUP   |   MRGT   | _MSC:F11 |
-// |   ^MB4   |   RCLK   |   MCLK   |   LCLK   |   ^MSC   |     |   ^MSC   |   LCLK   |   MCLK   |   RCLK   |  ^MB4    |
-//                       |   (H)    |          |          |     |   ^MSK   |          |    (H)   |
+// |    F1    |    F2    |  (H) F3  |  _MSC:F4 |    F5    |     |    F6    |  _MSC:F7 |  (H) F8  |    F9    |   F10    |
+// |   VOLD   |   VOLU   |   BRID   |   BRIU   |   F12    |     |   MLFT   |   MDWN   |    MUP   |   MRGT   |   F11    |
+// |   _MSC   |   RCLK   |   MCLK   |   LCLK   |          |     |          |   LCLK   |   MCLK   |   RCLK   |  _MSC    |
+//                       |   (H)    |          |          |     |          |          |    (H)   |
                         bindings = <
-   &kp F1       &kp F2        &kp F3        &kp F4        &kp F5            &kp F6      &kp F7      &kp F8      &kp F9      &kp F10
-   &lt MSC F12  &kp C_VOL_DN  &kp C_VOL_UP  &kp C_BRI_DN  &kp C_BRI_UP      &mmv MOU_L  &mmv MOU_D  &mmv MOU_U  &mmv MOU_R  &lt MSC F11
-   &mktg MB4    &mkp RCLK     &mkp MCLK     &mkp LCLK     &tog MSC          &tog MSC    &mkp LCLK   &mkp MCLK   &mkp RCLK   &mktg MB4
-                              &trans        &trans        &trans            &tog MSK    &trans      &trans
+   &kp F1        &kp F2        &kp F3        &lt MSC F4    &kp F5            &kp F6      &lt MSC F7  &kp F8      &kp F9      &kp F1
+   &kp C_VOL_DN  &kp C_VOL_UP  &kp C_BRI_DN  &kp C_BRI_UP  &lt MSC F12       &mmv MOU_L  &mmv MOU_D  &mmv MOU_U  &mmv MOU_R  &kp F11
+   &mo MSC       &mkp RCLK     &mkp MCLK     &mkp LCLK     &trans            &trans      &mkp LCLK   &mkp MCLK   &mkp RCLK   &mo MSC
+                               &trans        &trans        &trans            &trans      &trans      &trans
    &trans   &trans   &trans
                         >;
                 };
                 MSC_layer {
 // +------------------------------------------------------+     +------------------------------------------------------+
-// |  OUT_TOG |   BT_0   |   BT_1   |   BT_C   |   DFU    |     |    DFU   |   RESET  |          |          |          |
-// |    (H)   |          |          |          |  RESET   |     |   SLFT   |   SDWN   |    SUP   |   SRGT   |   (H)    |
-// |   ^MB4   |   RCLK   |   MCLK   |   LCLK   |   ^MSC   |     |   ^MSC   |   LCLK   |   MCLK   |   RCLK   |  ^MB4    |
-//                       |          |          |  TEMPO   |     |   ^MSK   |          |          |
+// |          |   BT_0   | (H) BT_1 | (H) BT_C |          |     |          |    (H)   |    (H)   |          |          |
+// |   RESET  |          |          |          |          |     |   SLFT   |   SDWN   |    SUP   |   SRGT   |   RESET  |
+// |    (H)   |   RCLK   |   MCLK   |   LCLK   |          |     |          |   LCLK   |   MCLK   |   RCLK   |    (H)   |
+//                       |   (H)    |   TEMPO  |    DFU   |     |   DFU    |          |    (H)   |
                         bindings = <
-   &out OUT_TOG  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_CLR    &bootloader       &bootloader   &sys_reset  &trans      &trans      &trans
-   &trans        &trans        &trans        &trans        &sys_reset        &msc SCL_L    &msc SCL_D  &msc SCL_U  &msc SCL_R  &trans
-   &mktg MB4     &mkp RCLK     &mkp MCLK     &mkp LCLK     &tog MSC          &tog MSC      &mkp LCLK   &mkp MCLK   &mkp RCLK   &mktg MB4
-                               &trans        &trans        &tempo            &tog MSK      &trans      &trans
+   &trans      &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_CLR    &trans            &trans       &trans      &trans      &trans      &trans
+   &sys_reset  &trans        &trans        &trans        &trans            &msc SCL_L   &msc SCL_D  &msc SCL_U  &msc SCL_R  &sys_reset
+   &trans      &mkp RCLK     &mkp MCLK     &mkp LCLK     &trans            &trans       &mkp LCLK   &mkp MCLK   &mkp RCLK   &trans
+                             &trans        &tempo        &bootloader       &bootloader  &trans      &trans
    &trans   &trans   &trans
                         >;
                 };
