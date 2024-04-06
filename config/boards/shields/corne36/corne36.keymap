@@ -15,6 +15,9 @@
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/mouse.h>
 
+#include <behaviors/insomnia.dtsi>
+#include <dt-bindings/zmk/insomnia.h>
+
 #define DEF 0
 #define LHB 1
 #define NUM 2
@@ -281,15 +284,15 @@
                 };
                 MSC_layer {
 // +------------------------------------------------------+     +------------------------------------------------------+
-// |          |   BT_0   | (H) BT_1 | (H) BT_C |          |     |          |    (H)   |    (H)   |          |          |
-// |   RESET  |          |          |          |          |     |   SLFT   |   SDWN   |    SUP   |   SRGT   |   RESET  |
+// |          |   BT_0   | (H) BT_1 | (H) BT_C |          |     |          |    (H)   |    (H)   |  ISA_OFF |  ISA_ON  |
+// |   RESET  |  ISA_ON  |  ISA_OFF |  ISA_SLP |          |     |   SLFT   |   SDWN   |    SUP   |   SRGT   |   RESET  |
 // |    (H)   |   RCLK   |   MCLK   |   LCLK   |          |     |          |   LCLK   |   MCLK   |   RCLK   |    (H)   |
-//                       |   (H)    |   TEMPO  |    DFU   |     |   DFU    |          |    (H)   |
+//                       |   (H)    |   TEMPO  |    DFU   |     |   DFU    |  ISA_SLP |    (H)   |
                         bindings = <
-   &trans      &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_CLR    &trans            &trans       &trans      &trans      &trans      &trans
-   &sys_reset  &trans        &trans        &trans        &trans            &msc SCL_L   &msc SCL_D  &msc SCL_U  &msc SCL_R  &sys_reset
-   &trans      &mkp RCLK     &mkp MCLK     &mkp LCLK     &trans            &trans       &mkp LCLK   &mkp MCLK   &mkp RCLK   &trans
-                             &trans        &tempo        &bootloader       &bootloader  &trans      &trans
+   &trans      &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_CLR    &trans            &trans       &trans        &trans      &isa ISA_OFF  &isa ISA_ON
+   &sys_reset  &isa ISA_ON   &isa ISA_OFF  &isa ISA_SLP  &trans            &msc SCL_L   &msc SCL_D    &msc SCL_U  &msc SCL_R    &sys_reset
+   &trans      &mkp RCLK     &mkp MCLK     &mkp LCLK     &trans            &trans       &mkp LCLK     &mkp MCLK   &mkp RCLK     &trans
+                             &trans        &tempo        &bootloader       &bootloader  &isa ISA_SLP  &trans
    &trans   &trans   &trans
                         >;
                 };

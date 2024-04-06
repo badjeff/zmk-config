@@ -19,6 +19,9 @@ manifest:
     - name: zmk-analog-input-driver
       remote: badjeff
       revision: main
+    - name: zmk-behavior-insomnia
+      remote: badjeff
+      revision: main
     - name: zmk-behavior-key-tempo
       remote: badjeff
       revision: main
@@ -38,9 +41,6 @@ manifest:
       remote: badjeff
       revision: main
     - name: zmk-split-peripheral-continuous-scan-window
-      remote: badjeff
-      revision: main
-    - name: zmk-insomnia
       remote: badjeff
       revision: main
     # - name: zmk-behavior-set-default-layer
