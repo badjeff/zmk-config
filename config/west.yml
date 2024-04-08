@@ -40,7 +40,7 @@ manifest:
     - name: zmk-split-peripheral-input-relay
       remote: badjeff
       revision: main
-    - name: zmk-split-peripheral-continuous-scan-window
+    - name: zmk-split-peripheral-bonding-tweak
       remote: badjeff
       revision: main
     # - name: zmk-behavior-set-default-layer
