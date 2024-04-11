@@ -71,7 +71,7 @@
                 device = <&pd0>;
                 layers = <MSC>;
                 evt-type = <INPUT_EV_REL>;
-                x-input-code = <INPUT_REL_MISC>;
+                x-input-code = <INPUT_REL_HWHEEL>;
                 y-input-code = <INPUT_REL_WHEEL>;
                 scale-multiplier = <1>;
                 scale-divisor = <12>;
@@ -94,7 +94,7 @@
                 device = <&pd1>;
                 layers = <MSC>;
                 evt-type = <INPUT_EV_REL>;
-                x-input-code = <INPUT_REL_MISC>;
+                x-input-code = <INPUT_REL_HWHEEL>;
                 y-input-code = <INPUT_REL_WHEEL>;
                 scale-multiplier = <1>;
                 scale-divisor = <12>;
@@ -117,7 +117,7 @@
                 device = <&pd2>;
                 layers = <MSC>;
                 evt-type = <INPUT_EV_REL>;
-                x-input-code = <INPUT_REL_MISC>;
+                x-input-code = <INPUT_REL_HWHEEL>;
                 y-input-code = <INPUT_REL_WHEEL>;
                 scale-multiplier = <1>;
                 scale-divisor = <12>;
