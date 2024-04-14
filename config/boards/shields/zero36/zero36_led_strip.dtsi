@@ -1,0 +1,55 @@
+/*
+ * Copyright (c) 2020 Pete Johanson
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <dt-bindings/led/led.h>
+
+// #define SPI0_RX_P16 RP2040_PINMUX(16, RP2_PINCTRL_GPIO_FUNC_SPI)
+// #define SPI0_CSN_P17 RP2040_PINMUX(17, RP2_PINCTRL_GPIO_FUNC_SPI)
+// #define SPI0_SCK_P18 RP2040_PINMUX(18, RP2_PINCTRL_GPIO_FUNC_SPI)
+// #define SPI0_TX_P19 RP2040_PINMUX(19, RP2_PINCTRL_GPIO_FUNC_SPI)
+
+&pinctrl {
+	spi0_default: spi0_default {
+		group1 {
+			pinmux = <SPI0_CSN_P17>, <SPI0_SCK_P18>, <SPI0_TX_P19>;
+		};
+		group2 {
+			pinmux = <SPI0_RX_P16>;
+			input-enable;
+		};
+	};
+};
+
+&spi0 {
+	// compatible = "raspberrypi,pico-spi", "arm,pl022";
+	// clock-frequency = <DT_FREQ_M(8)>;
+	status = "okay";
+	pinctrl-0 = <&spi0_default>;
+	pinctrl-names = "default";
+
+	led_strip: ws2812@0 {
+		compatible = "worldsemi,ws2812-spi";
+		status = "okay";
+
+		/* SPI */
+		reg = <0>; /* ignored, but necessary for SPI bindings */
+		spi-max-frequency = <DT_FREQ_M(8)>;
+
+		/* WS2812 */
+		chain-length = <1>;
+		spi-one-frame = <0x70>;
+		spi-zero-frame = <0x40>;
+
+		color-mapping = <LED_COLOR_ID_GREEN LED_COLOR_ID_RED LED_COLOR_ID_BLUE>;
+	};
+
+};
+
+/ {
+	chosen {
+		zmk,underglow = &led_strip;
+	};
+};
