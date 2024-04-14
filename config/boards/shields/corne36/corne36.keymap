@@ -221,6 +221,12 @@
                         tapping-term-ms = <200>; quick-tap-ms = <200>;
                         flavor = "tap-preferred"; bindings = <&mkp>, <&tog>;
                 };
+                // rot_enc: sensor_rotate {
+                //         compatible = "zmk,behavior-sensor-rotate";
+                //         #sensor-binding-cells = <0>;
+                //         bindings = <&msc SCL_D>, <&msc SCL_U>;
+                //         tap-ms = <120>;
+                // };
         };
 
         tempo: key_tempo {
@@ -244,6 +250,7 @@
                                   &lt MSK ESC    &mt LGUI ESC    &mt LCTRL TAB       &mt LALT RET    &lt NUM SPACE    &lt MSK BKSP
    &mkp RCLK   &hmkp_tg MCLK MSC   &mkp LCLK
                         >;
+                        // sensor-bindings = <&rot_enc>;
                 };
                 LHB_layer {
                         bindings = <
@@ -253,6 +260,7 @@
                    &trans  &trans  &trans    &trans  &trans  &trans
    &mkp LCLK   &hmkp_tg MCLK MSC   &mkp RCLK
                         >;
+                        // sensor-bindings = <&rot_enc>;
                 };
                 NUM_layer {
 // +------------------------------------------------------+     +-------------------------------------------------------+

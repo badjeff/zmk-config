@@ -35,3 +35,11 @@
 		device = <&pd2>;
 	};
 };
+
+// &s_encoder {
+//     status = "okay";
+// };
+// &sensors {
+// 		status = "okay";
+// 		sensors = <&s_encoder>;
+// };
