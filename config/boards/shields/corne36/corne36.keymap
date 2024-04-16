@@ -248,12 +248,12 @@
                 DEF_layer {
 // +------------------------------------------------------+     +--------------------------------------------------------+
 // |     Q    |  LCTRL:W |  _MSK:E  |  LALT:R  |     T    |     |     Y     |  RALT:U  |  _MSK:I   |  RCTRL:O |     P    |
-// |  SHFT A  |  _NUM:S  |  _NUM:D  |  LGUI:F  |     G    |     |     H     |  RGUI:J  |  _NUM:K   |  _NUM:L  |  SHFT ;: |
+// |     A    |  _NUM:S  |  _NUM:D  |  LGUI:F  |     G    |     |     H     |  RGUI:J  |  _NUM:K   |  _NUM:L  |     ;:   |
 // |  SHFT Z  |     X    |     C    |     V    |     B    |     |     N     |     M    |    ,<     |    .>    |  SHFT /? |
 //                       | ^MSK:ESC |  GUI:ESC | CTRL:TAB |     |  ALT:ENT  | _NUM:SPC | ^MSK:BKSP |
                         bindings = <
    &kp Q          &hm_l LCTRL W   &hl_l MSK E    &hm_l LALT R    &kp T               &kp Y           &hm_r RALT U     &hl_r MSK I     &hm_r RCTRL O  &kp P
-   &mt LSHFT A    &hl_l NUM S     &hl_l NUM D    &hm_l LGUI F    &kp G               &kp H           &hm_r RGUI J     &hl_r NUM K     &hl_r NUM L    &mt RSHFT SEMI
+   &kp A          &hl_l NUM S     &hl_l NUM D    &hm_l LGUI F    &kp G               &kp H           &hm_r RGUI J     &hl_r NUM K     &hl_r NUM L    &kp SEMI
    &mt LSHFT Z    &kp X           &kp C          &kp V           &kp B               &kp N           &kp M            &kp COMMA       &kp DOT        &mt RSHFT FSLH
                                   &lt MSK ESC    &mt LGUI ESC    &mt LCTRL TAB       &mt LALT RET    &lt NUM SPACE    &lt MSK BKSP
    &mkp RCLK   &hmkp_tg MCLK MSC   &mkp LCLK
@@ -273,12 +273,12 @@
                 NUM_layer {
 // +------------------------------------------------------+     +-------------------------------------------------------+
 // |    1!    | LCTRL:2@  |    3#    | LALT:4$  |    5%   |     |    6^    |  RALT:7& |    8&    |  RCTRL 9( |    0)    |
-// | SHFT `~  |           |    {[    |    ]}    |   TAB   |     |    LFT   |   DWN    |    UP    |    RGT    |  SHFT '" |
+// |    `~    |           |    {[    |    ]}    |   TAB   |     |    LFT   |   DWN    |    UP    |    RGT    |    '"    |
 // | SHFT TAB |           |          |          |   RET   |     |   BKSP   |    -_    |    =+    |    SPC    |  SHFT \| |
 //                        |          |          |         |     |          |    (H)   |          |
                         bindings = <
    &kp N1             &hm_l LCTRL N2   &kp N3     &hm_l LALT N4   &kp N5              &kp N6      &hm_r RALT N7   &kp N8      &hm_r RCTRL N9   &kp N0
-   &mt LSHFT GRAVE    &trans           &kp LBKT   &kp RBKT        &kp TAB             &kp LEFT    &kp DOWN        &kp UP      &kp RIGHT        &mt RSHFT SQT
+   &kp GRAVE          &trans           &kp LBKT   &kp RBKT        &kp TAB             &kp LEFT    &kp DOWN        &kp UP      &kp RIGHT        &kp SQT
    &mt LSHFT TAB      &trans           &trans     &trans          &kp RET             &kp BKSP    &kp MINUS       &kp EQUAL   &kp SPACE        &mt RSHFT BSLH
                                        &trans     &trans          &trans              &trans      &trans          &trans
    &trans   &trans   &trans
