@@ -249,12 +249,12 @@
 // +------------------------------------------------------+     +--------------------------------------------------------+
 // |     Q    |  LCTRL:W |  _MSK:E  |  LALT:R  |     T    |     |     Y     |  RALT:U  |  _MSK:I   |  RCTRL:O |     P    |
 // |     A    |  _NUM:S  |  _NUM:D  |  LGUI:F  |     G    |     |     H     |  RGUI:J  |  _NUM:K   |  _NUM:L  |     ;:   |
-// |  SHFT Z  |     X    |     C    |     V    |     B    |     |     N     |     M    |    ,<     |    .>    |  SHFT /? |
+// |  SHFT Z  |  LGUI:X  |     C    |     V    |     B    |     |     N     |     M    |    ,<     |  LGUI:.> |  SHFT /? |
 //                       | ^MSK:ESC |  GUI:ESC | CTRL:TAB |     |  ALT:ENT  | _NUM:SPC | ^MSK:BKSP |
                         bindings = <
-   &kp Q          &hm_l LCTRL W   &hl_l MSK E    &hm_l LALT R    &kp T               &kp Y           &hm_r RALT U     &hl_r MSK I     &hm_r RCTRL O  &kp P
-   &kp A          &hl_l NUM S     &hl_l NUM D    &hm_l LGUI F    &kp G               &kp H           &hm_r RGUI J     &hl_r NUM K     &hl_r NUM L    &kp SEMI
-   &mt LSHFT Z    &kp X           &kp C          &kp V           &kp B               &kp N           &kp M            &kp COMMA       &kp DOT        &mt RSHFT FSLH
+   &kp Q          &hm_l LCTRL W   &hl_l MSK E    &hm_l LALT R    &kp T               &kp Y           &hm_r RALT U     &hl_r MSK I     &hm_r RCTRL O   &kp P
+   &kp A          &hl_l NUM S     &hl_l NUM D    &hm_l LGUI F    &kp G               &kp H           &hm_r RGUI J     &hl_r NUM K     &hl_r NUM L     &kp SEMI
+   &mt LSHFT Z    &hm_l LGUI X    &kp C          &kp V           &kp B               &kp N           &kp M            &kp COMMA       &hm_r LGUI DOT  &mt RSHFT FSLH
                                   &lt MSK ESC    &mt LGUI ESC    &mt LCTRL TAB       &mt LALT RET    &lt NUM SPACE    &lt MSK BKSP
    &mkp RCLK   &hmkp_tg MCLK MSC   &mkp LCLK
                         >;
