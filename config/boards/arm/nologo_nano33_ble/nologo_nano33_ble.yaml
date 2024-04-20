@@ -1,0 +1,15 @@
+identifier: nologo_nano33_ble
+name: Nologo NANA33 BLE
+type: mcu
+arch: arm
+toolchain:
+  - zephyr
+  - gnuarmemb
+  - xtools
+supported:
+  - adc
+  - usb_device
+  - ble
+  - ieee802154
+  - pwm
+  - watchdog

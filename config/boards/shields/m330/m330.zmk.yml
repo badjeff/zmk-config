@@ -1,0 +1,11 @@
+file_format: "1"
+id: m330
+name: m330
+type: shield
+url: https://github.com/badjeff/m330/
+requires: [pro_micro]
+exposes: []
+features:
+  - keys
+siblings:
+  - m330

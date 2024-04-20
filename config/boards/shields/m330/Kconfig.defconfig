@@ -1,0 +1,6 @@
+if SHIELD_TUMKA36
+
+config ZMK_KEYBOARD_NAME
+    default "m330"
+
+endif
