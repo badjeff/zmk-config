@@ -17,14 +17,16 @@
 		;
 };
 
-#include "sparklite_trackball.dtsi"
+// #include "sparklite_trackball_adns9800.dtsi"
+#include "sparklite_trackball_pmw3610.dtsi"
 
 /* enable &pd0 on split peripheral. typical input device for zephyr input subsystem. */
 /* NOTE 1: use the same device alias (&pd0) on central and peripheral(s) is alright. */
 /* NOTE 2: input event shall be intecepted by module `zmk-split-peripheral-input-relay`. */
 &pd0 {
   status = "okay";
-  irq-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+  // irq-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+	irq-gpios = <&gpio1 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 };
 
 / {

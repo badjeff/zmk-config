@@ -16,6 +16,9 @@ manifest:
     - name: zmk-adns9800-driver
       remote: badjeff
       revision: main
+    - name: zmk-pmw3610-driver
+      remote: badjeff
+      revision: main
     - name: zmk-analog-input-driver
       remote: badjeff
       revision: main
