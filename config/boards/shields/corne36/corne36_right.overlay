@@ -20,8 +20,11 @@
 		;
 };
 
-#include "corne36_trackball.dtsi"
+// #include "corne36_trackball.dtsi"
 / {
+	pd0: virtual_input_0 {
+		compatible = "zmk,virtual-input";
+	};
 	pd1: virtual_input_1 {
 		compatible = "zmk,virtual-input";
 	};
