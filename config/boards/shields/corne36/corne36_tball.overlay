@@ -145,3 +145,10 @@ RC(4,0) RC(4,1) RC(4,2)
 // 		status = "okay";
 // 		sensors = <&s_encoder>;
 // };
+
+// #include "corne36_trackpoint_ps2.dtsi"
+/ {
+	mouse_ps2: virtual_input_0 {
+		compatible = "zmk,virtual-input";
+	};
+};
