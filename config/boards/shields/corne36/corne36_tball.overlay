@@ -43,7 +43,7 @@ RC(4,0) RC(4,1) RC(4,2)
 	};
 };
 
-#include "corne36_tball_trackball.dtsi"
+#include "corne36_tball_adns9800.dtsi"
 
 /* enable &pd0 on split peripheral. typical input device for zephyr input subsystem. */
 /* NOTE 1: use the same device alias (&pd0) on central and peripheral(s) is alright. */

@@ -16,7 +16,7 @@
 		;
 };
 
-// #include "corne36_trackball.dtsi"
+// #include "corne36_trackball_adns9800.dtsi"
 / {
 	pd0: virtual_input_0 {
 		compatible = "zmk,virtual-input";
@@ -45,4 +45,11 @@
 // &sensors {
 // 		status = "okay";
 // 		sensors = <&s_encoder>;
+// };
+
+#include "corne36_trackpoint_ps2.dtsi"
+// / {
+// 	mouse_ps2: virtual_input_0 {
+// 		compatible = "zmk,virtual-input";
+// 	};
 // };
