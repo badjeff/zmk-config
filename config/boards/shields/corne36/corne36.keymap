@@ -124,28 +124,28 @@
                 y-invert;
         };
 
-        tb3_mmv_ibl {
-                compatible = "zmk,input-behavior-listener";
-                device = <&mouse_ps2>;
-                layers = <DEF NUM MSK LHB>;
-		evt-type = <INPUT_EV_REL>;
-		x-input-code = <INPUT_REL_X>;
-		y-input-code = <INPUT_REL_Y>;
-		scale-multiplier = <1>;
-		scale-divisor = <1>;
-                // bindings = <&ib_tog_layer MSK>;
-        };
-        tb3_msl_ibl {
-                compatible = "zmk,input-behavior-listener";
-                device = <&mouse_ps2>;
-                layers = <MSC>;
-                evt-type = <INPUT_EV_REL>;
-                x-input-code = <INPUT_REL_HWHEEL>;
-                y-input-code = <INPUT_REL_WHEEL>;
-                scale-multiplier = <1>;
-                scale-divisor = <12>;
-                y-invert;
-        };
+        // tp0_mmv_ibl {
+        //         compatible = "zmk,input-behavior-listener";
+        //         device = <&mouse_ps2>;
+        //         layers = <DEF NUM MSK LHB>;
+	//         evt-type = <INPUT_EV_REL>;
+	//         x-input-code = <INPUT_REL_X>;
+	//         y-input-code = <INPUT_REL_Y>;
+	//         scale-multiplier = <1>;
+	//         scale-divisor = <1>;
+        //         // bindings = <&ib_tog_layer MSK>;
+        // };
+        // tp0_msl_ibl {
+        //         compatible = "zmk,input-behavior-listener";
+        //         device = <&mouse_ps2>;
+        //         layers = <MSC>;
+        //         evt-type = <INPUT_EV_REL>;
+        //         x-input-code = <INPUT_REL_HWHEEL>;
+        //         y-input-code = <INPUT_REL_WHEEL>;
+        //         scale-multiplier = <1>;
+        //         scale-divisor = <12>;
+        //         y-invert;
+        // };
 
         // ib_tog_layer: ib_tog_layer {
         //         compatible = "zmk,input-behavior-tog-layer";
