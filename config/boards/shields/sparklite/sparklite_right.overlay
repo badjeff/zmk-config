@@ -18,34 +18,19 @@
 };
 
 // #include "sparklite_trackball_adns9800.dtsi"
-#include "sparklite_trackball_pmw3610.dtsi"
-
-/* enable &pd0 on split peripheral. typical input device for zephyr input subsystem. */
-/* NOTE 1: use the same device alias (&pd0) on central and peripheral(s) is alright. */
-/* NOTE 2: input event shall be intecepted by module `zmk-split-peripheral-input-relay`. */
-&pd0 {
-  status = "okay";
-  // irq-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-	irq-gpios = <&gpio1 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-};
-
+// #include "sparklite_trackball_pmw3610.dtsi"
 / {
-	/* THIS make keymap binding happy only, nothing happen on peripheral side */
+	pd0: virtual_input_0 {
+		compatible = "zmk,virtual-input";
+	};
 	pd1: virtual_input {
 		compatible = "zmk,virtual-input";
 	};
 };
-
 / {
-	/* for peripheral side, define (input-device)-to-(relay-channel) mapping */
 	input_relay_config_102 {
 		compatible = "zmk,split-peripheral-input-relay";
-
-		/* peripheral side input device, used to be intecepted and be resurrected on central */
 		device = <&pd0>;
-		
-		/* channel id, used to annotate raw input event */
-		/* NOTE: should matching relay-channel on central overlay */
 		relay-channel = <102>;
 	};
 };
@@ -103,3 +88,10 @@
 // 		control-gpios = <&gpio0 4 GPIO_ACTIVE_HIGH>;
 // 	};
 // };
+
+// #include "sparklite_trackpoint_ps2.dtsi"
+/ {
+	mouse_ps2: virtual_input_0 {
+		compatible = "zmk,virtual-input";
+	};
+};
