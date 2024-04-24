@@ -95,3 +95,10 @@
 		compatible = "zmk,virtual-input";
 	};
 };
+
+// #include "sparklite_touchpad_cirque.dtsi" 
+/ {
+	glidepoint0: virtual_input_0 {
+		compatible = "zmk,virtual-input";
+	};
+};

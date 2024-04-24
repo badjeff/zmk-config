@@ -46,11 +46,14 @@ manifest:
     - name: zmk-split-peripheral-bonding-tweak
       remote: badjeff
       revision: main
-    - name: kb_zmk_ps2_mouse_trackpoint_driver
-      remote: badjeff
-      revision: main
     # - name: zmk-behavior-set-default-layer
     #   remote: badjeff
     #   revision: main
+    - name: kb_zmk_ps2_mouse_trackpoint_driver
+      remote: badjeff
+      revision: main
+    - name: cirque-input-module
+      remote: badjeff
+      revision: main
   self:
     path: config
