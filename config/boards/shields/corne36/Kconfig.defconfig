@@ -8,7 +8,28 @@ config ZMK_SPLIT_ROLE_CENTRAL
 
 endif
 
-if SHIELD_CORNE36_LEFT || SHIELD_CORNE36_RIGHT || SHIELD_CORNE36_TBALL
+if SHIELD_CORNE36_LEFT || SHIELD_CORNE36_RIGHT
+
+config ZMK_SPLIT
+    default y
+
+endif
+
+if SHIELD_CORNE36_TBALL0 || SHIELD_CORNE36_TBALL1
+
+config ZMK_SPLIT
+    default y
+
+endif
+
+if SHIELD_CORNE36_TPOINT0
+
+config ZMK_SPLIT
+    default y
+
+endif
+
+if SHIELD_CORNE36_TPAD0
 
 config ZMK_SPLIT
     default y

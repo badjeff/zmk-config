@@ -20,7 +20,11 @@
 		;
 };
 
-// #include "corne36_trackball_adns9800.dtsi"
+// #include "corne36__trackball_adns9800.dtsi"
+// #include "corne36__trackball_pmw3610.dtsi"
+// #include "corne36__trackpoint_ps2.dtsi"
+// #include "corne36__touchpad_cirque.dtsi"
+
 / {
 	pd0: virtual_input_0 {
 		compatible = "zmk,virtual-input";
@@ -28,14 +32,23 @@
 	pd1: virtual_input_1 {
 		compatible = "zmk,virtual-input";
 	};
-	pd2: virtual_input_2 {
+	tball0: virtual_input_tb_1 {
 		compatible = "zmk,virtual-input";
 	};
-	input_relay_config_102 {
-		compatible = "zmk,split-peripheral-input-relay";
-		device = <&pd0>;
-		relay-channel = <102>;
+	tball1: virtual_input_tb_2 {
+		compatible = "zmk,virtual-input";
 	};
+	tpoint0: virtual_input_tp {
+		compatible = "zmk,virtual-input";
+	};
+	tpad0: virtual_input_gp {
+		compatible = "zmk,virtual-input";
+	};
+	// input_relay_config_102 {
+	// 	compatible = "zmk,split-peripheral-input-relay";
+	// 	device = <&pd0>;
+	// 	relay-channel = <102>;
+	// };
 };
 
 // &s_encoder {
@@ -44,11 +57,4 @@
 // &sensors {
 // 		status = "okay";
 // 		sensors = <&s_encoder>;
-// };
-
-// #include "corne36_trackpoint_ps2.dtsi"
-// / {
-// 	mouse_ps2: virtual_input_0 {
-// 		compatible = "zmk,virtual-input";
-// 	};
 // };

@@ -112,34 +112,34 @@
                 // bindings = <&ib_fwd_to_hid_io>;
         };
 
-        tp0_mmv_ibl {
+        tpoint0_mmv_ibl {
                 compatible = "zmk,input-behavior-listener";
-                device = <&mouse_ps2>;
+                device = <&tpoint0>;
                 layers = <DEFAULT>;
 		evt-type = <INPUT_EV_REL>;
 		x-input-code = <INPUT_REL_X>;
 		y-input-code = <INPUT_REL_Y>;
 		scale-multiplier = <1>;
 		scale-divisor = <1>;
+                y-invert;
                 // bindings = <&ib_tog_layer RAISE>;
                 // bindings = <&ib_fwd_to_hid_io>;
         };
-        tp0_msl_ibl {
+        tpoint0_msl_ibl {
                 compatible = "zmk,input-behavior-listener";
-                device = <&mouse_ps2>;
+                device = <&tpoint0>;
                 layers = <RAISE>;
                 evt-type = <INPUT_EV_REL>;
                 x-input-code = <INPUT_REL_HWHEEL>;
                 y-input-code = <INPUT_REL_WHEEL>;
                 scale-multiplier = <1>;
                 scale-divisor = <12>;
-                y-invert;
                 // bindings = <&ib_fwd_to_hid_io>;
         };
 
-        gp0_mmv_ibl {
+        tpad0_mmv_ibl {
                 compatible = "zmk,input-behavior-listener";
-                device = <&glidepoint0>;
+                device = <&tpad0>;
                 layers = <DEFAULT>;
 		evt-type = <INPUT_EV_REL>;
 	        x-input-code = <INPUT_REL_X>;
@@ -148,19 +148,17 @@
 	        scale-divisor = <2>;
                 // bindings = <&ib_tog_layer RAISE>;
                 // bindings = <&ib_fwd_to_hid_io>;
-                x-invert;
+                y-invert;
         };
-        gp0_msl_ibl {
+        tpad0_msl_ibl {
                 compatible = "zmk,input-behavior-listener";
-                device = <&glidepoint0>;
+                device = <&tpad0>;
                 layers = <RAISE>;
                 evt-type = <INPUT_EV_REL>;
                 x-input-code = <INPUT_REL_HWHEEL>;
                 y-input-code = <INPUT_REL_WHEEL>;
                 scale-multiplier = <1>;
-                scale-divisor = <10>;
-                x-invert;
-                y-invert;
+                scale-divisor = <8>;
                 // bindings = <&ib_fwd_to_hid_io>;
         };
 

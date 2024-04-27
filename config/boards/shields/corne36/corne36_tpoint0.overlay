@@ -1,0 +1,165 @@
+/*
+ * Copyright (c) 2020 Pete Johanson
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <dt-bindings/zmk/matrix_transform.h>
+
+/ {
+	chosen {
+		zmk,kscan = &kscan0;
+		zmk,matrix-transform = &default_transform;
+ 		// zephyr,display = &oled;
+	};
+
+	default_transform: keymap_transform_0 {
+		compatible = "zmk,matrix-transform";
+		columns = <10>;
+		rows = <5>;
+		map = <
+RC(0,0) RC(0,1) RC(0,2) RC(0,3) RC(0,4)  RC(0,5) RC(0,6) RC(0,7) RC(0,8) RC(0,9)
+RC(1,0) RC(1,1) RC(1,2) RC(1,3) RC(1,4)  RC(1,5) RC(1,6) RC(1,7) RC(1,8) RC(1,9)
+RC(2,0) RC(2,1) RC(2,2) RC(2,3) RC(2,4)  RC(2,5) RC(2,6) RC(2,7) RC(2,8) RC(2,9)
+                RC(3,2) RC(3,3) RC(3,4)  RC(3,5) RC(3,6) RC(3,7)
+RC(4,0) RC(4,1) RC(4,2)
+		>;
+		row-offset = <4>;
+		col-offset = <0>;
+	};
+
+	kscan0: kscan {
+		compatible = "zmk,kscan-gpio-matrix";
+		label = "KSCAN";
+		diode-direction = "col2row";
+		wakeup-source;
+		row-gpios
+			= <&gpio0 29 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+		col-gpios
+			= <&gpio0 2 GPIO_ACTIVE_HIGH>
+			, <&gpio0 3 GPIO_ACTIVE_HIGH>
+			, <&gpio0 28 GPIO_ACTIVE_HIGH>
+			;
+	};
+};
+
+// #include "corne36_trackball_adns9800.dtsi"
+// #include "corne36_trackball_pmw3610.dtsi"
+// #include "corne36_trackpoint_ps2.dtsi"
+// #include "corne36_touchpad_cirque.dtsi" 
+#include "corne36_tpoint0_ps2.dtsi" 
+
+/ {
+	pd0: virtual_input_0 {
+		compatible = "zmk,virtual-input";
+	};
+	pd1: virtual_input_1 {
+		compatible = "zmk,virtual-input";
+	};
+	tball0: virtual_input_tb_1 {
+		compatible = "zmk,virtual-input";
+	};
+	tball1: virtual_input_tb_2 {
+		compatible = "zmk,virtual-input";
+	};
+	// tpoint0: virtual_input_tp {
+	// 	compatible = "zmk,virtual-input";
+	// };
+	tpad0: virtual_input_gp {
+		compatible = "zmk,virtual-input";
+	};
+	// input_relay_config_102 {
+	// 	compatible = "zmk,split-peripheral-input-relay";
+	// 	relay-channel = <102>;
+	// 	device = <&pd1>;
+	// };
+	// input_relay_config_103 {
+	// 	compatible = "zmk,split-peripheral-input-relay";
+	// 	relay-channel = <103>;
+	// 	device = <&tball0>;
+	// };
+	// input_relay_config_104 {
+	// 	compatible = "zmk,split-peripheral-input-relay";
+	// 	relay-channel = <104>;
+	// 	device = <&tball1>;
+	// };
+	input_relay_config_105 {
+		compatible = "zmk,split-peripheral-input-relay";
+		relay-channel = <105>;
+		device = <&tpoint0>;
+	};
+	// input_relay_config_106 {
+	// 	compatible = "zmk,split-peripheral-input-relay";
+	// 	relay-channel = <106>;
+	// 	device = <&tpad0>;
+	// };
+};
+
+#define INPUT_EV_KEY 0x01               /**< Key event */
+#define INPUT_EV_REL 0x02               /**< Relative coordinate event */
+#define INPUT_EV_ABS 0x03               /**< Absolute coordinate event */
+#define INPUT_EV_MSC 0x04               /**< Miscellaneous event */
+#define INPUT_EV_VENDOR_START 0xf0      /**< Vendor specific event start */
+#define INPUT_EV_VENDOR_STOP 0xff       /**< Vendor specific event stop */
+
+#define INPUT_REL_X 0x00                /**< Relative X coordinate */
+#define INPUT_REL_Y 0x01                /**< Relative Y coordinate */
+#define INPUT_REL_WHEEL 0x08            /**< Relative wheel coordinate */
+#define INPUT_REL_HWHEEL 0x06           /**< Relative horizontal wheel coordinate */
+#define INPUT_REL_MISC 0x09             /**< Relative misc coordinate */
+
+// &adc {
+// 	status = "okay";
+// };
+
+// / {
+// 	anin0: analog_input_0 {
+// 		compatible = "zmk,analog-input";
+// 		sampling-hz = <100>;
+// 		x-ch {
+// 			io-channels = <&adc 2>;
+// 			mv-mid = <1630>;
+// 			mv-min-max = <1600>;
+// 			mv-deadzone = <10>;
+// 			scale-multiplier = <1>;
+// 			scale-divisor = <70>;
+// 			invert;
+// 			evt-type = <INPUT_EV_REL>;
+// 			input-code = <INPUT_REL_X>;
+// 		};
+// 		y-ch {
+// 			io-channels = <&adc 3>;
+// 			mv-mid = <1630>;
+// 			mv-min-max = <1600>;
+// 			mv-deadzone = <10>;
+// 			scale-multiplier = <1>;
+// 			scale-divisor = <70>;
+// 			invert;
+// 			evt-type = <INPUT_EV_REL>;
+// 			input-code = <INPUT_REL_Y>;
+// 		};
+// 	};
+// };
+
+// /{
+// 	s_encoder: s_encoder {
+// 		compatible = "alps,ec11";
+// 		a-gpios = <&gpio0 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+// 		b-gpios = <&gpio0 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+// 		steps = <80>;
+// 		status = "disabled";
+// 	};
+// 	sensors: sensors {
+// 		compatible = "zmk,keymap-sensors";
+// 		status = "disabled";
+// 		sensors = <>;
+// 		triggers-per-rotation = <20>;
+// 	};
+// };
+// &s_encoder {
+//     status = "okay";
+// };
+// &sensors {
+// 		status = "okay";
+// 		sensors = <&s_encoder>;
+// };

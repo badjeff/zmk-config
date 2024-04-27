@@ -10,4 +10,7 @@ features:
 siblings:
   - corne36_left
   - corne36_right
-  - corne36_tball
+  - corne36_tball0
+  - corne36_tball1
+  - corne36_tpoint0
+  - corne36_tpad0

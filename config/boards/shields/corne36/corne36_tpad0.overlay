@@ -43,21 +43,55 @@ RC(4,0) RC(4,1) RC(4,2)
 	};
 };
 
-#include "corne36_tball_adns9800.dtsi"
+// #include "corne36_trackball_adns9800.dtsi"
+// #include "corne36_trackball_pmw3610.dtsi"
+// #include "corne36_trackpoint_ps2.dtsi"
+// #include "corne36_touchpad_cirque.dtsi" 
+#include "corne36_tpad0_cirque.dtsi" 
+
 / {
-	// pd0: virtual_input_0 {
-	// 	compatible = "zmk,virtual-input";
-	// };
+	pd0: virtual_input_0 {
+		compatible = "zmk,virtual-input";
+	};
 	pd1: virtual_input_1 {
 		compatible = "zmk,virtual-input";
 	};
-	pd2: virtual_input_2 {
+	tball0: virtual_input_tb_1 {
 		compatible = "zmk,virtual-input";
 	};
-	input_relay_config_102 {
+	tball1: virtual_input_tb_2 {
+		compatible = "zmk,virtual-input";
+	};
+	tpoint0: virtual_input_tp {
+		compatible = "zmk,virtual-input";
+	};
+	// tpad0: virtual_input_gp {
+	// 	compatible = "zmk,virtual-input";
+	// };
+	// input_relay_config_102 {
+	// 	compatible = "zmk,split-peripheral-input-relay";
+	// 	relay-channel = <102>;
+	// 	device = <&pd1>;
+	// };
+	// input_relay_config_103 {
+	// 	compatible = "zmk,split-peripheral-input-relay";
+	// 	relay-channel = <103>;
+	// 	device = <&tball0>;
+	// };
+	// input_relay_config_104 {
+	// 	compatible = "zmk,split-peripheral-input-relay";
+	// 	relay-channel = <104>;
+	// 	device = <&tball1>;
+	// };
+	// input_relay_config_105 {
+	// 	compatible = "zmk,split-peripheral-input-relay";
+	// 	relay-channel = <105>;
+	// 	device = <&tpoint0>;
+	// };
+	input_relay_config_106 {
 		compatible = "zmk,split-peripheral-input-relay";
-		device = <&pd0>;
-		relay-channel = <103>;
+		relay-channel = <106>;
+		device = <&tpad0>;
 	};
 };
 
@@ -128,11 +162,4 @@ RC(4,0) RC(4,1) RC(4,2)
 // &sensors {
 // 		status = "okay";
 // 		sensors = <&s_encoder>;
-// };
-
-// #include "corne36_trackpoint_ps2.dtsi"
-// / {
-// 	mouse_ps2: virtual_input_0 {
-// 		compatible = "zmk,virtual-input";
-// 	};
 // };

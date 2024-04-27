@@ -9,14 +9,14 @@
 		group1 {
 			psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
 							<NRF_PSEL(SPIM_MOSI, 1, 15)>,
-							<NRF_PSEL(SPIM_MISO, 1, 14)>;
+							<NRF_PSEL(SPIM_MISO, 1, 15)>;
 		};
 	};
 	spi2_sleep: spi2_sleep {
 		group1 {
 			psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
 							<NRF_PSEL(SPIM_MOSI, 1, 15)>,
-							<NRF_PSEL(SPIM_MISO, 1, 14)>;
+							<NRF_PSEL(SPIM_MISO, 1, 15)>;
 			low-power-enable;
 		};
 	};
@@ -32,12 +32,19 @@
 	compatible = "nordic,nrf-spim";
 	status = "disabled"; // <<< disabled in main .dtsi, okay in .overlay
 	pd0: pd@0 {
-		compatible = "avago,adns9800";
+		compatible = "pixart,pmw3610";
 		status = "disabled";
 		label = "TRACKBALL0";
 		reg = <0>;
 		spi-max-frequency = <4000000>;
 	};
+	// pd0a: pd@1 {
+	// 	compatible = "pixart,pmw3610";
+	// 	status = "disabled";
+	// 	label = "TRACKBALL2";
+	// 	reg = <1>;
+	// 	spi-max-frequency = <4000000>;
+	// };
 };
 
 // Config custom gpios
@@ -47,6 +54,7 @@
 	pinctrl-1 = <&spi2_sleep>;
 	pinctrl-names = "default", "sleep";
 	cs-gpios = <&gpio1 12 GPIO_ACTIVE_LOW>;
+					//  , <&gpio1 11 GPIO_ACTIVE_LOW>;
 };
 
 #define INPUT_EV_KEY 0x01               /**< Key event */
@@ -64,9 +72,17 @@
 
 &pd0 {
   status = "okay";
-  irq-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+	irq-gpios = <&gpio1 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 	cpi = <500>;
 	evt-type = <INPUT_EV_REL>;
 	x-input-code = <INPUT_REL_X>;
 	y-input-code = <INPUT_REL_Y>;
 };
+// &pd0a {
+//   status = "okay";
+//   irq-gpios = <&gpio0 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+// 	cpi = <500>;
+// 	evt-type = <INPUT_EV_REL>;
+// 	x-input-code = <INPUT_REL_X>;
+// 	y-input-code = <INPUT_REL_Y>;
+// };

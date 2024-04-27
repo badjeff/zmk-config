@@ -117,7 +117,7 @@
 };
 
 / {
-    mouse_ps2: mouse_ps2 {
+    tpoint0: tpoint0 {
 				status = "disabled";
         compatible = "zmk,input-mouse-ps2";
 	      ps2-device = <&uart_ps2>;
@@ -133,9 +133,8 @@
 &uart_ps2 {
     status = "okay";
 };
-&mouse_ps2 {
+&tpoint0 {
     status = "okay";
 		disable-clicking;
 		tp-sensitivity = <166>;
-		tp-y-invert;
 };

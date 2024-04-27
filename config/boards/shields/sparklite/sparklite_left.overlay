@@ -88,14 +88,14 @@
 
 // #include "sparklite_trackpoint_ps2.dtsi"
 / {
-	mouse_ps2: virtual_input_0 {
+	tpoint0: virtual_input_0 {
 		compatible = "zmk,virtual-input";
 	};
 };
 
 #include "sparklite_touchpad_cirque.dtsi" 
 // / {
-// 	glidepoint0: virtual_input_0 {
+// 	tpad0: virtual_input_0 {
 // 		compatible = "zmk,virtual-input";
 // 	};
 // };

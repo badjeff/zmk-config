@@ -7,16 +7,16 @@
 &pinctrl {
 	spi2_default: spi2_default {
 		group1 {
-			psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
-							<NRF_PSEL(SPIM_MOSI, 1, 15)>,
-							<NRF_PSEL(SPIM_MISO, 1, 14)>;
+			psels = <NRF_PSEL(SPIM_SCK, 0, 8)>,
+							<NRF_PSEL(SPIM_MOSI, 0, 20)>,
+							<NRF_PSEL(SPIM_MISO, 0, 17)>;
 		};
 	};
 	spi2_sleep: spi2_sleep {
 		group1 {
-			psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
-							<NRF_PSEL(SPIM_MOSI, 1, 15)>,
-							<NRF_PSEL(SPIM_MISO, 1, 14)>;
+			psels = <NRF_PSEL(SPIM_SCK, 0, 8)>,
+							<NRF_PSEL(SPIM_MOSI, 0, 20)>,
+							<NRF_PSEL(SPIM_MISO, 0, 17)>;
 			low-power-enable;
 		};
 	};
@@ -46,12 +46,12 @@
 	pinctrl-0 = <&spi2_default>;
 	pinctrl-1 = <&spi2_sleep>;
 	pinctrl-names = "default", "sleep";
-	cs-gpios = <&gpio1 12 GPIO_ACTIVE_LOW>;
+	cs-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
 };
 
 &tpad0 {
   status = "okay";
-	dr-gpios = <&gpio1 11 GPIO_ACTIVE_HIGH>;
+	dr-gpios = <&gpio1 6 GPIO_ACTIVE_HIGH>;
 	sleep;
 	no-taps;
 	sensitivity = "3x";
