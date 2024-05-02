@@ -137,4 +137,6 @@
     status = "okay";
 		disable-clicking;
 		tp-sensitivity = <166>;
+		tp-x-invert;
+		tp-y-invert;
 };
