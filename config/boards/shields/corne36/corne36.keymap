@@ -176,11 +176,11 @@
                 layers = <DEF NUM MSK LHB>;
 	        scale-multiplier = <3>;
 	        scale-divisor = <2>;
-                // bindings = <&ib_tog_layer RAISE>;
+                // bindings = <&ib_tog_layer MSK>;
                 // bindings = <&ib_fwd_to_hid_io>;
                 y-invert;
                 /* NOTE: do NOT override event code here, */
-                /*       let crique glidepoint reports click from taps */
+                /*       let Cirque glidepoint reports click from taps */
 		// evt-type = <INPUT_EV_REL>;
 	        // x-input-code = <INPUT_REL_X>;
 	        // y-input-code = <INPUT_REL_Y>;

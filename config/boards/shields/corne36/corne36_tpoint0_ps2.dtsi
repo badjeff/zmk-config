@@ -136,7 +136,8 @@
 &tpoint0 {
     status = "okay";
 		disable-clicking;
-		tp-sensitivity = <166>;
+		tp-sensitivity = <128>;
 		tp-x-invert;
 		tp-y-invert;
+		sampling-rate = <80>;
 };
