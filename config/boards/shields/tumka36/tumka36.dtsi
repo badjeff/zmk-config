@@ -51,11 +51,4 @@ RC(4,0) RC(4,1) RC(4,2)
 						;
 	};
 
-	vbatt: vbatt {
-		compatible = "zmk,battery-voltage-divider";
-		io-channels = <&adc 2>;
-		output-ohms = <2000000>;
-		full-ohms = <(2000000 + 806000)>;
-	};
-
 };

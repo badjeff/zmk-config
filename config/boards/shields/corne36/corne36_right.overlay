@@ -20,6 +20,18 @@
 		;
 };
 
+/{
+	chosen {
+		zmk,battery = &vbatt;
+	};
+	vbatt: vbatt {
+		compatible = "zmk,battery-voltage-divider";
+		io-channels = <&adc 2>;
+		output-ohms = <2000000>;
+		full-ohms = <(2000000 + 806000)>;
+	};
+};
+
 // #include "corne36__trackball_adns9800.dtsi"
 // #include "corne36__trackball_pmw3610.dtsi"
 // #include "corne36__trackpoint_ps2.dtsi"
