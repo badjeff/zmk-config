@@ -15,7 +15,8 @@
 
 #define MOUSE_PS2_UART_BAUD_RATE <14400>
 #define MOUSE_PS2_PIN_UNEXPOSED_TX <NRF_PSEL(UART_TX, 0, 27)>
-#define MOUSE_PS2_PIN_UNEXPOSED_RX <NRF_PSEL(UART_RX, 0, 28)>
+// #define MOUSE_PS2_PIN_UNEXPOSED_RX <NRF_PSEL(UART_RX, 0, 28)>
+#define MOUSE_PS2_PIN_UNEXPOSED_RX <NRF_PSEL(UART_RX, 1, 12)>
 
 &gpiote { interrupts = < 6 0 >; };
 &clock { interrupts = < 0 3 >; };
