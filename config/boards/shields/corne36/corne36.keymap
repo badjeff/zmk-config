@@ -59,11 +59,11 @@
         //         compatible = "zmk,input-behavior-listener";
         //         device = <&pd0>;
         //         layers = <DEF NUM MSK LHB>;
-	// 	evt-type = <INPUT_EV_REL>;
-	// 	x-input-code = <INPUT_REL_X>;
-	// 	y-input-code = <INPUT_REL_Y>;
-	// 	scale-multiplier = <1>;
-	// 	scale-divisor = <1>;
+	//         evt-type = <INPUT_EV_REL>;
+	//         x-input-code = <INPUT_REL_X>;
+	//         y-input-code = <INPUT_REL_Y>;
+	//         scale-multiplier = <1>;
+	//         scale-divisor = <1>;
         //         // bindings = <&ib_tog_layer MSK>;
         // };
         // tb0_msl_ibl {
@@ -134,6 +134,7 @@
 		scale-multiplier = <1>;
 		scale-divisor = <1>;
                 // bindings = <&ib_tog_layer MSK>;
+                // bindings = <&ib_fwd_to_hid_io>;
         };
         tball1_msl_ibl {
                 compatible = "zmk,input-behavior-listener";
@@ -145,6 +146,7 @@
                 scale-multiplier = <1>;
                 scale-divisor = <11>;
                 y-invert;
+                // bindings = <&ib_fwd_to_hid_io>;
         };
 
         tpoint0_mmv_ibl {
@@ -202,6 +204,11 @@
         //         compatible = "zmk,input-behavior-tog-layer";
         //         #binding-cells = <1>;
         //         time-to-live-ms = <1000>;
+        // };
+
+        // ib_fwd_to_hid_io: ib_forward_fwd_to_hid_io {
+        //         compatible = "zmk,input-behavior-fwd-to-hid-io";
+        //         #binding-cells = <0>;
         // };
 
         //   0   1   2   3   4     5   6   7   8   9
