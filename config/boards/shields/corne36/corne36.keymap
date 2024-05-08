@@ -62,8 +62,6 @@
 	//         evt-type = <INPUT_EV_REL>;
 	//         x-input-code = <INPUT_REL_X>;
 	//         y-input-code = <INPUT_REL_Y>;
-	//         scale-multiplier = <1>;
-	//         scale-divisor = <1>;
         //         // bindings = <&ib_tog_layer MSK>;
         // };
         // tb0_msl_ibl {
@@ -73,9 +71,8 @@
         //         evt-type = <INPUT_EV_REL>;
         //         x-input-code = <INPUT_REL_MISC>;
         //         y-input-code = <INPUT_REL_WHEEL>;
-        //         scale-multiplier = <1>;
-        //         scale-divisor = <11>;
         //         y-invert;
+        //         bindings = <&ib_wheel_scaler 1 25>;
         // };
 
         // tb1_mmv_ibl {
@@ -85,8 +82,6 @@
 	//         evt-type = <INPUT_EV_REL>;
 	//         x-input-code = <INPUT_REL_X>;
 	//         y-input-code = <INPUT_REL_Y>;
-	//         scale-multiplier = <1>;
-	//         scale-divisor = <1>;
         //         // bindings = <&ib_tog_layer MSK>;
         // };
         // tb1_msl_ibl {
@@ -96,9 +91,8 @@
         //         evt-type = <INPUT_EV_REL>;
         //         x-input-code = <INPUT_REL_MISC>;
         //         y-input-code = <INPUT_REL_WHEEL>;
-        //         scale-multiplier = <1>;
-        //         scale-divisor = <11>;
         //         y-invert;
+        //         bindings = <&ib_wheel_scaler 1 25>;
         // };
 
         tball0_mmv_ibl {
@@ -108,8 +102,6 @@
 		evt-type = <INPUT_EV_REL>;
 		x-input-code = <INPUT_REL_X>;
 		y-input-code = <INPUT_REL_Y>;
-		scale-multiplier = <1>;
-		scale-divisor = <1>;
                 // bindings = <&ib_tog_layer MSK>;
         };
         tball0_msl_ibl {
@@ -119,9 +111,8 @@
                 evt-type = <INPUT_EV_REL>;
                 x-input-code = <INPUT_REL_MISC>;
                 y-input-code = <INPUT_REL_WHEEL>;
-                scale-multiplier = <1>;
-                scale-divisor = <11>;
                 y-invert;
+                bindings = <&ib_wheel_scaler 1 25>;
         };
 
         tball1_mmv_ibl {
@@ -131,8 +122,6 @@
 		evt-type = <INPUT_EV_REL>;
 		x-input-code = <INPUT_REL_X>;
 		y-input-code = <INPUT_REL_Y>;
-		scale-multiplier = <1>;
-		scale-divisor = <1>;
                 // bindings = <&ib_tog_layer MSK>;
                 // bindings = <&ib_fwd_to_hid_io>;
         };
@@ -143,10 +132,8 @@
                 evt-type = <INPUT_EV_REL>;
                 x-input-code = <INPUT_REL_MISC>;
                 y-input-code = <INPUT_REL_WHEEL>;
-                scale-multiplier = <1>;
-                scale-divisor = <11>;
                 y-invert;
-                // bindings = <&ib_fwd_to_hid_io>;
+                bindings = <&ib_wheel_scaler 1 25>;
         };
 
         tpoint0_mmv_ibl {
@@ -156,8 +143,6 @@
 	        evt-type = <INPUT_EV_REL>;
 	        x-input-code = <INPUT_REL_X>;
 	        y-input-code = <INPUT_REL_Y>;
-	        scale-multiplier = <1>;
-	        scale-divisor = <1>;
                 y-invert;
                 // bindings = <&ib_tog_layer MSK>;
         };
@@ -168,8 +153,7 @@
                 evt-type = <INPUT_EV_REL>;
                 x-input-code = <INPUT_REL_MISC>;
                 y-input-code = <INPUT_REL_WHEEL>;
-                scale-multiplier = <1>;
-                scale-divisor = <19>;
+                bindings = <&ib_wheel_scaler 1 23>;
         };
 
         tpad0_mmv_ibl {
@@ -195,9 +179,14 @@
                 evt-type = <INPUT_EV_REL>;
                 x-input-code = <INPUT_REL_MISC>;
                 y-input-code = <INPUT_REL_WHEEL>;
-                scale-multiplier = <1>;
-                scale-divisor = <3>;
-                // bindings = <&ib_fwd_to_hid_io>;
+                bindings = <&ib_wheel_scaler 1 8>;
+        };
+
+        ib_wheel_scaler: ib_wheel_scaler {
+                compatible = "zmk,input-behavior-scaler";
+                #binding-cells = <2>;
+                evt-type = <INPUT_EV_REL>;
+                input-code = <INPUT_REL_WHEEL>;
         };
 
         // ib_tog_layer: ib_tog_layer {
