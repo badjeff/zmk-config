@@ -53,7 +53,8 @@
   status = "okay";
 	dr-gpios = <&gpio1 11 GPIO_ACTIVE_HIGH>;
 	sleep;
+	no-smoothing;
 	// sensitivity = "2x";
-	//no-taps;
+	// no-taps;
 	// rotate-90;
 };
