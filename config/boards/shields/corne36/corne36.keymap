@@ -384,3 +384,27 @@
                 };
        };
 };
+
+#define OUTPUT_SOURCE_LAYER_STATE_CHANGE        1
+#define OUTPUT_SOURCE_POSITION_STATE_CHANGE     2
+#define OUTPUT_SOURCE_KEYCODE_STATE_CHANGE      3
+#define OUTPUT_SOURCE_TRANSPORT                 4
+/{
+        lra0_obl__press_key_code_q {
+                compatible = "zmk,output-behavior-listener";
+                layers = < DEF LHB >;
+                sources = < OUTPUT_SOURCE_KEYCODE_STATE_CHANGE >;
+                position = < 0x14 >;
+                bindings = < &ob_lra0 >;
+        };
+        ob_lra0: ob_lra0 {
+                compatible = "zmk,output-behavior-generic";
+                #binding-cells = <0>;
+                device = <&fb_lra0>;
+                // delay = <0>;
+                /* DON'T need time-to-live-ms for DRV2605 driver */
+                // time-to-live-ms = <130>;
+                /* force will be convrt to waveformm effect from DRV2605 library */
+                force = <7>;
+        };
+};
