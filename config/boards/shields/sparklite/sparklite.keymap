@@ -180,38 +180,38 @@
                 #binding-cells = <0>;
         };
 
-        // lar0_obl__enter_raise_layer {
+        // erm0_obl__enter_raise_layer {
         //         compatible = "zmk,output-behavior-listener";
         //         layers = < RAISE >;
         //         sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
-        //         bindings = < &ob_lar0_in &ob_lar0_out >;
+        //         bindings = < &ob_erm0_in &ob_erm0_out >;
         // };
-        // lar0_obl__back_to_default_layer {
+        // erm0_obl__back_to_default_layer {
         //         compatible = "zmk,output-behavior-listener";
         //         layers = < DEFAULT >;
         //         sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
         //         invert-state;
-        //         bindings = < &ob_lar0_out >;
+        //         bindings = < &ob_erm0_out >;
         // };
-        // lar0_obl__press_position_5 {
+        // erm0_obl__press_position_5 {
         //         compatible = "zmk,output-behavior-listener";
         //         layers = < DEFAULT >;
         //         sources = < OUTPUT_SOURCE_POSITION_STATE_CHANGE >;
         //         position = <5>;
-        //         bindings = < &ob_lar0_in >;
+        //         bindings = < &ob_erm0_in >;
         // };
-        // lar0_obl__press_key_code_D {
+        // erm0_obl__press_key_code_D {
         //         compatible = "zmk,output-behavior-listener";
         //         layers = < DEFAULT >;
         //         sources = < OUTPUT_SOURCE_KEYCODE_STATE_CHANGE >;
         //         position = < 0x07 >;
-        //         bindings = < &ob_lar0_in >;
+        //         bindings = < &ob_erm0_in >;
         // };
-        // ob_lar0_in: ob_generic_lar0_in {
+        // ob_erm0_in: ob_generic_erm0_in {
         //         compatible = "zmk,output-behavior-generic"; #binding-cells = <0>;
         //         device = <&lra0>; delay = <1>; time-to-live-ms = <30>; force = <80>;
         // };
-        // ob_lar0_out: ob_generic_lar0_out {
+        // ob_erm0_out: ob_generic_erm0_out {
         //         compatible = "zmk,output-behavior-generic"; #binding-cells = <0>;
         //         device = <&lra0>; delay = <133>; time-to-live-ms = <10>; force = <30>;
         // };
