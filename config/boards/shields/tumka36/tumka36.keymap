@@ -44,90 +44,42 @@
 #define SCL_R MOVE_X(U_MOUSE_SCROLL_MAX)
 
 / {
-        // behaviors {
-        //         mmv: mmv_dummy {
-        //                 compatible = "zmk,behavior-momentary-layer";
-        //                 #binding-cells = <1>;
-        //         };
-        //         msc: msc_dummy {
-        //                 compatible = "zmk,behavior-momentary-layer";
-        //                 #binding-cells = <1>;
-        //         };
-        // };
+        tpoint0_mmv_ibl {
+                compatible = "zmk,input-behavior-listener";
+                device = <&tpoint0>;
+                layers = <DEF NUM MSK LHB>;
+	        evt-type = <INPUT_EV_REL>;
+	        x-input-code = <INPUT_REL_X>;
+	        y-input-code = <INPUT_REL_Y>;
+                y-invert;
+                // bindings = <&ib_tog_layer MSK>;
+        };
+        tpoint0_msl_ibl {
+                compatible = "zmk,input-behavior-listener";
+                device = <&tpoint0>;
+                layers = <MSC>;
+                evt-type = <INPUT_EV_REL>;
+                x-input-code = <INPUT_REL_MISC>;
+                y-input-code = <INPUT_REL_WHEEL>;
+                // bindings = <&ib_wheel_scaler 1 23>;
+        };
 
-        // tb0_mmv_ibl {
-        //         compatible = "zmk,input-behavior-listener";
-        //         device = <&pd0>;
-        //         layers = <DEF NUM MSK LHB>;
-	// 	evt-type = <INPUT_EV_REL>;
-	// 	x-input-code = <INPUT_REL_X>;
-	// 	y-input-code = <INPUT_REL_Y>;
-	// 	scale-multiplier = <1>;
-	// 	scale-divisor = <1>;
-        //         // bindings = <&ib_tog_layer MSK>;
-        // };
-        // tb0_msl_ibl {
-        //         compatible = "zmk,input-behavior-listener";
-        //         device = <&pd0>;
-        //         layers = <MSC>;
+        // ib_wheel_scaler: ib_wheel_scaler {
+        //         compatible = "zmk,input-behavior-scaler";
+        //         #binding-cells = <2>;
         //         evt-type = <INPUT_EV_REL>;
-        //         x-input-code = <INPUT_REL_HWHEEL>;
-        //         y-input-code = <INPUT_REL_WHEEL>;
-        //         scale-multiplier = <1>;
-        //         scale-divisor = <11>;
-        //         y-invert;
-        // };
-
-        // tb1_mmv_ibl {
-        //         compatible = "zmk,input-behavior-listener";
-        //         device = <&pd1>;
-        //         layers = <DEF NUM MSK LHB>;
-	// 	evt-type = <INPUT_EV_REL>;
-	// 	x-input-code = <INPUT_REL_X>;
-	// 	y-input-code = <INPUT_REL_Y>;
-	// 	scale-multiplier = <1>;
-	// 	scale-divisor = <1>;
-        //         // bindings = <&ib_tog_layer MSK>;
-        // };
-        // tb1_msl_ibl {
-        //         compatible = "zmk,input-behavior-listener";
-        //         device = <&pd1>;
-        //         layers = <MSC>;
-        //         evt-type = <INPUT_EV_REL>;
-        //         x-input-code = <INPUT_REL_HWHEEL>;
-        //         y-input-code = <INPUT_REL_WHEEL>;
-        //         scale-multiplier = <1>;
-        //         scale-divisor = <11>;
-        //         y-invert;
-        // };
-
-        // tb2_mmv_ibl {
-        //         compatible = "zmk,input-behavior-listener";
-        //         device = <&pd2>;
-        //         layers = <DEF NUM MSK LHB>;
-	// 	evt-type = <INPUT_EV_REL>;
-	// 	x-input-code = <INPUT_REL_X>;
-	// 	y-input-code = <INPUT_REL_Y>;
-	// 	scale-multiplier = <1>;
-	// 	scale-divisor = <1>;
-        //         // bindings = <&ib_tog_layer MSK>;
-        // };
-        // tb2_msl_ibl {
-        //         compatible = "zmk,input-behavior-listener";
-        //         device = <&pd2>;
-        //         layers = <MSC>;
-        //         evt-type = <INPUT_EV_REL>;
-        //         x-input-code = <INPUT_REL_HWHEEL>;
-        //         y-input-code = <INPUT_REL_WHEEL>;
-        //         scale-multiplier = <1>;
-        //         scale-divisor = <11>;
-        //         y-invert;
+        //         input-code = <INPUT_REL_WHEEL>;
         // };
 
         // ib_tog_layer: ib_tog_layer {
         //         compatible = "zmk,input-behavior-tog-layer";
         //         #binding-cells = <1>;
         //         time-to-live-ms = <1000>;
+        // };
+
+        // ib_fwd_to_hid_io: ib_forward_fwd_to_hid_io {
+        //         compatible = "zmk,input-behavior-fwd-to-hid-io";
+        //         #binding-cells = <0>;
         // };
 
         //   0   1   2   3   4     5   6   7   8   9
@@ -166,14 +118,14 @@
                 dot   { timeout-ms = <30>; key-positions = <18 34>; bindings = <&kp DOT>; layers = <DEF LHB>; };
                 flash { timeout-ms = <30>; key-positions = <19 34>; bindings = <&kp FSLH>; layers = <DEF LHB>; };
 
-                bksp { timeout-ms = <90>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <DEF LHB NUM>; };                
-                esc  { timeout-ms = <90>; key-positions = <11 12>; bindings = <&kp ESC>; layers = <DEF LHB NUM>; };
+                bksp { timeout-ms = <70>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <DEF LHB NUM>; };                
+                esc  { timeout-ms = <70>; key-positions = <11 12>; bindings = <&kp ESC>; layers = <DEF LHB NUM>; };
 
-                spcr { timeout-ms = <90>; key-positions = <27 28>; bindings = <&kp SPC>; layers = <DEF LHB NUM>; };
-                tab  { timeout-ms = <90>; key-positions = <21 22>; bindings = <&kp TAB>; layers = <DEF LHB NUM>; };
+                spcr { timeout-ms = <70>; key-positions = <27 28>; bindings = <&kp SPC>; layers = <DEF LHB NUM>; };
+                tab  { timeout-ms = <70>; key-positions = <21 22>; bindings = <&kp TAB>; layers = <DEF LHB NUM>; };
 
-                ret1  { timeout-ms = <90>; key-positions = <17 26>; bindings = <&kp RET>; layers = <DEF LHB NUM>; };
-                ret2  { timeout-ms = <90>; key-positions = <12 23>; bindings = <&kp RET>; layers = <DEF LHB NUM>; };
+                ret1  { timeout-ms = <80>; key-positions = <17 26>; bindings = <&kp RET>; layers = <DEF LHB NUM>; };
+                ret2  { timeout-ms = <80>; key-positions = <12 23>; bindings = <&kp RET>; layers = <DEF LHB NUM>; };
 
                 n1   { timeout-ms = <80>; key-positions = <1 2>; bindings = <&kp N1>; layers = <NUM>; };
                 n5   { timeout-ms = <70>; key-positions = <2 3>; bindings = <&kp N5>; layers = <NUM>; };
@@ -300,12 +252,12 @@
                 };
                 MSC_layer {
 // +------------------------------------------------------+     +------------------------------------------------------+
-// |   TEMPO  |   BT_0   | (H) BT_1 | (H) BT_C |          |     |    TOG   |    (H)   |    (H)   |          |    DFU   |
+// |   TEMPO  |   BT_0   | (H) BT_1 | (H) BT_C |          |     |          |    (H)   |    (H)   |          |    DFU   |
 // |   RESET  |  ISA_ON  |  ISA_OFF |  ISA_SLP |          |     |   SLFT   |   SDWN   |    SUP   |   SRGT   |   RESET  |
 // |    (H)   |   RCLK   |   MCLK   |   LCLK   |          |     |          |   LCLK   |   MCLK   |   RCLK   |    (H)   |
 //                       |   (H)    |          |          |     |          |          |    (H)   |
                         bindings = <
-   &tempo      &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_CLR    &trans            &out OUT_TOG &trans        &trans      &trans        &bootloader
+   &tempo      &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_CLR    &trans            &trans       &trans        &trans      &trans        &bootloader
    &sys_reset  &isa ISA_ON   &isa ISA_OFF  &isa ISA_SLP  &trans            &msc SCL_L   &msc SCL_D    &msc SCL_U  &msc SCL_R    &sys_reset
    &trans      &mkp RCLK     &mkp MCLK     &mkp LCLK     &trans            &trans       &mkp LCLK     &mkp MCLK   &mkp RCLK     &trans
                              &trans        &trans        &trans            &trans       &trans        &trans

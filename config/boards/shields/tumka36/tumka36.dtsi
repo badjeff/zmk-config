@@ -32,8 +32,8 @@ RC(4,0) RC(4,1) RC(4,2)
 		wakeup-source;
 		row-gpios
             = <&pro_micro 8  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro 9  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+						, <&pro_micro 2  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+						, <&pro_micro 0  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
 						, <&pro_micro 1  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             ;
 		

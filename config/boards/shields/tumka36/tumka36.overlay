@@ -5,3 +5,5 @@
  */
 
 #include "tumka36.dtsi"
+
+#include "tumka36__trackpoint_ps2.dtsi"
