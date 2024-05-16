@@ -88,11 +88,23 @@
 // };
 
 // #include "corne36__haptic_drv2605.dtsi"
+// /{
+// 	fb_lra0: fb_lra0 {
+// 		compatible = "zmk,output-haptic-feedback";
+// 		#binding-cells = <0>;
+// 		// driver = "drv2605";
+// 		// device = <&drv2605_0>;
+// 	};
+// };
+
 /{
 	fb_lra0: fb_lra0 {
-		compatible = "zmk,output-haptic-feedback";
+		compatible = "zmk,output-split-output-relay";
 		#binding-cells = <0>;
-		// driver = "drv2605";
-		// device = <&drv2605_0>;
+	};
+	output_relay_config_201 {
+		compatible = "zmk,split-peripheral-output-relay";
+		device = <&fb_lra0>;
+		relay-channel = <201>;
 	};
 };
