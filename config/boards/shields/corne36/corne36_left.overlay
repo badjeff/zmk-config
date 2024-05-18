@@ -108,3 +108,15 @@
 // 		relay-channel = <201>;
 // 	};
 // };
+
+// /{
+// 	fb_led0: fb_led0 {
+// 		compatible = "zmk,output-split-output-relay";
+// 		#binding-cells = <0>;
+// 	};
+// 	output_relay_config_202 {
+// 		compatible = "zmk,split-peripheral-output-relay";
+// 		device = <&fb_led0>;
+// 		relay-channel = <202>;
+// 	};
+// };

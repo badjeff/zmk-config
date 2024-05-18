@@ -407,4 +407,26 @@
                 /* force will be convrt to waveformm effect from DRV2605 library */
                 force = <7>;
         };
+
+        // pwm0_obl__press_key_code_p {
+        //         compatible = "zmk,output-behavior-listener";
+        //         layers = < DEF LHB >;
+        //         sources = < OUTPUT_SOURCE_KEYCODE_STATE_CHANGE >;
+        //         position = < 0x13>;
+        //         bindings = < &ob_led0 >;
+        //         /* caught all state change that include key press and release */
+        //         all-state;
+        // };
+        // ob_led0: ob_led0 {
+        //         compatible = "zmk,output-behavior-generic";
+        //         #binding-cells = <0>;
+        //         device = <&fb_led0>;
+        //         delay = <0>;
+        //         /* set duty cycle of pwm, max 256 */
+        //         force = <180>;
+        //         /* enable momentum to trigger on both on all state change */
+        //         momentum;
+        //         momentum-force = <12>;
+        // };
+
 };
