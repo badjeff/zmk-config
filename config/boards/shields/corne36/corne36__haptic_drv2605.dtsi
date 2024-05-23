@@ -32,5 +32,6 @@
         compatible = "ti,drv2605";
         reg = <0x5a>;
         library = <6>;
+        standby-ms = <1000>;
     };
 };
