@@ -160,8 +160,6 @@
                 compatible = "zmk,input-behavior-listener";
                 device = <&tpad0>;
                 layers = <DEF NUM MSK LHB>;
-	        scale-multiplier = <5>;
-	        scale-divisor = <4>;
                 // bindings = <&ib_tog_layer MSK>;
                 // bindings = <&ib_fwd_to_hid_io>;
                 y-invert;
