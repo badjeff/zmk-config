@@ -1,0 +1,6 @@
+if SHIELD_SAMUKUN
+
+config ZMK_KEYBOARD_NAME
+    default "SAMUKUN"
+
+endif
