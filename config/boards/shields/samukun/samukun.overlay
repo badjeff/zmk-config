@@ -6,4 +6,4 @@
 
 #include "samukun.dtsi"
 
-#include "samukun__trackpoint_ps2.dtsi"
+#include "samukun__tpoint0.dtsi"

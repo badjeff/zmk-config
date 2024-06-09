@@ -52,6 +52,9 @@ manifest:
     - name: zmk-drv2605-driver
       remote: badjeff
       revision: main      
+    - name: zmk-kscan-blackout
+      remote: badjeff
+      revision: main      
     # - name: zmk-behavior-set-default-layer
     #   remote: badjeff
     #   revision: main
