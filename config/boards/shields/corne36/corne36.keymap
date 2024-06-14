@@ -234,7 +234,8 @@
                 dot   { timeout-ms = <30>; key-positions = <18 34>; bindings = <&kp DOT>; layers = <DEF LHB>; };
                 flash { timeout-ms = <30>; key-positions = <19 34>; bindings = <&kp FSLH>; layers = <DEF LHB>; };
 
-                bksp { timeout-ms = <70>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <DEF LHB NUM>; };                
+                bksp { timeout-ms = <70>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <DEF LHB>; };
+                del  { timeout-ms = <70>; key-positions = <17 18>; bindings = <&kp DEL>; layers = <NUM>; };
                 esc  { timeout-ms = <70>; key-positions = <11 12>; bindings = <&kp ESC>; layers = <DEF LHB NUM>; };
 
                 spcr { timeout-ms = <70>; key-positions = <27 28>; bindings = <&kp SPC>; layers = <DEF LHB NUM>; };
