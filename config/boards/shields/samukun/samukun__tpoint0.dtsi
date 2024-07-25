@@ -140,4 +140,5 @@
 		tp-x-invert;
 		tp-y-invert;
 		sampling-rate = <80>;
+		pull-mode;
 };
