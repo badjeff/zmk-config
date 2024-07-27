@@ -12,16 +12,28 @@
 		zmk,matrix-transform = &default_transform;
 	};
 
+	// kscan0: kscan {
+	// 	compatible = "zmk,kscan-blackout";
+	// 	label = "KSCAN";
+	// };
 	kscan0: kscan {
-		compatible = "zmk,kscan-blackout";
+		compatible = "zmk,kscan-gpio-matrix";
 		label = "KSCAN";
+		wakeup-source;
+		diode-direction = "col2row";
+		row-gpios
+			= <&pro_micro 21 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+			;
+		col-gpios
+			= <&pro_micro 19 GPIO_ACTIVE_HIGH>
+			;
 	};
 
 	default_transform: keymap_transform_0 {
 		compatible = "zmk,matrix-transform";
-		columns = <0>;
-		rows = <0>;
-		map = <>;
+		columns = <1>;
+		rows = <1>;
+		map = < RC(0,0) >;
 	};
 
 };

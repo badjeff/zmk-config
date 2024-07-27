@@ -141,4 +141,5 @@
 		tp-y-invert;
 		sampling-rate = <80>;
 		pull-mode;
+		use-shared-semaphore;
 };
