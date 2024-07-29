@@ -17,6 +17,23 @@
 #define MOUSE_PS2_PIN_UNEXPOSED_TX <NRF_PSEL(UART_TX, 0, 27)>
 #define MOUSE_PS2_PIN_UNEXPOSED_RX <NRF_PSEL(UART_RX, 0, 28)>
 
+
+
+#define MOUSE_PS2_PIN_SCL_PRO_MICRO_1 <&pro_micro 14 GPIO_ACTIVE_HIGH>
+#define MOUSE_PS2_PIN_SDA_PRO_MICRO_1 <&pro_micro 0 GPIO_ACTIVE_HIGH>
+#define MOUSE_PS2_PIN_RST_PRO_MICRO_1 <&pro_micro 8 GPIO_ACTIVE_HIGH>
+#define MOUSE_PS2_PIN_SDA_PINCTRL_1 <NRF_PSEL(UART_RX, 0, 8)> // 0, 8
+// #define MOUSE_PS2_PIN_SCL_PRO_MICRO_1 <&gpio0 5 GPIO_ACTIVE_HIGH>
+// #define MOUSE_PS2_PIN_SDA_PRO_MICRO_1 <&gpio0 4 GPIO_ACTIVE_HIGH>
+// #define MOUSE_PS2_PIN_RST_PRO_MICRO_1 <&gpio1 11 GPIO_ACTIVE_HIGH>
+// #define MOUSE_PS2_PIN_SDA_PINCTRL_1 <NRF_PSEL(UART_RX, 0, 4)>
+
+#define MOUSE_PS2_UART_BAUD_RATE_1 <14400>
+#define MOUSE_PS2_PIN_UNEXPOSED_TX_1 <NRF_PSEL(UART_TX, 0, 27)>
+#define MOUSE_PS2_PIN_UNEXPOSED_RX_1 <NRF_PSEL(UART_RX, 0, 28)>
+
+
+
 &gpiote { interrupts = < 6 0 >; };
 &clock { interrupts = < 0 3 >; };
 &power { interrupts = < 0 3 >; };
@@ -96,50 +113,110 @@
 							MOUSE_PS2_PIN_UNEXPOSED_RX;
 		};
 	};
+
+
+
+	uart1_ps2_default: uart1_ps2_default {
+		group1 {
+			psels = MOUSE_PS2_PIN_UNEXPOSED_TX_1,
+							MOUSE_PS2_PIN_SDA_PINCTRL_1;
+		};
+	};
+
+	// Set this to the same pins as uart1_ps2_default
+	uart1_ps2_sleep: uart1_ps2_sleep {
+		group1 {
+			psels = MOUSE_PS2_PIN_UNEXPOSED_TX_1,
+							MOUSE_PS2_PIN_SDA_PINCTRL_1;
+			low-power-enable;
+		};
+	};
+
+	uart1_ps2_off: uart1_ps2_off {
+		group1 {
+			psels = MOUSE_PS2_PIN_UNEXPOSED_TX_1,
+							MOUSE_PS2_PIN_UNEXPOSED_RX_1;
+		};
+	};
+
+
+
 };
 
-&uart0 {
-    status = "disabled";
+
+
+// &uart0 {
+//     status = "okay";
+//     compatible = "nordic,nrf-uarte";
+
+//     current-speed = MOUSE_PS2_UART_BAUD_RATE;
+//     pinctrl-0 = <&uart0_ps2_default>;
+//     pinctrl-1 = <&uart0_ps2_off>;
+
+//     pinctrl-names = "default", "sleep";
+
+//     uart0_ps2: uart0_ps2 {
+//         status="okay";
+//         compatible = "uart-ps2";
+//         scl-gpios = MOUSE_PS2_PIN_SCL_PRO_MICRO;
+//         sda-gpios = MOUSE_PS2_PIN_SDA_PRO_MICRO;
+//     };
+// };
+
+
+&uart1 {
+    status = "okay";
     compatible = "nordic,nrf-uarte";
 
-    current-speed = MOUSE_PS2_UART_BAUD_RATE;
-    pinctrl-0 = <&uart0_ps2_default>;
-    pinctrl-1 = <&uart0_ps2_off>;
+    current-speed = MOUSE_PS2_UART_BAUD_RATE_1;
+    pinctrl-0 = <&uart1_ps2_default>;
+    pinctrl-1 = <&uart1_ps2_off>;
 
     pinctrl-names = "default", "sleep";
 
-    uart_ps2: uart_ps2 {
-        status="disabled";
+    uart1_ps2: uart1_ps2 {
+        status="okay";
         compatible = "uart-ps2";
-        scl-gpios = MOUSE_PS2_PIN_SCL_PRO_MICRO;
-        sda-gpios = MOUSE_PS2_PIN_SDA_PRO_MICRO;
+        scl-gpios = MOUSE_PS2_PIN_SCL_PRO_MICRO_1;
+        sda-gpios = MOUSE_PS2_PIN_SDA_PRO_MICRO_1;
     };
 };
+
+
+
+// / {
+//     tpoint0: tpoint0 {
+// 				status = "okay";
+//         compatible = "zmk,input-mouse-ps2";
+// 	      ps2-device = <&uart0_ps2>;
+// #ifdef MOUSE_PS2_PIN_RST_PRO_MICRO
+//         rst-gpios = MOUSE_PS2_PIN_RST_PRO_MICRO;
+// #endif
+// 				disable-clicking;
+// 				tp-sensitivity = <128>;
+// 				tp-x-invert;
+// 				tp-y-invert;
+// 				sampling-rate = <80>;
+// 				pull-mode;
+// 				use-shared-semaphore;
+//     };
+// };
+
 
 / {
-    tpoint0: tpoint0 {
-				status = "disabled";
+    tpoint1: tpoint1 {
+				status = "okay";
         compatible = "zmk,input-mouse-ps2";
-	      ps2-device = <&uart_ps2>;
-#ifdef MOUSE_PS2_PIN_RST_PRO_MICRO
-        rst-gpios = MOUSE_PS2_PIN_RST_PRO_MICRO;
+	      ps2-device = <&uart1_ps2>;
+#ifdef MOUSE_PS2_PIN_RST_PRO_MICRO_1
+        rst-gpios = MOUSE_PS2_PIN_RST_PRO_MICRO_1;
 #endif
+				disable-clicking;
+				tp-sensitivity = <128>;
+				tp-x-invert;
+				tp-y-invert;
+				sampling-rate = <80>;
+				pull-mode;
+				use-shared-semaphore;
     };
-};
-
-&uart0 {
-    status = "okay";
-};
-&uart_ps2 {
-    status = "okay";
-};
-&tpoint0 {
-    status = "okay";
-		disable-clicking;
-		tp-sensitivity = <128>;
-		tp-x-invert;
-		tp-y-invert;
-		sampling-rate = <80>;
-		pull-mode;
-		use-shared-semaphore;
 };
