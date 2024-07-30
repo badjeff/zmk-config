@@ -14,17 +14,17 @@
 #define DEF 0
 
 / {
-        // tpoint0_mmv_ibl {
-        //         compatible = "zmk,input-behavior-listener";
-        //         device = <&tpoint0>;
-        //         layers = <DEF>;
-	//         evt-type = <INPUT_EV_REL>;
-	//         x-input-code = <INPUT_REL_X>;
-	//         y-input-code = <INPUT_REL_Y>;
-        //         xy-swap; x-invert;
-        //         y-invert;
-        //         // bindings = <&ib_tog_layer MSK>;
-        // };
+        tpoint0_mmv_ibl {
+                compatible = "zmk,input-behavior-listener";
+                device = <&tpoint0>;
+                layers = <DEF>;
+	        evt-type = <INPUT_EV_REL>;
+	        x-input-code = <INPUT_REL_X>;
+	        y-input-code = <INPUT_REL_Y>;
+                xy-swap; x-invert;
+                y-invert;
+                // bindings = <&ib_tog_layer MSK>;
+        };
 
         tpoint1_mmv_ibl {
                 compatible = "zmk,input-behavior-listener";

@@ -15,8 +15,7 @@
 
 #define MOUSE_PS2_UART_BAUD_RATE <14400>
 #define MOUSE_PS2_PIN_UNEXPOSED_TX <NRF_PSEL(UART_TX, 0, 27)>
-#define MOUSE_PS2_PIN_UNEXPOSED_RX <NRF_PSEL(UART_RX, 0, 28)>
-
+#define MOUSE_PS2_PIN_UNEXPOSED_RX <NRF_PSEL(UART_RX, 0, 26)>
 
 
 #define MOUSE_PS2_PIN_SCL_PRO_MICRO_1 <&pro_micro 14 GPIO_ACTIVE_HIGH>
@@ -29,9 +28,108 @@
 // #define MOUSE_PS2_PIN_SDA_PINCTRL_1 <NRF_PSEL(UART_RX, 0, 4)>
 
 #define MOUSE_PS2_UART_BAUD_RATE_1 <14400>
-#define MOUSE_PS2_PIN_UNEXPOSED_TX_1 <NRF_PSEL(UART_TX, 0, 27)>
+#define MOUSE_PS2_PIN_UNEXPOSED_TX_1 <NRF_PSEL(UART_TX, 0, 29)>
 #define MOUSE_PS2_PIN_UNEXPOSED_RX_1 <NRF_PSEL(UART_RX, 0, 28)>
 
+
+&pinctrl {
+
+	uart0_ps2_default: uart0_ps2_default {
+		group1 {
+			psels = MOUSE_PS2_PIN_UNEXPOSED_TX,
+							MOUSE_PS2_PIN_SDA_PINCTRL;
+		};
+	};
+	uart0_ps2_off: uart0_ps2_off {
+		group1 {
+			psels = MOUSE_PS2_PIN_UNEXPOSED_TX,
+							MOUSE_PS2_PIN_UNEXPOSED_RX;
+		};
+	};
+
+	uart1_ps2_default: uart1_ps2_default {
+		group1 {
+			psels = MOUSE_PS2_PIN_UNEXPOSED_TX_1,
+							MOUSE_PS2_PIN_SDA_PINCTRL_1;
+		};
+	};
+
+	uart1_ps2_off: uart1_ps2_off {
+		group1 {
+			psels = MOUSE_PS2_PIN_UNEXPOSED_TX_1,
+							MOUSE_PS2_PIN_UNEXPOSED_RX_1;
+		};
+	};
+	
+};
+
+
+&uart0 {
+    status = "okay";
+    compatible = "nordic,nrf-uarte";
+
+    current-speed = MOUSE_PS2_UART_BAUD_RATE;
+    pinctrl-0 = <&uart0_ps2_default>;
+    pinctrl-1 = <&uart0_ps2_off>;
+    pinctrl-names = "default", "sleep";
+
+    uart0_ps2: uart0_ps2 {
+        status="okay";
+        compatible = "uart-ps2";
+        scl-gpios = MOUSE_PS2_PIN_SCL_PRO_MICRO;
+        sda-gpios = MOUSE_PS2_PIN_SDA_PRO_MICRO;
+    };
+};
+
+&uart1 {
+    status = "okay";
+    compatible = "nordic,nrf-uarte";
+
+    current-speed = MOUSE_PS2_UART_BAUD_RATE_1;
+    pinctrl-0 = <&uart1_ps2_default>;
+    pinctrl-1 = <&uart1_ps2_off>;
+    pinctrl-names = "default", "sleep";
+
+    uart1_ps2: uart1_ps2 {
+        status="okay";
+        compatible = "uart-ps2";
+        scl-gpios = MOUSE_PS2_PIN_SCL_PRO_MICRO_1;
+        sda-gpios = MOUSE_PS2_PIN_SDA_PRO_MICRO_1;
+    };
+};
+
+
+/ {
+    tpoint0: tpoint0 {
+				status = "okay";
+        compatible = "zmk,input-mouse-ps2";
+	      ps2-device = <&uart0_ps2>;
+#ifdef MOUSE_PS2_PIN_RST_PRO_MICRO
+        rst-gpios = MOUSE_PS2_PIN_RST_PRO_MICRO;
+#endif
+				disable-clicking;
+				tp-sensitivity = <128>;
+				tp-x-invert;
+				tp-y-invert;
+				sampling-rate = <80>;
+    };
+};
+
+/ {
+    tpoint1: tpoint1 {
+				status = "okay";
+        compatible = "zmk,input-mouse-ps2";
+	      ps2-device = <&uart1_ps2>;
+#ifdef MOUSE_PS2_PIN_RST_PRO_MICRO_1
+        rst-gpios = MOUSE_PS2_PIN_RST_PRO_MICRO_1;
+#endif
+				disable-clicking;
+				tp-sensitivity = <128>;
+				tp-x-invert;
+				tp-y-invert;
+				sampling-rate = <80>;
+    };
+};
 
 
 &gpiote { interrupts = < 6 0 >; };
@@ -78,145 +176,3 @@
 &pwm3 { interrupts = < 45 3 >; };
 &spi3 { interrupts = < 47 3 >; };
 &cryptocell { interrupts = < 42 3 >; };
-
-&pinctrl {
-	// This pinctrl state is used for receiving
-	// For `UART_TX`, set an unused and unexposed pin
-	// For `UART_RX`, set the PS/2 SDA pin number
-	uart0_ps2_default: uart0_ps2_default {
-		group1 {
-			psels = MOUSE_PS2_PIN_UNEXPOSED_TX,
-							MOUSE_PS2_PIN_SDA_PINCTRL;
-		};
-	};
-
-	// Set this to the same pins as uart0_ps2_default
-	uart0_ps2_sleep: uart0_ps2_sleep {
-		group1 {
-			psels = MOUSE_PS2_PIN_UNEXPOSED_TX,
-							MOUSE_PS2_PIN_SDA_PINCTRL;
-			low-power-enable;
-		};
-	};
-
-	// The nrf52 UART controller is not compatible with the PS/2
-	// transmission frame. So the PS/2 UART driver doesn't use UART for
-	// transmissions and instead use GPIO bit-banging.
-	//
-	// When the driver switches to transmit mode, it frees up the SDA pin by
-  // switching the UART controller to unexposed/unused pins.
-	//
-	// Then it configures the GPIO controller to use the SCL and SDA pins
-	uart0_ps2_off: uart0_ps2_off {
-		group1 {
-			psels = MOUSE_PS2_PIN_UNEXPOSED_TX,
-							MOUSE_PS2_PIN_UNEXPOSED_RX;
-		};
-	};
-
-
-
-	uart1_ps2_default: uart1_ps2_default {
-		group1 {
-			psels = MOUSE_PS2_PIN_UNEXPOSED_TX_1,
-							MOUSE_PS2_PIN_SDA_PINCTRL_1;
-		};
-	};
-
-	// Set this to the same pins as uart1_ps2_default
-	uart1_ps2_sleep: uart1_ps2_sleep {
-		group1 {
-			psels = MOUSE_PS2_PIN_UNEXPOSED_TX_1,
-							MOUSE_PS2_PIN_SDA_PINCTRL_1;
-			low-power-enable;
-		};
-	};
-
-	uart1_ps2_off: uart1_ps2_off {
-		group1 {
-			psels = MOUSE_PS2_PIN_UNEXPOSED_TX_1,
-							MOUSE_PS2_PIN_UNEXPOSED_RX_1;
-		};
-	};
-
-
-
-};
-
-
-
-&uart0 {
-    status = "okay";
-    compatible = "nordic,nrf-uarte";
-
-    current-speed = MOUSE_PS2_UART_BAUD_RATE;
-    pinctrl-0 = <&uart0_ps2_default>;
-    pinctrl-1 = <&uart0_ps2_off>;
-
-    pinctrl-names = "default", "sleep";
-
-    // uart0_ps2: uart0_ps2 {
-    //     status="okay";
-    //     compatible = "uart-ps2";
-    //     scl-gpios = MOUSE_PS2_PIN_SCL_PRO_MICRO;
-    //     sda-gpios = MOUSE_PS2_PIN_SDA_PRO_MICRO;
-    // };
-};
-
-
-&uart1 {
-    status = "okay";
-    compatible = "nordic,nrf-uarte";
-
-    current-speed = MOUSE_PS2_UART_BAUD_RATE_1;
-    pinctrl-0 = <&uart1_ps2_default>;
-    pinctrl-1 = <&uart1_ps2_off>;
-
-    pinctrl-names = "default", "sleep";
-
-    uart1_ps2: uart1_ps2 {
-        status="okay";
-        compatible = "uart-ps2";
-        scl-gpios = MOUSE_PS2_PIN_SCL_PRO_MICRO_1;
-        sda-gpios = MOUSE_PS2_PIN_SDA_PRO_MICRO_1;
-    };
-};
-
-
-
-// / {
-//     tpoint0: tpoint0 {
-// 				status = "okay";
-//         compatible = "zmk,input-mouse-ps2";
-// 	      ps2-device = <&uart0_ps2>;
-// #ifdef MOUSE_PS2_PIN_RST_PRO_MICRO
-//         rst-gpios = MOUSE_PS2_PIN_RST_PRO_MICRO;
-// #endif
-// 				disable-clicking;
-// 				tp-sensitivity = <128>;
-// 				tp-x-invert;
-// 				tp-y-invert;
-// 				sampling-rate = <80>;
-// 				pull-mode;
-// 				use-shared-semaphore;
-//     };
-// };
-
-
-/ {
-    tpoint1: tpoint1 {
-				status = "okay";
-        compatible = "zmk,input-mouse-ps2";
-	      ps2-device = <&uart1_ps2>;
-#ifdef MOUSE_PS2_PIN_RST_PRO_MICRO_1
-        rst-gpios = MOUSE_PS2_PIN_RST_PRO_MICRO_1;
-#endif
-				disable-clicking;
-				tp-sensitivity = <128>;
-				tp-x-invert;
-				tp-y-invert;
-				sampling-rate = <80>;
-				pull-mode;
-				use-shared-semaphore;
-    };
-};
