@@ -308,6 +308,17 @@
                 // };
         };
 
+        kpad: key_kip_a_d {
+                compatible = "zmk,behavior-key-press-lip";
+                #binding-cells = <1>;
+                keycodes = <A D>;
+        };
+        kpws: key_kip_w_s {
+                compatible = "zmk,behavior-key-press-lip";
+                #binding-cells = <1>;
+                keycodes = <W S>;
+        };
+
         tempo: key_tempo {
                 compatible = "zmk,behavior-key-tempo";
                 #binding-cells = <0>;
@@ -348,8 +359,8 @@
 // |  SHFT Z  |     X    |     C    |     V    |     B    |     |     N     |     M    |    ,<     |    .>    |  SHFT /? |
 //                       | ^MSK:ESC |  GUI:ESC | CTRL:TAB |     |  ALT:ENT  | _NUM:SPC | ^MSK:BKSP |
                         bindings = <
-   &kp Q          &kp W           &kp E          &kp R           &kp T               &kp Y           &kp U            &kp I           &kp O           &kp P
-   &kp A          &kp S           &kp D          &kp F           &kp G               &kp H           &kp J            &kp K           &kp L           &kp SEMI
+   &kp Q          &kpws W         &kp E          &kp R           &kp T               &kp Y           &kp U            &kp I           &kp O           &kp P
+   &kpad A        &kpws S         &kpad D        &kp F           &kp G               &kp H           &kp J            &kp K           &kp L           &kp SEMI
    &mt LSHFT Z    &kp X           &kp C          &kp V           &kp B               &kp N           &kp M            &kp COMMA       &kp DOT         &mt RSHFT FSLH
                                   &lt MSK ESC    &mt LGUI ESC    &mt LCTRL TAB       &mt LALT RET    &lt NUM SPACE    &lt MSK BKSP
    &mkp RCLK   &hmkp_tg MCLK MSC   &mkp LCLK
