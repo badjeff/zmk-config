@@ -60,7 +60,7 @@
         // tb0_mmv_ibl {
         //         compatible = "zmk,input-behavior-listener";
         //         device = <&pd0>;
-        //         layers = <DEF NUM MSK LHB>;
+        //         layers = <DEF TSP GME LHB NUM MSK>;
 	//         evt-type = <INPUT_EV_REL>;
 	//         x-input-code = <INPUT_REL_X>;
 	//         y-input-code = <INPUT_REL_Y>;
@@ -80,7 +80,7 @@
         // tb1_mmv_ibl {
         //         compatible = "zmk,input-behavior-listener";
         //         device = <&pd1>;
-        //         layers = <DEF NUM MSK LHB>;
+        //         layers = <DEF TSP GME LHB NUM MSK>;
 	//         evt-type = <INPUT_EV_REL>;
 	//         x-input-code = <INPUT_REL_X>;
 	//         y-input-code = <INPUT_REL_Y>;
@@ -100,7 +100,7 @@
         tball0_mmv_ibl {
                 compatible = "zmk,input-behavior-listener";
                 device = <&tball0>;
-                layers = <DEF NUM MSK LHB>;
+                layers = <DEF TSP GME LHB NUM MSK>;
 		evt-type = <INPUT_EV_REL>;
 		x-input-code = <INPUT_REL_X>;
 		y-input-code = <INPUT_REL_Y>;
@@ -120,7 +120,7 @@
         tball1_mmv_ibl {
                 compatible = "zmk,input-behavior-listener";
                 device = <&tball1>;
-                layers = <DEF NUM MSK LHB>;
+                layers = <DEF TSP GME LHB NUM MSK>;
 		evt-type = <INPUT_EV_REL>;
 		x-input-code = <INPUT_REL_X>;
 		y-input-code = <INPUT_REL_Y>;
@@ -141,7 +141,7 @@
         tpoint0_mmv_ibl {
                 compatible = "zmk,input-behavior-listener";
                 device = <&tpoint0>;
-                layers = <DEF NUM MSK LHB>;
+                layers = <DEF TSP GME LHB NUM MSK>;
 	        evt-type = <INPUT_EV_REL>;
 	        x-input-code = <INPUT_REL_X>;
 	        y-input-code = <INPUT_REL_Y>;
@@ -161,7 +161,7 @@
         tpad0_mmv_ibl {
                 compatible = "zmk,input-behavior-listener";
                 device = <&tpad0>;
-                layers = <DEF NUM MSK LHB>;
+                layers = <DEF TSP GME LHB NUM MSK>;
                 // bindings = <&ib_tog_layer MSK>;
                 // bindings = <&ib_fwd_to_hid_io>;
                 y-invert;
