@@ -351,7 +351,7 @@
                 TSP_layer {
                         bindings = <
    &kp N0  &kp N9  &kp N8         &trans          &trans          &trans          &trans         &kp N3  &kp N2  &kp N1
-   &trans  &kp N7  &kp N6         &trans          &trans          &trans          &trans         &kp N4  &kp N  &trans
+   &trans  &kp N7  &kp N6         &trans          &trans          &trans          &trans         &kp N4  &kp N5  &trans
    &trans  &trans  &trans         &trans          &trans          &trans          &trans         &trans  &trans  &trans
                    &lt MSK BKSP   &lt NUM SPACE   &mt LALT RET    &mt LCTRL TAB   &mt LGUI ESC   &lt MSK ESC
    &trans   &trans   &trans
