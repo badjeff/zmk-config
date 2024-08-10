@@ -8,6 +8,6 @@
 
 // #include "zero36_trackball.dtsi"
 
-// #include "zero36_analog_input.dtsi"
+#include "zero36_analog_input.dtsi"
 
 // #include "zero36_led_strip.dtsi"
