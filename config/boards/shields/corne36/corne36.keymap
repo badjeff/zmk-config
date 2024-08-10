@@ -74,7 +74,7 @@
         //         x-input-code = <INPUT_REL_MISC>;
         //         y-input-code = <INPUT_REL_WHEEL>;
         //         y-invert;
-        //         bindings = <&ib_wheel_scaler 1 25>;
+        //         bindings = <&ib_wheel_scaler 1 25>, <&ib_misc_scaler 0 0>;
         // };
 
         // tb1_mmv_ibl {
@@ -94,7 +94,7 @@
         //         x-input-code = <INPUT_REL_MISC>;
         //         y-input-code = <INPUT_REL_WHEEL>;
         //         y-invert;
-        //         bindings = <&ib_wheel_scaler 1 25>;
+        //         bindings = <&ib_wheel_scaler 1 25>, <&ib_misc_scaler 0 0>;
         // };
 
         tball0_mmv_ibl {
@@ -114,7 +114,7 @@
                 x-input-code = <INPUT_REL_MISC>;
                 y-input-code = <INPUT_REL_WHEEL>;
                 y-invert;
-                bindings = <&ib_wheel_scaler 1 25>;
+                bindings = <&ib_wheel_scaler 1 25>, <&ib_misc_scaler 0 0>;
         };
 
         tball1_mmv_ibl {
@@ -135,7 +135,7 @@
                 x-input-code = <INPUT_REL_MISC>;
                 y-input-code = <INPUT_REL_WHEEL>;
                 y-invert;
-                bindings = <&ib_wheel_scaler 1 25>;
+                bindings = <&ib_wheel_scaler 1 25>, <&ib_misc_scaler 0 0>;
         };
 
         tpoint0_mmv_ibl {
@@ -155,7 +155,7 @@
                 evt-type = <INPUT_EV_REL>;
                 x-input-code = <INPUT_REL_MISC>;
                 y-input-code = <INPUT_REL_WHEEL>;
-                bindings = <&ib_wheel_scaler 1 23>;
+                bindings = <&ib_wheel_scaler 1 23>, <&ib_misc_scaler 0 0>;
         };
 
         tpad0_mmv_ibl {
@@ -179,7 +179,7 @@
                 evt-type = <INPUT_EV_REL>;
                 x-input-code = <INPUT_REL_MISC>;
                 y-input-code = <INPUT_REL_WHEEL>;
-                bindings = <&ib_wheel_scaler 1 8>;
+                bindings = <&ib_wheel_scaler 1 8>, <&ib_misc_scaler 0 0>;
         };
 
         ib_wheel_scaler: ib_wheel_scaler {
@@ -187,6 +187,12 @@
                 #binding-cells = <2>;
                 evt-type = <INPUT_EV_REL>;
                 input-code = <INPUT_REL_WHEEL>;
+        };
+        ib_misc_scaler: ib_misc_scaler {
+                compatible = "zmk,input-behavior-scaler";
+                #binding-cells = <2>;
+                evt-type = <INPUT_EV_REL>;
+                input-code = <INPUT_REL_MISC>;
         };
 
         // ib_tog_layer: ib_tog_layer {
