@@ -59,12 +59,12 @@
         //         y-invert;
         // };
         
-	// anin0_ibl {
-	// 	compatible = "zmk,input-behavior-listener";
-	// 	device = <&anin0>;
-	// 	layers = <DEFAULT>;
-        //         bindings = <&ib_fwd_to_hid_io>;
-	// };
+	anin0_ibl {
+		compatible = "zmk,input-behavior-listener";
+		device = <&anin0>;
+		layers = <DEFAULT>;
+                bindings = <&ib_fwd_to_hid_io>;
+	};
 
         // ib_tog_layer: ib_tog_layer {
         //         compatible = "zmk,input-behavior-tog-layer";
@@ -72,37 +72,40 @@
         //         time-to-live-ms = <1000>;
         // };
 
-        // ib_fwd_to_hid_io: ib_forward_fwd_to_hid_io {
-        //         compatible = "zmk,input-behavior-fwd-to-hid-io";
-        //         #binding-cells = <0>;
-        // };
-
-        // hidiokp: hid_io_key_press {
-        //     compatible = "zmk,behavior-hid-io-key-press";
-        //     #binding-cells = <1>;
-        // };
-	// hidiokp_ibl {
-	// 	compatible = "zmk,input-behavior-listener";
-	// 	device = <&hidiokp>;
-	// 	layers = <DEFAULT>;
-        //         bindings = <&ib_fwd_to_hid_io>;
-	// };
-
-        ins883x: behavior_drv883x_0 {
-                compatible = "zmk,behavior-drv883x";
-                #binding-cells = <2>;
-                drv883x-dev = <&drv883x_0>;
-                vel-neutral = <128>;
-                vel-min-max = <128>;
+        ib_fwd_to_hid_io: ib_forward_fwd_to_hid_io {
+                compatible = "zmk,input-behavior-fwd-to-hid-io";
+                #binding-cells = <0>;
         };
+
+        hidiokp: hid_io_key_press {
+            compatible = "zmk,behavior-hid-io-key-press";
+            #binding-cells = <1>;
+        };
+	hidiokp_ibl {
+		compatible = "zmk,input-behavior-listener";
+		device = <&hidiokp>;
+		layers = <DEFAULT>;
+                bindings = <&ib_fwd_to_hid_io>;
+	};
+
+        // ins883x: behavior_drv883x_0 {
+        //         compatible = "zmk,behavior-drv883x";
+        //         #binding-cells = <2>;
+        //         drv883x-dev = <&drv883x_0>;
+        //         vel-neutral = <128>;
+        //         vel-min-max = <128>;
+        // };
 
         keymap {
                 compatible = "zmk,keymap";
                 default_layer {
                         bindings = <
-                                &ins883x 0 160 // channel 0, speed +32 (forward)
-                                &ins883x 0 128 // channel 0, speed 0   (neutral)
-                                &ins883x 0 96  // channel 0, speed -32 (reverse)
+
+                                &hidiokp 0      &hidiokp 1       &hidiokp 2
+                                
+                                // &ins883x 0 160 // channel 0, speed +32 (forward)
+                                // &ins883x 0 128 // channel 0, speed 0   (neutral)
+                                // &ins883x 0 96  // channel 0, speed -32 (reverse)
                         >;
                 };
                 // raise_layer {
