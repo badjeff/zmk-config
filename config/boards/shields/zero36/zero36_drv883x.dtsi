@@ -15,11 +15,24 @@
         group2 {
             pinmux = <PWM_1A_P2>;
         };
+        // group3 {
+        //     pinmux = <PWM_1B_P3>;
+        // };
+        // group4 {
+        //     pinmux = <PWM_2A_P4>;
+        // };
     };
 };
 
+&i2c0 {
+	status = "disabled";
+};
+
+&spi0 {
+	status = "disabled";
+};
+
 &pwm {
-    // compatible = "raspberrypi,pico-pwm";
     status = "okay";
     pinctrl-0 = <&pwms_default>;
     pinctrl-names = "default";
@@ -31,16 +44,14 @@
   drv883x_0: drv883x {
     compatible = "ti,drv883x";
 
-    enable-gpios = <&zero_header 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+    enable-gpios = <&gpio0 0 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 
-    /* map PWM gpios to IN1 / IN2 pin on drv883x */
-    /* set N in <&pwm N ...>, where N is refering to group<N> from above &pinctrl */
+    /* map PWM gpios to IN1 .. IN4 pin on drv883x */
     pwms = <&pwm 1 PWM_MSEC(20) PWM_POLARITY_NORMAL>
-         , <&pwm 2 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
-
-    /* either use plain gpios if always run at full speed */
-    // in1-gpios = <&zero_header 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
-    // in2-gpios = <&zero_header 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+         , <&pwm 2 PWM_MSEC(20) PWM_POLARITY_NORMAL>
+         //  , <&pwm 3 PWM_MSEC(20) PWM_POLARITY_NORMAL>
+         //  , <&pwm 4 PWM_MSEC(20) PWM_POLARITY_NORMAL>
+         ;
 
   };
 };
