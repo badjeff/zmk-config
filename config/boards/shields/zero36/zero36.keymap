@@ -88,7 +88,7 @@
                 bindings = <&ib_fwd_to_hid_io>;
 	};
 
-        // ins883x: behavior_drv883x_0 {
+        // h_bridge_0: behavior_drv883x_0 {
         //         compatible = "zmk,behavior-drv883x";
         //         #binding-cells = <2>;
         //         drv883x-dev = <&drv883x_0>;
@@ -96,16 +96,33 @@
         //         vel-min-max = <128>;
         // };
 
+        h_bridge_0: behavior_drv883x_0 {
+                compatible = "zmk,behavior-tb6612fng";
+                #binding-cells = <2>;
+                tb6612fng-dev = <&tb6612fng_0>;
+                vel-neutral = <128>;
+                vel-min-max = <128>;
+        };
+
         keymap {
                 compatible = "zmk,keymap";
                 default_layer {
                         bindings = <
 
-                                &hidiokp 0      &hidiokp 1       &hidiokp 2
+                                // &hidiokp 0      &hidiokp 1       &hidiokp 2
                                 
-                                // &ins883x 0 160 // channel 0, speed +32 (forward)
-                                // &ins883x 0 128 // channel 0, speed 0   (neutral)
-                                // &ins883x 0 96  // channel 0, speed -32 (reverse)
+                                &h_bridge_0 0 160 // channel 0, speed +32 (forward)
+                                &h_bridge_0 0 128 // channel 0, speed 0   (neutral)
+                                &h_bridge_0 0 96  // channel 0, speed -32 (reverse)
+
+                                // &h_bridge_0 0 192 // channel 0, speed +32 (forward)
+                                // &h_bridge_0 0 128 // channel 0, speed 0   (neutral)
+                                // &h_bridge_0 0 64  // channel 0, speed -32 (reverse)
+
+                                // &h_bridge_0 0 224 // channel 0, speed +32 (forward)
+                                // &h_bridge_0 0 128 // channel 0, speed 0   (neutral)
+                                // &h_bridge_0 0 32  // channel 0, speed -32 (reverse)
+
                         >;
                 };
                 // raise_layer {

@@ -12,4 +12,6 @@
 
 // #include "zero36_led_strip.dtsi"
 
-#include "zero36_drv883x.dtsi"
+// #include "zero36_drv883x.dtsi"
+
+#include "zero36_tb6612fng.dtsi"
