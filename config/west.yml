@@ -58,6 +58,9 @@ manifest:
     - name: zmk-drv883x-driver
       remote: badjeff
       revision: main      
+    - name: zmk-tb6612fng-driver
+      remote: badjeff
+      revision: main      
     - name: zmk-kscan-blackout
       remote: badjeff
       revision: main      
