@@ -120,12 +120,24 @@
         tball1_mmv_ibl {
                 compatible = "zmk,input-behavior-listener";
                 device = <&tball1>;
-                layers = <DEF TSP GME LHB NUM MSK>;
+                // layers = <DEF TSP GME LHB NUM MSK>;
+                layers = <DEF TSP GME LHB MSK>;
 		evt-type = <INPUT_EV_REL>;
 		x-input-code = <INPUT_REL_X>;
 		y-input-code = <INPUT_REL_Y>;
                 // bindings = <&ib_tog_layer MSK>;
                 // bindings = <&ib_fwd_to_hid_io>;
+        };
+        tball1_mmv_ibl__PRECISE__ {
+                compatible = "zmk,input-behavior-listener";
+                device = <&tball1>;
+                layers = < NUM >;
+		evt-type = <INPUT_EV_REL>;
+		x-input-code = <INPUT_REL_X>;
+		y-input-code = <INPUT_REL_Y>;
+                // bindings = <&ib_tog_layer MSK>;
+                // bindings = <&ib_fwd_to_hid_io>;
+                bindings = <&ib_x_scaler 2 3>, <&ib_y_scaler 2 3>;
         };
         tball1_msl_ibl {
                 compatible = "zmk,input-behavior-listener";
@@ -193,6 +205,18 @@
                 #binding-cells = <2>;
                 evt-type = <INPUT_EV_REL>;
                 input-code = <INPUT_REL_MISC>;
+        };
+        ib_x_scaler: ib_x_scaler {
+                compatible = "zmk,input-behavior-scaler";
+                #binding-cells = <2>;
+                evt-type = <INPUT_EV_REL>;
+                input-code = <INPUT_REL_X>;
+        };
+        ib_y_scaler: ib_y_scaler {
+                compatible = "zmk,input-behavior-scaler";
+                #binding-cells = <2>;
+                evt-type = <INPUT_EV_REL>;
+                input-code = <INPUT_REL_Y>;
         };
 
         // ib_tog_layer: ib_tog_layer {
