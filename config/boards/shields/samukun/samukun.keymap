@@ -14,29 +14,29 @@
 #define DEF 0
 
 / {
-        tpoint0_mmv_ibl {
-                compatible = "zmk,input-behavior-listener";
-                device = <&tpoint0>;
-                layers = <DEF>;
-	        evt-type = <INPUT_EV_REL>;
-	        x-input-code = <INPUT_REL_X>;
-	        y-input-code = <INPUT_REL_Y>;
-                xy-swap; x-invert;
-                y-invert;
-                // bindings = <&ib_tog_layer MSK>;
-        };
+        // tpoint0_mmv_ibl {
+        //         compatible = "zmk,input-behavior-listener";
+        //         device = <&tpoint0>;
+        //         layers = <DEF>;
+	//         evt-type = <INPUT_EV_REL>;
+	//         x-input-code = <INPUT_REL_X>;
+	//         y-input-code = <INPUT_REL_Y>;
+        //         xy-swap; x-invert;
+        //         y-invert;
+        //         // bindings = <&ib_tog_layer MSK>;
+        // };
 
-        tpoint1_mmv_ibl {
-                compatible = "zmk,input-behavior-listener";
-                device = <&tpoint1>;
-                layers = <DEF>;
-	        evt-type = <INPUT_EV_REL>;
-	        x-input-code = <INPUT_REL_X>;
-	        y-input-code = <INPUT_REL_Y>;
-                xy-swap; x-invert;
-                y-invert;
-                // bindings = <&ib_tog_layer MSK>;
-        };
+        // tpoint1_mmv_ibl {
+        //         compatible = "zmk,input-behavior-listener";
+        //         device = <&tpoint1>;
+        //         layers = <DEF>;
+	//         evt-type = <INPUT_EV_REL>;
+	//         x-input-code = <INPUT_REL_X>;
+	//         y-input-code = <INPUT_REL_Y>;
+        //         xy-swap; x-invert;
+        //         y-invert;
+        //         // bindings = <&ib_tog_layer MSK>;
+        // };
 
         // ib_fwd_to_hid_io: ib_forward_fwd_to_hid_io {
         //         compatible = "zmk,input-behavior-fwd-to-hid-io";
@@ -47,7 +47,11 @@
                 compatible = "zmk,keymap";
                 DEF_layer {
                         bindings = <
-                                &mkp LCLK
+                                &kp N1  &kp N2  &kp N3  &kp N4  &kp N5  &kp N6  &kp N7  &kp N8
+
+                                &kp A  &kp B  &kp C  &kp D  &kp E  &kp F  &kp G  &kp H
+
+                                &kp LS(A)  &kp LS(B)  &kp LS(C)  &kp LS(D)  &kp LS(E)  &kp LS(F)  &kp LS(G)  &kp LS(H)
                         >;
                 };
        };

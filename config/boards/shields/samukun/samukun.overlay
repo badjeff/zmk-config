@@ -6,4 +6,6 @@
 
 #include "samukun.dtsi"
 
-#include "samukun__tpoint0.dtsi"
+// #include "samukun__tpoint0.dtsi"
+
+#include "samukun__595.dtsi"
