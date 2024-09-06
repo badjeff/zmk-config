@@ -401,8 +401,8 @@
                         >;
                         // sensor-bindings = <&rot_enc>;
                 };
-                display-name = "RH Mou";
                 LHB_layer {
+                        display-name = "MKP Swap";
                         bindings = <
    &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
    &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
@@ -412,13 +412,13 @@
                         >;
                         // sensor-bindings = <&rot_enc>;
                 };
-                display-name = "Number";
                 NUM_layer {
 // +------------------------------------------------------+     +-------------------------------------------------------+
 // |    1!    | LCTRL:2@  |    3#    | LALT:4$  |    5%   |     |    6^    |  RALT:7& |    8&    |  RCTRL 9( |    0)    |
 // |    `~    |           |    {[    |    ]}    |   TAB   |     |    LFT   |   DWN    |    UP    |    RGT    |    '"    |
 // | SHFT TAB |           |          |          |   RET   |     |   BKSP   |    -_    |    =+    |    SPC    |  SHFT \| |
 //                        |          |          |         |     |          |    (H)   |          |
+                        display-name = "Num";
                         bindings = <
    &kp N1             &hm_l LCTRL N2   &kp N3     &hm_l LALT N4   &kp N5              &kp N6      &hm_r RALT N7   &kp N8      &hm_r RCTRL N9   &kp N0
    &kp GRAVE          &trans           &kp LBKT   &kp RBKT        &kp TAB             &kp LEFT    &kp DOWN        &kp UP      &kp RIGHT        &kp SQT
@@ -427,13 +427,13 @@
    &trans   &trans   &trans
                         >;
                 };
-                display-name = "Mouse Key";
                 MSK_layer {
 // +------------------------------------------------------+     +------------------------------------------------------+
 // |    F1    |    F2    |  (H) F3  |  _MSC:F4 |    F5    |     |    F6    |  _MSC:F7 |  (H) F8  |    F9    |   F10    |
 // |   VOLD   |   VOLU   |   BRID   |   BRIU   |   F12    |     |   MLFT   |   MDWN   |    MUP   |   MRGT   |   F11    |
 // |   _MSC   |   RCLK   |   MCLK   |   LCLK   |          |     |          |   LCLK   |   MCLK   |   RCLK   |  _MSC    |
 //                       |   (H)    |          |          |     |          |          |    (H)   |
+                        display-name = "Mou Key";
                         bindings = <
    &kp F1        &kp F2        &kp F3        &lt MSC F4    &kp F5            &kp F6      &lt MSC F7  &kp F8      &kp F9      &kp F1
    &kp C_VOL_DN  &kp C_VOL_UP  &kp C_BRI_DN  &kp C_BRI_UP  &kp F12           &mmv MOU_L  &mmv MOU_D  &mmv MOU_U  &mmv MOU_R  &kp F11
@@ -442,13 +442,13 @@
    &trans   &trans   &trans
                         >;
                 };
-                display-name = "Mouse Scroll";
                 MSC_layer {
 // +------------------------------------------------------+     +------------------------------------------------------+
 // |   TEMPO  |   BT_0   | (H) BT_1 | (H) BT_C |          |     |          |    (H)   |    (H)   |          |    DFU   |
 // |   RESET  |  ISA_ON  |  ISA_OFF |  ISA_SLP |          |     |   SLFT   |   SDWN   |    SUP   |   SRGT   |   RESET  |
 // |    (H)   |   RCLK   |   MCLK   |   LCLK   |          |     |          |   LCLK   |   MCLK   |   RCLK   |    (H)   |
 //                       |   (H)    |          |          |     |          |          |    (H)   |
+                        display-name = "Mou Scroll";
                         bindings = <
    &tempo      &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_CLR    &trans            &trans       &trans        &trans      &tog GME      &bootloader
    &sys_reset  &isa ISA_ON   &isa ISA_OFF  &isa ISA_SLP  &studio_unlock    &msc SCL_L   &msc SCL_D    &msc SCL_U  &msc SCL_R    &sys_reset
