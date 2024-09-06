@@ -18,6 +18,7 @@ include:
 
   - board: nice_nano_v2
     shield: corne36_left
+    snippet: studio-rpc-usb-uart
   - board: nice_nano_v2
     shield: corne36_right
   - board: seeeduino_xiao_ble

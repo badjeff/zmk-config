@@ -11,7 +11,8 @@ manifest:
     #   import: app/west.yml
     - name: zmk
       remote: badjeff
-      revision: feat/pointers-move-scroll
+      # revision: feat/pointers-move-scroll
+      revision: feat/pointer-move-scoll-studio
       import: app/west.yml
     - name: zmk-adns9800-driver
       remote: badjeff
