@@ -111,17 +111,17 @@
 
                                 // &hidiokp 0      &hidiokp 1       &hidiokp 2
                                 
-                                &h_bridge_0 0 160 // channel 0, speed +32 (forward)
+                                // &h_bridge_0 0 160 // channel 0, speed +32 (forward)
+                                // &h_bridge_0 0 128 // channel 0, speed 0   (neutral)
+                                // &h_bridge_0 0 96  // channel 0, speed -32 (reverse)
+
+                                // &h_bridge_0 0 192 // channel 0, speed +64 (forward)
+                                // &h_bridge_0 0 128 // channel 0, speed 0   (neutral)
+                                // &h_bridge_0 0 64  // channel 0, speed -64 (reverse)
+
+                                &h_bridge_0 0 224 // channel 0, speed +96 (forward)
                                 &h_bridge_0 0 128 // channel 0, speed 0   (neutral)
-                                &h_bridge_0 0 96  // channel 0, speed -32 (reverse)
-
-                                // &h_bridge_0 0 192 // channel 0, speed +32 (forward)
-                                // &h_bridge_0 0 128 // channel 0, speed 0   (neutral)
-                                // &h_bridge_0 0 64  // channel 0, speed -32 (reverse)
-
-                                // &h_bridge_0 0 224 // channel 0, speed +32 (forward)
-                                // &h_bridge_0 0 128 // channel 0, speed 0   (neutral)
-                                // &h_bridge_0 0 32  // channel 0, speed -32 (reverse)
+                                &h_bridge_0 0 32  // channel 0, speed -96 (reverse)
 
                         >;
                 };
