@@ -40,9 +40,9 @@
 		compatible = "zmk,gpio-595";
 		status = "okay";
 		gpio-controller;
-		spi-max-frequency = <4000000>;
+		spi-max-frequency = <2000000>;
 		reg = <0>;
-		label = "4HC595";
+		label = "74HC595";
 		#gpio-cells = <2>;
 		ngpios = <24>;
 	};
