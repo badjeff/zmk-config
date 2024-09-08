@@ -174,7 +174,8 @@
         tpad0_mmv_ibl {
                 compatible = "zmk,input-behavior-listener";
                 device = <&tpad0>;
-                layers = <DEF TSP GME LHB NUM MSK>;
+                // layers = <DEF TSP GME LHB NUM MSK>;
+                layers = <DEF TSP GME LHB MSK>;
                 // bindings = <&ib_tog_layer MSK>;
                 // bindings = <&ib_fwd_to_hid_io>;
                 y-invert;
@@ -183,6 +184,21 @@
 		// evt-type = <INPUT_EV_REL>;
 	        // x-input-code = <INPUT_REL_X>;
 	        // y-input-code = <INPUT_REL_Y>;
+                bindings = <&ib_x_scaler 7 5>, <&ib_y_scaler 7 5>;
+        };
+        tpad0_mmv_ibl__PRECISE__ {
+                compatible = "zmk,input-behavior-listener";
+                device = <&tpad0>;
+                layers = < NUM >;
+                // bindings = <&ib_tog_layer MSK>;
+                // bindings = <&ib_fwd_to_hid_io>;
+                y-invert;
+                /* NOTE: do NOT override event code here, */
+                /*       let Cirque glidepoint reports click from taps */
+		// evt-type = <INPUT_EV_REL>;
+	        // x-input-code = <INPUT_REL_X>;
+	        // y-input-code = <INPUT_REL_Y>;
+                bindings = <&ib_x_scaler 2 3>, <&ib_y_scaler 2 3>;
         };
         tpad0_msl_ibl {
                 compatible = "zmk,input-behavior-listener";
