@@ -14,23 +14,24 @@
 };
 
 // #include "sparklite_trackball_adns9800.dtsi"
-// #include "sparklite_trackball_pmw3610.dtsi"
-/ {
-	pd0: virtual_input_0 {
-		compatible = "zmk,virtual-input";
-	};
-	pd1: virtual_input {
-		compatible = "zmk,virtual-input";
-	};
-};
+#include "sparklite_trackball_pmw3610.dtsi"
 
-/ {
-	input_relay_config_102 {
-		compatible = "zmk,split-peripheral-input-relay";
-		relay-channel = <102>;
-		device = <&pd1>;
-	};
-};
+// / {
+// 	pd0: virtual_input_0 {
+// 		compatible = "zmk,virtual-input";
+// 	};
+// 	pd1: virtual_input_1 {
+// 		compatible = "zmk,virtual-input";
+// 	};
+// };
+
+// / {
+// 	input_relay_config_102 {
+// 		compatible = "zmk,split-peripheral-input-relay";
+// 		relay-channel = <102>;
+// 		device = <&pd1>;
+// 	};
+// };
 
 #define INPUT_EV_KEY 0x01               /**< Key event */
 #define INPUT_EV_REL 0x02               /**< Relative coordinate event */
@@ -87,13 +88,13 @@
 // };
 
 // #include "sparklite_trackpoint_ps2.dtsi"
-/ {
-	tpoint0: virtual_input_0 {
-		compatible = "zmk,virtual-input";
-	};
-};
+// / {
+// 	tpoint0: virtual_input_0 {
+// 		compatible = "zmk,virtual-input";
+// 	};
+// };
 
-#include "sparklite_touchpad_cirque.dtsi" 
+// #include "sparklite_touchpad_cirque.dtsi" 
 // / {
 // 	tpad0: virtual_input_0 {
 // 		compatible = "zmk,virtual-input";
