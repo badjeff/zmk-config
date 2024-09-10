@@ -36,6 +36,9 @@
 #define OUTPUT_SOURCE_KEYCODE_STATE_CHANGE      3
 #define OUTPUT_SOURCE_TRANSPORT                 4
 
+#define HID_IO_USAGE_FWD_TO_MOUSE 1
+#define HID_IO_USAGE_FWD_TO_JOYSTICK 2
+
 / {
         tb0_mmv_ibl {
                 compatible = "zmk,input-behavior-listener";
@@ -45,7 +48,9 @@
 		x-input-code = <INPUT_REL_X>;
 		y-input-code = <INPUT_REL_Y>;
                 // bindings = <&ib_tog_layer RAISE>;
-                // bindings = <&ib_fwd_to_hid_io>;
+                bindings = <&ib_fwd_to_hid_io>;
+                x-invert;
+                y-invert;
         };
         tb0_msl_ibl {
                 compatible = "zmk,input-behavior-listener";
@@ -155,10 +160,11 @@
         //         time-to-live-ms = <1000>;
         // };
 
-        // ib_fwd_to_hid_io: ib_forward_fwd_to_hid_io {
-        //         compatible = "zmk,input-behavior-fwd-to-hid-io";
-        //         #binding-cells = <0>;
-        // };
+        ib_fwd_to_hid_io: ib_forward_fwd_to_hid_io {
+                compatible = "zmk,input-behavior-fwd-to-hid-io";
+                #binding-cells = <0>;
+                usage = <HID_IO_USAGE_FWD_TO_MOUSE>;
+        };
 
         // erm0_obl__enter_raise_layer {
         //         compatible = "zmk,output-behavior-listener";
