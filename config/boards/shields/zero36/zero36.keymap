@@ -143,3 +143,25 @@
                 // };
        };
 };
+
+#define OUTPUT_SOURCE_TRANSPORT 6
+/{
+        obl_transport {
+                compatible = "zmk,output-behavior-listener";
+                layers = < DEFAULT RAISE >;
+                sources = < OUTPUT_SOURCE_TRANSPORT >;
+                bindings = < &ob_fader_motor >;
+        };
+        ob_fader_motor: ob_fader_motor {
+                compatible = "zmk,output-behavior-generic";
+                #binding-cells = <0>;
+                device = <&fader_motor>;
+        };
+	fader_motor: fader_motor {
+		compatible = "zmk,output-haptic-feedback";
+		#binding-cells = <0>;
+		// driver = "drv2605";
+		// device = <&drv2605_0>;
+	};
+
+};
