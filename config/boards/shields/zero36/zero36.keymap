@@ -105,7 +105,7 @@
         //         vel-min-max = <128>;
         // };
 
-        h_bridge_0: behavior_drv883x_0 {
+        h_bridge_0: behavior_tb6612fng {
                 compatible = "zmk,behavior-tb6612fng";
                 #binding-cells = <2>;
                 tb6612fng-dev = <&tb6612fng_0>;
@@ -148,20 +148,24 @@
 /{
         obl_transport {
                 compatible = "zmk,output-behavior-listener";
-                layers = < DEFAULT RAISE >;
-                sources = < OUTPUT_SOURCE_TRANSPORT >;
-                bindings = < &ob_fader_motor >;
+                layers = <DEFAULT RAISE>;
+                sources = <OUTPUT_SOURCE_TRANSPORT>;
+                bindings = <&ob_fader_motor>;
         };
         ob_fader_motor: ob_fader_motor {
                 compatible = "zmk,output-behavior-generic";
                 #binding-cells = <0>;
                 device = <&fader_motor>;
+                positional;
         };
 	fader_motor: fader_motor {
-		compatible = "zmk,output-haptic-feedback";
+		compatible = "zmk,output-motorized-fader";
 		#binding-cells = <0>;
-		// driver = "drv2605";
-		// device = <&drv2605_0>;
+                sensor-device = <&anin0>;
+                sensor-channel = <0>;
+                motor-driver-device = <&tb6612fng_0>;
+                motor-driver = "tb6612fng";
+                motor-channel = <0>;
 	};
 
 };

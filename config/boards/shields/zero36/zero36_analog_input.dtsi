@@ -28,8 +28,8 @@
 	anin0: analog_input_0 {
 		compatible = "zmk,analog-input";
 		
-		// sampling-hz = <100>;
-		sampling-hz = <50>;
+		sampling-hz = <100>;
+		// sampling-hz = <50>;
 
 		/* channels for thumbstick */
 		// x-ch {
