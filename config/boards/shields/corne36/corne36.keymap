@@ -304,11 +304,11 @@
                 dot   { timeout-ms = <30>; key-positions = <18 34>; bindings = <&kp DOT>; layers = <DEF TSP LHB>; };
                 flash { timeout-ms = <30>; key-positions = <19 34>; bindings = <&kp FSLH>; layers = <DEF TSP LHB>; };
 
-                bksp { timeout-ms = <70>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <DEF TSP LHB>; };
-                del  { timeout-ms = <70>; key-positions = <17 18>; bindings = <&kp DEL>; layers = <NUM TSP>; };
-                esc  { timeout-ms = <70>; key-positions = <11 12>; bindings = <&kp ESC>; layers = <DEF TSP LHB NUM>; };
-
+                bksp { timeout-ms = <70>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <DEF TSP LHB NUM>; };
+                del  { timeout-ms = <70>; key-positions = <18 19>; bindings = <&kp DEL>; layers = <DEF TSP LHB NUM>; };
                 spcr { timeout-ms = <70>; key-positions = <27 28>; bindings = <&kp SPC>; layers = <DEF TSP LHB NUM>; };
+
+                esc  { timeout-ms = <70>; key-positions = <11 12>; bindings = <&kp ESC>; layers = <DEF TSP LHB NUM>; };
                 tab  { timeout-ms = <70>; key-positions = <21 22>; bindings = <&kp TAB>; layers = <DEF TSP LHB NUM>; };
 
                 ret1  { timeout-ms = <30>; key-positions = <17 26>; bindings = <&kp RET>; layers = <DEF TSP LHB NUM>; };
