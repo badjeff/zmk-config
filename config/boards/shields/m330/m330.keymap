@@ -16,6 +16,7 @@
 #include <dt-bindings/zmk/ext_power.h>
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/mouse.h>
+#include <dt-bindings/zmk/input_transform.h>
 
 #include <behaviors/insomnia.dtsi>
 #include <dt-bindings/zmk/insomnia.h>

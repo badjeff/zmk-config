@@ -16,6 +16,7 @@
 #include <dt-bindings/zmk/ext_power.h>
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/mouse.h>
+#include <dt-bindings/zmk/input_transform.h>
 
 #define DEFAULT 0
 #define RAISE   1
@@ -29,27 +30,69 @@
 #define HID_IO_USAGE_FWD_TO_JOYSTICK 2
 
 / {
-        tb0_mmv_ibl {
-                compatible = "zmk,input-behavior-listener";
-                device = <&pd0>;
-                layers = <DEFAULT>;
-		evt-type = <INPUT_EV_REL>;
-		x-input-code = <INPUT_REL_X>;
-		y-input-code = <INPUT_REL_Y>;
-                // bindings = <&ib_tog_layer RAISE>;
-                bindings = <&ib_fwd_to_hid_io>;
-                x-invert;
-                y-invert;
+        xy_transf: xy_transf {
+                compatible = "zmk,input-processor-transform";
+                #input-processor-cells = <1>;
+                type = <INPUT_EV_REL>;
+                x-codes = <INPUT_REL_X>, <INPUT_REL_WHEEL>;
+                y-codes = <INPUT_REL_Y>, <INPUT_REL_HWHEEL>;
         };
-        tb0_msl_ibl {
-                compatible = "zmk,input-behavior-listener";
+        xy_scaler: xy_scaler {
+                compatible = "zmk,input-processor-scaler";
+                #input-processor-cells = <2>;
+                type = <INPUT_EV_REL>;
+                codes = <INPUT_REL_X>, <INPUT_REL_Y>;
+                track-remainders;
+        };
+        x_scaler: x_scaler {
+                compatible = "zmk,input-processor-scaler";
+                #input-processor-cells = <2>;
+                type = <INPUT_EV_REL>;
+                codes = <INPUT_REL_X>;
+        };
+        to_wheel: to_wheel {
+                compatible = "zmk,input-processor-code-mapper";
+                #input-processor-cells = <0>;
+                type = <INPUT_EV_REL>;
+                map = <INPUT_REL_X INPUT_REL_MISC>, <INPUT_REL_Y INPUT_REL_WHEEL>;
+        };
+
+        // tb0_mmv_ibl {
+        //         compatible = "zmk,input-behavior-listener";
+        //         device = <&pd0>;
+        //         layers = <DEFAULT>;
+	//         evt-type = <INPUT_EV_REL>;
+	//         x-input-code = <INPUT_REL_X>;
+	//         y-input-code = <INPUT_REL_Y>;
+        //         // bindings = <&ib_tog_layer RAISE>;
+        //         bindings = <&ib_fwd_to_hid_io>;
+        //         x-invert;
+        //         y-invert;
+        // };
+        // tb0_msl_ibl {
+        //         compatible = "zmk,input-behavior-listener";
+        //         device = <&pd0>;
+        //         layers = <RAISE>;
+        //         evt-type = <INPUT_EV_REL>;
+        //         x-input-code = <INPUT_REL_MISC>;
+        //         y-input-code = <INPUT_REL_WHEEL>;
+        //         y-invert;
+        //         // bindings = <&ib_fwd_to_hid_io>;
+        // };
+        tball1_mmv_il {
+                compatible = "zmk,input-listener";
                 device = <&pd0>;
-                layers = <RAISE>;
-                evt-type = <INPUT_EV_REL>;
-                x-input-code = <INPUT_REL_MISC>;
-                y-input-code = <INPUT_REL_WHEEL>;
-                y-invert;
-                // bindings = <&ib_fwd_to_hid_io>;
+                input-processors = <&xy_transf (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>;
+                // precise {
+                //         layers = <DEFAULT>;
+                //         inherit;
+                //         input-processors = <&xy_scaler 3 4>;
+                // };
+                scroll {
+                        layers = <RAISE>;
+                        inherit;
+                        input-processors = <&xy_scaler 1 25>, <&x_scaler 0 1>, <&to_wheel>;
+                };
         };
 
         // tb0a_mmv_ibl {
