@@ -306,7 +306,8 @@
 
                 bksp { timeout-ms = <70>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <DEF TSP LHB NUM>; };
                 del  { timeout-ms = <70>; key-positions = <18 19>; bindings = <&kp DEL>; layers = <DEF TSP LHB NUM>; };
-                spcr { timeout-ms = <70>; key-positions = <27 28>; bindings = <&kp SPC>; layers = <DEF TSP LHB NUM>; };
+                spc1 { timeout-ms = <70>; key-positions = <16 18>; bindings = <&kp SPC>; layers = <DEF TSP LHB NUM>; };
+                spc2 { timeout-ms = <70>; key-positions = <27 28>; bindings = <&kp SPC>; layers = <DEF TSP LHB NUM>; };
 
                 esc  { timeout-ms = <70>; key-positions = <11 12>; bindings = <&kp ESC>; layers = <DEF TSP LHB NUM>; };
                 tab  { timeout-ms = <70>; key-positions = <21 22>; bindings = <&kp TAB>; layers = <DEF TSP LHB NUM>; };
