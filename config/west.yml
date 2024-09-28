@@ -54,16 +54,16 @@ manifest:
       revision: main
     - name: zmk-drv2605-driver
       remote: badjeff
-      revision: main      
+      revision: main
     - name: zmk-drv883x-driver
       remote: badjeff
-      revision: main      
+      revision: main
     - name: zmk-tb6612fng-driver
       remote: badjeff
-      revision: main      
+      revision: main
     - name: zmk-kscan-blackout
       remote: badjeff
-      revision: main      
+      revision: main
     # - name: zmk-behavior-set-default-layer
     #   remote: badjeff
     #   revision: main
@@ -72,6 +72,6 @@ manifest:
       revision: main
     - name: cirque-input-module
       remote: badjeff
-      revision: main
+      revision: tweak
   self:
     path: config
