@@ -35,3 +35,10 @@ config ZMK_SPLIT
     default y
 
 endif
+
+if SHIELD_CORNE36_MOU0
+
+config ZMK_SPLIT
+    default y
+
+endif

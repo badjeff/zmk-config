@@ -68,6 +68,9 @@ RC(4,0) RC(4,1) RC(4,2)
 	// tpad0: virtual_input_gp {
 	// 	compatible = "zmk,virtual-input";
 	// };
+	mou0: virtual_input_mo_0 {
+		compatible = "zmk,virtual-input";
+	};
 	// input_relay_config_102 {
 	// 	compatible = "zmk,split-peripheral-input-relay";
 	// 	relay-channel = <102>;
@@ -93,6 +96,11 @@ RC(4,0) RC(4,1) RC(4,2)
 		relay-channel = <106>;
 		device = <&tpad0>;
 	};
+	// input_relay_config_107 {
+	// 	compatible = "zmk,split-peripheral-input-relay";
+	// 	relay-channel = <107>;
+	// 	device = <&mou0>;
+	// };
 };
 
 #include <zephyr/dt-bindings/input/input-event-codes.h>

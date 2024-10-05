@@ -18,3 +18,6 @@ config SHIELD_CORNE36_TPOINT0
 
 config SHIELD_CORNE36_TPAD0
 	def_bool $(shields_list_contains,corne36_tpad0)
+
+config SHIELD_CORNE36_MOU0
+	def_bool $(shields_list_contains,corne36_mou0)

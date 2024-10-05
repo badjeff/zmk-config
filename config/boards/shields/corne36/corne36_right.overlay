@@ -56,10 +56,13 @@
 	tpad0: virtual_input_gp {
 		compatible = "zmk,virtual-input";
 	};
+	mou0: virtual_input_mo_0 {
+		compatible = "zmk,virtual-input";
+	};
 	// input_relay_config_102 {
 	// 	compatible = "zmk,split-peripheral-input-relay";
 	// 	device = <&pd0>;
-	// 	relay-channel = <102>;
+	// 	relay-channel = <107>;
 	// };
 };
 
