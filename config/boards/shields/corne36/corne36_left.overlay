@@ -87,13 +87,13 @@
 	};
 };
 
-// &s_encoder {
-//     status = "okay";
-// };
-// &sensors {
-// 		status = "okay";
-// 		sensors = <&s_encoder>;
-// };
+&s_encoder {
+    status = "okay";
+};
+&sensors {
+		status = "okay";
+		sensors = <&s_encoder>;
+};
 
 // #include "corne36__haptic_drv2605.dtsi"
 // /{

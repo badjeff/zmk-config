@@ -49,6 +49,10 @@
 #define SCL_L MOVE_X(-U_MOUSE_SCROLL_MAX)
 #define SCL_R MOVE_X(U_MOUSE_SCROLL_MAX)
 
+#define ENC_SCL_U MOVE_Y(70)
+#define ENC_SCL_D MOVE_Y(-70)
+#define ENC_SCL_TAP_MS 120
+
 / {
         xy_transf: xy_transf {
                 compatible = "zmk,input-processor-transform";
@@ -167,24 +171,34 @@
                         time-to-max-speed-ms = <300>;
                         acceleration-exponent = <1>;
                 };
+                m_s: mouse_scroll {
+                        compatible = "zmk,behavior-input-two-axis";
+                        #binding-cells = <1>;
+                        trigger-period-ms = <12>;
+                        x-input-code = <INPUT_REL_HWHEEL>;
+                        y-input-code = <INPUT_REL_WHEEL>;
+                        time-to-max-speed-ms = <300>;
+                        acceleration-exponent = <1>;
+                };
         };
 
         mmv_input_listener {
                 compatible = "zmk,input-listener";
                 device = <&m_v>;
-                scroll {
-                        layers = <MSC>;
-                        inherit;
-                        input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
-                                         , <&xy_scaler 1 75>, <&to_wheel>;
-                };
+        };
+        mms_input_listener {
+                compatible = "zmk,input-listener";
+                device = <&m_s>;
         };
 
-        //   0   1   2   3   4     5   6   7   8   9
+        //   0   1   2   3   4     5   6   7   8   9  <-- split keyboard
         //  10  11  12  13  14    15  16  17  18  19
         //  20  21  22  23  24    25  26  27  28  29
         //          30  31  32    33  34  35
-        //  36 37 38
+        //  36  37  38  <-- generic pointer devices
+        //  39  40  41  <-- mouse devices
+        //  42  43  44
+        //  45  46  47
         combos {
                 compatible = "zmk,combos";
 
@@ -280,12 +294,12 @@
                         tapping-term-ms = <200>; quick-tap-ms = <200>;
                         flavor = "tap-preferred"; bindings = <&mkp>, <&tog>;
                 };
-                // rot_enc: sensor_rotate {
-                //         compatible = "zmk,behavior-sensor-rotate";
-                //         #sensor-binding-cells = <0>;
-                //         bindings = <&m_s SCL_D>, <&m_s SCL_U>;
-                //         tap-ms = <120>;
-                // };
+                rot_enc: sensor_rotate {
+                        compatible = "zmk,behavior-sensor-rotate";
+                        #sensor-binding-cells = <0>;
+                        bindings = <&m_s ENC_SCL_D>, <&m_s ENC_SCL_U>;
+                        tap-ms = <ENC_SCL_TAP_MS>;                        
+                };
         };
 
         kpad: key_kip_a_d {
@@ -320,8 +334,11 @@
    &mt LSHFT Z    &hm_l LGUI X    &hm_l LGUI C   &hm_l LGUI V    &kp B               &kp N           &hm_r RGUI M     &hm_r RGUI COMMA  &hm_r RGUI DOT  &mt RSHFT FSLH
                                   &lt MSK ESC    &mt LGUI ESC    &mt LCTRL TAB       &mt LALT RET    &lt NUM SPACE    &lt MSK BKSP
    &mkp RCLK   &hmkp_tg MCLK MSC   &mkp LCLK
+   &mkp RCLK   &mkp MCLK   &mkp LCLK
+   &mkp MB4    &mkp MB5    &kp C_VOL_DN
+   &mkp MB4    &mkp MB5    &kp C_VOL_UP
                         >;
-                        // sensor-bindings = <&rot_enc>;
+                        sensor-bindings = <&rot_enc>;
                 };
                 TSP_layer {
                         display-name = "Thumb Swap";
@@ -331,8 +348,11 @@
    &trans  &trans  &trans         &trans          &trans          &trans          &trans         &trans  &trans  &trans
                    &lt MSK BKSP   &lt NUM SPACE   &mt LALT RET    &mt LCTRL TAB   &mt LGUI ESC   &lt MSK ESC
    &trans   &trans   &trans
+   &trans   &trans   &trans
+   &trans   &trans   &trans
+   &trans   &trans   &trans
                         >;
-                        // sensor-bindings = <&rot_enc>;
+                        sensor-bindings = <&rot_enc>;
                 };
                 GME_layer {
 // +------------------------------------------------------+     +--------------------------------------------------------+
@@ -346,9 +366,12 @@
    &kpad A        &kpws S         &kpad D        &kp F           &kp G               &kp H           &kp J            &kp K           &kp L           &kp SEMI
    &mt LSHFT Z    &kp X           &kp C          &kp V           &kp B               &kp N           &kp M            &kp COMMA       &kp DOT         &mt RSHFT FSLH
                                   &lt MSK ESC    &mt LGUI ESC    &mt LCTRL TAB       &mt LALT RET    &lt NUM SPACE    &lt MSK BKSP
-   &mkp RCLK   &hmkp_tg MCLK MSC   &mkp LCLK
+   &trans   &trans   &trans
+   &trans   &trans   &trans
+   &trans   &trans   &trans
+   &trans   &trans   &trans
                         >;
-                        // sensor-bindings = <&rot_enc>;
+                        sensor-bindings = <&rot_enc>;
                 };
                 LHB_layer {
                         display-name = "MKP Swap";
@@ -358,8 +381,11 @@
    &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
                    &trans  &trans  &trans    &trans  &trans  &trans
    &mkp LCLK   &hmkp_tg MCLK MSC   &mkp RCLK
+   &trans   &trans   &trans
+   &trans   &trans   &trans
+   &trans   &trans   &trans
                         >;
-                        // sensor-bindings = <&rot_enc>;
+                        sensor-bindings = <&rot_enc>;
                 };
                 NUM_layer {
 // +------------------------------------------------------+     +-------------------------------------------------------+
@@ -374,7 +400,11 @@
    &mt LSHFT TAB      &trans           &trans     &trans          &kp RET             &trans      &kp MINUS       &kp EQUAL   &trans           &mt RSHFT BSLH
                                        &trans     &trans          &trans              &trans      &trans          &trans
    &trans   &trans   &trans
+   &trans   &trans   &trans
+   &trans   &trans   &trans
+   &trans   &trans   &trans
                         >;
+                        sensor-bindings = <&rot_enc>;
                 };
                 MSK_layer {
 // +------------------------------------------------------+     +------------------------------------------------------+
@@ -389,7 +419,11 @@
    &mo MSC       &mkp RCLK     &mkp MCLK     &mkp LCLK     &trans            &trans      &mkp LCLK   &mkp MCLK   &mkp RCLK   &mo MSC
                                &trans        &trans        &trans            &trans      &trans      &trans
    &trans   &trans   &trans
+   &trans   &trans   &trans
+   &trans   &trans   &trans
+   &trans   &trans   &trans
                         >;
+                        sensor-bindings = <&rot_enc>;
                 };
                 MSC_layer {
 // +------------------------------------------------------+     +------------------------------------------------------+
@@ -400,11 +434,15 @@
                         display-name = "Mou Scroll";
                         bindings = <
    &tempo      &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_CLR    &trans            &trans       &trans        &trans      &tog GME      &bootloader
-   &sys_reset  &isa ISA_ON   &isa ISA_OFF  &isa ISA_SLP  &studio_unlock    &m_v MOU_L   &m_v MOU_D    &m_v MOU_U  &m_v MOU_R    &sys_reset
+   &sys_reset  &isa ISA_ON   &isa ISA_OFF  &isa ISA_SLP  &studio_unlock    &m_s SCL_L   &m_s SCL_D    &m_s SCL_U  &m_s SCL_R    &sys_reset
    &trans      &mkp RCLK     &mkp MCLK     &mkp LCLK     &trans            &trans       &mkp LCLK     &mkp MCLK   &mkp RCLK     &trans
                              &trans        &trans        &trans            &trans       &trans        &trans
    &trans   &trans   &trans
+   &trans   &trans   &trans
+   &trans   &trans   &trans
+   &trans   &trans   &trans
                         >;
+                        sensor-bindings = <&rot_enc>;
                 };
        };
 };
