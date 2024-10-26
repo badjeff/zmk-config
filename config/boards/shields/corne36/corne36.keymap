@@ -165,7 +165,7 @@
                 m_v: mouse_move {
                         compatible = "zmk,behavior-input-two-axis";
                         #binding-cells = <1>;
-                        trigger-period-ms = <12>;
+                        trigger-period-ms = <12>; // slow down for OTA, default is 3ms
                         x-input-code = <INPUT_REL_X>;
                         y-input-code = <INPUT_REL_Y>;
                         time-to-max-speed-ms = <300>;
@@ -174,7 +174,7 @@
                 m_s: mouse_scroll {
                         compatible = "zmk,behavior-input-two-axis";
                         #binding-cells = <1>;
-                        trigger-period-ms = <12>;
+                        trigger-period-ms = <12>; // slow down for OTA, default is 3ms
                         x-input-code = <INPUT_REL_HWHEEL>;
                         y-input-code = <INPUT_REL_WHEEL>;
                         time-to-max-speed-ms = <300>;
@@ -334,9 +334,9 @@
    &mt LSHFT Z    &hm_l LGUI X    &hm_l LGUI C   &hm_l LGUI V    &kp B               &kp N           &hm_r RGUI M     &hm_r RGUI COMMA  &hm_r RGUI DOT  &mt RSHFT FSLH
                                   &lt MSK ESC    &mt LGUI ESC    &mt LCTRL TAB       &mt LALT RET    &lt NUM SPACE    &lt MSK BKSP
    &mkp RCLK   &hmkp_tg MCLK MSC   &mkp LCLK
-   &mkp RCLK   &mkp MCLK   &mkp LCLK
-   &mkp MB4    &mkp MB5    &kp C_VOL_DN
-   &mkp MB4    &mkp MB5    &kp C_VOL_UP
+   &mkp LCLK   &kp C_VOL_DN        &kp C_VOL_UP
+   &mkp MCLK   &mkp MB5            &mkp MB5
+   &mkp RCLK   &mkp MB4            &mkp MB4
                         >;
                         sensor-bindings = <&rot_enc>;
                 };
@@ -421,7 +421,7 @@
    &trans   &trans   &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
-   &trans   &trans   &trans
+   &trans   &kp C_BRI_DN   &kp C_BRI_UP
                         >;
                         sensor-bindings = <&rot_enc>;
                 };
