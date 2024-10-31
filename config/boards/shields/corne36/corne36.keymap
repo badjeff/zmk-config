@@ -336,7 +336,7 @@
    &mt LSHFT Z    &hm_l LGUI X    &hm_l LGUI C   &hm_l LGUI V    &kp B               &kp N           &hm_r RGUI M     &hm_r RGUI COMMA  &hm_r RGUI DOT  &mt RSHFT FSLH
                                   &lt MSK ESC    &mt LGUI ESC    &mt LCTRL TAB       &mt LALT RET    &lt NUM SPACE    &lt MSK BKSP
    &mkp RCLK   &hmkp_tg MCLK MSC   &mkp LCLK
-   &mkp LCLK   &kp C_VOL_DN        &kp C_VOL_UP
+   &mkp LCLK   &mo MSC             &tog LHB
    &mkp MCLK   &mkp MB5            &mkp MB5
    &mkp RCLK   &mkp MB4            &mkp MB4
                         >;
@@ -383,9 +383,9 @@
    &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
                    &trans  &trans  &trans    &trans  &trans  &trans
    &mkp LCLK   &hmkp_tg MCLK MSC   &mkp RCLK
-   &trans   &trans   &trans
-   &trans   &trans   &trans
-   &trans   &trans   &trans
+   &mkp RCLK   &tog LHB   &mo MSC
+   &mkp MCLK   &trans     &trans
+   &mkp LCLK   &trans     &trans
                         >;
                         sensor-bindings = <&rot_enc>;
                 };
