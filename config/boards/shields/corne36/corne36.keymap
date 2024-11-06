@@ -49,9 +49,9 @@
 #define SCL_L MOVE_X(-U_MOUSE_SCROLL_MAX)
 #define SCL_R MOVE_X(U_MOUSE_SCROLL_MAX)
 
-#define ENC_SCL_U MOVE_Y(70)
-#define ENC_SCL_D MOVE_Y(-70)
-#define ENC_SCL_TAP_MS 120
+#define ENC_SCL_U MOVE_Y(60)
+#define ENC_SCL_D MOVE_Y(-60)
+#define ENC_SCL_TAP_MS 100
 
 / {
         xy_transf: xy_transf {
@@ -263,6 +263,7 @@
                 f12  { timeout-ms = <70>; key-positions = <1 2 3>; bindings = <&kp F12>; layers = <MSK>; };
 
                 mkp_swap { timeout-ms = <60>; key-positions = <36 38>; bindings = <&tog LHB>; layers = <DEF TSP LHB NUM MSK MSC>; };
+                mou_swap { timeout-ms = <60>; key-positions = <40 41>; bindings = <&tog LHB>; layers = <DEF TSP LHB NUM MSK MSC>; };
 
                 nav_left { timeout-ms = <60>; key-positions = <16 17>; bindings = <&kp LEFT>; layers = <NUM TSP>; };
                 mmv_left { timeout-ms = <60>; key-positions = <16 17>; bindings = <&m_v MOU_L>; layers = <MSK MSC>; };
@@ -336,7 +337,7 @@
    &mt LSHFT Z    &hm_l LGUI X    &hm_l LGUI C   &hm_l LGUI V    &kp B               &kp N           &hm_r RGUI M     &hm_r RGUI COMMA  &hm_r RGUI DOT  &mt RSHFT FSLH
                                   &lt MSK ESC    &mt LGUI ESC    &mt LCTRL TAB       &mt LALT RET    &lt NUM SPACE    &lt MSK BKSP
    &mkp RCLK   &hmkp_tg MCLK MSC   &mkp LCLK
-   &mkp LCLK   &mo MSC             &tog LHB
+   &mkp LCLK   &mo MSC             &hmkp_tg MCLK MSC
    &mkp MCLK   &mkp MB5            &mkp MB5
    &mkp RCLK   &mkp MB4            &mkp MB4
                         >;
@@ -383,9 +384,9 @@
    &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
                    &trans  &trans  &trans    &trans  &trans  &trans
    &mkp LCLK   &hmkp_tg MCLK MSC   &mkp RCLK
-   &mkp RCLK   &tog LHB   &mo MSC
-   &mkp MCLK   &trans     &trans
-   &mkp LCLK   &trans     &trans
+   &mkp RCLK   &hmkp_tg MCLK MSC   &mo MSC
+   &mkp MCLK   &trans              &trans
+   &mkp LCLK   &trans              &trans
                         >;
                         sensor-bindings = <&rot_enc>;
                 };
