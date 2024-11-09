@@ -43,15 +43,15 @@
 #define MOU_L MOVE_X(-U_MOUSE_MOVE_MAX)
 #define MOU_R MOVE_X(U_MOUSE_MOVE_MAX)
 
-#define U_MOUSE_SCROLL_MAX 20
+#define U_MOUSE_SCROLL_MAX 10
 #define SCL_U MOVE_Y(U_MOUSE_SCROLL_MAX)
 #define SCL_D MOVE_Y(-U_MOUSE_SCROLL_MAX)
 #define SCL_L MOVE_X(-U_MOUSE_SCROLL_MAX)
 #define SCL_R MOVE_X(U_MOUSE_SCROLL_MAX)
 
-#define ENC_SCL_U MOVE_Y(60)
-#define ENC_SCL_D MOVE_Y(-60)
-#define ENC_SCL_TAP_MS 100
+#define ENC_SCL_U MOVE_Y(20)
+#define ENC_SCL_D MOVE_Y(-20)
+#define ENC_SCL_TAP_MS 65
 
 / {
         xy_transf: xy_transf {
@@ -158,7 +158,7 @@
                 scroll {
                         layers = <MSC>;
                         inherit;
-                        input-processors = <&xy_scaler 1 25>, <&x_scaler 0 1>
+                        input-processors = <&xy_scaler 1 40>, <&x_scaler 0 1>
                                          , <&to_wheel>;
                 };
         };
@@ -179,8 +179,17 @@
                         trigger-period-ms = <12>; // slow down for OTA, default is 3ms
                         x-input-code = <INPUT_REL_HWHEEL>;
                         y-input-code = <INPUT_REL_WHEEL>;
-                        time-to-max-speed-ms = <300>;
+                        time-to-max-speed-ms = <50>;
                         acceleration-exponent = <1>;
+                };
+                ec_s: mouse_scroll {
+                        compatible = "zmk,behavior-input-two-axis";
+                        #binding-cells = <1>;
+                        trigger-period-ms = <12>; // slow down for OTA, default is 3ms
+                        x-input-code = <INPUT_REL_HWHEEL>;
+                        y-input-code = <INPUT_REL_WHEEL>;
+                        time-to-max-speed-ms = <30>;
+                        acceleration-exponent = <0>;
                 };
         };
 
@@ -300,7 +309,7 @@
                 rot_enc: sensor_rotate {
                         compatible = "zmk,behavior-sensor-rotate";
                         #sensor-binding-cells = <0>;
-                        bindings = <&m_s ENC_SCL_D>, <&m_s ENC_SCL_U>;
+                        bindings = <&ec_s ENC_SCL_D>, <&ec_s ENC_SCL_U>;
                         tap-ms = <ENC_SCL_TAP_MS>;                        
                 };
         };

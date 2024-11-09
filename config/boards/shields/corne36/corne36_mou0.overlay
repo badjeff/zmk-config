@@ -165,7 +165,7 @@ RC(4,0) RC(4,1) RC(4,2)
 		// NFC pins in nRF52 series: P0.09 and P0.10
 		a-gpios = <&gpio0 9  (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
 		b-gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-		steps = <60>; // 12 steps for EC05
+		steps = <80>;
 };
 &sensors {
 		status = "okay";
