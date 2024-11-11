@@ -89,10 +89,6 @@
 
 &s_encoder {
     status = "okay";
-		//*** Use unexposed gpios on n!n for this dummy sensor
-		//    instead of use `&pro_micro 2` and `&pro_micro 3`
-		a-gpios = <&gpio0 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-		b-gpios = <&gpio0 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
 };
 &sensors {
 		status = "okay";

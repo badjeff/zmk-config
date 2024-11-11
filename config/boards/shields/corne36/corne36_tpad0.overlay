@@ -141,29 +141,6 @@ RC(7,0) RC(7,1) RC(7,2)
 // 	};
 // };
 
-// /{
-// 	s_encoder: s_encoder {
-// 		compatible = "alps,ec11";
-// 		a-gpios = <&gpio0 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-// 		b-gpios = <&gpio0 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-// 		steps = <80>;
-// 		status = "disabled";
-// 	};
-// 	sensors: sensors {
-// 		compatible = "zmk,keymap-sensors";
-// 		status = "disabled";
-// 		sensors = <>;
-// 		triggers-per-rotation = <20>;
-// 	};
-// };
-// &s_encoder {
-//     status = "okay";
-// };
-// &sensors {
-// 		status = "okay";
-// 		sensors = <&s_encoder>;
-// };
-
 // #include "corne36__haptic_drv2605.dtsi"
 // /{
 // 	fb_lra0: fb_lra0 {

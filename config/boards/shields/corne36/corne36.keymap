@@ -49,10 +49,6 @@
 #define SCL_L MOVE_X(-U_MOUSE_SCROLL_MAX)
 #define SCL_R MOVE_X(U_MOUSE_SCROLL_MAX)
 
-#define ENC_SCL_U MOVE_Y(20)
-#define ENC_SCL_D MOVE_Y(-20)
-#define ENC_SCL_TAP_MS 65
-
 / {
         xy_transf: xy_transf {
                 compatible = "zmk,input-processor-transform";
@@ -188,8 +184,14 @@
                         trigger-period-ms = <12>; // slow down for OTA, default is 3ms
                         x-input-code = <INPUT_REL_HWHEEL>;
                         y-input-code = <INPUT_REL_WHEEL>;
-                        time-to-max-speed-ms = <30>;
+                        time-to-max-speed-ms = <277>;
                         acceleration-exponent = <0>;
+                };
+                rot_enc: sensor_rotate {
+                        compatible = "zmk,behavior-sensor-rotate";
+                        #sensor-binding-cells = <0>;
+                        bindings = <&ec_s MOVE_Y(-17)>, <&ec_s MOVE_Y(17)>;
+                        tap-ms = <65>;
                 };
         };
 
@@ -305,12 +307,6 @@
                         compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
                         tapping-term-ms = <200>; quick-tap-ms = <200>;
                         flavor = "tap-preferred"; bindings = <&mkp>, <&tog>;
-                };
-                rot_enc: sensor_rotate {
-                        compatible = "zmk,behavior-sensor-rotate";
-                        #sensor-binding-cells = <0>;
-                        bindings = <&ec_s ENC_SCL_D>, <&ec_s ENC_SCL_U>;
-                        tap-ms = <ENC_SCL_TAP_MS>;                        
                 };
         };
 
