@@ -50,11 +50,44 @@
                 type = <INPUT_EV_REL>;
                 codes = <INPUT_REL_X>;
         };
+        y_scaler: y_scaler {
+                compatible = "zmk,input-processor-scaler";
+                #input-processor-cells = <2>;
+                type = <INPUT_EV_REL>;
+                codes = <INPUT_REL_Y>;
+        };
+        xy_swap: xy_swap {
+                compatible = "zmk,input-processor-code-mapper";
+                #input-processor-cells = <0>;
+                type = <INPUT_EV_REL>;
+                map = <INPUT_REL_X INPUT_REL_Y>
+                    , <INPUT_REL_Y INPUT_REL_X>
+                    , <INPUT_REL_WHEEL INPUT_REL_HWHEEL>
+                    , <INPUT_REL_HWHEEL INPUT_REL_WHEEL>;
+        };
         to_wheel: to_wheel {
                 compatible = "zmk,input-processor-code-mapper";
                 #input-processor-cells = <0>;
                 type = <INPUT_EV_REL>;
-                map = <INPUT_REL_X INPUT_REL_MISC>, <INPUT_REL_Y INPUT_REL_WHEEL>;
+                map = <INPUT_REL_X INPUT_REL_HWHEEL>
+                    , <INPUT_REL_Y INPUT_REL_WHEEL>;
+        };
+
+        tball1_pri_mmv_il {
+                compatible = "zmk,input-listener";
+                device = <&pd0>;
+                default {
+                        layers = <DEFAULT>;
+                        input-processors = <&y_scaler 0 1>;
+                };
+        };
+        tball1_sec_mmv_il {
+                compatible = "zmk,input-listener";
+                device = <&pd0a>;
+                default {
+                        layers = <DEFAULT>;
+                        input-processors = <&y_scaler 0 1>, <&xy_swap>;
+                };
         };
 
         // tb0_mmv_ibl {
@@ -79,21 +112,21 @@
         //         y-invert;
         //         // bindings = <&ib_fwd_to_hid_io>;
         // };
-        tball1_mmv_il {
-                compatible = "zmk,input-listener";
-                device = <&pd0>;
-                input-processors = <&xy_transf (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>;
-                // precise {
-                //         layers = <DEFAULT>;
-                //         inherit;
-                //         input-processors = <&xy_scaler 3 4>;
-                // };
-                scroll {
-                        layers = <RAISE>;
-                        inherit;
-                        input-processors = <&xy_scaler 1 25>, <&x_scaler 0 1>, <&to_wheel>;
-                };
-        };
+        // tball1_mmv_il {
+        //         compatible = "zmk,input-listener";
+        //         device = <&pd0>;
+        //         input-processors = <&xy_transf (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>;
+        //         // precise {
+        //         //         layers = <DEFAULT>;
+        //         //         inherit;
+        //         //         input-processors = <&xy_scaler 3 4>;
+        //         // };
+        //         scroll {
+        //                 layers = <RAISE>;
+        //                 inherit;
+        //                 input-processors = <&xy_scaler 1 25>, <&x_scaler 0 1>, <&to_wheel>;
+        //         };
+        // };
 
         // tb0a_mmv_ibl {
         //         compatible = "zmk,input-behavior-listener";
@@ -192,11 +225,11 @@
         //         time-to-live-ms = <1000>;
         // };
 
-        ib_fwd_to_hid_io: ib_forward_fwd_to_hid_io {
-                compatible = "zmk,input-behavior-fwd-to-hid-io";
-                #binding-cells = <0>;
-                usage = <HID_IO_USAGE_FWD_TO_MOUSE>;
-        };
+        // ib_fwd_to_hid_io: ib_forward_fwd_to_hid_io {
+        //         compatible = "zmk,input-behavior-fwd-to-hid-io";
+        //         #binding-cells = <0>;
+        //         usage = <HID_IO_USAGE_FWD_TO_MOUSE>;
+        // };
 
         // erm0_obl__enter_raise_layer {
         //         compatible = "zmk,output-behavior-listener";
