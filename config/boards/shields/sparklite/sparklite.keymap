@@ -21,7 +21,6 @@
 
 #include <dt-bindings/zmk/input_mixer.h>
 #include <input/processors/mixer.dtsi>
-// &zip_mixer { sync_report_ms = <12>; };
 
 #define DEFAULT 0
 #define RAISE   1
