@@ -47,44 +47,6 @@
 #define SCL_R MOVE_X(U_MOUSE_SCROLL_MAX)
 
 / {
-        // tpoint0_mmv_ibl {
-        //         compatible = "zmk,input-behavior-listener";
-        //         device = <&tpoint0>;
-        //         layers = <DEF NUM MSK LHB>;
-	//         evt-type = <INPUT_EV_REL>;
-	//         x-input-code = <INPUT_REL_X>;
-	//         y-input-code = <INPUT_REL_Y>;
-        //         y-invert;
-        //         // bindings = <&ib_tog_layer MSK>;
-        // };
-        // tpoint0_msl_ibl {
-        //         compatible = "zmk,input-behavior-listener";
-        //         device = <&tpoint0>;
-        //         layers = <MSC>;
-        //         evt-type = <INPUT_EV_REL>;
-        //         x-input-code = <INPUT_REL_MISC>;
-        //         y-input-code = <INPUT_REL_WHEEL>;
-        //         // bindings = <&ib_wheel_scaler 1 23>;
-        // };
-
-        // ib_wheel_scaler: ib_wheel_scaler {
-        //         compatible = "zmk,input-behavior-scaler";
-        //         #binding-cells = <2>;
-        //         evt-type = <INPUT_EV_REL>;
-        //         input-code = <INPUT_REL_WHEEL>;
-        // };
-
-        // ib_tog_layer: ib_tog_layer {
-        //         compatible = "zmk,input-behavior-tog-layer";
-        //         #binding-cells = <1>;
-        //         time-to-live-ms = <1000>;
-        // };
-
-        // ib_fwd_to_hid_io: ib_forward_fwd_to_hid_io {
-        //         compatible = "zmk,input-behavior-fwd-to-hid-io";
-        //         #binding-cells = <0>;
-        // };
-
         //   0   1   2   3   4     5   6   7   8   9
         //  10  11  12  13  14    15  16  17  18  19
         //  20  21  22  23  24    25  26  27  28  29

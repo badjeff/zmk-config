@@ -34,21 +34,21 @@ manifest:
     - name: zmk-behavior-mouse-key-toggle
       remote: badjeff
       revision: main
-    - name: zmk-input-behavior-listener
-      remote: badjeff
-      revision: main
-    - name: zmk-output-behavior-listener
-      remote: badjeff
-      revision: main
-    - name: zmk-hid-io
-      remote: badjeff
-      revision: main
-    - name: zmk-split-peripheral-input-relay
-      remote: badjeff
-      revision: main
-    - name: zmk-split-peripheral-output-relay
-      remote: badjeff
-      revision: main
+    # - name: zmk-input-behavior-listener
+    #   remote: badjeff
+    #   revision: main
+    # - name: zmk-output-behavior-listener
+    #   remote: badjeff
+    #   revision: main
+    # - name: zmk-hid-io
+    #   remote: badjeff
+    #   revision: main
+    # - name: zmk-split-peripheral-input-relay
+    #   remote: badjeff
+    #   revision: main
+    # - name: zmk-split-peripheral-output-relay
+    #   remote: badjeff
+    #   revision: main
     - name: zmk-split-peripheral-bonding-tweak
       remote: badjeff
       revision: main

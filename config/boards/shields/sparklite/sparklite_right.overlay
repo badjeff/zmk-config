@@ -17,59 +17,6 @@
 		;
 };
 
-// #include "sparklite_trackball_adns9800.dtsi"
-// #include "sparklite_trackball_pmw3610.dtsi"
-/ {
-	pd0: virtual_input_0 {
-		compatible = "zmk,virtual-input";
-	};
-	pd1: virtual_input {
-		compatible = "zmk,virtual-input";
-	};
-};
-/ {
-	input_relay_config_102 {
-		compatible = "zmk,split-peripheral-input-relay";
-		device = <&pd0>;
-		relay-channel = <102>;
-	};
-};
-
-#include <zephyr/dt-bindings/input/input-event-codes.h>
-
-// &adc {
-// 	status = "okay";
-// };
-
-// / {
-// 	anin0: analog_input_0 {
-// 		compatible = "zmk,analog-input";
-// 		sampling-hz = <100>;
-// 		x-ch {
-// 			io-channels = <&adc 2>;
-// 			mv-mid = <1630>;
-// 			mv-min-max = <1600>;
-// 			mv-deadzone = <10>;
-// 			scale-multiplier = <1>;
-// 			scale-divisor = <70>;
-// 			invert;
-// 			evt-type = <INPUT_EV_REL>;
-// 			input-code = <INPUT_REL_X>;
-// 		};
-// 		y-ch {
-// 			io-channels = <&adc 3>;
-// 			mv-mid = <1630>;
-// 			mv-min-max = <1600>;
-// 			mv-deadzone = <10>;
-// 			scale-multiplier = <1>;
-// 			scale-divisor = <70>;
-// 			invert;
-// 			evt-type = <INPUT_EV_REL>;
-// 			input-code = <INPUT_REL_Y>;
-// 		};
-// 	};
-// };
-
 // / {
 // 	erm0: output_generic_0 {
 // 		compatible = "zmk,output-generic";
@@ -77,17 +24,3 @@
 // 		control-gpios = <&gpio0 4 GPIO_ACTIVE_HIGH>;
 // 	};
 // };
-
-// #include "sparklite_trackpoint_ps2.dtsi"
-/ {
-	tpoint0: virtual_input_0 {
-		compatible = "zmk,virtual-input";
-	};
-};
-
-// #include "sparklite_touchpad_cirque.dtsi" 
-/ {
-	tpad0: virtual_input_0 {
-		compatible = "zmk,virtual-input";
-	};
-};

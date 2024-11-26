@@ -1,0 +1,18 @@
+/*
+ * Copyright (c) 2020 Pete Johanson
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+/{
+  split_inputs {
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    tball0_split: tball0@0 { compatible = "zmk,input-split"; reg = <0>; };
+    tball1_split: tball1@1 { compatible = "zmk,input-split"; reg = <1>; };
+    tpoint0_split: tpoint0@2 { compatible = "zmk,input-split"; reg = <2>; };
+    tpad0_split: tpad0@3 { compatible = "zmk,input-split"; reg = <3>; };
+    mou0_split: mou0@4 { compatible = "zmk,input-split"; reg = <4>; };
+  };
+};
