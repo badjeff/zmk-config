@@ -23,12 +23,11 @@
 #include <dt-bindings/zmk/insomnia.h>
 
 #define DEF 0
-#define TSP 1
-#define GME 2
-#define LHB 3
-#define NUM 4
-#define MSK 5
-#define MSC 6
+#define GME 1
+#define LHB 2
+#define NUM 3
+#define MSK 4
+#define MSC 5
 
 #ifndef MOVE_Y
 #define MOVE_Y(n) (0)
@@ -215,71 +214,26 @@
         combos {
                 compatible = "zmk,combos";
 
-                q   { timeout-ms = <60>; key-positions = <1 2>; bindings = <&kp Q>; layers = <DEF TSP LHB>; };
-                t   { timeout-ms = <60>; key-positions = <2 3>; bindings = <&kp T>; layers = <DEF TSP LHB>; };
-                g   { timeout-ms = <60>; key-positions = <12 13>; bindings = <&kp G>; layers = <DEF TSP LHB>; };
-                b   { timeout-ms = <60>; key-positions = <22 23>; bindings = <&kp B>; layers = <DEF TSP LHB>; };
-                b_d { timeout-ms = <70>; key-positions = <2 13>; bindings = <&kp B>; layers = <DEF TSP LHB>; };
-                b_v { timeout-ms = <60>; key-positions = <23 13>; bindings = <&kp B>; layers = <DEF TSP LHB>; };
-                t_v { timeout-ms = <60>; key-positions = <3 13>; bindings = <&kp T>; layers = <DEF TSP LHB>; };
+                spc       { timeout-ms = <70>; key-positions = <16 17>; bindings = <&kp SPC>; layers = <DEF GME LHB NUM>; };
+                bksp      { timeout-ms = <70>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <DEF GME LHB NUM>; };
+                del       { timeout-ms = <70>; key-positions = <16 18>; bindings = <&kp DEL>; layers = <DEF GME LHB NUM>; };
 
-                z   { timeout-ms = <30>; key-positions = <10 31>; bindings = <&kp Z>; layers = <DEF TSP LHB>; };
-                x   { timeout-ms = <30>; key-positions = <11 31>; bindings = <&kp X>; layers = <DEF TSP LHB>; };
-                c   { timeout-ms = <30>; key-positions = <12 31>; bindings = <&kp C>; layers = <DEF TSP LHB>; };
-                v   { timeout-ms = <30>; key-positions = <13 31>; bindings = <&kp V>; layers = <DEF TSP LHB>; };
-                b_t { timeout-ms = <30>; key-positions = <13 32>; bindings = <&kp B>; layers = <DEF TSP LHB>; };
+                esc       { timeout-ms = <70>; key-positions = <11 12>; bindings = <&kp ESC>; layers = <DEF GME LHB NUM>; };
+                tab       { timeout-ms = <70>; key-positions = <12 13>; bindings = <&kp TAB>; layers = <DEF GME LHB NUM>; };
 
-                p   { timeout-ms = <60>; key-positions = <7 8>; bindings = <&kp P>; layers = <DEF TSP LHB>; };
-                y   { timeout-ms = <60>; key-positions = <6 7>; bindings = <&kp Y>; layers = <DEF TSP LHB>; };
-                h   { timeout-ms = <60>; key-positions = <16 17>; bindings = <&kp H>; layers = <DEF TSP LHB>; };
-                n   { timeout-ms = <60>; key-positions = <26 27>; bindings = <&kp N>; layers = <DEF TSP LHB>; };
-                n_d { timeout-ms = <70>; key-positions = <7 16>; bindings = <&kp N>; layers = <DEF TSP LHB>; };
-                n_v { timeout-ms = <60>; key-positions = <26 16>; bindings = <&kp N>; layers = <DEF TSP LHB>; };
-                y_v { timeout-ms = <60>; key-positions = <6 16>; bindings = <&kp Y>; layers = <DEF TSP LHB>; };
+                ret_r     { timeout-ms = <30>; key-positions = <17 26>; bindings = <&kp RET>; layers = <DEF GME LHB NUM>; };
+                ret_l     { timeout-ms = <30>; key-positions = <12 23>; bindings = <&kp RET>; layers = <DEF GME LHB NUM>; };
 
-                n_t   { timeout-ms = <30>; key-positions = <16 33>; bindings = <&kp N>; layers = <DEF TSP LHB>; };
-                m     { timeout-ms = <30>; key-positions = <16 34>; bindings = <&kp M>; layers = <DEF TSP LHB>; };
-                comma { timeout-ms = <30>; key-positions = <17 34>; bindings = <&kp COMMA>; layers = <DEF TSP LHB>; };
-                dot   { timeout-ms = <30>; key-positions = <18 34>; bindings = <&kp DOT>; layers = <DEF TSP LHB>; };
-                flash { timeout-ms = <30>; key-positions = <19 34>; bindings = <&kp FSLH>; layers = <DEF TSP LHB>; };
+                mkp_swap  { timeout-ms = <60>; key-positions = <36 38>; bindings = <&tog LHB>; layers = <DEF GME LHB NUM MSK MSC>; };
+                mou_swap  { timeout-ms = <60>; key-positions = <40 41>; bindings = <&tog LHB>; layers = <DEF GME LHB NUM MSK MSC>; };
 
-                bksp { timeout-ms = <70>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <DEF TSP LHB NUM>; };
-                del  { timeout-ms = <70>; key-positions = <18 19>; bindings = <&kp DEL>; layers = <DEF TSP LHB NUM>; };
-                spc1 { timeout-ms = <70>; key-positions = <16 18>; bindings = <&kp SPC>; layers = <DEF TSP LHB NUM>; };
-                spc2 { timeout-ms = <70>; key-positions = <27 28>; bindings = <&kp SPC>; layers = <DEF TSP LHB NUM>; };
+                dfu_l     { timeout-ms = <60>; key-positions = <0 1>; bindings = <&bootloader>; layers = <MSC>; };
 
-                esc  { timeout-ms = <70>; key-positions = <11 12>; bindings = <&kp ESC>; layers = <DEF TSP LHB NUM>; };
-                tab  { timeout-ms = <70>; key-positions = <21 22>; bindings = <&kp TAB>; layers = <DEF TSP LHB NUM>; };
+                tog_num_l { timeout-ms = <60>; key-positions = <11 12 13>; bindings = <&tog NUM>; layers = <DEF GME LHB NUM MSK MSC>; };
+                tog_num_r { timeout-ms = <60>; key-positions = <16 17 18>; bindings = <&tog NUM>; layers = <DEF GME LHB NUM MSK MSC>; };
 
-                ret1  { timeout-ms = <30>; key-positions = <17 26>; bindings = <&kp RET>; layers = <DEF TSP LHB NUM>; };
-                ret2  { timeout-ms = <30>; key-positions = <12 23>; bindings = <&kp RET>; layers = <DEF TSP LHB NUM>; };
-
-                n1   { timeout-ms = <60>; key-positions = <1 2>; bindings = <&kp N1>; layers = <NUM TSP>; };
-                n5   { timeout-ms = <60>; key-positions = <2 3>; bindings = <&kp N5>; layers = <NUM TSP>; };
-                n5_v { timeout-ms = <60>; key-positions = <3 13>; bindings = <&kp N5>; layers = <NUM TSP>; };
-                
-                n0   { timeout-ms = <60>; key-positions = <7 8>; bindings = <&kp N0>; layers = <NUM TSP>; };
-                n6   { timeout-ms = <60>; key-positions = <6 7>; bindings = <&kp N6>; layers = <NUM TSP>; };
-                n6_v { timeout-ms = <60>; key-positions = <6 16>; bindings = <&kp N6>; layers = <NUM TSP>; };
-
-                f1   { timeout-ms = <60>; key-positions = <1 2>; bindings = <&kp F1>; layers = <MSK>; };
-                f5   { timeout-ms = <60>; key-positions = <2 3>; bindings = <&kp F5>; layers = <MSK>; };
-                f5_v { timeout-ms = <60>; key-positions = <3 13>; bindings = <&kp F5>; layers = <MSK>; };
-
-                f10  { timeout-ms = <60>; key-positions = <7 8>; bindings = <&kp F10>; layers = <MSK>; };
-                f6   { timeout-ms = <60>; key-positions = <6 7>; bindings = <&kp F6>; layers = <MSK>; };
-                f6_v { timeout-ms = <60>; key-positions = <6 16>; bindings = <&kp F6>; layers = <MSK>; };
-
-                f11  { timeout-ms = <70>; key-positions = <6 7 8>; bindings = <&kp F11>; layers = <MSK>; };
-                f12  { timeout-ms = <70>; key-positions = <1 2 3>; bindings = <&kp F12>; layers = <MSK>; };
-
-                mkp_swap { timeout-ms = <60>; key-positions = <36 38>; bindings = <&tog LHB>; layers = <DEF TSP LHB NUM MSK MSC>; };
-                mou_swap { timeout-ms = <60>; key-positions = <40 41>; bindings = <&tog LHB>; layers = <DEF TSP LHB NUM MSK MSC>; };
-
-                nav_left { timeout-ms = <60>; key-positions = <16 17>; bindings = <&kp LEFT>; layers = <NUM TSP>; };
-                mmv_left { timeout-ms = <60>; key-positions = <16 17>; bindings = <&m_v MOU_L>; layers = <MSK MSC>; };
-
-                dfu_l { timeout-ms = <60>; key-positions = <0 1>; bindings = <&bootloader>; layers = <MSC>; };
+                tog_msk_l { timeout-ms = <60>; key-positions = <21 22 23>; bindings = <&tog MSK>; layers = <DEF GME LHB NUM MSK MSC>; };
+                tog_msk_r { timeout-ms = <60>; key-positions = <26 27 28>; bindings = <&tog MSK>; layers = <DEF GME LHB NUM MSK MSC>; };
         };
 
         behaviors {
@@ -332,33 +286,19 @@
                 DEF_layer {
 // +------------------------------------------------------+     +--------------------------------------------------------+
 // |     Q    |  LCTRL:W |  _MSK:E  |  LALT:R  |     T    |     |     Y     |  RALT:U  |  _MSK:I   |  RCTRL:O |     P    |
-// |     A    |  _NUM:S  |  _NUM:D  |  _TSP:F  |     G    |     |     H     |  _TSP:J  |  _NUM:K   |  _NUM:L  |     ;:   |
+// |     A    |  _NUM:S  |  _NUM:D  |  _NUM:F  |     G    |     |     H     |  _NUM:J  |  _NUM:K   |  _NUM:L  |     ;:   |
 // |  SHFT Z  |  LGUI:X  |  LGUI:C  |  LGUI:V  |     B    |     |     N     |  RGUI:M  |  RGUI:,<  |  RGUI:.> |  SHFT /? |
 //                       | ^MSK:ESC |  GUI:ESC | CTRL:TAB |     |  ALT:ENT  | _NUM:SPC | ^MSK:BKSP |
                         display-name = "Default";
                         bindings = <
    &kp Q          &hm_l LCTRL W   &hl_l MSK E    &hm_l LALT R    &kp T               &kp Y           &hm_r RALT U     &hl_r MSK I       &hm_r RCTRL O   &kp P
-   &kp A          &hl_l NUM S     &hl_l NUM D    &hl_l TSP F     &kp G               &kp H           &hl_r TSP J      &hl_r NUM K       &hl_r NUM L     &kp SEMI
+   &kp A          &hl_l NUM S     &hl_l NUM D    &hl_l NUM F     &kp G               &kp H           &hl_r NUM J      &hl_r NUM K       &hl_r NUM L     &kp SEMI
    &mt LSHFT Z    &hm_l LGUI X    &hm_l LGUI C   &hm_l LGUI V    &kp B               &kp N           &hm_r RGUI M     &hm_r RGUI COMMA  &hm_r RGUI DOT  &mt RSHFT FSLH
                                   &lt MSK ESC    &mt LGUI ESC    &mt LCTRL TAB       &mt LALT RET    &lt NUM SPACE    &lt MSK BKSP
    &mkp RCLK   &hmkp_tg MCLK MSC   &mkp LCLK
    &mkp LCLK   &mo MSC             &hmkp_tg MCLK MSC
    &mkp MCLK   &mkp MB5            &mkp MB5
    &mkp RCLK   &mkp MB4            &mkp MB4
-                        >;
-                        sensor-bindings = <&rot_enc>;
-                };
-                TSP_layer {
-                        display-name = "Thumb Swap";
-                        bindings = <
-   &kp N0  &kp N9  &kp N8         &trans          &trans          &trans          &trans         &kp N3  &kp N2  &kp N1
-   &trans  &kp N7  &kp N6         &trans          &trans          &trans          &trans         &kp N4  &kp N5  &trans
-   &trans  &trans  &trans         &trans          &trans          &trans          &trans         &trans  &trans  &trans
-                   &lt MSK BKSP   &lt NUM SPACE   &mt LALT RET    &mt LCTRL TAB   &mt LGUI ESC   &lt MSK ESC
-   &trans   &trans   &trans
-   &trans   &trans   &trans
-   &trans   &trans   &trans
-   &trans   &trans   &trans
                         >;
                         sensor-bindings = <&rot_enc>;
                 };
@@ -416,15 +356,15 @@
                 };
                 MSK_layer {
 // +------------------------------------------------------+     +------------------------------------------------------+
-// |    F1    |    F2    |  (H) F3  |  _MSC:F4 |    F5    |     |    F6    |  _MSC:F7 |  (H) F8  |    F9    |   F10    |
-// |   VOLD   |   VOLU   |   BRID   |   BRIU   |   F12    |     |   MLFT   |   MDWN   |    MUP   |   MRGT   |   F11    |
-// |   _MSC   |   RCLK   |   MCLK   |   LCLK   |          |     |          |   LCLK   |   MCLK   |   RCLK   |  _MSC    |
+// |    F1    |    F2    |  (H) F3  |    F4    |    F5    |     |    F6    |    F7    |  (H) F8  |    F9    |   F10    |
+// |   VOLD   |   VOLU   |   BRID   |   BRIU   |          |     |   MLFT   |   MDWN   |    MUP   |   MRGT   |          |
+// |   _MSC   |   RCLK   |   MCLK   |   LCLK   |   F12    |     |   F11    |   LCLK   |   MCLK   |   RCLK   |  _MSC    |
 //                       |   (H)    |          |          |     |          |          |    (H)   |
                         display-name = "Mou Key";
                         bindings = <
-   &kp F1        &kp F2        &kp F3        &lt MSC F4    &kp F5            &kp F6      &lt MSC F7  &kp F8      &kp F9      &kp F1
-   &kp C_VOL_DN  &kp C_VOL_UP  &kp C_BRI_DN  &kp C_BRI_UP  &kp F12           &m_v MOU_L  &m_v MOU_D  &m_v MOU_U  &m_v MOU_R  &kp F11
-   &mo MSC       &mkp RCLK     &mkp MCLK     &mkp LCLK     &trans            &trans      &mkp LCLK   &mkp MCLK   &mkp RCLK   &mo MSC
+   &kp F1        &kp F2        &kp F3        &kp F4        &kp F5            &kp F6      &kp F7      &kp F8      &kp F9      &kp F10
+   &kp C_VOL_DN  &kp C_VOL_UP  &kp C_BRI_DN  &kp C_BRI_UP  &trans            &m_v MOU_L  &m_v MOU_D  &m_v MOU_U  &m_v MOU_R  &trans
+   &mo MSC       &mkp RCLK     &mkp MCLK     &mkp LCLK     &kp F12           &kp F11     &mkp LCLK   &mkp MCLK   &mkp RCLK   &mo MSC
                                &trans        &trans        &trans            &trans      &trans      &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
@@ -464,7 +404,7 @@
 // /{
 //         // lra0_obl__press_key_code_q {
 //         //         compatible = "zmk,output-behavior-listener";
-//         //         layers = < DEF TSP LHB MSC >;
+//         //         layers = < DEF LHB MSC >;
 //         //         sources = < OUTPUT_SOURCE_KEYCODE_STATE_CHANGE >;
 //         //         position = < 0x14 >;
 //         //         bindings = < &ob_lra0 >;
@@ -481,7 +421,7 @@
 //         // };
 //         // led1_obl__press_mouse_btn_1 {
 //         //         compatible = "zmk,output-behavior-listener";
-//         //         layers = < DEF TSP LHB MSC >;
+//         //         layers = < DEF LHB MSC >;
 //         //         /* trigger on mouse button 1 status change */
 //         //         sources = < OUTPUT_SOURCE_MOUSE_BUTTON_STATE_CHANGE >;
 //         //         position = < 1 >;
@@ -502,7 +442,7 @@
 //         // };
 //         // led1_obl__press_mouse_whl_1 {
 //         //         compatible = "zmk,output-behavior-listener";
-//         //         layers = < DEF TSP LHB MSC >;
+//         //         layers = < DEF LHB MSC >;
 //         //         /* trigger on mouse wheel status change */
 //         //         sources = < OUTPUT_SOURCE_MOUSE_WHEEL_STATE_CHANGE >;
 //         //         bindings = < &ob_mwhl1_led1 >;
@@ -518,7 +458,7 @@
 //         // };
 //         // pwm0_obl__press_key_code_p {
 //         //         compatible = "zmk,output-behavior-listener";
-//         //         layers = < DEF TSP LHB MSC >;
+//         //         layers = < DEF LHB MSC >;
 //         //         sources = < OUTPUT_SOURCE_KEYCODE_STATE_CHANGE >;
 //         //         position = < 0x13>;
 //         //         bindings = < &ob_led0 >;
