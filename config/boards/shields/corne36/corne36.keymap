@@ -287,13 +287,13 @@
 // +------------------------------------------------------+     +--------------------------------------------------------+
 // |     Q    |  LCTRL:W |  _MSK:E  |  LALT:R  |     T    |     |     Y     |  RALT:U  |  _MSK:I   |  RCTRL:O |     P    |
 // |     A    |  _NUM:S  |  _NUM:D  |  _NUM:F  |     G    |     |     H     |  _NUM:J  |  _NUM:K   |  _NUM:L  |     ;:   |
-// |  SHFT Z  |  LGUI:X  |  LGUI:C  |  LGUI:V  | LCTRL:B  |     |  RCTRL:N  |  RGUI:M  |  RGUI:,<  |  RGUI:.> |  SHFT /? |
+// |  SHFT Z  |  LGUI:X  |  LGUI:C  |  LGUI:V  |     B    |     |     N     |  RGUI:M  |  RGUI:,<  |  RGUI:.> |  SHFT /? |
 //                       | ^MSK:ESC |  GUI:ESC | CTRL:TAB |     |  ALT:ENT  | _NUM:SPC | ^MSK:BKSP |
                         display-name = "Default";
                         bindings = <
    &kp Q          &hm_l LCTRL W   &hl_l MSK E    &hm_l LALT R    &kp T               &kp Y           &hm_r RALT U     &hl_r MSK I       &hm_r RCTRL O   &kp P
    &kp A          &hl_l NUM S     &hl_l NUM D    &hl_l NUM F     &kp G               &kp H           &hl_r NUM J      &hl_r NUM K       &hl_r NUM L     &kp SEMI
-   &mt LSHFT Z    &hm_l LGUI X    &hm_l LGUI C   &hm_l LGUI V    &mt LCTRL B         &mt RCTRL N     &hm_r RGUI M     &hm_r RGUI COMMA  &hm_r RGUI DOT  &mt RSHFT FSLH
+   &mt LSHFT Z    &hm_l LGUI X    &hm_l LGUI C   &hm_l LGUI V    &kp B               &kp N           &hm_r RGUI M     &hm_r RGUI COMMA  &hm_r RGUI DOT  &mt RSHFT FSLH
                                   &lt MSK ESC    &mt LGUI ESC    &mt LCTRL TAB       &mt LALT RET    &lt NUM SPACE    &lt MSK BKSP
    &mkp RCLK   &hmkp_tg MCLK MSC   &mkp LCLK
    &mkp LCLK   &mo MSC             &hmkp_tg MCLK MSC
