@@ -407,6 +407,14 @@
 // #define OUTPUT_SOURCE_MOUSE_WHEEL_STATE_CHANGE  5
 // #define OUTPUT_SOURCE_TRANSPORT                 6
 // /{
+//         // kp_spotlight_on_enter_cfg_layer {
+//         //         compatible = "zmk,output-behavior-listener";
+//         //         layers = < MSK >;
+//         //         sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+//         //         bindings = < &kp LG(SPACE) >;
+//         //         tap-ms = <30>;
+//         // };
+
 //         // lra0_obl__press_key_code_q {
 //         //         compatible = "zmk,output-behavior-listener";
 //         //         layers = < DEF LHB MSC >;
