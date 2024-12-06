@@ -364,7 +364,7 @@
 // |    F1    |    F2    |  (H) F3  |    F4    |    F5   |     |    F6    |    F7    |  (H) F8  |    F9    |    F10   |
 // |   ^MSC   |   BRID   |   BRIU   |   VOLD   |   VOLU  |     |   MLFT   |   MDWN   |    MUP   |   MRGT   |   ^MSC   |
 // | SHF ^MSC |   RCLK   |   MCLK   |   LCLK   |   F12   |     |   F11    |   LCLK   |   MCLK   |   RCLK   | SHF ^MSC |
-//                       |   (H)    |          |          |     |          |          |    (H)   |
+//                       |   (H)    |          |         |     |          |          |    (H)   |
                         display-name = "Mou Key";
                         bindings = <
    &kp F1            &kp F2        &kp F3        &kp F4        &kp F5            &kp F6      &kp F7      &kp F8      &kp F9      &kp F10
@@ -389,7 +389,7 @@
    &trans            &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_CLR    &sys_reset        &sys_reset   &trans        &trans      &tog GME      &bootloader
    &tog MSC          &isa ISA_ON   &isa ISA_OFF  &isa ISA_SLP  &studio_unlock    &m_s SCL_L   &m_s SCL_D    &m_s SCL_U  &m_s SCL_R    &tog MSC
    &kp_tg RSHFT MSC  &mkp RCLK     &mkp MCLK     &mkp LCLK     &tempo            &trans       &mkp LCLK     &mkp MCLK   &mkp RCLK     &kp_tg RSHFT MSC
-                             &trans        &trans        &trans            &trans       &trans        &trans
+                                   &trans        &trans        &trans            &trans       &trans        &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
