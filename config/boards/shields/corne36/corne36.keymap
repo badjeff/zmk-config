@@ -159,6 +159,34 @@
         };
 
         behaviors {
+                ht: hold_tap_mods {
+                        compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
+                        tapping-term-ms = <200>;
+                        flavor = "hold-preferred"; bindings = <&kp>, <&kp>;
+                        display-name = "mod-tap";
+                };
+                hm: homerow_mods {
+                        compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
+                        tapping-term-ms = <200>; quick-tap-ms = <200>;
+                        flavor = "tap-preferred"; bindings = <&kp>, <&kp>;
+                        display-name = "mod-tap";
+                };
+                hl: homerow_layers {
+                        compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
+                        tapping-term-ms = <200>; quick-tap-ms = <200>;
+                        flavor = "tap-preferred"; bindings = <&mo>, <&kp>;
+                        display-name = "hold-layer";
+                };
+                kg: key_press_tap_toggle {
+                        compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
+                        tapping-term-ms = <200>; quick-tap-ms = <200>;
+                        flavor = "tap-preferred"; bindings = <&kp>, <&tog>;
+                };
+                mkg: hold_mouse_key_press_tap_toggle {
+                        compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
+                        tapping-term-ms = <200>; quick-tap-ms = <200>;
+                        flavor = "tap-preferred"; bindings = <&mkp>, <&tog>;
+                };
                 m_v: mouse_move {
                         compatible = "zmk,behavior-input-two-axis";
                         #binding-cells = <1>;
@@ -236,39 +264,6 @@
                 tog_msk_r { timeout-ms = <60>; key-positions = <26 27 28>; bindings = <&tog MSK>; layers = <DEF GME LHB NUM MSK MSC>; };
         };
 
-        behaviors {
-                hm_l: homerow_mods_left {
-                        compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
-                        tapping-term-ms = <200>; quick-tap-ms = <200>;
-                        flavor = "tap-preferred"; bindings = <&kp>, <&kp>;
-                };
-                hm_r: homerow_mods_right {
-                        compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
-                        tapping-term-ms = <200>; quick-tap-ms = <200>;
-                        flavor = "tap-preferred"; bindings = <&kp>, <&kp>;
-                };
-                hl_l: homerow_layers_left {
-                        compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
-                        tapping-term-ms = <200>; quick-tap-ms = <200>;
-                        flavor = "tap-preferred"; bindings = <&mo>, <&kp>;
-                };
-                hl_r: homerow_layers_right {
-                        compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
-                        tapping-term-ms = <200>; quick-tap-ms = <200>;
-                        flavor = "tap-preferred"; bindings = <&mo>, <&kp>;
-                };
-                kp_tg: key_press_tap_toggle {
-                        compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
-                        tapping-term-ms = <200>; quick-tap-ms = <200>;
-                        flavor = "tap-preferred"; bindings = <&kp>, <&tog>;
-                };
-                hmkp_tg: hold_mouse_key_press_tap_toggle {
-                        compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
-                        tapping-term-ms = <200>; quick-tap-ms = <200>;
-                        flavor = "tap-preferred"; bindings = <&mkp>, <&tog>;
-                };
-        };
-
         kpad: key_kip_a_d {
                 compatible = "zmk,behavior-key-press-lip";
                 #binding-cells = <1>;
@@ -296,14 +291,14 @@
 //                       | ^MSK:ESC |  GUI:ESC | CTRL:TAB |     |  ALT:ENT  | _NUM:SPC | ^MSK:BKSP |
                         display-name = "Default";
                         bindings = <
-   &kp Q          &hm_l LCTRL W   &hl_l MSK E    &hm_l LALT R    &kp T               &kp Y           &hm_r RALT U     &hl_r MSK I       &hm_r RCTRL O   &kp P
-   &kp A          &hl_l NUM S     &hl_l NUM D    &hl_l NUM F     &kp G               &kp H           &hl_r NUM J      &hl_r NUM K       &hl_r NUM L     &kp SEMI
-   &mt LSHFT Z    &hm_l LGUI X    &hm_l LGUI C   &hm_l LGUI V    &kp B               &kp N           &hm_r RGUI M     &hm_r RGUI COMMA  &hm_r RGUI DOT  &mt RSHFT FSLH
-                                  &lt MSK ESC    &mt LGUI ESC    &mt LCTRL TAB       &mt LALT RET    &lt NUM SPACE    &lt MSK BKSP
-   &mkp RCLK   &hmkp_tg MCLK MSC   &mkp LCLK
-   &mkp LCLK   &mo MSC             &hmkp_tg MCLK MSC
-   &mkp MCLK   &mkp MB5            &mkp MB5
-   &mkp RCLK   &mkp MB4            &mkp MB4
+   &kp Q          &hm LCTRL W   &hl MSK E    &hm LALT R    &kp T               &kp Y         &hm RALT U     &hl MSK I       &hm RCTRL O   &kp P
+   &kp A          &hl NUM S     &hl NUM D    &hl NUM F     &kp G               &kp H         &hl NUM J      &hl NUM K       &hl NUM L     &kp SEMI
+   &ht LSHFT Z    &hm LGUI X    &hm LGUI C   &hm LGUI V    &kp B               &kp N         &hm RGUI M     &hm RGUI COMMA  &hm RGUI DOT  &ht RSHFT FSLH
+                                &lt MSK ESC  &ht LGUI ESC  &ht LCTRL TAB       &ht LALT RET  &lt NUM SPACE  &lt MSK BKSP
+   &mkp RCLK   &mkg MCLK MSC   &mkp LCLK
+   &mkp LCLK   &mo MSC         &mkg MCLK MSC
+   &mkp MCLK   &mkp MB5        &mkp MB5
+   &mkp RCLK   &mkp MB4        &mkp MB4
                         >;
                         sensor-bindings = <&rot_enc>;
                 };
@@ -317,8 +312,8 @@
                         bindings = <
    &kp Q          &kpws W         &kp E          &kp R           &kp T               &kp Y           &kp U            &kp I           &kp O           &kp P
    &kpad A        &kpws S         &kpad D        &kp F           &kp G               &kp H           &kp J            &kp K           &kp L           &kp SEMI
-   &mt LSHFT Z    &kp X           &kp C          &kp V           &kp B               &kp N           &kp M            &kp COMMA       &kp DOT         &mt RSHFT FSLH
-                                  &lt MSK ESC    &mt LGUI ESC    &mt LCTRL TAB       &mt LALT RET    &lt NUM SPACE    &lt MSK BKSP
+   &ht LSHFT Z    &kp X           &kp C          &kp V           &kp B               &kp N           &kp M            &kp COMMA       &kp DOT         &ht RSHFT FSLH
+                                  &lt MSK ESC    &ht LGUI ESC    &ht LCTRL TAB       &ht LALT RET    &lt NUM SPACE    &lt MSK BKSP
    &trans   &trans   &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
@@ -333,10 +328,10 @@
    &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
    &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
                    &trans  &trans  &trans    &trans  &trans  &trans
-   &mkp LCLK   &hmkp_tg MCLK MSC   &mkp RCLK
-   &mkp RCLK   &hmkp_tg MCLK MSC   &mo MSC
-   &mkp MCLK   &trans              &trans
-   &mkp LCLK   &trans              &trans
+   &mkp LCLK   &mkg MCLK MSC   &mkp RCLK
+   &mkp RCLK   &mkg MCLK MSC   &mo MSC
+   &mkp MCLK   &trans          &trans
+   &mkp LCLK   &trans          &trans
                         >;
                         sensor-bindings = <&rot_enc>;
                 };
@@ -348,10 +343,10 @@
 //                        |          |          |         |     |          |    (H)   |          |
                         display-name = "Num";
                         bindings = <
-   &kp N1             &hm_l LCTRL N2   &kp N3     &hm_l LALT N4   &kp N5              &kp N6      &hm_r RALT N7   &kp N8      &hm_r RCTRL N9   &kp N0
-   &kp GRAVE          &trans           &kp LBKT   &kp RBKT        &trans              &kp LEFT    &kp DOWN        &kp UP      &kp RIGHT        &kp SQT
-   &mt LSHFT TAB      &trans           &trans     &trans          &trans              &trans      &kp MINUS       &kp EQUAL   &trans           &mt RSHFT BSLH
-                                       &trans     &trans          &trans              &trans      &trans          &trans
+   &kp N1             &hm LCTRL N2   &kp N3     &hm LALT N4   &kp N5              &kp N6      &hm RALT N7   &kp N8      &hm RCTRL N9   &kp N0
+   &kp GRAVE          &trans         &kp LBKT   &kp RBKT      &trans              &kp LEFT    &kp DOWN      &kp UP      &kp RIGHT      &kp SQT
+   &ht LSHFT TAB      &trans         &trans     &trans        &trans              &trans      &kp MINUS     &kp EQUAL   &trans         &ht RSHFT BSLH
+                                     &trans     &trans        &trans              &trans      &trans        &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
@@ -367,10 +362,10 @@
 //                       |   (H)    |          |         |     |          |          |    (H)   |
                         display-name = "Mou Key";
                         bindings = <
-   &kp F1            &kp F2        &kp F3        &kp F4        &kp F5            &kp F6      &kp F7      &kp F8      &kp F9      &kp F10
-   &tog MSC          &kp C_BRI_DN  &kp C_BRI_UP  &kp C_VOL_DN  &kp C_VOL_UP      &m_v MOU_L  &m_v MOU_D  &m_v MOU_U  &m_v MOU_R  &tog MSC
-   &kp_tg LSHFT MSC  &mkp RCLK     &mkp MCLK     &mkp LCLK     &kp F12           &kp F11     &mkp LCLK   &mkp MCLK   &mkp RCLK   &kp_tg RSHFT MSC
-                                   &trans        &trans        &trans            &trans      &trans      &trans
+   &kp F1         &kp F2        &kp F3        &kp F4        &kp F5            &kp F6      &kp F7      &kp F8      &kp F9      &kp F10
+   &tog MSC       &kp C_BRI_DN  &kp C_BRI_UP  &kp C_VOL_DN  &kp C_VOL_UP      &m_v MOU_L  &m_v MOU_D  &m_v MOU_U  &m_v MOU_R  &tog MSC
+   &kg LSHFT MSC  &mkp RCLK     &mkp MCLK     &mkp LCLK     &kp F12           &kp F11     &mkp LCLK   &mkp MCLK   &mkp RCLK   &kg RSHFT MSC
+                                &trans        &trans        &trans            &trans      &trans      &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
@@ -386,10 +381,10 @@
 //                       |   (H)    |          |          |     |          |          |    (H)   |
                         display-name = "Mou Scroll";
                         bindings = <
-   &trans            &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_CLR    &sys_reset        &sys_reset   &trans        &trans      &tog GME      &bootloader
-   &tog MSC          &isa ISA_ON   &isa ISA_OFF  &isa ISA_SLP  &studio_unlock    &m_s SCL_L   &m_s SCL_D    &m_s SCL_U  &m_s SCL_R    &tog MSC
-   &kp_tg RSHFT MSC  &mkp RCLK     &mkp MCLK     &mkp LCLK     &tempo            &trans       &mkp LCLK     &mkp MCLK   &mkp RCLK     &kp_tg RSHFT MSC
-                                   &trans        &trans        &trans            &trans       &trans        &trans
+   &trans         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_CLR    &sys_reset        &sys_reset   &trans        &trans      &tog GME      &bootloader
+   &tog MSC       &isa ISA_ON   &isa ISA_OFF  &isa ISA_SLP  &studio_unlock    &m_s SCL_L   &m_s SCL_D    &m_s SCL_U  &m_s SCL_R    &tog MSC
+   &kg RSHFT MSC  &mkp RCLK     &mkp MCLK     &mkp LCLK     &tempo            &trans       &mkp LCLK     &mkp MCLK   &mkp RCLK     &kg RSHFT MSC
+                                &trans        &trans        &trans            &trans       &trans        &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
@@ -407,35 +402,61 @@
 #define OUTPUT_SOURCE_MOUSE_WHEEL_STATE_CHANGE  5
 #define OUTPUT_SOURCE_TRANSPORT                 6
 /{
+        kp_f17_on_enter_def_layer {
+                compatible = "zmk,output-behavior-listener";
+                sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+                layers = < DEF >;
+                bindings = < &kp F17 >; tap-ms = <30>;
+        };
+                kp_f17_on_leave_num_to_def_layer {
+                        compatible = "zmk,output-behavior-listener";
+                        sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+                        invert-state; position = < NUM >; layers = < DEF >; 
+                        bindings = < &kp F17 >; tap-ms = <30>;
+                };
+                kp_f17_on_leave_mmv_to_def_layer {
+                        compatible = "zmk,output-behavior-listener";
+                        sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+                        invert-state; position = < MSK >; layers = < DEF >; 
+                        bindings = < &kp F17 >; tap-ms = <30>;
+                };
+                kp_f17_on_leave_msc_to_def_layer {
+                        compatible = "zmk,output-behavior-listener";
+                        sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+                        invert-state; position = < MSC >; layers = < DEF >; 
+                        bindings = < &kp F17 >; tap-ms = <30>;
+                };
+                kp_f17_on_leave_mmv_to_num_layer {
+                        compatible = "zmk,output-behavior-listener";
+                        sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+                        invert-state; position = < MSK >; layers = < NUM >; 
+                        bindings = < &kp F17 >; tap-ms = <30>;
+                };
+                kp_f17_on_leave_msc_to_num_layer {
+                        compatible = "zmk,output-behavior-listener";
+                        sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+                        invert-state; position = < MSC >; layers = < NUM >; 
+                        bindings = < &kp F17 >; tap-ms = <30>;
+                };
+
         kp_f19_on_enter_mmv_layer {
                 compatible = "zmk,output-behavior-listener";
                 sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
                 layers = < MSK >;
                 bindings = < &kp F19 >; tap-ms = <30>;
         };
+                kp_f19_on_leave_msc_to_mmv_layer {
+                        compatible = "zmk,output-behavior-listener";
+                        sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+                        invert-state; position = < MSC >; layers = < MSK >; 
+                        bindings = < &kp F19 >; tap-ms = <30>;
+                };
+
         kp_f20_on_enter_msc_layer {
                 compatible = "zmk,output-behavior-listener";
                 sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
                 layers = < MSC >;
                 bindings = < &kp F20 >; tap-ms = <30>;
-        };
-        kp_f19_on_leave_msc_to_mmv_layer {
-                compatible = "zmk,output-behavior-listener";
-                sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
-                invert-state; position = < MSC >; layers = < MSK >; 
-                bindings = < &kp F19 >; tap-ms = <30>;
-        };
-        kp_f18_on_leave_mmv_to_def_layer {
-                compatible = "zmk,output-behavior-listener";
-                sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
-                invert-state; position = < MSK >; layers = < DEF >; 
-                bindings = < &kp F18 >; tap-ms = <30>;
-        };
-        kp_f18_on_leave_msc_to_def_layer {
-                compatible = "zmk,output-behavior-listener";
-                sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
-                invert-state; position = < MSC >; layers = < DEF >; 
-                bindings = < &kp F18 >; tap-ms = <30>;
         };
 
         // lra0_obl__press_key_code_q {
