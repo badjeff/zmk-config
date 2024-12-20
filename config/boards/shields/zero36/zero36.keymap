@@ -84,21 +84,21 @@
                 bindings = <&ib_fwd_to_hid_io>;
 	};
 
-        // h_bridge_0: behavior_drv883x_0 {
-        //         compatible = "zmk,behavior-drv883x";
-        //         #binding-cells = <2>;
-        //         drv883x-dev = <&drv883x_0>;
-        //         vel-neutral = <128>;
-        //         vel-min-max = <128>;
-        // };
-
-        h_bridge_0: behavior_tb6612fng {
-                compatible = "zmk,behavior-tb6612fng";
+        h_bridge_0: behavior_drv883x_0 {
+                compatible = "zmk,behavior-drv883x";
                 #binding-cells = <2>;
-                tb6612fng-dev = <&tb6612fng_0>;
+                drv883x-dev = <&drv883x_0>;
                 vel-neutral = <128>;
                 vel-min-max = <128>;
         };
+
+        // h_bridge_0: behavior_tb6612fng {
+        //         compatible = "zmk,behavior-tb6612fng";
+        //         #binding-cells = <2>;
+        //         tb6612fng-dev = <&tb6612fng_0>;
+        //         vel-neutral = <128>;
+        //         vel-min-max = <128>;
+        // };
 
         keymap {
                 compatible = "zmk,keymap";
@@ -150,8 +150,12 @@
 		#binding-cells = <0>;
                 sensor-device = <&anin0>;
                 sensor-channel = <0>;
-                motor-driver-device = <&tb6612fng_0>;
-                motor-driver = "tb6612fng";
+
+                // motor-driver-device = <&tb6612fng_0>;
+                // motor-driver = "tb6612fng";
+                motor-driver-device = <&drv883x_0>;
+                motor-driver = "drv883x";
+
                 motor-channel = <0>;
 	};
 
