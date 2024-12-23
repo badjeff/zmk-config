@@ -50,11 +50,16 @@
                 compatible = "zmk,keymap";
                 DEF_layer {
                         bindings = <
-                                &kp LSHFT  &kp N2  &kp N3  &kp N4  &kp N5  &kp N6  &kp N7  &kp N8
 
-                                &kp A  &kp B  &kp C  &kp D  &kp E  &kp F  &kp G  &kp H
+&kp LSHFT  &kp N2  &kp N3  &kp N4  &kp N5  &kp N6  &kp N7  &kp N8
+&kp A  &kp B  &kp C  &kp D  &kp E  &kp F  &kp G  &kp H
+&kp LS(A)  &kp LS(B)  &kp LS(C)  &kp LS(D)  &kp LS(E)  &kp LS(F)  &kp LS(G)  &kp LS(H)
 
-                                &kp LS(A)  &kp LS(B)  &kp LS(C)  &kp LS(D)  &kp LS(E)  &kp LS(F)  &kp LS(G)  &kp LS(H)
+&kp N1   &kp N2   &kp N3   &kp N4
+&kp N5   &kp N6   &kp N7   &kp N8
+&kp N9   &kp N0   &kp A    &kp B
+&kp C    &kp D    &kp E    &kp F
+
                         >;
                 };
        };

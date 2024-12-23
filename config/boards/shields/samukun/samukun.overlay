@@ -8,4 +8,4 @@
 
 // #include "samukun__tpoint0.dtsi"
 
-#include "samukun__595.dtsi"
+#include "samukun__gpio0.dtsi"
