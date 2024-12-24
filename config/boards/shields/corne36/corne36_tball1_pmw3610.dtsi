@@ -22,7 +22,7 @@
 	};
 };
 
-// release gpio1 12 & 13 from xiao_ble-pinctrl.dtsi
+// release gpio1 11 & 12 from xiao_ble-pinctrl.dtsi
 // for &trackball { irq-gpios }
 &uart0 {
 	status = "disabled";
