@@ -1,0 +1,54 @@
+/*
+ * Copyright (c) 2020 Pete Johanson
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include "corne36.dtsi"
+
+&kscan0 {
+	compatible = "zmk,kscan-blackout";
+	label = "KSCAN";
+	/delete-property/ wakeup-source;
+	/delete-property/ diode-direction;
+	/delete-property/ row-gpios;
+	/delete-property/ col-gpios;
+};
+
+/{
+	chosen {
+		zmk,battery = &vbatt;
+	};
+	vbatt: vbatt {
+		compatible = "zmk,battery-voltage-divider";
+		io-channels = <&adc 2>;
+		output-ohms = <2000000>;
+		full-ohms = <(2000000 + 806000)>;
+	};
+};
+
+#include "corne36_zplit.dtsi"
+
+// &s_encoder {
+//     status = "okay";
+// };
+// &sensors {
+// 		status = "okay";
+// 		sensors = <&s_encoder>;
+// };
+/{
+	s_encoder: s_encoder {
+		compatible = "alps,ec11";
+    status = "okay";
+		// NFC pins in nRF52 series: P0.09 and P0.10
+		a-gpios = <&gpio0 9  (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+		b-gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+		steps = <48>;
+	};
+	sensors: sensors {
+		compatible = "zmk,keymap-sensors";
+		status = "okay";
+		sensors = <&s_encoder>;
+		triggers-per-rotation = <12>;
+	};
+};
