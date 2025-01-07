@@ -375,7 +375,7 @@
                 };
                 MSC_layer {
 // +------------------------------------------------------+     +------------------------------------------------------+
-// |          |   BT_0   | (H) BT_1 | (H) BT_C |  RESET   |     |   RESET  |    (H)   |    (H)   |   ^GME   |    DFU   |
+// |   DFU    |   BT_0   | (H) BT_1 | (H) BT_C |  RESET   |     |   RESET  |    (H)   |    (H)   |   ^GME   |    DFU   |
 // |   ^MSC   |  ISA_ON  |  ISA_OFF |  ISA_SLP |  STD_UL  |     |   SLFT   |   SDWN   |    SUP   |   SRGT   |   ^MSC   |
 // | SHF ^MSC |   RCLK   |   MCLK   |   LCLK   |  TEMPO   |     |          |   LCLK   |   MCLK   |   RCLK   | SHF ^MSC |
 //                       |   (H)    |          |          |     |          |          |    (H)   |
@@ -402,43 +402,43 @@
 #define OUTPUT_SOURCE_MOUSE_WHEEL_STATE_CHANGE  5
 #define OUTPUT_SOURCE_TRANSPORT                 6
 /{
-        kp_f19_on_enter_mmv_layer {
-                compatible = "zmk,output-behavior-listener";
-                sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
-                layers = < MSK >; bindings = < &kp F19 >; tap-ms = <30>;
-        };
-        kp_f19_on_leave_to_mmv_layer {
-                compatible = "zmk,output-behavior-listener";
-                sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
-                invert-state; layers = < MSK >; bindings = < &kp F19 >; tap-ms = <30>;
-        };
+        // kp_f19_on_enter_mmv_layer {
+        //         compatible = "zmk,output-behavior-listener";
+        //         sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+        //         layers = < MSK >; bindings = < &kp F19 >; tap-ms = <30>;
+        // };
+        // kp_f19_on_leave_to_mmv_layer {
+        //         compatible = "zmk,output-behavior-listener";
+        //         sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+        //         invert-state; layers = < MSK >; bindings = < &kp F19 >; tap-ms = <30>;
+        // };
 
-        kp_f20_on_enter_msc_layer {
-                compatible = "zmk,output-behavior-listener";
-                sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
-                layers = < MSC >; bindings = < &kp F20 >; tap-ms = <30>;
-        };
-        kp_f20_on_leave_to_msc_layer {
-                compatible = "zmk,output-behavior-listener";
-                sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
-                invert-state; layers = < MSC >; bindings = < &kp F20 >; tap-ms = <30>;
-        };
+        // kp_f20_on_enter_msc_layer {
+        //         compatible = "zmk,output-behavior-listener";
+        //         sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+        //         layers = < MSC >; bindings = < &kp F20 >; tap-ms = <30>;
+        // };
+        // kp_f20_on_leave_to_msc_layer {
+        //         compatible = "zmk,output-behavior-listener";
+        //         sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+        //         invert-state; layers = < MSC >; bindings = < &kp F20 >; tap-ms = <30>;
+        // };
 
-        kp_f17_on_leave_to_def_layer {
-                compatible = "zmk,output-behavior-listener";
-                sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
-                invert-state; layers = < BAS >; bindings = < &kp F17 >; tap-ms = <30>;
-        };
-        kp_f17_on_leave_to_lhb_layer {
-                compatible = "zmk,output-behavior-listener";
-                sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
-                invert-state; layers = < LHB >; bindings = < &kp F17 >; tap-ms = <30>;
-        };
-        kp_f17_on_leave_to_num_layer {
-                compatible = "zmk,output-behavior-listener";
-                sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
-                invert-state; layers = < NUM >; bindings = < &kp F17 >; tap-ms = <30>;
-        };
+        // kp_f17_on_leave_to_def_layer {
+        //         compatible = "zmk,output-behavior-listener";
+        //         sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+        //         invert-state; layers = < BAS >; bindings = < &kp F17 >; tap-ms = <30>;
+        // };
+        // kp_f17_on_leave_to_lhb_layer {
+        //         compatible = "zmk,output-behavior-listener";
+        //         sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+        //         invert-state; layers = < LHB >; bindings = < &kp F17 >; tap-ms = <30>;
+        // };
+        // kp_f17_on_leave_to_num_layer {
+        //         compatible = "zmk,output-behavior-listener";
+        //         sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+        //         invert-state; layers = < NUM >; bindings = < &kp F17 >; tap-ms = <30>;
+        // };
 
         // lra0_obl__press_key_code_q {
         //         compatible = "zmk,output-behavior-listener";
