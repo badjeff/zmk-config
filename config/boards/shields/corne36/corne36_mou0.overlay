@@ -50,13 +50,18 @@ RC(4,0) RC(4,1) RC(4,2)
 	};
 };
 
+#include <input/processors/report_rate_limit.dtsi>
+&zip_report_rate_limit {
+	report-ms = <12>;
+};
+
 #include "corne36_mou0_pmw3610.dtsi" 
 #include "corne36_zplit.dtsi"
 &tball0_split { status = "disabled"; };
 &tball1_split { status = "disabled"; };
 &tpoint0_split { status = "disabled"; };
 &tpad0_split { status = "disabled"; };
-&mou0_split { device = <&mou0>; };
+&mou0_split { device = <&mou0>; input-processors = <&zip_report_rate_limit>; };
 
 /{
 	s_encoder: s_encoder {

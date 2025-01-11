@@ -67,6 +67,9 @@ manifest:
     - name: zmk-input-processor-mixer
       remote: badjeff
       revision: main
+    - name: zmk-input-processor-report-rate-limit
+      remote: badjeff
+      revision: main      
     # - name: zmk-behavior-set-default-layer
     #   remote: badjeff
     #   revision: main
