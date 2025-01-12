@@ -46,14 +46,11 @@ RC(7,0) RC(7,1) RC(7,2)
 };
 
 #include <input/processors/report_rate_limit.dtsi>
-&zip_report_rate_limit {
-	report-ms = <12>;
-};
 
 #include "corne36_tball1_pmw3610.dtsi" 
 #include "corne36_zplit.dtsi"
 &tball0_split { status = "disabled"; };
-&tball1_split { device = <&tball1>; input-processors = <&zip_report_rate_limit>; };
+&tball1_split { device = <&tball1>; input-processors = <&zip_report_rate_limit 12>; };
 &tpoint0_split { status = "disabled"; };
 &tpad0_split { status = "disabled"; };
 &mou0_split { status = "disabled"; };
