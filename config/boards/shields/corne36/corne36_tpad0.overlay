@@ -52,5 +52,5 @@ RC(7,0) RC(7,1) RC(7,2)
 &tball0_split { status = "disabled"; };
 &tball1_split { status = "disabled"; };
 &tpoint0_split { status = "disabled"; };
-&tpad0_split { device = <&tpad0>; input-processors = <&zip_report_rate_limit 12>; };
+&tpad0_split { device = <&tpad0>; input-processors = <&zip_report_rate_limit 9>; };
 &mou0_split { status = "disabled"; };
