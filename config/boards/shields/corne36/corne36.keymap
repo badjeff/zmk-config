@@ -253,7 +253,7 @@
                 ret_l     { timeout-ms = <30>; key-positions = <12 23>; bindings = <&kp RET>; layers = <BAS GME LHB NUM>; };
 
                 mkp_swap  { timeout-ms = <60>; key-positions = <36 38>; bindings = <&tog LHB>; layers = <BAS GME LHB NUM MSK MSC>; };
-                mou_swap  { timeout-ms = <60>; key-positions = <40 41>; bindings = <&tog LHB>; layers = <BAS GME LHB NUM MSK MSC>; };
+                mou_swap  { timeout-ms = <60>; key-positions = <46 47>; bindings = <&tog LHB>; layers = <BAS GME LHB NUM MSK MSC>; };
 
                 dfu_l     { timeout-ms = <60>; key-positions = <0 1>; bindings = <&bootloader>; layers = <MSC>; };
 
