@@ -22,6 +22,9 @@
 #include <behaviors/insomnia.dtsi>
 #include <dt-bindings/zmk/insomnia.h>
 
+#include <input/processors/report_rate_limit.dtsi>
+#include <input/processors/xyz.dtsi>
+
 #define BAS 0
 #define GME 1
 #define LHB 2
@@ -80,12 +83,15 @@
         tball0_mmv_il {
                 compatible = "zmk,input-listener";
                 device = <&tball0_split>;
+                input-processors = <&zip_zxy>, <&zip_report_rate_limit 8>;
                 precise {
                         layers = <NUM>;
+                        process-next;
                         input-processors = <&xy_scaler 2 3>;
                 };
                 scroll {
                         layers = <MSC>;
+                        process-next;
                         input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
                                         , <&xy_scaler 1 25>, <&x_scaler 0 1>
                                         , <&to_wheel>;
@@ -95,12 +101,15 @@
         tball1_mmv_il {
                 compatible = "zmk,input-listener";
                 device = <&tball1_split>;
+                input-processors = <&zip_zxy>, <&zip_report_rate_limit 8>;
                 precise {
                         layers = <NUM>;
+                        process-next;
                         input-processors = <&xy_scaler 2 3>;
                 };
                 scroll {
                         layers = <MSC>;
+                        process-next;
                         input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
                                         , <&xy_scaler 1 25>, <&x_scaler 0 1>
                                         , <&to_wheel>;
@@ -110,7 +119,8 @@
         tpoint0_mmv_il {
                 compatible = "zmk,input-listener";
                 device = <&tpoint0_split>;
-                input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>;
+                input-processors = <&zip_zxy>, <&zip_report_rate_limit 8>
+                                 , <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>;
                 precise {
                         layers = <NUM>;
                         process-next;
@@ -127,7 +137,8 @@
         tpad0_mmv_il {
                 compatible = "zmk,input-listener";
                 device = <&tpad0_split>;
-                input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>;
+                input-processors = <&zip_zxy>, <&zip_report_rate_limit 8>
+                                 , <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>;
                 precise {
                         layers = <NUM>;
                         process-next;
@@ -144,7 +155,8 @@
         mou0_mmv_il {
                 compatible = "zmk,input-listener";
                 device = <&mou0_split>;
-                input-processors = <&xy_transf (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>;
+                input-processors = <&zip_zxy>, <&zip_report_rate_limit 8>
+                                 , <&xy_transf (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>;
                 precise {
                         layers = <NUM>;
                         process-next;
