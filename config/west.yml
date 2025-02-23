@@ -37,9 +37,9 @@ manifest:
     # - name: zmk-input-behavior-listener
     #   remote: badjeff
     #   revision: main
-    # - name: zmk-output-behavior-listener
-    #   remote: badjeff
-    #   revision: main
+    - name: zmk-output-behavior-listener
+      remote: badjeff
+      revision: main
     # - name: zmk-hid-io
     #   remote: badjeff
     #   revision: main
