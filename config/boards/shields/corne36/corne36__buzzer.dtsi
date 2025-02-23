@@ -76,23 +76,23 @@
 	on_enter_msk_layer {
 		compatible = "zmk,output-behavior-listener";
 		sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
-		layers = < MSK >; bindings = < &ob_buz1 >; tap-ms = <83>;
+		layers = < MSK >; bindings = < &ob_buz1 >; tap-ms = <123>;
 	};
 	on_enter_msc_layer {
 		compatible = "zmk,output-behavior-listener";
 		sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
-		layers = < MSC >; bindings = < &ob_buz2 >; tap-ms = <67>;
+		layers = < MSC >; bindings = < &ob_buz1 >; tap-ms = <77>;
 	};
 
 	on_leave_to_bas_layer {
 		compatible = "zmk,output-behavior-listener";
 		sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
-		invert-state; layers = < BAS >; bindings = < &ob_buz0 >; tap-ms = <15>;
+		invert-state; layers = < BAS >; bindings = < &ob_buz0 >; tap-ms = <19>;
 	};
 	on_leave_to_msk_layer {
 		compatible = "zmk,output-behavior-listener";
 		sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
-		invert-state; layers = < MSK >; bindings = < &ob_buz2 >; tap-ms = <57>;
+		invert-state; layers = < MSK >; bindings = < &ob_buz2 >; tap-ms = <77>;
 	};
 
 };
