@@ -27,10 +27,12 @@
 
 #define BAS 0
 #define GME 1
-#define LHB 2
-#define NUM 3
-#define MSK 4
-#define MSC 5
+#define LNP 2
+#define RNP 3
+#define LHB 4
+#define NUM 5
+#define MSK 6
+#define MSC 7
 
 #ifndef MOVE_Y
 #define MOVE_Y(n) (0)
@@ -254,15 +256,18 @@
         combos {
                 compatible = "zmk,combos";
 
-                spc       { timeout-ms = <70>; key-positions = <16 17>; bindings = <&kp SPC>; layers = <BAS GME LHB NUM>; };
-                bksp      { timeout-ms = <70>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <BAS GME LHB NUM>; };
-                del       { timeout-ms = <70>; key-positions = <16 18>; bindings = <&kp DEL>; layers = <BAS GME LHB NUM>; };
+                spc       { timeout-ms = <70>; key-positions = <16 17>; bindings = <&kp SPC>; layers = <BAS GME LNP RNP LHB NUM>; };
+                bksp      { timeout-ms = <70>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <BAS GME LNP RNP LHB NUM>; };
+                del       { timeout-ms = <70>; key-positions = <16 18>; bindings = <&kp DEL>; layers = <BAS GME LNP RNP LHB NUM>; };
 
-                esc       { timeout-ms = <70>; key-positions = <11 12>; bindings = <&kp ESC>; layers = <BAS GME LHB NUM>; };
-                tab       { timeout-ms = <70>; key-positions = <12 13>; bindings = <&kp TAB>; layers = <BAS GME LHB NUM>; };
+                esc       { timeout-ms = <70>; key-positions = <11 12>; bindings = <&kp ESC>; layers = <BAS GME LNP RNP LHB NUM>; };
+                tab       { timeout-ms = <70>; key-positions = <12 13>; bindings = <&kp TAB>; layers = <BAS GME LNP RNP LHB NUM>; };
 
-                ret_r     { timeout-ms = <30>; key-positions = <17 26>; bindings = <&kp RET>; layers = <BAS GME LHB NUM>; };
-                ret_l     { timeout-ms = <30>; key-positions = <12 23>; bindings = <&kp RET>; layers = <BAS GME LHB NUM>; };
+                ret_r     { timeout-ms = <30>; key-positions = <17 26>; bindings = <&kp RET>; layers = <BAS GME LNP RNP LHB NUM>; };
+                ret_l     { timeout-ms = <30>; key-positions = <12 23>; bindings = <&kp RET>; layers = <BAS GME LNP RNP LHB NUM>; };
+
+                tog_lnp   { timeout-ms = <60>; key-positions = <0 1>; bindings = <&tog LNP>; layers = <BAS GME LNP RNP LHB NUM MSK MSC>; };
+                tog_rnp   { timeout-ms = <60>; key-positions = <8 9>; bindings = <&tog RNP>; layers = <BAS GME LNP RNP LHB NUM MSK MSC>; };
 
                 mkp_swap  { timeout-ms = <60>; key-positions = <36 38>; bindings = <&tog LHB>; layers = <BAS GME LHB NUM MSK MSC>; };
                 mou_swap  { timeout-ms = <60>; key-positions = <46 47>; bindings = <&tog LHB>; layers = <BAS GME LHB NUM MSK MSC>; };
@@ -326,6 +331,34 @@
    &kpad A        &kpws S         &kpad D        &kp F           &kp G               &kp H           &kp J            &kp K           &kp L           &kp SEMI
    &ht LSHFT Z    &kp X           &kp C          &kp V           &kp B               &kp N           &kp M            &kp COMMA       &kp DOT         &ht RSHFT FSLH
                                   &lt MSK ESC    &ht LGUI ESC    &ht LCTRL TAB       &ht LALT RET    &lt NUM SPACE    &lt MSK BKSP
+   &trans   &trans   &trans
+   &trans   &trans   &trans
+   &trans   &trans   &trans
+   &trans   &trans   &trans
+                        >;
+                        sensor-bindings = <&rot_enc>;
+                };
+                LNP_layer {
+                        display-name = "L N P";
+                        bindings = <
+   &trans  &kp N7  &kp N8  &kp N9  &trans    &trans  &trans  &trans  &trans  &trans
+   &kp N0  &kp N4  &kp N5  &kp N6  &trans    &trans  &trans  &trans  &trans  &trans
+   &trans  &kp N1  &kp N2  &kp N3  &trans    &trans  &trans  &trans  &trans  &trans
+                   &trans  &trans  &trans    &trans  &trans  &trans
+   &trans   &trans   &trans
+   &trans   &trans   &trans
+   &trans   &trans   &trans
+   &trans   &trans   &trans
+                        >;
+                        sensor-bindings = <&rot_enc>;
+                };
+                RNP_layer {
+                        display-name = "R N P";
+                        bindings = <
+   &trans  &trans  &trans  &trans  &trans    &trans  &kp N7  &kp N8  &kp N9  &trans
+   &trans  &trans  &trans  &trans  &trans    &trans  &kp N4  &kp N5  &kp N6  &kp N0
+   &trans  &trans  &trans  &trans  &trans    &trans  &kp N1  &kp N2  &kp N3  &trans
+                   &trans  &trans  &trans    &trans  &trans  &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
