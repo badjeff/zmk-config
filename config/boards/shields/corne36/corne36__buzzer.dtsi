@@ -39,10 +39,12 @@
 
 #define BAS 0
 #define GME 1
-#define LHB 2
-#define NUM 3
-#define MSK 4
-#define MSC 5
+#define LNP 2
+#define RNP 3
+#define LHB 4
+#define NUM 5
+#define MSK 6
+#define MSC 7
 
 #define OUTPUT_SOURCE_LAYER_STATE_CHANGE        1
 #define OUTPUT_SOURCE_POSITION_STATE_CHANGE     2
