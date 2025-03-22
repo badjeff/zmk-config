@@ -38,4 +38,4 @@
 		sensors = <&s_encoder>;
 };
 
-#include "corne36__buzzer.dtsi"
+// #include "corne36__buzzer.dtsi"
