@@ -1,0 +1,135 @@
+/*
+ * Copyright (c) 2020 Pete Johanson
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#define BAS 0
+#define GME 1
+#define LNP 2
+#define RNP 3
+#define LHB 4
+#define NUM 5
+#define MSK 6
+#define MSC 7
+
+#define OUTPUT_SOURCE_LAYER_STATE_CHANGE        1
+#define OUTPUT_SOURCE_POSITION_STATE_CHANGE     2
+#define OUTPUT_SOURCE_KEYCODE_STATE_CHANGE      3
+#define OUTPUT_SOURCE_MOUSE_BUTTON_STATE_CHANGE 4
+#define OUTPUT_SOURCE_MOUSE_WHEEL_STATE_CHANGE  5
+#define OUTPUT_SOURCE_TRANSPORT                 6
+/{
+	// kp_f19_on_enter_mmv_layer {
+	//         compatible = "zmk,output-behavior-listener";
+	//         sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+	//         layers = < MSK >; bindings = < &kp F19 >; tap-ms = <30>;
+	// };
+	// kp_f19_on_leave_to_mmv_layer {
+	//         compatible = "zmk,output-behavior-listener";
+	//         sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+	//         invert-state; layers = < MSK >; bindings = < &kp F19 >; tap-ms = <30>;
+	// };
+
+	// kp_f20_on_enter_msc_layer {
+	//         compatible = "zmk,output-behavior-listener";
+	//         sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+	//         layers = < MSC >; bindings = < &kp F20 >; tap-ms = <30>;
+	// };
+	// kp_f20_on_leave_to_msc_layer {
+	//         compatible = "zmk,output-behavior-listener";
+	//         sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+	//         invert-state; layers = < MSC >; bindings = < &kp F20 >; tap-ms = <30>;
+	// };
+
+	// kp_f17_on_leave_to_def_layer {
+	//         compatible = "zmk,output-behavior-listener";
+	//         sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+	//         invert-state; layers = < BAS >; bindings = < &kp F17 >; tap-ms = <30>;
+	// };
+	// kp_f17_on_leave_to_lhb_layer {
+	//         compatible = "zmk,output-behavior-listener";
+	//         sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+	//         invert-state; layers = < LHB >; bindings = < &kp F17 >; tap-ms = <30>;
+	// };
+	// kp_f17_on_leave_to_num_layer {
+	//         compatible = "zmk,output-behavior-listener";
+	//         sources = < OUTPUT_SOURCE_LAYER_STATE_CHANGE >;
+	//         invert-state; layers = < NUM >; bindings = < &kp F17 >; tap-ms = <30>;
+	// };
+
+	// lra0_obl__press_key_code_q {
+	//         compatible = "zmk,output-behavior-listener";
+	//         layers = < BAS LHB MSC >;
+	//         sources = < OUTPUT_SOURCE_KEYCODE_STATE_CHANGE >;
+	//         position = < 0x14 >;
+	//         bindings = < &ob_lra0 >;
+	// };
+	// ob_lra0: ob_lra0 {
+	//         compatible = "zmk,output-behavior-generic";
+	//         #binding-cells = <0>;
+	//         device = <&fb_lra0>;
+	//         // delay = <0>;
+	//         /* DON'T need time-to-live-ms for DRV2605 driver */
+	//         // time-to-live-ms = <130>;
+	//         /* force will be convrt to waveformm effect from DRV2605 library */
+	//         force = <7>;
+	// };
+	// led1_obl__press_mouse_btn_1 {
+	//         compatible = "zmk,output-behavior-listener";
+	//         layers = < BAS LHB MSC >;
+	//         /* trigger on mouse button 1 status change */
+	//         sources = < OUTPUT_SOURCE_MOUSE_BUTTON_STATE_CHANGE >;
+	//         position = < 1 >;
+	//         bindings = < &ob_mbtn_led1 >;
+	//         /* caught all state change that include key press and release */
+	//         all-state;
+	// };
+	// ob_mbtn_led1: ob_mbtn_led1 {
+	//         compatible = "zmk,output-behavior-generic";
+	//         #binding-cells = <0>;
+	//         device = <&fb_led0>;
+	//         delay = <0>;
+	//         /* set duty cycle of pwm, max 256 */
+	//         force = <120>;
+	//         /* enable momentum to trigger on both on all state change */
+	//         momentum;
+	//         momentum-force = <0>;
+	// };
+	// led1_obl__press_mouse_whl_1 {
+	//         compatible = "zmk,output-behavior-listener";
+	//         layers = < BAS LHB MSC >;
+	//         /* trigger on mouse wheel status change */
+	//         sources = < OUTPUT_SOURCE_MOUSE_WHEEL_STATE_CHANGE >;
+	//         bindings = < &ob_mwhl1_led1 >;
+	// };
+	// ob_mwhl1_led1: ob_mwhl1_led1 {
+	//         compatible = "zmk,output-behavior-generic";
+	//         #binding-cells = <0>;
+	//         device = <&fb_led0>;
+	//         delay = <0>;
+	//         time-to-live-ms = <25>;
+	//         /* set duty cycle of pwm, max 256 */
+	//         force = <80>;
+	// };
+	// pwm0_obl__press_key_code_p {
+	//         compatible = "zmk,output-behavior-listener";
+	//         layers = < BAS LHB MSC >;
+	//         sources = < OUTPUT_SOURCE_KEYCODE_STATE_CHANGE >;
+	//         position = < 0x13>;
+	//         bindings = < &ob_led0 >;
+	//         /* caught all state change that include key press and release */
+	//         all-state;
+	// };
+	// ob_led0: ob_led0 {
+	//         compatible = "zmk,output-behavior-generic";
+	//         #binding-cells = <0>;
+	//         device = <&fb_led0>;
+	//         delay = <0>;
+	//         /* set duty cycle of pwm, max 256 */
+	//         force = <180>;
+	//         /* enable momentum to trigger on both on all state change */
+	//         momentum;
+	//         momentum-force = <12>;
+	// };
+};
