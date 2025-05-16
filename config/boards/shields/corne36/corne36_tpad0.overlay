@@ -55,3 +55,4 @@ RC(7,0) RC(7,1) RC(7,2)
 &tpoint0_split { status = "disabled"; };
 &tpad0_split { device = <&tpad0>; input-processors = <&zip_report_rate_limit 4>, <&zip_xyz>; };
 &mou0_split { status = "disabled"; };
+&mou1_split { status = "disabled"; };

@@ -34,3 +34,4 @@
 &tpoint0_split { status = "disabled"; };
 &tpad0_split { status = "disabled"; };
 &mou0_split { status = "disabled"; };
+&mou1_split { status = "disabled"; };

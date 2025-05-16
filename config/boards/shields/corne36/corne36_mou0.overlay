@@ -60,6 +60,7 @@ RC(4,0) RC(4,1) RC(4,2)
 &tpoint0_split { status = "disabled"; };
 &tpad0_split { status = "disabled"; };
 &mou0_split { device = <&mou0>; input-processors = <&zip_report_rate_limit 4>, <&zip_xyz>; };
+&tpad1_split { status = "disabled"; };
 
 /{
 	s_encoder: s_encoder {
