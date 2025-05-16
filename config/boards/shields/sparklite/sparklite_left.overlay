@@ -15,6 +15,7 @@
 
 // #include "sparklite_trackball_adns9800.dtsi"
 #include "sparklite_trackball_pmw3610.dtsi"
+// #include "sparklite_trackball_paw3395.dtsi"
 
 // / {
 // 	erm0: output_generic_0 {

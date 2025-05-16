@@ -58,6 +58,18 @@
                 device = <&zip_mixer>;
         };
 
+        // tball2_pri_mmv_il {
+        //         compatible = "zmk,input-listener";
+        //         device = <&pd0>;
+        //         default {
+        //                 layers = <DEFAULT>;
+        //                 // input-processors 
+        //                 //         = <&zip_xy_swap_mapper>
+        //                 //         , <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>
+        //                 //         ;
+        //         };
+        // };
+
         // erm0_obl__enter_raise_layer {
         //         compatible = "zmk,output-behavior-listener";
         //         layers = < RAISE >;
