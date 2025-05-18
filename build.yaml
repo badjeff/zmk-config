@@ -26,6 +26,8 @@ include:
   - board: seeeduino_xiao_ble
     shield: corne36_tball1
   - board: seeeduino_xiao_ble
+    shield: corne36_tball2
+  - board: seeeduino_xiao_ble
     shield: corne36_tpoint0
   - board: seeeduino_xiao_ble
     shield: corne36_tpad0

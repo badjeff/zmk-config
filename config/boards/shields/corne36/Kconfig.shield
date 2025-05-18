@@ -13,6 +13,9 @@ config SHIELD_CORNE36_TBALL0
 config SHIELD_CORNE36_TBALL1
 	def_bool $(shields_list_contains,corne36_tball1)
 
+config SHIELD_CORNE36_TBALL2
+	def_bool $(shields_list_contains,corne36_tball2)
+
 config SHIELD_CORNE36_TPOINT0
 	def_bool $(shields_list_contains,corne36_tpoint0)
 

@@ -31,20 +31,13 @@
 &spi2 {
 	compatible = "nordic,nrf-spim";
 	status = "disabled"; // <<< disabled in main .dtsi, okay in .overlay
-	pd0: pd@0 {
+	tball2: pd@0 {
 		compatible = "pixart,paw3395";
 		status = "disabled";
-		label = "TRACKBALL0";
+		label = "TBALL2";
 		reg = <0>;
 		spi-max-frequency = <1000000>; // NOTE: >= <2000000> is too fast to handle.
 	};
-	// pd0a: pd@1 {
-	// 	compatible = "pixart,paw3395";
-	// 	status = "disabled";
-	// 	label = "TRACKBALL2";
-	// 	reg = <1>;
-	// 	spi-max-frequency = <4000000>;
-	// };
 };
 
 // Config custom gpios
@@ -54,24 +47,15 @@
 	pinctrl-1 = <&spi2_sleep>;
 	pinctrl-names = "default", "sleep";
 	cs-gpios = <&gpio1 12 GPIO_ACTIVE_LOW>;
-					//  , <&gpio0 4 GPIO_ACTIVE_LOW>;
 };
 
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 
-&pd0 {
+&tball2 {
   status = "okay";
 	irq-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-	cpi = <550>;
+	cpi = <500>;
 	evt-type = <INPUT_EV_REL>;
 	x-input-code = <INPUT_REL_X>;
 	y-input-code = <INPUT_REL_Y>;
 };
-// &pd0a {
-//   status = "okay";
-//   irq-gpios = <&gpio0 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-// 	cpi = <500>;
-// 	evt-type = <INPUT_EV_REL>;
-// 	x-input-code = <INPUT_REL_X>;
-// 	y-input-code = <INPUT_REL_Y>;
-// };
