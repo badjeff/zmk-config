@@ -36,14 +36,14 @@
 		status = "disabled";
 		label = "TRACKBALL0";
 		reg = <0>;
-		spi-max-frequency = <1000000>; // NOTE: >= <2000000> is too fast to handle.
+		spi-max-frequency = <1500000>;
 	};
 	// pd0a: pd@1 {
 	// 	compatible = "pixart,paw3395";
 	// 	status = "disabled";
 	// 	label = "TRACKBALL2";
 	// 	reg = <1>;
-	// 	spi-max-frequency = <4000000>;
+	// 	spi-max-frequency = <1500000>;
 	// };
 };
 
