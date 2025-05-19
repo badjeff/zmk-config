@@ -52,7 +52,7 @@ RC(7,0) RC(7,1) RC(7,2)
 #include "corne36_zplit.dtsi"
 &tball0_split { status = "disabled"; };
 &tball1_split { status = "disabled"; };
-&tball2_split { device = <&tball2>; input-processors = <&zip_report_rate_limit 8>, <&zip_xyz>; };
+&tball2_split { device = <&tball2>; input-processors = <&zip_report_rate_limit 4>, <&zip_xyz>; };
 &tpoint0_split { status = "disabled"; };
 &tpad0_split { status = "disabled"; };
 &mou0_split { status = "disabled"; };
