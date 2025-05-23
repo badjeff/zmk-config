@@ -9,10 +9,12 @@
 #include <behaviors.dtsi>
 #include <behaviors/mouse_keys.dtsi>
 #include <behaviors/mouse_key_press.dtsi>
+#include <behaviors/mouse_move.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/mouse.h>
 #include <dt-bindings/zmk/input_transform.h>
+#include <input/processors.dtsi>
 
 #define DEF 0
 
@@ -46,6 +48,24 @@
         //         #binding-cells = <0>;
         // };
 
+        // behaviors {
+        //         ec_s: mouse_scroll {
+        //                 compatible = "zmk,behavior-input-two-axis";
+        //                 #binding-cells = <1>;
+        //                 trigger-period-ms = <12>; // slow down for OTA, default is 3ms
+        //                 x-input-code = <INPUT_REL_HWHEEL>;
+        //                 y-input-code = <INPUT_REL_WHEEL>;
+        //                 time-to-max-speed-ms = <177>;
+        //                 acceleration-exponent = <0>;
+        //         };
+        //         rot_enc: sensor_rotate {
+        //                 compatible = "zmk,behavior-sensor-rotate";
+        //                 #sensor-binding-cells = <0>;
+        //                 bindings = <&ec_s MOVE_Y(-37)>, <&ec_s MOVE_Y(37)>;
+        //                 tap-ms = <65>;
+        //         };
+        // };
+
         keymap {
                 compatible = "zmk,keymap";
                 DEF_layer {
@@ -61,6 +81,7 @@
 &kp C    &kp D    &kp E    &kp F
 
                         >;
+                        // sensor-bindings = < &rot_enc >;
                 };
        };
 };

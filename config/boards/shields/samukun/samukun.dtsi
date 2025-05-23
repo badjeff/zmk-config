@@ -54,7 +54,7 @@
 			, <&sr0 23 GPIO_ACTIVE_HIGH>
 			;
 		row-gpios
-			= <&pro_micro 21 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+			= <&pro_micro 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
 			;
     wakeup-source;
 	};
@@ -113,3 +113,24 @@
 	};
 
 };
+
+// &adc {
+// 	status = "okay";
+// };
+
+// / {
+//     scroll_wheel: scroll_wheel {
+//         compatible = "ploopy,optical-encoder";
+//         status = "okay";
+//         poll-period = <10>;
+//         event-startup-delay = <1000>;
+//         steps = <28>;
+//         io-channels = <&adc 5>, <&adc 7>;
+//     };
+
+//     sensors: sensors {
+//         compatible = "zmk,keymap-sensors";
+//         sensors = <&scroll_wheel>;
+//         triggers-per-rotation = <14>;
+//     };
+// };
