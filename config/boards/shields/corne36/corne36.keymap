@@ -19,6 +19,8 @@
 #include <dt-bindings/zmk/mouse.h>
 #include <dt-bindings/zmk/input_transform.h>
 
+#include <behaviors/key_press_lip.dtsi>
+#include <behaviors/tempo.dtsi>
 #include <behaviors/insomnia.dtsi>
 #include <dt-bindings/zmk/insomnia.h>
 
@@ -314,22 +316,6 @@
                 tog_msk_lr { timeout-ms = <50>; key-positions = <27 28>; bindings = <&tog MSK>; layers = <BAS GME LHB NUM MSK MSC>; };
         };
 
-        kpad: key_kip_a_d {
-                compatible = "zmk,behavior-key-press-lip";
-                #binding-cells = <1>;
-                keycodes = <A D>;
-        };
-        kpws: key_kip_w_s {
-                compatible = "zmk,behavior-key-press-lip";
-                #binding-cells = <1>;
-                keycodes = <W S>;
-        };
-
-        tempo: key_tempo {
-                compatible = "zmk,behavior-key-tempo";
-                #binding-cells = <0>;
-                usage-pages = <HID_USAGE_KEY HID_USAGE_CONSUMER>;
-        };
 
         keymap {
                 compatible = "zmk,keymap";
