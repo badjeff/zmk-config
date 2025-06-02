@@ -1,0 +1,16 @@
+/*
+ * Copyright (c) 2020 Pete Johanson
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+ /{
+    esb_split {
+        compatible = "zmk,esb-split";
+        // These are arbitrary default addresses. In end user products
+        // different addresses should be used for each set of devices.
+        base-addr-0 = <0x89 0xb4 0xB9 0x6A>;
+        base-addr-1 = <0x19 0x89 0x06 0x04>;
+        addr-prefix = <0xE1 0xC9 0xC8 0xC9 0xC0 0xC6 0xC0 0xC4>;
+    };
+};

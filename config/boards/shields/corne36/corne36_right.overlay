@@ -32,6 +32,7 @@
 	};
 };
 
+#include "corne36__esb_addr.dtsi"
 #include "corne36_zplit.dtsi"
 &tball0_split { status = "disabled"; };
 &tball1_split { status = "disabled"; };

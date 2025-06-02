@@ -28,6 +28,7 @@
 	};
 };
 
+#include "corne36__esb_addr.dtsi"
 #include "corne36_zplit.dtsi"
 
 &s_encoder {

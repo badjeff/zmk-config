@@ -45,6 +45,7 @@ RC(7,0) RC(7,1) RC(7,2)
 	};
 };
 
+#include "corne36__esb_addr.dtsi"
 #include <input/processors/report_rate_limit.dtsi>
 #include <input/processors/xyz.dtsi>
 
