@@ -105,7 +105,8 @@
         tball1_mmv_il {
                 compatible = "zmk,input-listener";
                 device = <&tball1_split>;
-                input-processors = <&zip_zxy>, <&zip_report_rate_limit 8>;
+                // input-processors = <&zip_zxy>, <&zip_report_rate_limit 8>;
+                input-processors = <&zip_zxy>;
                 precise {
                         layers = <NUM>;
                         process-next;
