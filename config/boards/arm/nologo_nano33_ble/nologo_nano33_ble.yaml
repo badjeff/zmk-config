@@ -8,8 +8,13 @@ toolchain:
   - xtools
 supported:
   - adc
-  - usb_device
   - ble
-  - ieee802154
+  - i2c
   - pwm
+  - serial
+  - spi
+  - uart
+  - usb_cdc
+  - usb_device
   - watchdog
+vendor: nologo

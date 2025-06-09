@@ -1,3 +1,4 @@
+# Copyright (c) 2021 The ZMK Contributors
 # SPDX-License-Identifier: MIT
 
 CONFIG_SOC_SERIES_NRF52X=y
@@ -6,6 +7,7 @@ CONFIG_BOARD_NOLOGO_NANO33_BLE=y
 
 # Enable MPU
 CONFIG_ARM_MPU=y
+# CONFIG_HW_STACK_PROTECTION=y
 
 # Use pinctrl
 CONFIG_PINCTRL=y

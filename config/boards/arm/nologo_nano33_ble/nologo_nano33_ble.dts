@@ -8,6 +8,7 @@
 
 #include <nordic/nrf52840_qiaa.dtsi>
 #include "nologo_nano33_ble-pinctrl.dtsi"
+#include "nologo_nano33_ble-header.dtsi"
 
 / {
     model = "nologo_nana33_ble";
@@ -18,76 +19,107 @@
         zephyr,sram = &sram0;
         zephyr,flash = &flash0;
         zephyr,console = &cdc_acm_uart;
+        zephyr,shell-uart = &uart0;
+        zephyr,uart-mcumgr = &uart0;
+        zephyr,bt-mon-uart = &uart0;
+        zephyr,bt-c2h-uart = &uart0;
+        zephyr,ieee802154 = &ieee802154;
         zmk,battery = &vbatt;
     };
-
-    leds {
-        compatible = "gpio-leds";
-        red_led: led_2 {
-            gpios = <&gpio0 24 GPIO_ACTIVE_HIGH>;
-        };
-        green_led: led_1 {
-            gpios = <&gpio0 16 GPIO_ACTIVE_HIGH>;
-        };
-        blue_led: led_0 {
-            gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>;
-        };
-    };
-
-    // Node name must match original "EXT_POWER" label to preserve user settings.
-    // EXT_POWER {
-    //     compatible = "zmk,ext-power-generic";
-    //     control-gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>;
-    //     init-delay-ms = <50>;
-    // };
 
     vbatt: vbatt {
         compatible = "zmk,battery-nrf-vddh";
     };
-};
 
-&adc {
-    status = "okay";
-};
+    leds {
+        compatible = "gpio-leds";
+        led0: led_0 {
+            gpios = <&gpio0 24 GPIO_ACTIVE_LOW>;
+            label = "Red LED";
+        };
+        led1: led_1 {
+            gpios = <&gpio0 16 GPIO_ACTIVE_LOW>;
+            label = "Green LED";
+        };
+        led2: led_2 {
+            gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
+            label = "Blue LED";
+        };
+        led3: led_3 {
+            /* Cannot be used together with spi2. */
+            gpios = <&gpio0 13 GPIO_ACTIVE_HIGH>;
+            label = "Yellow LED";
+        };
+        led4: led_4 {
+            gpios = <&gpio1 9 GPIO_ACTIVE_HIGH>;
+            label = "User LED";
+        };
+    };
 
-&gpiote {
-    status = "okay";
-};
+    pwmleds {
+        compatible = "pwm-leds";
 
-&gpio0 {
-    status = "okay";
-};
+        red_pwm_led: led_pwm_0 {
+            pwms = <&pwm0 0 PWM_MSEC(20) PWM_POLARITY_INVERTED>;
+            label = "Red PWM LED";
+        };
+        green_pwm_led: led_pwm_1 {
+            pwms = <&pwm0 1 PWM_MSEC(20) PWM_POLARITY_INVERTED>;
+            label = "Green PWM LED";
+        };
+        blue_pwm_led: led_pwm_2 {
+            pwms = <&pwm0 2 PWM_MSEC(20) PWM_POLARITY_INVERTED>;
+            label = "Blue PWM LED";
+        };
+        user_pwm_led: led_pwm_4 {
+            pwms = <&pwm1 0 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
+            label = "User PWM LED";
+        };
+    };
 
-&gpio1 {
-    status = "okay";
-};
+    pwmleds2 {
+        compatible = "pwm-leds";
+        /* Cannot be used together with spi2. */
+        status = "disabled";
 
-&i2c0 {
-    compatible = "nordic,nrf-twi";
-    pinctrl-0 = <&i2c0_default>;
-    pinctrl-1 = <&i2c0_sleep>;
-    pinctrl-names = "default", "sleep";
-};
+        yellow_pwm_led: led_pwm_3 {
+            pwms = <&pwm2 0 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
+            label = "Yellow PWM LED";
+        };
+    };
 
-&uart0 {
-    compatible = "nordic,nrf-uarte";
-    current-speed = <115200>;
-    pinctrl-0 = <&uart0_default>;
-    pinctrl-1 = <&uart0_sleep>;
-    pinctrl-names = "default", "sleep";
-};
+    vdd_env: vdd-env {
+        compatible = "regulator-fixed";
+        regulator-name = "vdd_env";
+        enable-gpios = <&gpio0 22 GPIO_ACTIVE_HIGH>;
+        regulator-boot-on;
+        startup-delay-us = <5000>;
+    };
 
-&usbd {
-    status = "okay";
-    cdc_acm_uart: cdc_acm_uart {
-        compatible = "zephyr,cdc-acm-uart";
+    zephyr,user {
+        /* I2C pull-ups are connected to VDD via pin voltage level */
+        pull-up-gpios = <&gpio1 0 GPIO_ACTIVE_HIGH>;
+    };
+
+    /* These aliases are provided for compatibility with samples */
+    aliases {
+        led0 = &led0;
+        led1 = &led1;
+        led2 = &led2;
+        led3 = &led3;
+        led4 = &led4;
+        pwm-led0 = &red_pwm_led;
+        pwm-led1 = &green_pwm_led;
+        pwm-led2 = &blue_pwm_led;
+        pwm-led3 = &yellow_pwm_led;
+        pwm-led4 = &user_pwm_led;
+        red-pwm-led = &red_pwm_led;
+        green-pwm-led = &green_pwm_led;
+        blue-pwm-led = &blue_pwm_led;
+        spi = &spi2;
+        watchdog0 = &wdt0;
     };
 };
-
-
-nano_i2c: &i2c0 {};
-nano_spi: &spi0 {};
-nano_serial: &uart0 {};
 
 &flash0 {
     /*
@@ -123,4 +155,85 @@ nano_serial: &uart0 {};
             reg = <0x000f4000 0x0000c000>;
         };
     };
+};
+
+&adc {
+    status = "okay";
+};
+
+&uart0 {
+    compatible = "nordic,nrf-uart";
+    current-speed = <115200>;
+    status = "okay";
+    pinctrl-0 = <&uart0_default>;
+    pinctrl-1 = <&uart0_sleep>;
+    pinctrl-names = "default", "sleep";
+};
+
+arduino_i2c: &i2c0 {
+    compatible = "nordic,nrf-twim";
+    status = "okay";
+    pinctrl-0 = <&i2c0_default>;
+    pinctrl-1 = <&i2c0_sleep>;
+    pinctrl-names = "default", "sleep";
+};
+
+&i2c1 {
+    compatible = "nordic,nrf-twim";
+    status = "okay";
+    pinctrl-0 = <&i2c1_default>;
+    pinctrl-1 = <&i2c1_sleep>;
+    pinctrl-names = "default", "sleep";
+};
+
+/* SPI2 is used because SPI1/0 shares conflicts with I2C1/0 */
+arduino_spi: &spi2 {
+    compatible = "nordic,nrf-spim";
+    status = "okay";
+    pinctrl-0 = <&spi2_default>;
+    pinctrl-1 = <&spi2_sleep>;
+    pinctrl-names = "default", "sleep";
+};
+
+&uicr {
+    gpio-as-nreset;
+};
+
+&gpio0 {
+    status = "okay";
+};
+
+&gpio1 {
+    status = "okay";
+};
+
+&pwm0 {
+    status = "okay";
+    pinctrl-0 = <&pwm0_default>;
+    pinctrl-1 = <&pwm0_sleep>;
+    pinctrl-names = "default", "sleep";
+};
+
+&pwm1 {
+    status = "okay";
+    pinctrl-0 = <&pwm1_default>;
+    pinctrl-1 = <&pwm1_sleep>;
+    pinctrl-names = "default", "sleep";
+};
+
+&pwm2 {
+    /* Cannot be used together with spi2 because of conflict on P0.13. */
+    status = "disabled";
+    pinctrl-0 = <&pwm2_default>;
+    pinctrl-1 = <&pwm2_sleep>;
+    pinctrl-names = "default", "sleep";
+};
+
+zephyr_udc0: &usbd {
+    compatible = "nordic,nrf-usbd";
+    status = "okay";
+};
+
+&ieee802154 {
+    status = "okay";
 };
