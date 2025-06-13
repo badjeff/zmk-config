@@ -55,6 +55,10 @@
 #define SCL_L MOVE_X(-U_MOUSE_SCROLL_MAX)
 #define SCL_R MOVE_X(U_MOUSE_SCROLL_MAX)
 
+&zip_report_rate_limit {
+        limit-ble-only;
+};
+
 / {
         xy_transf: xy_transf {
                 compatible = "zmk,input-processor-transform";
