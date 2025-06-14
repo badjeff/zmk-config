@@ -1,0 +1,32 @@
+# Copyright (c) 2020 Pete Johanson
+# SPDX-License-Identifier: MIT
+
+config SHIELD_DONKI36_DONGLE
+	def_bool $(shields_list_contains,donki36_dongle)
+
+config SHIELD_DONKI36_LEFT
+	def_bool $(shields_list_contains,donki36_left)
+
+config SHIELD_DONKI36_RIGHT
+	def_bool $(shields_list_contains,donki36_right)
+
+config SHIELD_DONKI36_TBALL0
+	def_bool $(shields_list_contains,donki36_tball0)
+
+config SHIELD_DONKI36_TBALL1
+	def_bool $(shields_list_contains,donki36_tball1)
+
+config SHIELD_DONKI36_TBALL2
+	def_bool $(shields_list_contains,donki36_tball2)
+
+config SHIELD_DONKI36_TPOINT0
+	def_bool $(shields_list_contains,donki36_tpoint0)
+
+config SHIELD_DONKI36_TPAD0
+	def_bool $(shields_list_contains,donki36_tpad0)
+
+config SHIELD_DONKI36_MOU0
+	def_bool $(shields_list_contains,donki36_mou0)
+
+config SHIELD_DONKI36_MOU1
+	def_bool $(shields_list_contains,donki36_mou1)

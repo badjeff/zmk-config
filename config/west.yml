@@ -2,6 +2,8 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
+    - name: nrfconnect
+      url-base: https://github.com/nrfconnect
     - name: badjeff
       url-base: https://github.com/badjeff
   projects:
@@ -76,6 +78,18 @@ manifest:
     - name: zmk-input-processor-xyz
       remote: badjeff
       revision: main
+    - name: zmk-feature-split-esb
+      remote: badjeff
+      revision: main  
+    - name: sdk-nrf
+      remote: nrfconnect
+      revision: v2.6.4 # zephyr v3.5.99
+      path: nrf
+    - name: nrfxlib
+      remote: nrfconnect
+      revision: v2.6.4
+     repo-path: sdk-nrfxlib
+     path: nrfxlib
     # - name: zmk-behavior-set-default-layer
     #   remote: badjeff
     #   revision: main

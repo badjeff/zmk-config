@@ -1,0 +1,20 @@
+file_format: "1"
+id: donki36
+name: donki36
+type: shield
+url: https://github.com/badjeff/donki36/
+requires: [pro_micro]
+exposes: []
+features:
+  - keys
+siblings:
+  - donki36_dongle
+  - donki36_left
+  - donki36_right
+  - donki36_tball0
+  - donki36_tball1
+  - donki36_tball2
+  - donki36_tpoint0
+  - donki36_tpad0
+  - donki36_mou0
+  - donki36_mou1
