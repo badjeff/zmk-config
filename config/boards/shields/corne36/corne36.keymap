@@ -316,6 +316,8 @@
 
                 tog_msk_ll { timeout-ms = <50>; key-positions = <21 22>; bindings = <&tog MSK>; layers = <BAS GME LHB NUM MSK MSC>; };
                 tog_msk_lr { timeout-ms = <50>; key-positions = <27 28>; bindings = <&tog MSK>; layers = <BAS GME LHB NUM MSK MSC>; };
+
+                dfu_l     { timeout-ms = <50>; key-positions = <0 1>; bindings = <&bootloader>; layers = <MSC>; };
         };
 
 
