@@ -16,5 +16,7 @@
     tpad0_split: tpad0@3 { compatible = "zmk,input-split"; reg = <3>; };
     mou0_split: mou0@4 { compatible = "zmk,input-split"; reg = <4>; };
     mou1_split: mou1@5 { compatible = "zmk,input-split"; reg = <5>; };
+    mou2_split: mou2@7 { compatible = "zmk,input-split"; reg = <7>; };
+    mou2_split_alt: mou2_alt@8 { compatible = "zmk,input-split"; reg = <8>; };
   };
 };

@@ -63,6 +63,8 @@ include:
     shield: donki36_mou0
   - board: seeeduino_xiao_ble
     shield: donki36_mou1
+  - board: seeeduino_xiao_ble
+    shield: donki36_mou2
 
   # - board: nice_nano_v2
   #   shield: nano18_left

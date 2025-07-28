@@ -31,11 +31,18 @@
 &spi2 {
 	compatible = "nordic,nrf-spim";
 	status = "disabled"; // <<< disabled in main .dtsi, okay in .overlay
-	mou1: pd@0 {
+	mou2: pd@0 {
 		compatible = "pixart,paw3395";
 		status = "disabled";
-		label = "MOU1";
+		label = "MOU2";
 		reg = <0>;
+		spi-max-frequency = <4000000>;
+	};
+	mou2_alt: pd@1 {
+		compatible = "pixart,pmw3610";
+		status = "disabled";
+		label = "MOU2_ALT";
+		reg = <1>;
 		spi-max-frequency = <4000000>;
 	};
 };
@@ -46,12 +53,13 @@
 	pinctrl-0 = <&spi2_default>;
 	pinctrl-1 = <&spi2_sleep>;
 	pinctrl-names = "default", "sleep";
-	cs-gpios = <&gpio1 12 GPIO_ACTIVE_LOW>;
+	cs-gpios = <&gpio1 12 GPIO_ACTIVE_LOW>
+	         , <&gpio0 9 GPIO_ACTIVE_LOW>; // NFC 1
 };
 
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 
-&mou1 {
+&mou2 {
   status = "okay";
 	irq-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 	cpi = <1650>;
@@ -59,4 +67,15 @@
 	x-input-code = <INPUT_REL_X>;
 	y-input-code = <INPUT_REL_Y>;
 	force-awake;
+};
+
+&mou2_alt {
+  status = "okay";
+	irq-gpios = <&gpio0 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // NFC 2
+	cpi = <800>;
+	evt-type = <INPUT_EV_REL>;
+	x-input-code = <INPUT_REL_X>;
+	y-input-code = <INPUT_REL_Y>;
+	force-awake;
+	force-awake-4ms-mode;
 };

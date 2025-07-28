@@ -65,6 +65,8 @@ RC(4,0) RC(4,1) RC(4,2)
 &tpad0_split { status = "disabled"; };
 &mou0_split { status = "disabled"; };
 &mou1_split { device = <&mou1>; input-processors = <&zip_xyz>; };
+&mou2_split { status = "disabled"; };
+&mou2_split_alt { status = "disabled"; };
 
 /{
 	s_encoder: s_encoder {
@@ -73,12 +75,12 @@ RC(4,0) RC(4,1) RC(4,2)
 		// NFC pins in nRF52 series: P0.09 and P0.10
 		a-gpios = <&gpio0 9  (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
 		b-gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-		steps = <48>;
+		steps = <36>; // <36>; for 23mm wheel, <48>; for 19mm wheel
 	};
 	sensors: sensors {
 		compatible = "zmk,keymap-sensors";
 		status = "okay";
 		sensors = <&s_encoder>;
-		triggers-per-rotation = <12>;
+		triggers-per-rotation = <12>; // EC05 encoder
 	};
 };

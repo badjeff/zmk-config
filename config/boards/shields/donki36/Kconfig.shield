@@ -30,3 +30,6 @@ config SHIELD_DONKI36_MOU0
 
 config SHIELD_DONKI36_MOU1
 	def_bool $(shields_list_contains,donki36_mou1)
+
+config SHIELD_DONKI36_MOU2
+	def_bool $(shields_list_contains,donki36_mou2)
