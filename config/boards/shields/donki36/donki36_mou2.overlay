@@ -67,7 +67,7 @@ RC(4,0) RC(4,1) RC(4,2)
 &mou1_split { status = "disabled"; };
 &mou2_split { device = <&mou2>; input-processors = <&zip_xyz>; };
 
-&mou2_split_alt { status = "disabled"; };
+// &mou2_split_alt { status = "disabled"; };
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 / {
     /* compress xy to z */

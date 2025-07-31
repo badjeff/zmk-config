@@ -77,5 +77,5 @@
 	x-input-code = <INPUT_REL_X>;
 	y-input-code = <INPUT_REL_Y>;
 	force-awake;
-	force-awake-4ms-mode;
+	// force-awake-4ms-mode;
 };

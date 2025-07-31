@@ -245,7 +245,7 @@
         mou2_mmv_il_alt {
                 compatible = "zmk,input-listener";
                 device = <&mou2_split_alt>;
-                input-processors = <&zip_zxy_alt>;//, <&zip_report_rate_limit 8>;
+                // input-processors = <&zip_zxy_alt>;//, <&zip_report_rate_limit 8>;
                 input-processors = <&zip_zxy_alt>
                                  , <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
                                  , <&xy_scaler 1 40> 
