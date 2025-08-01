@@ -35,6 +35,7 @@
 #define NUM 5
 #define MSK 6
 #define MSC 7
+#define TBM 8
 
 #ifndef MOVE_Y
 #define MOVE_Y(n) (0)
@@ -245,24 +246,17 @@
         mou2_mmv_il_alt {
                 compatible = "zmk,input-listener";
                 device = <&mou2_split_alt>;
-                // input-processors = <&zip_zxy_alt>;//, <&zip_report_rate_limit 8>;
-                input-processors = <&zip_zxy_alt>
-                                 , <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
-                                 , <&xy_scaler 1 40> 
-                                 //  , <&x_scaler 0 1>
-                                 , <&to_wheel>;
-                // precise {
-                //         layers = <NUM>;
-                //         process-next;
-                //         input-processors = <&xy_scaler 2 3>;
-                // };
-                // scroll {
-                //         layers = <MSC>;
-                //         process-next;
-                //         input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
-                //                          , <&xy_scaler 1 40>, <&x_scaler 0 1>
-                //                          , <&to_wheel>;
-                // };
+                trackball_mode_overriding {
+                        layers = <TBM>;
+                        input-processors = <&zip_zxy_alt>;
+                };
+                normal_scrolling_mode {
+                        layers = <BAS GME LNP RNP LHB NUM MSK MSC>;
+                        input-processors = <&zip_zxy_alt>
+                                         , <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
+                                         , <&xy_scaler 1 40> // , <&x_scaler 0 1>
+                                         , <&to_wheel>;
+                };
         };
 
         behaviors {
@@ -349,24 +343,27 @@
         combos {
                 compatible = "zmk,combos";
 
-                spc       { timeout-ms = <50>; key-positions = <16 17>; bindings = <&kp SPC>; layers = <BAS GME LNP RNP LHB NUM>; };
-                bksp      { timeout-ms = <50>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <BAS GME LNP RNP LHB NUM>; };
-                del       { timeout-ms = <50>; key-positions = <6 7 8>; bindings = <&kp DEL>; layers = <BAS GME LNP RNP LHB NUM>; };
+                spc       { timeout-ms = <50>; key-positions = <16 17>; bindings = <&kp SPC>; layers = <BAS GME LNP RNP LHB NUM TBM>; };
+                bksp      { timeout-ms = <50>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <BAS GME LNP RNP LHB NUM TBM>; };
+                del       { timeout-ms = <50>; key-positions = <6 7 8>; bindings = <&kp DEL>; layers = <BAS GME LNP RNP LHB NUM TBM>; };
 
-                esc       { timeout-ms = <50>; key-positions = <11 12>; bindings = <&kp ESC>; layers = <BAS GME LNP RNP LHB NUM>; };
-                tab       { timeout-ms = <50>; key-positions = <12 13>; bindings = <&kp TAB>; layers = <BAS GME LNP RNP LHB NUM>; };
+                esc       { timeout-ms = <50>; key-positions = <11 12>; bindings = <&kp ESC>; layers = <BAS GME LNP RNP LHB NUM TBM>; };
+                tab       { timeout-ms = <50>; key-positions = <12 13>; bindings = <&kp TAB>; layers = <BAS GME LNP RNP LHB NUM TBM>; };
 
-                ret_r     { timeout-ms = <50>; key-positions = <26 17 18>; bindings = <&kp RET>; layers = <BAS GME LNP RNP LHB NUM>; };
-                ret_l     { timeout-ms = <50>; key-positions = <11 12 23>; bindings = <&kp RET>; layers = <BAS GME LNP RNP LHB NUM>; };
+                ret_r     { timeout-ms = <50>; key-positions = <26 17 18>; bindings = <&kp RET>; layers = <BAS GME LNP RNP LHB NUM TBM>; };
+                ret_l     { timeout-ms = <50>; key-positions = <11 12 23>; bindings = <&kp RET>; layers = <BAS GME LNP RNP LHB NUM TBM>; };
 
-                tog_lnp   { timeout-ms = <50>; key-positions = <1 2>; bindings = <&tog LNP>; layers = <BAS GME LNP RNP LHB NUM MSK MSC>; };
-                tog_rnp   { timeout-ms = <50>; key-positions = <7 8>; bindings = <&tog RNP>; layers = <BAS GME LNP RNP LHB NUM MSK MSC>; };
+                tog_lnp   { timeout-ms = <50>; key-positions = <1 2>; bindings = <&tog LNP>; layers = <BAS GME LNP RNP LHB NUM MSK MSC TBM>; };
+                tog_rnp   { timeout-ms = <50>; key-positions = <7 8>; bindings = <&tog RNP>; layers = <BAS GME LNP RNP LHB NUM MSK MSC TBM>; };
 
-                mkp_swap  { timeout-ms = <50>; key-positions = <36 38>; bindings = <&tog LHB>; layers = <BAS GME LHB NUM MSK MSC>; };
-                mou_swap  { timeout-ms = <50>; key-positions = <46 47>; bindings = <&tog LHB>; layers = <BAS GME LHB NUM MSK MSC>; };
+                mkp_swap  { timeout-ms = <50>; key-positions = <36 38>; bindings = <&tog LHB>; layers = <BAS GME LNP RNP LHB NUM MSK MSC TBM>; };
+                mou_swap  { timeout-ms = <50>; key-positions = <46 47>; bindings = <&tog LHB>; layers = <BAS GME LNP RNP LHB NUM MSK MSC TBM>; };
 
-                tog_msk_ll { timeout-ms = <50>; key-positions = <21 22>; bindings = <&tog MSK>; layers = <BAS GME LHB NUM MSK MSC>; };
-                tog_msk_lr { timeout-ms = <50>; key-positions = <27 28>; bindings = <&tog MSK>; layers = <BAS GME LHB NUM MSK MSC>; };
+                tbm_swap_l { timeout-ms = <50>; key-positions = <43 46>; bindings = <&tog TBM>; layers = <BAS GME LNP RNP LHB NUM MSK MSC TBM>; };
+                tbm_swap_r { timeout-ms = <50>; key-positions = <44 47>; bindings = <&tog TBM>; layers = <BAS GME LNP RNP LHB NUM MSK MSC TBM>; };
+
+                tog_msk_ll { timeout-ms = <80>; key-positions = <21 22>; bindings = <&tog MSK>; layers = <BAS GME LHB NUM MSK MSC TBM>; };
+                tog_msk_lr { timeout-ms = <80>; key-positions = <27 28>; bindings = <&tog MSK>; layers = <BAS GME LHB NUM MSK MSC TBM>; };
 
                 dfu_l     { timeout-ms = <50>; key-positions = <0 1>; bindings = <&bootloader>; layers = <MSC>; };
         };
@@ -387,7 +384,7 @@
    &ht LSHFT Z    &hm LGUI X    &hm LGUI C   &hm LGUI V    &kp B               &kp N         &hm RGUI M     &hm RGUI COMMA  &hm RGUI DOT  &ht RSHFT FSLH
                                 &lt MSK ESC  &ht LGUI ESC  &ht LCTRL TAB       &ht LALT RET  &lt NUM SPACE  &lt MSK BKSP
    &mkp RCLK   &mkg MCLK MSC   &mkp LCLK
-   &mkp LCLK   &mo MSC         &mkg MCLK MSC
+   &mkp LCLK   &mkg MCLK MSC   &mkg MCLK MSC
    &mkp MCLK   &mkp MB5        &mkp MB5
    &mkp RCLK   &mkp MB4        &mkp MB4
                         >;
@@ -448,7 +445,7 @@
    &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
                    &trans  &trans  &trans    &trans  &trans  &trans
    &mkp LCLK   &mkg MCLK MSC   &mkp RCLK
-   &mkp RCLK   &mkg MCLK MSC   &mo MSC
+   &mkp RCLK   &trans          &trans
    &mkp MCLK   &trans          &trans
    &mkp LCLK   &trans          &trans
                         >;
@@ -509,6 +506,20 @@
    &trans   &trans   &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
+                        >;
+                        sensor-bindings = <&rot_enc>;
+                };
+                TBM_layer {
+                        display-name = "Trackball Mode Swap";
+                        bindings = <
+   &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
+   &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
+   &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
+                   &trans  &trans  &trans    &trans  &trans  &trans
+   &trans      &trans          &trans
+   &trans      &trans          &trans
+   &trans      &trans          &trans
+   &trans      &trans          &trans
                         >;
                         sensor-bindings = <&rot_enc>;
                 };
