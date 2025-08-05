@@ -138,7 +138,7 @@
                         layers = <MSC>;
                         process-next;
                         input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
-                                        , <&xy_scaler 1 55>, <&x_scaler 0 1>
+                                        , <&xy_scaler 1 55> // , <&x_scaler 0 1>
                                         , <&to_wheel>;
                 };
         };
