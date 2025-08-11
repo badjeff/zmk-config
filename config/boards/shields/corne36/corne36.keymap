@@ -335,7 +335,7 @@
    &kp Q          &hm LCTRL W   &hl MSK E    &hm LALT R    &kp T               &kp Y         &hm RALT U     &hl MSK I       &hm RCTRL O   &kp P
    &kp A          &hl NUM S     &hl NUM D    &hl NUM F     &kp G               &kp H         &hl NUM J      &hl NUM K       &hl NUM L     &kp SEMI
    &ht LSHFT Z    &hm LGUI X    &hm LGUI C   &hm LGUI V    &kp B               &kp N         &hm RGUI M     &hm RGUI COMMA  &hm RGUI DOT  &ht RSHFT FSLH
-                                &lt MSK ESC  &ht LGUI ESC  &ht LCTRL TAB       &ht LALT RET  &lt NUM SPACE  &lt MSK BKSP
+                                &lt MSK ESC  &kp LGUI      &ht LCTRL TAB       &ht LALT RET  &lt NUM SPACE  &lt MSK BKSP
    &mkp RCLK   &mkg MCLK MSC   &mkp LCLK
    &mkp LCLK   &mo MSC         &mkg MCLK MSC
    &mkp MCLK   &mkp MB5        &mkp MB5
@@ -354,7 +354,7 @@
    &kp Q          &kpws W         &kp E          &kp R           &kp T               &kp Y           &kp U            &kp I           &kp O           &kp P
    &kpad A        &kpws S         &kpad D        &kp F           &kp G               &kp H           &kp J            &kp K           &kp L           &kp SEMI
    &ht LSHFT Z    &kp X           &kp C          &kp V           &kp B               &kp N           &kp M            &kp COMMA       &kp DOT         &ht RSHFT FSLH
-                                  &lt MSK ESC    &ht LGUI ESC    &ht LCTRL TAB       &ht LALT RET    &lt NUM SPACE    &lt MSK BKSP
+                                  &lt MSK ESC    &kp LGUI        &ht LCTRL TAB       &ht LALT RET    &lt NUM SPACE    &lt MSK BKSP
    &trans   &trans   &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
