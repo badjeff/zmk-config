@@ -9,6 +9,7 @@ features:
   - keys
 siblings:
   - donki36_dongle
+  - donki36_donglx
   - donki36_left
   - donki36_right
   - donki36_tball0

@@ -4,6 +4,9 @@
 config SHIELD_DONKI36_DONGLE
 	def_bool $(shields_list_contains,donki36_dongle)
 
+config SHIELD_DONKI36_DONGLX
+	def_bool $(shields_list_contains,donki36_donglx)
+
 config SHIELD_DONKI36_LEFT
 	def_bool $(shields_list_contains,donki36_left)
 
