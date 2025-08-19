@@ -45,6 +45,9 @@ include:
   - board: nice_nano_v2
     shield: donki36_dongle
     # snippet: studio-rpc-usb-uart
+  - board: seeeduino_xiao_ble
+    shield: donki36_donglx
+    # snippet: studio-rpc-usb-uart
   - board: nice_nano_v2
     shield: donki36_left
   - board: nice_nano_v2
