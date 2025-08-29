@@ -62,16 +62,20 @@
 &pd0 {
   status = "okay";
 	irq-gpios = <&gpio1 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-	cpi = <500>;
+	cpi = <3200>; // <500>;
 	evt-type = <INPUT_EV_REL>;
 	x-input-code = <INPUT_REL_X>;
 	y-input-code = <INPUT_REL_Y>;
+	force-awake;
+	force-awake-4ms-mode;
 };
 &pd0a {
   status = "okay";
   irq-gpios = <&gpio0 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-	cpi = <500>;
+	cpi = <3200>; // <500>;
 	evt-type = <INPUT_EV_REL>;
 	x-input-code = <INPUT_REL_X>;
 	y-input-code = <INPUT_REL_Y>;
+	force-awake;
+	force-awake-4ms-mode;
 };
