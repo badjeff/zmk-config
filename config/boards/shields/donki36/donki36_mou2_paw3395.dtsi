@@ -39,7 +39,7 @@
 		spi-max-frequency = <4000000>;
 	};
 	mou2_alt: pd@1 {
-		compatible = "pixart,pmw3610";
+		compatible = "pixart,pmw3610-alt";
 		status = "disabled";
 		label = "MOU2_ALT";
 		reg = <1>;
