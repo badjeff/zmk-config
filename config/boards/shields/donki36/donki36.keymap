@@ -511,7 +511,7 @@
    &trans   &trans   &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
-   &trans   &trans   &transp
+   &trans   &trans   &trans
                         >;
                         sensor-bindings = <&rot_enc>;
                 };
