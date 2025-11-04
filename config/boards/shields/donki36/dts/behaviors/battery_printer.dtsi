@@ -1,0 +1,9 @@
+/ {
+    behaviors {
+        /omit-if-no-ref/ batt: battery_printer {
+                compatible = "zmk,behavior-battery-printer";
+                label = "BATTERY_PRINTER";
+                #binding-cells = <0>;
+        };
+    };
+};
