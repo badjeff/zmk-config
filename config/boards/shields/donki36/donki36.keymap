@@ -11,6 +11,8 @@
 #include <behaviors/mouse_keys.dtsi>
 #include <behaviors/mouse_key_press.dtsi>
 #include <behaviors/mouse_key_toggle.dtsi>
+#include <behaviors/battery_printer.dtsi>
+
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/rgb.h>
@@ -35,7 +37,7 @@
 #define NUM 5
 #define MSK 6
 #define MSC 7
-#define TBM 8
+#define PHS 8
 
 #ifndef MOVE_Y
 #define MOVE_Y(n) (0)
@@ -247,7 +249,7 @@
                 compatible = "zmk,input-listener";
                 device = <&mou2_split_alt>;
                 trackball_mode_overriding {
-                        layers = <TBM>;
+                        layers = <PHS>;
                         input-processors = <&zip_zxy_alt>;
                 };
                 normal_scrolling_mode {
@@ -343,30 +345,33 @@
         combos {
                 compatible = "zmk,combos";
 
-                spc       { timeout-ms = <50>; key-positions = <16 17>; bindings = <&kp SPC>; layers = <BAS GME LNP RNP LHB NUM TBM>; };
-                bksp      { timeout-ms = <50>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <BAS GME LNP RNP LHB NUM TBM>; };
-                del       { timeout-ms = <50>; key-positions = <6 7 8>; bindings = <&kp DEL>; layers = <BAS GME LNP RNP LHB NUM TBM>; };
+                spc       { timeout-ms = <50>; key-positions = <16 17>; bindings = <&kp SPC>; layers = <BAS GME LNP RNP LHB NUM PHS>; };
+                bksp      { timeout-ms = <50>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <BAS GME LNP RNP LHB NUM PHS>; };
+                del       { timeout-ms = <50>; key-positions = <6 7 8>; bindings = <&kp DEL>; layers = <BAS GME LNP RNP LHB NUM PHS>; };
 
-                esc       { timeout-ms = <50>; key-positions = <11 12>; bindings = <&kp ESC>; layers = <BAS GME LNP RNP LHB NUM TBM>; };
-                tab       { timeout-ms = <50>; key-positions = <12 13>; bindings = <&kp TAB>; layers = <BAS GME LNP RNP LHB NUM TBM>; };
+                esc       { timeout-ms = <50>; key-positions = <11 12>; bindings = <&kp ESC>; layers = <BAS GME LNP RNP LHB NUM PHS>; };
+                tab       { timeout-ms = <50>; key-positions = <12 13>; bindings = <&kp TAB>; layers = <BAS GME LNP RNP LHB NUM PHS>; };
 
-                ret_r     { timeout-ms = <50>; key-positions = <26 17 18>; bindings = <&kp RET>; layers = <BAS GME LNP RNP LHB NUM TBM>; };
-                ret_l     { timeout-ms = <50>; key-positions = <11 12 23>; bindings = <&kp RET>; layers = <BAS GME LNP RNP LHB NUM TBM>; };
+                ret_r     { timeout-ms = <50>; key-positions = <26 17 18>; bindings = <&kp RET>; layers = <BAS GME LNP RNP LHB NUM PHS>; };
+                ret_l     { timeout-ms = <50>; key-positions = <11 12 23>; bindings = <&kp RET>; layers = <BAS GME LNP RNP LHB NUM PHS>; };
 
-                tog_lnp   { timeout-ms = <50>; key-positions = <1 2>; bindings = <&tog LNP>; layers = <BAS GME LNP RNP LHB NUM MSK MSC TBM>; };
-                tog_rnp   { timeout-ms = <50>; key-positions = <7 8>; bindings = <&tog RNP>; layers = <BAS GME LNP RNP LHB NUM MSK MSC TBM>; };
+                tog_lnp   { timeout-ms = <50>; key-positions = <1 2>; bindings = <&tog LNP>; layers = <BAS GME LNP RNP LHB NUM MSK MSC PHS>; };
+                tog_rnp   { timeout-ms = <50>; key-positions = <7 8>; bindings = <&tog RNP>; layers = <BAS GME LNP RNP LHB NUM MSK MSC PHS>; };
 
-                mkp_swap  { timeout-ms = <50>; key-positions = <36 38>; bindings = <&tog LHB>; layers = <BAS GME LNP RNP LHB NUM MSK MSC TBM>; };
-                mou_swap  { timeout-ms = <50>; key-positions = <46 47>; bindings = <&tog LHB>; layers = <BAS GME LNP RNP LHB NUM MSK MSC TBM>; };
+                mkp_swap  { timeout-ms = <50>; key-positions = <36 38>; bindings = <&tog LHB>; layers = <BAS GME LNP RNP LHB NUM MSK MSC PHS>; };
+                mou_swap  { timeout-ms = <50>; key-positions = <46 47>; bindings = <&tog LHB>; layers = <BAS GME LNP RNP LHB NUM MSK MSC PHS>; };
 
-                tbm_swap_l { timeout-ms = <80>; key-positions = <43 46>; bindings = <&tog TBM>; layers = <BAS GME LNP RNP LHB NUM MSK MSC TBM>; };
-                tbm_swap_r { timeout-ms = <80>; key-positions = <44 47>; bindings = <&tog TBM>; layers = <BAS GME LNP RNP LHB NUM MSK MSC TBM>; };
+                phs_swap_t { timeout-ms = <80>; key-positions = <36 37 38>; bindings = <&tog PHS>; layers = <BAS GME LNP RNP LHB NUM MSK MSC PHS>; };
+                phs_swap_l { timeout-ms = <80>; key-positions = <43 46>; bindings = <&tog PHS>; layers = <BAS GME LNP RNP LHB NUM MSK MSC PHS>; };
+                phs_swap_r { timeout-ms = <80>; key-positions = <44 47>; bindings = <&tog PHS>; layers = <BAS GME LNP RNP LHB NUM MSK MSC PHS>; };
 
-                tog_msk_ll { timeout-ms = <80>; key-positions = <21 22>; bindings = <&tog MSK>; layers = <BAS GME LHB NUM MSK MSC TBM>; };
-                tog_msk_lr { timeout-ms = <80>; key-positions = <27 28>; bindings = <&tog MSK>; layers = <BAS GME LHB NUM MSK MSC TBM>; };
+                tog_msk_ll { timeout-ms = <80>; key-positions = <21 22>; bindings = <&tog MSK>; layers = <BAS GME LHB NUM MSK MSC PHS>; };
+                tog_msk_lr { timeout-ms = <80>; key-positions = <27 28>; bindings = <&tog MSK>; layers = <BAS GME LHB NUM MSK MSC PHS>; };
                 mclk       { timeout-ms = <50>; key-positions = <22 23>; bindings = <&mkp MCLK>; layers = <BAS GME LHB NUM MSK MSC>; };
 
                 dfu_l     { timeout-ms = <50>; key-positions = <0 1>; bindings = <&bootloader>; layers = <MSC>; };
+                bt_clr    { timeout-ms = <50>; key-positions = <1 2 3>; bindings = <&bt BT_CLR>; layers = <MSC>; };
+
         };
 
 
@@ -495,31 +500,31 @@
 // |   DFU    |   BT_0   | (H) BT_1 | (H) BT_C |  RESET   |     |   RESET  |    (H)   |    (H)   |   ^GME   |    DFU   |
 // |   ^MSC   |  ISA_ON  |  ISA_OFF |  ISA_SLP |  STD_UL  |     |   SLFT   |   SDWN   |    SUP   |   SRGT   |   ^MSC   |
 // | SHF ^MSC |   RCLK   |   MCLK   |   LCLK   |  TEMPO   |     |          |   LCLK   |   MCLK   |   RCLK   | SHF ^MSC |
-//                       |   (H)    |          |  OUT_TOG |     |          |          |    (H)   |
+//                       |   (H)    |   BATT   |  OUT_TOG |     |          |   BATT   |    (H)   |
                         display-name = "Mou Scroll";
                         bindings = <
    &bootloader    &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_CLR    &sys_reset        &sys_reset   &trans        &trans      &tog GME      &bootloader
 // &tog MSC       &isa ISA_ON   &isa ISA_OFF  &isa ISA_SLP  &trans.           &m_s SCL_L   &m_s SCL_D    &m_s SCL_U  &m_s SCL_R    &tog MSC
    &tog MSC       &trans        &trans        &trans        &trans            &m_s SCL_L   &m_s SCL_D    &m_s SCL_U  &m_s SCL_R    &tog MSC
    &kg RSHFT MSC  &mkp RCLK     &mkp MCLK     &mkp LCLK     &tempo            &trans       &mkp LCLK     &mkp MCLK   &mkp RCLK     &kg RSHFT MSC
-                                &trans        &trans        &out OUT_TOG      &trans       &trans        &trans
+                                &trans        &batt         &out OUT_TOG      &trans       &batt         &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
-   &trans   &trans   &trans
+   &trans   &trans   &transp
                         >;
                         sensor-bindings = <&rot_enc>;
                 };
-                TBM_layer {
-                        display-name = "Trackball Mode Swap";
+                PHS_layer {
+                        display-name = "Peripheral Setup";
                         bindings = <
    &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
    &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
    &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
                    &trans  &trans  &trans    &trans  &trans  &trans
-   &trans      &trans          &trans
+   &batt       &bootloader     &batt
    &trans      &bootloader     &trans
-   &trans      &trans          &trans
+   &trans      &batt           &trans
    &trans      &trans          &trans
                         >;
                         sensor-bindings = <&rot_enc>;
