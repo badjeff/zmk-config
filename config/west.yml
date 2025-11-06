@@ -28,13 +28,13 @@ manifest:
       remote: nrfconnect
       # revision: v2.6.4 # zephyr v3.5.99
       # revision: v3.1.0
-      revision: main
+      revision: v3.1-branch
       path: nrf
     - name: nrfxlib
       remote: nrfconnect
       # revision: v2.6.4
       # revision: v3.1.0
-      revision: main
+      revision: v3.1-branch
       repo-path: sdk-nrfxlib
       path: nrfxlib
     - name: zmk-feature-split-esb
