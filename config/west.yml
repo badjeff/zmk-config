@@ -29,7 +29,7 @@ manifest:
       # revision: v2.6.4 # zephyr v3.5.99
       revision: v3.1.0
       path: nrf
-      west-patches
+      west-patches:
         - path: https://github.com/badjeff/zmk-feature-split-esb/blob/core/move-to-zephyr-4-1/patches/patch_ncs.diff
     - name: nrfxlib
       remote: nrfconnect
