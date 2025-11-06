@@ -16,77 +16,77 @@ include:
   # - board: nice_nano@2.0.0
   #   shield: settings_reset
 
-  # - board: nice_nano@2.0.0
-  #   shield: corne36_left
-  #   # snippet: studio-rpc-usb-uart
-  # - board: nice_nano@2.0.0
-  #   shield: corne36_right
+  - board: nice_nano@2.0.0
+    shield: corne36_left
+    # snippet: studio-rpc-usb-uart
+  - board: nice_nano@2.0.0
+    shield: corne36_right
+  - board: xiao_ble
+    shield: corne36_tball0
+  - board: xiao_ble
+    shield: corne36_tball1
+  - board: xiao_ble
+    shield: corne36_tball2
+  - board: xiao_ble
+    shield: corne36_tpoint0
   # - board: xiao_ble
-  #   shield: corne36_tball0
-  # - board: xiao_ble
-  #   shield: corne36_tball1
-  # - board: xiao_ble
-  #   shield: corne36_tball2
-  # - board: xiao_ble
-  #   shield: corne36_tpoint0
-  # # - board: xiao_ble
-  # #   shield: corne36_tpad0
-  # - board: xiao_ble
-  #   shield: corne36_mou0
-  # - board: xiao_ble
-  #   shield: corne36_mou1
+  #   shield: corne36_tpad0
+  - board: xiao_ble
+    shield: corne36_mou0
+  - board: xiao_ble
+    shield: corne36_mou1
 
-  # - board: xiao_ble
-  #   shield: corne36_dongle prospector_adapter
-  #   # snippet: studio-rpc-usb-uart
-  # - board: nice_nano@2.0.0
-  #   shield: corne36_dongleft
+  - board: xiao_ble
+    shield: corne36_dongle prospector_adapter
+    # snippet: studio-rpc-usb-uart
+  - board: nice_nano@2.0.0
+    shield: corne36_dongleft
 
-  # - board: nice_nano@2.0.0
-  #   shield: donki36_dongle
-  #   # snippet: studio-rpc-usb-uart
+  - board: nice_nano@2.0.0
+    shield: donki36_dongle
+    # snippet: studio-rpc-usb-uart
   - board: xiao_ble
     shield: donki36_donglx
     # snippet: studio-rpc-usb-uart
+  - board: nice_nano@2.0.0
+    shield: donki36_left
+  - board: nice_nano@2.0.0
+    shield: donki36_right
+  - board: xiao_ble
+    shield: donki36_tball0
+  - board: xiao_ble
+    shield: donki36_tball1
+  - board: xiao_ble
+    shield: donki36_tball2
+  - board: xiao_ble
+    shield: donki36_tpoint0
+  # - board: xiao_ble
+  #   shield: donki36_tpad0
+  - board: xiao_ble
+    shield: donki36_mou0
+  - board: xiao_ble
+    shield: donki36_mou1
+  - board: xiao_ble
+    shield: donki36_mou2
+
   # - board: nice_nano@2.0.0
-  #   shield: donki36_left
+  #   shield: nano18_left
   # - board: nice_nano@2.0.0
-  #   shield: donki36_right
-  # - board: xiao_ble
-  #   shield: donki36_tball0
-  # - board: xiao_ble
-  #   shield: donki36_tball1
-  # - board: xiao_ble
-  #   shield: donki36_tball2
-  # - board: xiao_ble
-  #   shield: donki36_tpoint0
-  # # - board: xiao_ble
-  # #   shield: donki36_tpad0
-  # - board: xiao_ble
-  #   shield: donki36_mou0
-  # - board: xiao_ble
-  #   shield: donki36_mou1
-  # - board: xiao_ble
-  #   shield: donki36_mou2
+  #   shield: nano18_right
 
-  # # - board: nice_nano@2.0.0
-  # #   shield: nano18_left
-  # # - board: nice_nano@2.0.0
-  # #   shield: nano18_right
-
+  - board: xiao_ble
+    shield: sparklite_left
   # - board: xiao_ble
-  #   shield: sparklite_left
-  # # - board: xiao_ble
-  # #   shield: sparklite_right
+  #   shield: sparklite_right
 
-  # # - board: nice_nano@2.0.0
-  # #   shield: tumka36
+  # - board: nice_nano@2.0.0
+  #   shield: tumka36
 
-  # # - board: waveshare_rp2040_zero
-  # #   shield: zero36
+  # - board: waveshare_rp2040_zero
+  #   shield: zero36
 
-  # # - board: nologo_nano33_ble
-  # #   shield: m330
+  # - board: nologo_nano33_ble
+  #   shield: m330
 
-  # # - board: nice_nano@2.0.0
-  # #   shield: samukun
+  # - board: nice_nano@2.0.0
+  #   shield: samukun
