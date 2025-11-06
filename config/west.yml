@@ -26,7 +26,6 @@ manifest:
 
     - name: sdk-nrf
       # remote: nrfconnect
-      # revision: v3.1-branch
       remote: badjeff
       revision: v3.1-branch--fix
       path: nrf
