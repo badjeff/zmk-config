@@ -57,6 +57,10 @@ manifest:
       remote: badjeff
       revision: main
 
+    - name: zzmk-behavior-battery-percentage-printer
+      remote: badjeff
+      revision: main
+
     - name: zmk-behavior-insomnia
       remote: badjeff
       revision: main
