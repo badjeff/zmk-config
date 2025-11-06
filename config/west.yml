@@ -57,7 +57,7 @@ manifest:
       remote: badjeff
       revision: main
 
-    - name: zzmk-behavior-battery-percentage-printer
+    - name: zmk-behavior-battery-percentage-printer
       remote: badjeff
       revision: main
 
