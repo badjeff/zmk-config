@@ -1,7 +1,0 @@
-# SPDX-License-Identifier: MIT
-
-description: "Behavior that types the battery percentage (digits only)."
-
-compatible: "zmk,behavior-battery-printer"
-
-include: zero_param.yaml

@@ -11,7 +11,7 @@
 #include <behaviors/mouse_keys.dtsi>
 #include <behaviors/mouse_key_press.dtsi>
 #include <behaviors/mouse_key_toggle.dtsi>
-#include <behaviors/battery_printer.dtsi>
+#include <behaviors/battery_percentage_printer.dtsi>
 
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
@@ -507,7 +507,7 @@
 // &tog MSC       &isa ISA_ON   &isa ISA_OFF  &isa ISA_SLP  &trans.           &m_s SCL_L   &m_s SCL_D    &m_s SCL_U  &m_s SCL_R    &tog MSC
    &tog MSC       &trans        &trans        &trans        &trans            &m_s SCL_L   &m_s SCL_D    &m_s SCL_U  &m_s SCL_R    &tog MSC
    &kg RSHFT MSC  &mkp RCLK     &mkp MCLK     &mkp LCLK     &tempo            &trans       &mkp LCLK     &mkp MCLK   &mkp RCLK     &kg RSHFT MSC
-                                &trans        &batt         &out OUT_TOG      &trans       &batt         &trans
+                                &trans        &bapp         &out OUT_TOG      &trans       &bapp         &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
@@ -522,9 +522,9 @@
    &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
    &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
                    &trans  &trans  &trans    &trans  &trans  &trans
-   &batt       &bootloader     &batt
+   &bapp       &bootloader     &bapp
    &trans      &bootloader     &trans
-   &trans      &batt           &trans
+   &trans      &bapp           &trans
    &trans      &trans          &trans
                         >;
                         sensor-bindings = <&rot_enc>;
