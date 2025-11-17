@@ -2,8 +2,8 @@ manifest:
   remotes:
     # - name: zmkfirmware
     #   url-base: https://github.com/zmkfirmware
-    - name: nrfconnect
-      url-base: https://github.com/nrfconnect
+    # - name: nrfconnect
+    #   url-base: https://github.com/nrfconnect
     - name: badjeff
       url-base: https://github.com/badjeff
     - name: petejohanson
@@ -24,19 +24,19 @@ manifest:
       revision: core/move-to-zephyr-4-1
       import: app/west.yml
 
-    - name: sdk-nrf
-      remote: badjeff
-      revision: v3.1-branch+zmk-fixes
-      path: nrf
-    - name: nrfxlib
-      remote: nrfconnect
-      revision: v3.1-branch
-      repo-path: sdk-nrfxlib
-      path: nrfxlib
-    - name: zmk-feature-split-esb
-      remote: badjeff
-      # revision: main
-      revision: core/move-to-zephyr-4-1
+    # - name: sdk-nrf
+    #   remote: badjeff
+    #   revision: v3.1-branch+zmk-fixes
+    #   path: nrf
+    # - name: nrfxlib
+    #   remote: nrfconnect
+    #   revision: v3.1-branch
+    #   repo-path: sdk-nrfxlib
+    #   path: nrfxlib
+    # - name: zmk-feature-split-esb
+    #   remote: badjeff
+    #   # revision: main
+    #   revision: core/move-to-zephyr-4-1
 
     - name: zmk-adns9800-driver
       remote: badjeff
