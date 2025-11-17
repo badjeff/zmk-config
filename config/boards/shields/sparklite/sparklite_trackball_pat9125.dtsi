@@ -1,0 +1,47 @@
+/*
+ * Copyright (c) 2020 Pete Johanson
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+&pinctrl {
+	i2c1_default: i2c1_default {
+		group1 {
+			psels = <NRF_PSEL(TWIM_SDA, 0, 4)>,
+				<NRF_PSEL(TWIM_SCL, 0, 5)>;
+		};
+	};
+
+	i2c1_sleep: i2c1_sleep {
+		group1 {
+			psels = <NRF_PSEL(TWIM_SDA, 0, 4)>,
+				<NRF_PSEL(TWIM_SCL, 0, 5)>;
+			low-power-enable;
+		};
+	};
+};
+
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+&i2c1 {
+	status = "okay";
+	compatible = "nordic,nrf-twim";
+	pinctrl-0 = <&i2c1_default>;
+	pinctrl-1 = <&i2c1_sleep>;
+	pinctrl-names = "default", "sleep";
+
+	pd0i: pd0i@79 {
+		compatible = "pixart,pat912x";
+		reg = <0x79>;
+		status = "okay";
+		motion-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+		res-x-cpi = <900>;
+		res-y-cpi = <900>;
+		zephyr,axis-x = <INPUT_REL_X>;
+		zephyr,axis-y = <INPUT_REL_Y>;
+		invert-x;
+		invert-y;
+		// sleep1-enable;
+		// sleep2-enable;
+	};
+};

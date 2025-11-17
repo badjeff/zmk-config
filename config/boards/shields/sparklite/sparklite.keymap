@@ -19,7 +19,7 @@
 #include <dt-bindings/zmk/input_transform.h>
 #include <input/processors.dtsi>
 
-#include <input/processors/mixer.dtsi>
+// #include <input/processors/mixer.dtsi>
 
 #define DEFAULT 0
 #define RAISE   1
@@ -30,38 +30,46 @@
 // #define OUTPUT_SOURCE_TRANSPORT                 4
 
 / {
-        tball1_pri_mmv_il {
-                compatible = "zmk,input-listener";
-                device = <&pd0>;
-                default {
-                        layers = <DEFAULT>;
-                        input-processors = <&zip_mixer 0>;
-                };
-        };
-        tball1_sec_mmv_il {
-                compatible = "zmk,input-listener";
-                device = <&pd0a>;
-                default {
-                        layers = <DEFAULT>;
-                        input-processors = <&zip_mixer 1>;
-                };
-        };
-        mixin_mmv_il {
-                compatible = "zmk,input-listener";
-                device = <&zip_mixer>;
-        };
-
-        // tball2_pri_mmv_il {
+        // tball1_pri_mmv_il {
         //         compatible = "zmk,input-listener";
         //         device = <&pd0>;
         //         default {
         //                 layers = <DEFAULT>;
-        //                 // input-processors 
-        //                 //         = <&zip_xy_swap_mapper>
-        //                 //         , <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>
-        //                 //         ;
+        //                 input-processors = <&zip_mixer 0>;
         //         };
         // };
+        // tball1_sec_mmv_il {
+        //         compatible = "zmk,input-listener";
+        //         device = <&pd0a>;
+        //         default {
+        //                 layers = <DEFAULT>;
+        //                 input-processors = <&zip_mixer 1>;
+        //         };
+        // };
+        // mixin_mmv_il {
+        //         compatible = "zmk,input-listener";
+        //         device = <&zip_mixer>;
+        // };
+
+        tball1_mmv_il {
+                compatible = "zmk,input-listener";
+                device = <&pd0>;
+                default {
+                        layers = <DEFAULT>;
+                        // input-processors 
+                        //         = <&zip_xy_swap_mapper>
+                        //         , <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>
+                        //         ;
+                };
+        };
+
+        tball2_mmv_il {
+                compatible = "zmk,input-listener";
+                device = <&pd0i>;
+                default {
+                        layers = <DEFAULT>;
+                };
+        };
 
         // erm0_obl__enter_raise_layer {
         //         compatible = "zmk,output-behavior-listener";
