@@ -36,11 +36,11 @@ include:
   - board: xiao_ble
     shield: corne36_mou1
 
-  - board: xiao_ble
-    shield: corne36_dongle prospector_adapter
-    # snippet: studio-rpc-usb-uart
-  - board: nice_nano@2.0.0
-    shield: corne36_dongleft
+  # - board: xiao_ble
+  #   shield: corne36_dongle prospector_adapter
+  #   # snippet: studio-rpc-usb-uart
+  # - board: nice_nano@2.0.0
+  #   shield: corne36_dongleft
 
   # - board: nice_nano@2.0.0
   #   shield: donki36_dongle
