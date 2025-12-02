@@ -41,7 +41,7 @@
 		zephyr,axis-y = <INPUT_REL_Y>;
 		// invert-x;
 		// invert-y;
-		// sleep1-enable;
-		// sleep2-enable;
+		sleep1-enable;
+		sleep2-enable;
 	};
 };
