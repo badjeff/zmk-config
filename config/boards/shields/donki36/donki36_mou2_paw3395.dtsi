@@ -70,6 +70,10 @@
 	force-awake;
 };
 
+&uicr {
+   nfct-pins-as-gpios;
+};
+
 &mou2_alt {
   status = "okay";
 	irq-gpios = <&gpio0 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // NFC 2

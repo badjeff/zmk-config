@@ -68,6 +68,10 @@ RC(4,0) RC(4,1) RC(4,2)
 &mou2_split { status = "disabled"; };
 &mou2_split_alt { status = "disabled"; };
 
+&uicr {
+   nfct-pins-as-gpios;
+};
+
 /{
 	s_encoder: s_encoder {
 		compatible = "alps,ec11";

@@ -63,6 +63,10 @@ RC(4,0) RC(4,1) RC(4,2)
 &mou0_split { status = "disabled"; };
 &mou1_split { device = <&mou1>; input-processors = <&zip_report_rate_limit 8>, <&zip_xyz>; };
 
+&uicr {
+   nfct-pins-as-gpios;
+};
+
 /{
 	s_encoder: s_encoder {
 		compatible = "alps,ec11";
