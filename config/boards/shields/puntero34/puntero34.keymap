@@ -1,0 +1,276 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+#include <behaviors.dtsi>
+#include <behaviors/studio_unlock.dtsi>
+#include <behaviors/mouse_keys.dtsi>
+#include <behaviors/mouse_key_press.dtsi>
+#include <behaviors/mouse_key_toggle.dtsi>
+#include <behaviors/battery_percentage_printer.dtsi>
+
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/rgb.h>
+#include <dt-bindings/zmk/ext_power.h>
+#include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/mouse.h>
+#include <dt-bindings/zmk/input_transform.h>
+
+#include <behaviors/key_press_lip.dtsi>
+#include <behaviors/tempo.dtsi>
+#include <behaviors/insomnia.dtsi>
+#include <dt-bindings/zmk/insomnia.h>
+
+#include <input/processors/report_rate_limit.dtsi>
+#include <input/processors/xyz.dtsi>
+
+#define BAS 0
+#define GME 1
+#define LNP 2
+#define RNP 3
+#define NUM 4
+#define FUN 5
+#define MSC 6
+
+&zip_report_rate_limit {
+        limit-ble-only;
+};
+
+/ {
+        xy_transf: xy_transf {
+                compatible = "zmk,input-processor-transform";
+                #input-processor-cells = <1>;
+                type = <INPUT_EV_REL>;
+                x-codes = <INPUT_REL_X>, <INPUT_REL_WHEEL>;
+                y-codes = <INPUT_REL_Y>, <INPUT_REL_HWHEEL>;
+        };
+        xy_scaler: xy_scaler {
+                compatible = "zmk,input-processor-scaler";
+                #input-processor-cells = <2>;
+                type = <INPUT_EV_REL>;
+                codes = <INPUT_REL_X>, <INPUT_REL_Y>;
+                track-remainders;
+        };
+        x_scaler: x_scaler {
+                compatible = "zmk,input-processor-scaler";
+                #input-processor-cells = <2>;
+                type = <INPUT_EV_REL>;
+                codes = <INPUT_REL_X>;
+        };
+        to_wheel: to_wheel {
+                compatible = "zmk,input-processor-code-mapper";
+                #input-processor-cells = <0>;
+                type = <INPUT_EV_REL>;
+                map = <INPUT_REL_X INPUT_REL_HWHEEL>
+                    , <INPUT_REL_Y INPUT_REL_WHEEL>;
+        };
+
+        tball0_mmv_il {
+                compatible = "zmk,input-listener";
+                device = <&tball0>;
+                input-processors = <&zip_report_rate_limit 8>;
+                precise {
+                        layers = <NUM>;
+                        process-next;
+                        input-processors = <&xy_scaler 1 2>;
+                };
+                scroll {
+                        layers = <MSC>;
+                        process-next;
+                        input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
+                                        , <&xy_scaler 1 25>, <&x_scaler 0 1>
+                                        , <&to_wheel>;
+                };
+        };
+
+        tball0_s_mmv_il {
+                compatible = "zmk,input-listener";
+                device = <&tball0_split>;
+                input-processors = <&zip_zxy>, <&zip_report_rate_limit 8>;
+                precise {
+                        layers = <NUM>;
+                        process-next;
+                        input-processors = <&xy_scaler 1 2>;
+                };
+                scroll {
+                        layers = <MSC>;
+                        process-next;
+                        input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
+                                        , <&xy_scaler 1 25>, <&x_scaler 0 1>
+                                        , <&to_wheel>;
+                };
+        };
+
+        behaviors {
+                ht: hold_tap_mods {
+                        compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
+                        tapping-term-ms = <200>;
+                        flavor = "hold-preferred"; bindings = <&kp>, <&kp>;
+                        display-name = "mod-tap";
+                };
+                hm: homerow_mods {
+                        compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
+                        tapping-term-ms = <200>; quick-tap-ms = <200>;
+                        flavor = "tap-preferred"; bindings = <&kp>, <&kp>;
+                        display-name = "mod-tap";
+                };
+                hl: homerow_layers {
+                        compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
+                        tapping-term-ms = <200>; quick-tap-ms = <200>;
+                        flavor = "tap-preferred"; bindings = <&mo>, <&kp>;
+                        display-name = "hold-layer";
+                };
+                kg: key_press_tap_toggle {
+                        compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
+                        tapping-term-ms = <200>; quick-tap-ms = <200>;
+                        flavor = "tap-preferred"; bindings = <&kp>, <&tog>;
+                };
+                mkg: hold_mouse_key_press_tap_toggle {
+                        compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;
+                        tapping-term-ms = <200>; quick-tap-ms = <200>;
+                        flavor = "tap-preferred"; bindings = <&mkp>, <&tog>;
+                };
+        };
+
+        //   0   1   2   3   4     5   6   7   8   9
+        //  10  11  12  13  14    15  16  17  18  19
+        //  20  21  22  23  24    25  26  27  28  29
+        //              30  31    32  33
+        combos {
+                compatible = "zmk,combos";
+
+                spc_l     { timeout-ms = <50>; key-positions = <22 23>; bindings = <&kp SPC>; layers = <BAS GME LNP RNP NUM>; };
+                spc_r     { timeout-ms = <50>; key-positions = <26 27>; bindings = <&kp SPC>; layers = <BAS GME LNP RNP NUM>; };
+
+                bksp      { timeout-ms = <50>; key-positions = <7 8>; bindings = <&kp BKSP>; layers = <BAS GME LNP RNP NUM>; };
+                del       { timeout-ms = <50>; key-positions = <6 7 8>; bindings = <&kp DEL>; layers = <BAS GME LNP RNP NUM>; };
+  
+                esc       { timeout-ms = <50>; key-positions = <1 2>; bindings = <&kp ESC>; layers = <BAS GME LNP RNP NUM>; };
+                tab       { timeout-ms = <50>; key-positions = <2 3>; bindings = <&kp TAB>; layers = <BAS GME LNP RNP NUM>; };
+
+                ret_r     { timeout-ms = <50>; key-positions = <26 17 18>; bindings = <&kp RET>; layers = <BAS GME LNP RNP NUM>; };
+                ret_l     { timeout-ms = <50>; key-positions = <11 12 23>; bindings = <&kp RET>; layers = <BAS GME LNP RNP NUM>; };
+
+                tog_lnp   { timeout-ms = <50>; key-positions = <1 23>; bindings = <&tog LNP>; layers = <BAS GME LNP RNP NUM FUN MSC>; };
+                tog_rnp   { timeout-ms = <50>; key-positions = <8 26>; bindings = <&tog RNP>; layers = <BAS GME LNP RNP NUM FUN MSC>; };
+                
+                tog_fun_l  { timeout-ms = <50>; key-positions = <21 22>; bindings = <&tog FUN>; layers = <BAS GME NUM FUN MSC>; };
+                tog_fun_r  { timeout-ms = <50>; key-positions = <27 28>; bindings = <&tog FUN>; layers = <BAS GME NUM FUN MSC>; };
+                
+                tog_msc_l  { timeout-ms = <50>; key-positions = <10 30>; bindings = <&tog MSC>; layers = <BAS GME LNP RNP NUM FUN MSC>; };
+                tog_msc_r  { timeout-ms = <50>; key-positions = <19 33>; bindings = <&tog MSC>; layers = <BAS GME LNP RNP NUM FUN MSC>; };
+
+                lclk_l     { timeout-ms = <50>; key-positions = <11 12>; bindings = <&mkp LCLK>; layers = <BAS GME NUM LNP RNP FUN MSC>; };
+                rclk_l     { timeout-ms = <50>; key-positions = <11 30>; bindings = <&mkp RCLK>; layers = <BAS GME NUM LNP RNP FUN MSC>; };
+                mclk_l     { timeout-ms = <50>; key-positions = <12 30>; bindings = <&mkp MCLK>; layers = <BAS GME NUM LNP RNP FUN MSC>; };
+
+                lclk_r     { timeout-ms = <50>; key-positions = <17 18>; bindings = <&mkp LCLK>; layers = <BAS GME NUM LNP RNP FUN MSC>; };
+                rclk_r     { timeout-ms = <50>; key-positions = <18 33>; bindings = <&mkp RCLK>; layers = <BAS GME NUM LNP RNP FUN MSC>; };
+                mclk_r     { timeout-ms = <50>; key-positions = <17 33>; bindings = <&mkp MCLK>; layers = <BAS GME NUM LNP RNP FUN MSC>; };
+
+                // dfu_l     { timeout-ms = <50>; key-positions = <0 1>; bindings = <&bootloader>; layers = <MSC>; };
+                bt_clr    { timeout-ms = <50>; key-positions = <1 2 3>; bindings = <&bt BT_CLR>; layers = <MSC>; };
+        };
+
+ 
+        keymap {
+                compatible = "zmk,keymap";
+                BAS_layer {
+// +------------------------------------------------------+     +--------------------------------------------------------+
+// |     Q    |  LCTRL:W |  _FUN:E  |  LALT:R  |     T    |     |     Y     |  RALT:U  |  _FUN:I   |  RCTRL:O |     P    |
+// |     A    |  _NUM:S  |  _NUM:D  |  _NUM:F  |     G    |     |     H     |  _NUM:J  |  _NUM:K   |  _NUM:L  |     ;:   |
+// |  SHFT Z  |  LGUI:X  |  LGUI:C  |  LGUI:V  |     B    |     |     N     |  RGUI:M  |  RGUI:,<  |  RGUI:.> |  SHFT /? |
+//                                  |   LGUI   | CTRL:TAB |     |  ALT:ENT  | _NUM:SPC |
+                        display-name = "Base";
+                        bindings = <
+   &kp Q          &hm LCTRL W   &hl FUN E    &hm LALT R    &kp T               &kp Y         &hm RALT U     &hl FUN I       &hm RCTRL O   &kp P
+   &kp A          &hl NUM S     &hl NUM D    &hl NUM F     &kp G               &kp H         &hl NUM J      &hl NUM K       &hl NUM L     &kp SEMI
+   &ht LSHFT Z    &hm LGUI X    &hm LGUI C   &hm LGUI V    &kp B               &kp N         &hm RGUI M     &hm RGUI COMMA  &hm RGUI DOT  &ht RSHFT FSLH
+                                             &kp LGUI      &ht LCTRL TAB       &ht LALT RET  &lt NUM SPACE
+   &mkp RCLK   &mkg MCLK MSC   &mkp LCLK
+   &mkp LCLK   &mo MSC         &mkg MCLK MSC
+   &mkp MCLK   &mkp MB5        &mkp MB5
+   &mkp RCLK   &mkp MB4        &mkp MB4
+                        >;
+                };
+                GME_layer {
+// +------------------------------------------------------+     +--------------------------------------------------------+
+// |     Q    |     W    |     E    |     R    |     T    |     |     Y     |     U    |     I     |     O    |     P    |
+// |     A    |     S    |     D    |     F    |     G    |     |     H     |     J    |     K     |     L    |     ;:   |
+// |  SHFT Z  |     X    |     C    |     V    |     B    |     |     N     |     M    |    ,<     |    .>    |  SHFT /? |
+//                                  |    GUI   | CTRL:TAB |     |  ALT:ENT  | _NUM:SPC |
+                        display-name = "Gaming";
+                        bindings = <
+   &kp Q          &kpws W         &kp E          &kp R           &kp T               &kp Y           &kp U            &kp I           &kp O           &kp P
+   &kpad A        &kpws S         &kpad D        &kp F           &kp G               &kp H           &kp J            &kp K           &kp L           &kp SEMI
+   &ht LSHFT Z    &kp X           &kp C          &kp V           &kp B               &kp N           &kp M            &kp COMMA       &kp DOT         &ht RSHFT FSLH
+                                                 &kp LGUI        &ht LCTRL TAB       &ht LALT RET    &lt NUM SPACE
+                        >;
+                };
+                LNP_layer {
+                        display-name = "L N P";
+                        bindings = <
+   &trans  &kp N7  &kp N8  &kp N9  &trans    &trans  &trans  &trans  &trans  &trans
+   &kp N0  &kp N4  &kp N5  &kp N6  &trans    &trans  &trans  &trans  &trans  &trans
+   &trans  &kp N1  &kp N2  &kp N3  &trans    &trans  &trans  &trans  &trans  &trans
+                   &trans  &trans  &trans    &trans  &trans  &trans
+                        >;
+                };
+                RNP_layer {
+                        display-name = "R N P";
+                        bindings = <
+   &trans  &trans  &trans  &trans  &trans    &trans  &kp N7  &kp N8  &kp N9  &trans
+   &trans  &trans  &trans  &trans  &trans    &trans  &kp N4  &kp N5  &kp N6  &kp N0
+   &trans  &trans  &trans  &trans  &trans    &trans  &kp N1  &kp N2  &kp N3  &trans
+                   &trans  &trans  &trans    &trans  &trans  &trans
+                        >;
+                };
+                NUM_layer {
+// +------------------------------------------------------+     +-------------------------------------------------------+
+// |    1!    | LCTRL:2@  |    3#    | LALT:4$  |    5%   |     |    6^    |  RALT:7& |    8&    |  RCTRL 9( |    0)    |
+// |    `~    |   TAB     |    {[    |    ]}    |         |     |    LFT   |   DWN    |    UP    |    RGT    |    '"    |
+// |  SHFT \| |    /?     |          |          |         |     |          |    -_    |    =+    |    \|     |  SHFT /? |
+//                                   |          |         |     |          |    (H)   |
+                        display-name = "Num";
+                        bindings = <
+   &kp N1             &hm LCTRL N2   &kp N3     &hm LALT N4   &kp N5              &kp N6      &hm RALT N7   &kp N8      &hm RCTRL N9   &kp N0
+   &kp GRAVE          &kp TAB        &kp LBKT   &kp RBKT      &trans              &kp LEFT    &kp DOWN      &kp UP      &kp RIGHT      &kp SQT
+   &ht LSHFT BSLH     &kp FSLH       &trans     &trans        &trans              &trans      &kp MINUS     &kp EQUAL   &kp BSLH       &ht RSHFT FSLH
+                                                &trans        &trans              &trans      &trans
+                        >;
+                };
+                FUN_layer {
+// +-----------------------------------------------------+     +------------------------------------------------------+
+// |    F1    |    F2    |  (H) F3  |    F4    |    F5   |     |    F6    |    F7    |  (H) F8  |    F9    |    F10   |
+// |   ^MSC   |   BRID   |   BRIU   |   VOLD   |   VOLU  |     |          |          |          |          |   ^MSC   |
+// | SHF ^MSC |   RCLK   |   MCLK   |   LCLK   |   F12   |     |   F11    |   LCLK   |   MCLK   |   RCLK   | SHF ^MSC |
+//                                  |          |         |     |          |          |
+                        display-name = "Func";
+                        bindings = <
+   &kp F1         &kp F2        &kp F3        &kp F4        &kp F5            &kp F6      &kp F7      &kp F8      &kp F9      &kp F10
+   &tog MSC       &kp C_BRI_DN  &kp C_BRI_UP  &kp C_VOL_DN  &kp C_VOL_UP      &trans      &trans      &trans      &trans      &tog MSC
+   &kg LSHFT MSC  &mkp RCLK     &mkp MCLK     &mkp LCLK     &kp F12           &kp F11     &mkp LCLK   &mkp MCLK   &mkp RCLK   &kg RSHFT MSC
+                                              &trans        &trans            &trans      &trans
+                        >;
+                };
+                MSC_layer {
+// +------------------------------------------------------+     +------------------------------------------------------+
+// |   DFU    |   BT_0   | (H) BT_1 | (H) BT_2 |  RESET   |     |   RESET  |    (H)   |    (H)   |   ^GME   |    DFU   |
+// |   ^MSC   |  ISA_ON  |  ISA_OFF |  ISA_SLP |  STD_UL  |     |          |          |          |          |   ^MSC   |
+// | SHF ^MSC |   RCLK   |   MCLK   |   LCLK   |  TEMPO   |     |          |   LCLK   |   MCLK   |   RCLK   | SHF ^MSC |
+//                                  |   BATT   |  OUT_TOG |     |          |   BATT   |
+                        display-name = "Scroll";
+                        bindings = <
+   &bootloader    &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &sys_reset        &sys_reset   &trans        &trans      &tog GME      &bootloader
+   &tog MSC       &isa ISA_ON   &isa ISA_OFF  &isa ISA_SLP  &trans            &trans       &trans        &trans      &trans        &tog MSC
+   &kg RSHFT MSC  &mkp RCLK     &mkp MCLK     &mkp LCLK     &tempo            &trans       &mkp LCLK     &mkp MCLK   &mkp RCLK     &kg RSHFT MSC
+                                              &bapp         &out OUT_TOG      &trans       &bapp
+                        >;
+                };
+       };
+};
