@@ -162,8 +162,8 @@
                 tog_fun_l  { timeout-ms = <50>; key-positions = <21 22>; bindings = <&tog FUN>; layers = <BAS GME NUM FUN MSC>; };
                 tog_fun_r  { timeout-ms = <50>; key-positions = <27 28>; bindings = <&tog FUN>; layers = <BAS GME NUM FUN MSC>; };
                 
-                tog_msc_l  { timeout-ms = <50>; key-positions = <10 30>; bindings = <&tog MSC>; layers = <BAS GME LNP RNP NUM FUN MSC>; };
-                tog_msc_r  { timeout-ms = <50>; key-positions = <19 33>; bindings = <&tog MSC>; layers = <BAS GME LNP RNP NUM FUN MSC>; };
+                tog_msc_l  { timeout-ms = <50>; key-positions = <11 12 30>; bindings = <&tog MSC>; layers = <BAS GME LNP RNP NUM FUN MSC>; };
+                tog_msc_r  { timeout-ms = <50>; key-positions = <17 18 33>; bindings = <&tog MSC>; layers = <BAS GME LNP RNP NUM FUN MSC>; };
 
                 lclk_l     { timeout-ms = <50>; key-positions = <11 12>; bindings = <&mkp LCLK>; layers = <BAS GME NUM LNP RNP FUN MSC>; };
                 rclk_l     { timeout-ms = <50>; key-positions = <11 30>; bindings = <&mkp RCLK>; layers = <BAS GME NUM LNP RNP FUN MSC>; };
