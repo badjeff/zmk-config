@@ -154,13 +154,17 @@
                 tog_fun_l  { timeout-ms = <50>; key-positions = <21 22>; bindings = <&tog FUN>; layers = <BAS GME NUP NUM FUN CFG>; };
                 tog_fun_r  { timeout-ms = <50>; key-positions = <27 28>; bindings = <&tog FUN>; layers = <BAS GME NUP NUM FUN CFG>; };
                 
-                lclk_l     { timeout-ms = <50>; key-positions = <11 12>; bindings = <&mkp LCLK>; layers = <BAS GME NUP NUM FUN CFG>; };
+                lclk_l     { timeout-ms = <50>; key-pos itions = <11 12>; bindings = <&mkp LCLK>; layers = <BAS GME NUP NUM FUN CFG>; };
                 rclk_l     { timeout-ms = <50>; key-positions = <11 30>; bindings = <&mkp RCLK>; layers = <BAS GME NUP NUM FUN CFG>; };
                 mclk_l     { timeout-ms = <50>; key-positions = <12 30>; bindings = <&mkp MCLK>; layers = <BAS GME NUP NUM FUN CFG>; };
+                bck_clk_l  { timeout-ms = <50>; key-positions = <13 30>; bindings = <&mkp MB4>; layers = <BAS GME NUP NUM FUN CFG>; };
+                fwd_clk_l  { timeout-ms = <50>; key-positions = <14 30>; bindings = <&mkp MB5>; layers = <BAS GME NUP NUM FUN CFG>; };
 
                 lclk_r     { timeout-ms = <50>; key-positions = <17 18>; bindings = <&mkp LCLK>; layers = <BAS GME NUP NUM FUN CFG>; };
                 rclk_r     { timeout-ms = <50>; key-positions = <18 33>; bindings = <&mkp RCLK>; layers = <BAS GME NUP NUM FUN CFG>; };
                 mclk_r     { timeout-ms = <50>; key-positions = <17 33>; bindings = <&mkp MCLK>; layers = <BAS GME NUP NUM FUN CFG>; };
+                bck_clk_r  { timeout-ms = <50>; key-positions = <16 33>; bindings = <&mkp MB4>; layers = <BAS GME NUP NUM FUN CFG>; };
+                fwd_clk_r  { timeout-ms = <50>; key-positions = <15 33>; bindings = <&mkp MB5>; layers = <BAS GME NUP NUM FUN CFG>; };
 
                 bt_clr    { timeout-ms = <50>; key-positions = <1 2 3>; bindings = <&bt BT_CLR>; layers = <CFG>; };
                 // dfu_l     { timeout-ms = <50>; key-positions = <0 1>; bindings = <&bootloader>; layers = <CFG>; };
