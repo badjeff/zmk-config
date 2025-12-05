@@ -77,7 +77,7 @@
                         layers = <NUM>;
                         process-next;
                         input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
-                                        , <&xy_scaler 1 25>, <&x_scaler 0 1>
+                                        , <&xy_scaler 1 15>, <&x_scaler 0 1>
                                         , <&to_wheel>;
                 };
         };
@@ -154,7 +154,7 @@
                 tog_fun_l  { timeout-ms = <50>; key-positions = <21 22>; bindings = <&tog FUN>; layers = <BAS GME NUP NUM FUN CFG>; };
                 tog_fun_r  { timeout-ms = <50>; key-positions = <27 28>; bindings = <&tog FUN>; layers = <BAS GME NUP NUM FUN CFG>; };
                 
-                lclk_l     { timeout-ms = <50>; key-pos itions = <11 12>; bindings = <&mkp LCLK>; layers = <BAS GME NUP NUM FUN CFG>; };
+                lclk_l     { timeout-ms = <50>; key-positions = <11 12>; bindings = <&mkp LCLK>; layers = <BAS GME NUP NUM FUN CFG>; };
                 rclk_l     { timeout-ms = <50>; key-positions = <11 30>; bindings = <&mkp RCLK>; layers = <BAS GME NUP NUM FUN CFG>; };
                 mclk_l     { timeout-ms = <50>; key-positions = <12 30>; bindings = <&mkp MCLK>; layers = <BAS GME NUP NUM FUN CFG>; };
                 bck_clk_l  { timeout-ms = <50>; key-positions = <13 30>; bindings = <&mkp MB4>; layers = <BAS GME NUP NUM FUN CFG>; };
