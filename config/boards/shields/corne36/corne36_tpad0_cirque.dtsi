@@ -51,8 +51,9 @@
 
 &tpad0 {
   status = "okay";
-	dr-gpios = <&gpio1 11 GPIO_ACTIVE_HIGH>;
-	sleep;
+	data-ready-gpios = <&gpio1 11 GPIO_ACTIVE_HIGH>;
+	primary-tap-enable;
+	// sleep;
 	// no-smoothing;
 	sensitivity = "2x";
 	// no-taps;
