@@ -151,9 +151,9 @@
                 tog_NUM_l  { timeout-ms = <50>; key-positions = <10 30>; bindings = <&tog NUM>; layers = <BAS GME NUP NUM FUN CFG>; };
                 tog_NUM_r  { timeout-ms = <50>; key-positions = <19 33>; bindings = <&tog NUM>; layers = <BAS GME NUP NUM FUN CFG>; };
 
-                tog_fun_l  { timeout-ms = <50>; key-positions = <21 22>; bindings = <&tog FUN>; layers = <BAS GME NUP NUM FUN CFG>; };
-                tog_fun_r  { timeout-ms = <50>; key-positions = <27 28>; bindings = <&tog FUN>; layers = <BAS GME NUP NUM FUN CFG>; };
-                
+                tog_FUN_l  { timeout-ms = <50>; key-positions = <21 22>; bindings = <&tog FUN>; layers = <BAS GME NUP NUM FUN CFG>; };
+                tog_FUN_r  { timeout-ms = <50>; key-positions = <27 28>; bindings = <&tog FUN>; layers = <BAS GME NUP NUM FUN CFG>; };
+
                 lclk_l     { timeout-ms = <50>; key-positions = <11 12>; bindings = <&mkp LCLK>; layers = <BAS GME NUP NUM FUN CFG>; };
                 rclk_l     { timeout-ms = <50>; key-positions = <11 30>; bindings = <&mkp RCLK>; layers = <BAS GME NUP NUM FUN CFG>; };
                 mclk_l     { timeout-ms = <50>; key-positions = <12 30>; bindings = <&mkp MCLK>; layers = <BAS GME NUP NUM FUN CFG>; };
@@ -245,14 +245,14 @@
                 CFG_layer {
 // +------------------------------------------------------+     +------------------------------------------------------+
 // |   DFU    |   BT_0   |   BT_1   |   BT_2   |  RESET   |     |   RESET  |          |          |   ^GME   |    DFU   |
-// |   ^CFG   |  ISA_ON  |  ISA_OFF |  ISA_SLP |  BATT    |     |   BATT   |          |          |          |   ^CFG   |
-// | SHF ^CFG |          |          |          |  TEMPO   |     |          |          |          |          | SHF ^CFG |
+// |   ^CFG   |  ISA_ON  |  ISA_OFF |  ISA_SLP |  TEMPO   |     |          |          |          |          |   ^CFG   |
+// | SHF ^CFG |          |          |          |  BATT    |     |   BATT   |          |          |          | SHF ^CFG |
 //                                  |          |  OUT_TOG |     |          |          |
                         display-name = "Config";
                         bindings = <
    &bootloader    &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &sys_reset        &sys_reset   &trans        &trans      &tog GME      &bootloader
-   &tog CFG       &isa ISA_ON   &isa ISA_OFF  &isa ISA_SLP  &bapp             &bapp        &trans        &trans      &trans        &tog CFG
-   &kg RSHFT CFG  &trans        &trans      &trans          &tempo            &trans       &trans        &trans      &trans        &kg RSHFT CFG
+   &tog CFG       &isa ISA_ON   &isa ISA_OFF  &isa ISA_SLP  &tempo            &trans       &trans        &trans      &trans        &tog CFG
+   &kg RSHFT CFG  &trans        &trans        &trans        &bapp             &bapp        &trans        &trans      &trans        &kg RSHFT CFG
                                               &trans        &out OUT_TOG      &trans       &trans
                         >;
                 };
