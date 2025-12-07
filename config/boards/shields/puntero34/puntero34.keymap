@@ -72,7 +72,7 @@
         tball0_mmv_il {
                 compatible = "zmk,input-listener";
                 device = <&tball0>;
-                input-processors = <&zip_report_rate_limit 12>;
+                input-processors = <&zip_report_rate_limit 14>;
                 scroll {
                         layers = <NUM>;
                         process-next;
@@ -85,7 +85,7 @@
         tball0_s_mmv_il {
                 compatible = "zmk,input-listener";
                 device = <&tball0_split>;
-                input-processors = <&zip_zxy>, <&zip_report_rate_limit 12>;
+                input-processors = <&zip_zxy>, <&zip_report_rate_limit 14>;
                 scroll {
                         layers = <NUM>;
                         process-next;

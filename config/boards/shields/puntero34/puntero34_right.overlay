@@ -22,5 +22,5 @@
 #include "puntero34_zplit.dtsi"
 &tball0_split {
 	device = <&tball0>;
-	input-processors = <&zip_report_rate_limit 6>, <&zip_xyz>;
+	input-processors = <&zip_report_rate_limit 8>, <&zip_xyz>;
 };
