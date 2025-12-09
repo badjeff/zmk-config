@@ -154,6 +154,10 @@
                 tog_NUM_r  { timeout-ms = <50>; key-positions = <19 25>; bindings = <&tog NUM>; layers = <BAS GME NUP NUM FUN CFG>; };
                 tog_NUM_la { timeout-ms = <50>; key-positions = <10 23>; bindings = <&tog NUM>; layers = <BAS GME NUP NUM FUN CFG>; };
                 tog_NUM_ra { timeout-ms = <50>; key-positions = <19 26>; bindings = <&tog NUM>; layers = <BAS GME NUP NUM FUN CFG>; };
+                tog_NUM_lb { timeout-ms = <50>; key-positions = <10 13>; bindings = <&tog NUM>; layers = <BAS GME NUP NUM FUN CFG>; };
+                tog_NUM_rb { timeout-ms = <50>; key-positions = <19 16>; bindings = <&tog NUM>; layers = <BAS GME NUP NUM FUN CFG>; };
+                tog_NUM_lc { timeout-ms = <50>; key-positions = <11 13>; bindings = <&tog NUM>; layers = <BAS GME NUP NUM FUN CFG>; };
+                tog_NUM_rc { timeout-ms = <50>; key-positions = <16 18>; bindings = <&tog NUM>; layers = <BAS GME NUP NUM FUN CFG>; };
                 tog_NUM_l34    { timeout-ms = <50>; key-positions = <10 30>; bindings = <&tog NUM>; layers = <BAS GME NUP NUM FUN CFG>; };
                 tog_NUM_r34    { timeout-ms = <50>; key-positions = <19 33>; bindings = <&tog NUM>; layers = <BAS GME NUP NUM FUN CFG>; };
 
@@ -194,13 +198,13 @@
                 BAS_layer {
 // +------------------------------------------------------+     +--------------------------------------------------------+
 // |     Q    |  LCTRL:W |  _FUN:E  |  LALT:R  |     T    |     |     Y     |  RALT:U  |  _FUN:I   |  RCTRL:O |     P    |
-// |     A    |  _NUM:S  |  _NUM:D  |  _NUM:F  |     G    |     |     H     |  _NUM:J  |  _NUM:K   |  _NUM:L  |     ;:   |
+// |  _NUM:A  |  _NUM:S  |  _NUM:D  |  _NUM:F  |     G    |     |     H     |  _NUM:J  |  _NUM:K   |  _NUM:L  |  _NUM:;: |
 // |  SHFT Z  |  LGUI:X  |  LGUI:C  |  LGUI:V  |  LGUI:B  |     |  _NUM:N   |  RGUI:M  |  RGUI:,<  |  RGUI:.> |  SHFT /? |
 //                                  |   LGUI   | CTRL:TAB |     |  ALT:ENT  | _NUM:SPC |
                         display-name = "Base";
                         bindings = <
    &kp Q          &hm LCTRL W   &hl FUN E    &hm LALT R    &kp T               &kp Y         &hm RALT U     &hl FUN I       &hm RCTRL O   &kp P
-   &kp A          &hl NUM S     &hl NUM D    &hl NUM F     &kp G               &kp H         &hl NUM J      &hl NUM K       &hl NUM L     &kp SEMI
+   &hl NUM A      &hl NUM S     &hl NUM D    &hl NUM F     &kp G               &kp H         &hl NUM J      &hl NUM K       &hl NUM L     &hl NUM SEMI
    &ht LSHFT Z    &hm LGUI X    &hm LGUI C   &hm LGUI V    &hm LGUI B          &lt NUM N     &hm RGUI M     &hm RGUI COMMA  &hm RGUI DOT  &ht RSHFT FSLH
                                              &kp LGUI      &ht LCTRL TAB       &ht LALT RET  &lt NUM SPACE
    &mkp RCLK   &mkg MCLK CFG   &mkp LCLK
