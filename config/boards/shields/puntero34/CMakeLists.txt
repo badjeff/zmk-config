@@ -4,7 +4,7 @@
 #---
 # patch pat912x driver to NOT reset on startup
 #---
-set(FILE_PATH "${APPLICATION_SOURCE_DIR}/../zephyr/drivers/input/input_pat912x.c")
+set(FILE_PATH "${ZEPHYR_BASE}/drivers/input/input_pat912x.c")
 file(READ "${FILE_PATH}" FILE_CONTENT)
 # message(STATUS "File path: ${FILE_PATH}")
 # message(STATUS "File contents:\n${FILE_CONTENT}")
