@@ -32,7 +32,7 @@
 	compatible = "nordic,nrf-spim";
 	status = "disabled"; // <<< disabled in main .dtsi, okay in .overlay
 	mou0: pd@0 {
-		compatible = "pixart,pmw3610";
+		compatible = "pixart,pmw3610-alt";
 		status = "disabled";
 		label = "MOU0";
 		reg = <0>;

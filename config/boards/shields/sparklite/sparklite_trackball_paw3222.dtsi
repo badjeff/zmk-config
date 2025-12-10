@@ -9,14 +9,14 @@
 		group1 {
 			psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
 							<NRF_PSEL(SPIM_MOSI, 1, 15)>,
-							<NRF_PSEL(SPIM_MISO, 1, 14)>;
+							<NRF_PSEL(SPIM_MISO, 1, 15)>;
 		};
 	};
 	spi2_sleep: spi2_sleep {
 		group1 {
 			psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
 							<NRF_PSEL(SPIM_MOSI, 1, 15)>,
-							<NRF_PSEL(SPIM_MISO, 1, 14)>;
+							<NRF_PSEL(SPIM_MISO, 1, 15)>;
 			low-power-enable;
 		};
 	};
@@ -31,17 +31,17 @@
 &spi2 {
 	compatible = "nordic,nrf-spim";
 	status = "disabled"; // <<< disabled in main .dtsi, okay in .overlay
-	mou2: pd@0 {
-		compatible = "pixart,paw3395";
+	pd0: pd@0 {
+		compatible = "pixart,paw32xx";
 		status = "disabled";
-		label = "MOU2";
+		label = "TRACKBALL0";
 		reg = <0>;
 		spi-max-frequency = <4000000>;
 	};
-	mou2_alt: pd@1 {
-		compatible = "pixart,pmw3610-alt";
+	pd0a: pd@1 {
+		compatible = "pixart,paw32xx";
 		status = "disabled";
-		label = "MOU2_ALT";
+		label = "TRACKBALL2";
 		reg = <1>;
 		spi-max-frequency = <4000000>;
 	};
@@ -54,34 +54,26 @@
 	pinctrl-1 = <&spi2_sleep>;
 	pinctrl-names = "default", "sleep";
 	cs-gpios = <&gpio1 12 GPIO_ACTIVE_LOW>
-	         , <&gpio0 9 GPIO_ACTIVE_LOW>; // NFC 1
+					 , <&gpio1 11 GPIO_ACTIVE_LOW>;
 };
 
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 
-&mou2 {
+&pd0 {
   status = "okay";
-	irq-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-	cpi = <1650>;
+	motion-gpios = <&gpio1 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+	res-cpi = <1600>;
+	zephyr,axis-x = <INPUT_REL_X>;
+	zephyr,axis-y = <INPUT_REL_Y>;
 	invert-y;
-	evt-type = <INPUT_EV_REL>;
-	x-input-code = <INPUT_REL_X>;
-	y-input-code = <INPUT_REL_Y>;
-	force-awake;
+	// force-awake;
 };
-
-&uicr {
-   nfct-pins-as-gpios;
-};
-
-&mou2_alt {
+&pd0a {
   status = "okay";
-	irq-gpios = <&gpio0 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // NFC 2
-	cpi = <800>;
-	swap-xy;
-	evt-type = <INPUT_EV_REL>;
-	x-input-code = <INPUT_REL_X>;
-	y-input-code = <INPUT_REL_Y>;
-	force-awake;
-	// force-awake-4ms-mode;
+  motion-gpios = <&gpio0 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+	res-cpi = <1600>;
+	zephyr,axis-x = <INPUT_REL_X>;
+	zephyr,axis-y = <INPUT_REL_Y>;
+ invert-y;
+	// force-awake;
 };

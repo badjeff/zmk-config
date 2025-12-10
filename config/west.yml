@@ -2,40 +2,55 @@ manifest:
   remotes:
     # - name: zmkfirmware
     #   url-base: https://github.com/zmkfirmware
-    - name: nrfconnect
-      url-base: https://github.com/nrfconnect
+    # - name: nrfconnect
+    #   url-base: https://github.com/nrfconnect
+    # - name: petejohanson
+    #   url-base: https://github.com/petejohanson
     - name: badjeff
       url-base: https://github.com/badjeff
+
   projects:
+
     # - name: zmk
     #   remote: zmkfirmware
     #   revision: main
+    #   import: app/west.yml
+    # - name: zmk
+    #   remote: petejohanson
+    #   revision: core/move-to-zephyr-4-1
     #   import: app/west.yml
     - name: zmk
       remote: badjeff
       revision: main
       import: app/west.yml
-    - name: sdk-nrf
-      remote: nrfconnect
-      revision: v2.6.4 # zephyr v3.5.99
-      path: nrf
-    - name: nrfxlib
-      remote: nrfconnect
-      revision: v2.6.4
-      repo-path: sdk-nrfxlib
-      path: nrfxlib
-    - name: zmk-feature-split-esb
-      remote: badjeff
-      revision: main
+
+    # - name: sdk-nrf
+    #   remote: badjeff
+    #   revision: v3.1-branch+zmk-fixes
+    #   path: nrf
+    # - name: nrfxlib
+    #   remote: nrfconnect
+    #   revision: v3.1-branch
+    #   repo-path: sdk-nrfxlib
+    #   path: nrfxlib
+    # - name: zmk-feature-split-esb
+    #   remote: badjeff
+    #   # revision: main
+    #   revision: core/move-to-zephyr-4-1
+
     - name: zmk-adns9800-driver
       remote: badjeff
       revision: main
+
     - name: zmk-pmw3610-driver
       remote: badjeff
       revision: main
+      # revision: zmk-0.4
+
     - name: zmk-paw3395-driver
       remote: badjeff
       revision: main
+
     - name: zmk-analog-input-driver
       remote: badjeff
       revision: main
@@ -47,65 +62,86 @@ manifest:
     - name: zmk-behavior-insomnia
       remote: badjeff
       revision: main
+
     - name: zmk-behavior-key-press-lip
       remote: badjeff
       revision: main
+
     - name: zmk-behavior-key-tempo
       remote: badjeff
       revision: main
+
     - name: zmk-behavior-mouse-key-toggle
       remote: badjeff
       revision: main
+
     # - name: zmk-input-behavior-listener
     #   remote: badjeff
     #   revision: main
+
     - name: zmk-output-behavior-listener
       remote: badjeff
       revision: main
+
     # - name: zmk-hid-io
     #   remote: badjeff
     #   revision: main
+
     # - name: zmk-split-peripheral-input-relay
     #   remote: badjeff
     #   revision: main
+
     # - name: zmk-split-peripheral-output-relay
     #   remote: badjeff
     #   revision: main
+
     - name: zmk-split-peripheral-bonding-tweak
       remote: badjeff
       revision: main
+
     - name: zmk-drv2605-driver
       remote: badjeff
       revision: main
+
     - name: zmk-drv883x-driver
       remote: badjeff
       revision: main
+
     - name: zmk-tb6612fng-driver
       remote: badjeff
       revision: main
+
     - name: zmk-kscan-blackout
       remote: badjeff
       revision: main
+
     - name: zmk-input-processor-mixer
       remote: badjeff
       revision: main
+
     - name: zmk-input-processor-report-rate-limit
       remote: badjeff
       revision: main
+
     - name: zmk-input-processor-xyz
       remote: badjeff
       revision: main
+
     # - name: zmk-behavior-set-default-layer
     #   remote: badjeff
     #   revision: main
+
     - name: kb_zmk_ps2_mouse_trackpoint_driver
       remote: badjeff
       revision: main
+
     - name: cirque-input-module
       remote: badjeff
       revision: tweak
+
     - name: prospector-zmk-module
       remote: badjeff
       revision: 1-47-inch-panel
+
   self:
     path: config

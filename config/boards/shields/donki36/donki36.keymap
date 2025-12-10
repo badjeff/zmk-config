@@ -31,13 +31,12 @@
 
 #define BAS 0
 #define GME 1
-#define LNP 2
-#define RNP 3
-#define LHB 4
-#define NUM 5
-#define MSK 6
-#define MSC 7
-#define PHS 8
+#define NUP 2
+#define LHB 3
+#define NUM 4
+#define FUN 5
+#define CFG 6
+#define PHS 7
 
 #ifndef MOVE_Y
 #define MOVE_Y(n) (0)
@@ -101,7 +100,7 @@
                         input-processors = <&xy_scaler 2 3>;
                 };
                 scroll {
-                        layers = <MSC>;
+                        layers = <CFG>;
                         process-next;
                         input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
                                         , <&xy_scaler 1 55> // , <&x_scaler 0 1>
@@ -119,7 +118,7 @@
                         input-processors = <&xy_scaler 2 3>;
                 };
                 scroll {
-                        layers = <MSC>;
+                        layers = <CFG>;
                         process-next;
                         input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
                                         , <&xy_scaler 1 55> // , <&x_scaler 0 1>
@@ -137,7 +136,7 @@
                         input-processors = <&xy_scaler 2 3>;
                 };
                 scroll {
-                        layers = <MSC>;
+                        layers = <CFG>;
                         process-next;
                         input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
                                         , <&xy_scaler 1 55> // , <&x_scaler 0 1>
@@ -156,7 +155,7 @@
                         input-processors = <&xy_scaler 2 3>;
                 };
                 scroll {
-                        layers = <MSC>;
+                        layers = <CFG>;
                         process-next;
                         input-processors = <&xy_scaler 1 22>, <&x_scaler 0 1>
                                          , <&to_wheel>;
@@ -174,7 +173,7 @@
                         input-processors = <&xy_scaler 2 3>;
                 };
                 scroll {
-                        layers = <MSC>;
+                        layers = <CFG>;
                         process-next;
                         input-processors = <&xy_scaler 1 22>, <&x_scaler 0 1>
                                          , <&to_wheel>;
@@ -192,7 +191,7 @@
                         input-processors = <&xy_scaler 2 3>;
                 };
                 scroll {
-                        layers = <MSC>;
+                        layers = <CFG>;
                         process-next;
                         input-processors = <&xy_scaler 1 40>, <&x_scaler 0 1>
                                          , <&to_wheel>;
@@ -209,7 +208,7 @@
                         input-processors = <&xy_scaler 2 3>;
                 };
                 scroll {
-                        layers = <MSC>;
+                        layers = <CFG>;
                         process-next;
                         input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
                                          , <&xy_scaler 1 40>, <&x_scaler 0 1>
@@ -227,7 +226,7 @@
                         input-processors = <&xy_scaler 2 3>;
                 };
                 scroll {
-                        layers = <MSC>;
+                        layers = <CFG>;
                         process-next;
                         input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
                                          , <&xy_scaler 1 40>, <&x_scaler 0 1>
@@ -253,7 +252,7 @@
                         input-processors = <&zip_zxy_alt>;
                 };
                 normal_scrolling_mode {
-                        layers = <BAS GME LNP RNP LHB NUM MSK MSC>;
+                        layers = <BAS GME NUP LHB NUM FUN CFG>;
                         input-processors = <&zip_zxy_alt>
                                          , <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
                                          , <&xy_scaler 1 40> // , <&x_scaler 0 1>
@@ -345,33 +344,70 @@
         combos {
                 compatible = "zmk,combos";
 
-                spc       { timeout-ms = <50>; key-positions = <16 17>; bindings = <&kp SPC>; layers = <BAS GME LNP RNP LHB NUM PHS>; };
-                bksp      { timeout-ms = <50>; key-positions = <17 18>; bindings = <&kp BKSP>; layers = <BAS GME LNP RNP LHB NUM PHS>; };
-                del       { timeout-ms = <50>; key-positions = <6 7 8>; bindings = <&kp DEL>; layers = <BAS GME LNP RNP LHB NUM PHS>; };
+                bksp      { timeout-ms = <50>; key-positions = <7 8>; bindings = <&kp BKSP>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                del       { timeout-ms = <50>; key-positions = <6 7 8>; bindings = <&kp DEL>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
 
-                esc       { timeout-ms = <50>; key-positions = <11 12>; bindings = <&kp ESC>; layers = <BAS GME LNP RNP LHB NUM PHS>; };
-                tab       { timeout-ms = <50>; key-positions = <12 13>; bindings = <&kp TAB>; layers = <BAS GME LNP RNP LHB NUM PHS>; };
+                esc       { timeout-ms = <50>; key-positions = <1 2>; bindings = <&kp ESC>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                tab       { timeout-ms = <50>; key-positions = <2 3>; bindings = <&kp TAB>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
 
-                ret_r     { timeout-ms = <50>; key-positions = <26 17 18>; bindings = <&kp RET>; layers = <BAS GME LNP RNP LHB NUM PHS>; };
-                ret_l     { timeout-ms = <50>; key-positions = <11 12 23>; bindings = <&kp RET>; layers = <BAS GME LNP RNP LHB NUM PHS>; };
+                spc_l     { timeout-ms = <50>; key-positions = <22 23>; bindings = <&kp SPC>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                spc_r     { timeout-ms = <50>; key-positions = <26 27>; bindings = <&kp SPC>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                spc_l2    { timeout-ms = <50>; key-positions = <22 23>; bindings = <&kp SPC>; layers = <BAS GME NUP NUM FUN CFG>; };
+                spc_r2    { timeout-ms = <50>; key-positions = <26 27>; bindings = <&kp SPC>; layers = <BAS GME NUP NUM FUN CFG>; };
 
-                tog_lnp   { timeout-ms = <50>; key-positions = <1 2>; bindings = <&tog LNP>; layers = <BAS GME LNP RNP LHB NUM MSK MSC PHS>; };
-                tog_rnp   { timeout-ms = <50>; key-positions = <7 8>; bindings = <&tog RNP>; layers = <BAS GME LNP RNP LHB NUM MSK MSC PHS>; };
+                ret_r     { timeout-ms = <50>; key-positions = <26 17 18>; bindings = <&kp RET>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                ret_l     { timeout-ms = <50>; key-positions = <11 12 23>; bindings = <&kp RET>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
 
-                mkp_swap  { timeout-ms = <50>; key-positions = <36 38>; bindings = <&tog LHB>; layers = <BAS GME LNP RNP LHB NUM MSK MSC PHS>; };
-                mou_swap  { timeout-ms = <50>; key-positions = <46 47>; bindings = <&tog LHB>; layers = <BAS GME LNP RNP LHB NUM MSK MSC PHS>; };
+                tog_NUP_l  { timeout-ms = <50>; key-positions = <1 23>; bindings = <&tog NUP>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                tog_NUP_r  { timeout-ms = <50>; key-positions = <8 26>; bindings = <&tog NUP>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
 
-                phs_swap_t { timeout-ms = <80>; key-positions = <36 37 38>; bindings = <&tog PHS>; layers = <BAS GME LNP RNP LHB NUM MSK MSC PHS>; };
-                phs_swap_l { timeout-ms = <80>; key-positions = <43 46>; bindings = <&tog PHS>; layers = <BAS GME LNP RNP LHB NUM MSK MSC PHS>; };
-                phs_swap_r { timeout-ms = <80>; key-positions = <44 47>; bindings = <&tog PHS>; layers = <BAS GME LNP RNP LHB NUM MSK MSC PHS>; };
+                tog_NUM_l  { timeout-ms = <50>; key-positions = <10 31>; bindings = <&tog NUM>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                tog_NUM_r  { timeout-ms = <50>; key-positions = <19 34>; bindings = <&tog NUM>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                tog_NUM_la { timeout-ms = <50>; key-positions = <10 23>; bindings = <&tog NUM>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                tog_NUM_ra { timeout-ms = <50>; key-positions = <19 26>; bindings = <&tog NUM>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                tog_NUM_lb { timeout-ms = <50>; key-positions = <10 13>; bindings = <&tog NUM>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                tog_NUM_rb { timeout-ms = <50>; key-positions = <19 16>; bindings = <&tog NUM>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                tog_NUM_lc { timeout-ms = <50>; key-positions = <11 13>; bindings = <&tog NUM>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                tog_NUM_rc { timeout-ms = <50>; key-positions = <16 18>; bindings = <&tog NUM>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                tog_NUM_l34    { timeout-ms = <50>; key-positions = <10 31>; bindings = <&tog NUM>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                tog_NUM_r34    { timeout-ms = <50>; key-positions = <19 34>; bindings = <&tog NUM>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
 
-                tog_msk_ll { timeout-ms = <80>; key-positions = <21 22>; bindings = <&tog MSK>; layers = <BAS GME LHB NUM MSK MSC PHS>; };
-                tog_msk_lr { timeout-ms = <80>; key-positions = <27 28>; bindings = <&tog MSK>; layers = <BAS GME LHB NUM MSK MSC PHS>; };
-                mclk       { timeout-ms = <50>; key-positions = <22 23>; bindings = <&mkp MCLK>; layers = <BAS GME LHB NUM MSK MSC>; };
+                tog_FUN_l { timeout-ms = <50>; key-positions = <21 22>; bindings = <&tog FUN>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                tog_FUN_r { timeout-ms = <50>; key-positions = <27 28>; bindings = <&tog FUN>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                
+                lclk_l     { timeout-ms = <50>; key-positions = <11 12>; bindings = <&mkp LCLK>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                rclk_l     { timeout-ms = <50>; key-positions = <11 24>; bindings = <&mkp RCLK>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                mclk_l     { timeout-ms = <50>; key-positions = <12 24>; bindings = <&mkp MCLK>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                rclk_la    { timeout-ms = <50>; key-positions = <11 23>; bindings = <&mkp RCLK>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                mclk_la    { timeout-ms = <50>; key-positions = <12 23>; bindings = <&mkp MCLK>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                m4_l       { timeout-ms = <50>; key-positions = <13 23>; bindings = <&mkp MB4>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                m5_l       { timeout-ms = <50>; key-positions = <14 24>; bindings = <&mkp MB5>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                rclk_l34       { timeout-ms = <50>; key-positions = <11 31>; bindings = <&mkp RCLK>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                mclk_l34       { timeout-ms = <50>; key-positions = <12 31>; bindings = <&mkp MCLK>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                m4_l34         { timeout-ms = <50>; key-positions = <13 31>; bindings = <&mkp MB4>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                m5_l34         { timeout-ms = <50>; key-positions = <14 31>; bindings = <&mkp MB5>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
 
-                dfu_l     { timeout-ms = <50>; key-positions = <0 1>; bindings = <&bootloader>; layers = <MSC>; };
-                bt_clr    { timeout-ms = <50>; key-positions = <1 2 3>; bindings = <&bt BT_CLR>; layers = <MSC>; };
+                lclk_r     { timeout-ms = <50>; key-positions = <17 18>; bindings = <&mkp LCLK>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                rclk_r     { timeout-ms = <50>; key-positions = <18 25>; bindings = <&mkp RCLK>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                mclk_r     { timeout-ms = <50>; key-positions = <17 25>; bindings = <&mkp MCLK>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                rclk_ra    { timeout-ms = <50>; key-positions = <18 26>; bindings = <&mkp RCLK>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                mclk_ra    { timeout-ms = <50>; key-positions = <17 26>; bindings = <&mkp MCLK>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                m4_r       { timeout-ms = <50>; key-positions = <16 26>; bindings = <&mkp MB4>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                m5_r       { timeout-ms = <50>; key-positions = <15 25>; bindings = <&mkp MB5>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                rclk_r34       { timeout-ms = <50>; key-positions = <18 34>; bindings = <&mkp RCLK>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                mclk_r34       { timeout-ms = <50>; key-positions = <17 34>; bindings = <&mkp MCLK>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                m4_r34         { timeout-ms = <50>; key-positions = <16 34>; bindings = <&mkp MB4>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                m5_r34         { timeout-ms = <50>; key-positions = <15 34>; bindings = <&mkp MB5>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
 
+                dfu_l     { timeout-ms = <50>; key-positions = <0 1>; bindings = <&bootloader>; layers = <CFG>; };
+                bt_clr    { timeout-ms = <50>; key-positions = <1 2 3>; bindings = <&bt BT_CLR>; layers = <CFG>; };
+
+                mkp_swap  { timeout-ms = <50>; key-positions = <36 38>; bindings = <&tog LHB>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                mou_swap  { timeout-ms = <50>; key-positions = <46 47>; bindings = <&tog LHB>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+
+                phs_swap_t { timeout-ms = <80>; key-positions = <36 37 38>; bindings = <&tog PHS>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                phs_swap_l { timeout-ms = <80>; key-positions = <43 46>; bindings = <&tog PHS>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                phs_swap_r { timeout-ms = <80>; key-positions = <44 47>; bindings = <&tog PHS>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
         };
 
 
@@ -379,18 +415,18 @@
                 compatible = "zmk,keymap";
                 BAS_layer {
 // +------------------------------------------------------+     +--------------------------------------------------------+
-// |     Q    |  LCTRL:W |  _MSK:E  |  LALT:R  |     T    |     |     Y     |  RALT:U  |  _MSK:I   |  RCTRL:O |     P    |
+// |     Q    |  LCTRL:W |  _FUN:E  |  LALT:R  |     T    |     |     Y     |  RALT:U  |  _FUN:I   |  RCTRL:O |     P    |
 // |     A    |  _NUM:S  |  _NUM:D  |  _NUM:F  |     G    |     |     H     |  _NUM:J  |  _NUM:K   |  _NUM:L  |     ;:   |
 // |  SHFT Z  |  LGUI:X  |  LGUI:C  |  LGUI:V  |     B    |     |     N     |  RGUI:M  |  RGUI:,<  |  RGUI:.> |  SHFT /? |
-//                       | ^MSK:ESC |  GUI:ESC | CTRL:TAB |     |  ALT:ENT  | _NUM:SPC | ^MSK:BKSP |
+//                       | ^FUN:ESC |  GUI:ESC | CTRL:TAB |     |  ALT:ENT  | _NUM:SPC | ^FUN:BKSP |
                         display-name = "Base";
                         bindings = <
-   &kp Q          &hm LCTRL W   &hl MSK E    &hm LALT R    &kp T               &kp Y         &hm RALT U     &hl MSK I       &hm RCTRL O   &kp P
+   &kp Q          &hm LCTRL W   &hl FUN E    &hm LALT R    &kp T               &kp Y         &hm RALT U     &hl FUN I       &hm RCTRL O   &kp P
    &kp A          &hl NUM S     &hl NUM D    &hl NUM F     &kp G               &kp H         &hl NUM J      &hl NUM K       &hl NUM L     &kp SEMI
    &ht LSHFT Z    &hm LGUI X    &hm LGUI C   &hm LGUI V    &kp B               &kp N         &hm RGUI M     &hm RGUI COMMA  &hm RGUI DOT  &ht RSHFT FSLH
-                                &lt MSK ESC  &kp LGUI      &ht LCTRL TAB       &ht LALT RET  &lt NUM SPACE  &lt MSK BKSP
-   &mkp RCLK   &mkg MCLK MSC   &mkp LCLK
-   &mkp LCLK   &mo MSC         &mo MSC
+                                &lt FUN ESC  &kp LGUI      &ht LCTRL TAB       &ht LALT RET  &lt NUM SPACE  &lt FUN BKSP
+   &mkp RCLK   &mkg MCLK CFG   &mkp LCLK
+   &mkp LCLK   &mo CFG         &mo CFG
    &mkp MCLK   &mkp MB5        &mkp MB5
    &mkp RCLK   &mkp MB4        &mkp MB4
                         >;
@@ -401,13 +437,13 @@
 // |     Q    |     W    |     E    |     R    |     T    |     |     Y     |     U    |     I     |     O    |     P    |
 // |     A    |     S    |     D    |     F    |     G    |     |     H     |     J    |     K     |     L    |     ;:   |
 // |  SHFT Z  |     X    |     C    |     V    |     B    |     |     N     |     M    |    ,<     |    .>    |  SHFT /? |
-//                       | ^MSK:ESC |  GUI:ESC | CTRL:TAB |     |  ALT:ENT  | _NUM:SPC | ^MSK:BKSP |
+//                       | ^FUN:ESC |  GUI:ESC | CTRL:TAB |     |  ALT:ENT  | _NUM:SPC | ^FUN:BKSP |
                         display-name = "Gaming";
                         bindings = <
    &kp Q          &kpws W         &kp E          &kp R           &kp T               &kp Y           &kp U            &kp I           &kp O           &kp P
    &kpad A        &kpws S         &kpad D        &kp F           &kp G               &kp H           &kp J            &kp K           &kp L           &kp SEMI
    &ht LSHFT Z    &kp X           &kp C          &kp V           &kp B               &kp N           &kp M            &kp COMMA       &kp DOT         &ht RSHFT FSLH
-                                  &lt MSK ESC    &kp LGUI        &ht LCTRL TAB       &ht LALT RET    &lt NUM SPACE    &lt MSK BKSP
+                                  &lt FUN ESC    &kp LGUI        &ht LCTRL TAB       &ht LALT RET    &lt NUM SPACE    &lt FUN BKSP
    &trans   &trans   &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
@@ -450,7 +486,7 @@
    &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
    &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
                    &trans  &trans  &trans    &trans  &trans  &trans
-   &mkp LCLK   &mkg MCLK MSC   &mkp RCLK
+   &mkp LCLK   &mkg MCLK CFG   &mkp RCLK
    &mkp RCLK   &trans          &trans
    &mkp MCLK   &trans          &trans
    &mkp LCLK   &trans          &trans
@@ -476,17 +512,17 @@
                         >;
                         sensor-bindings = <&rot_enc>;
                 };
-                MSK_layer {
+                FUN_layer {
 // +-----------------------------------------------------+     +------------------------------------------------------+
 // |    F1    |    F2    |  (H) F3  |    F4    |    F5   |     |    F6    |    F7    |  (H) F8  |    F9    |    F10   |
-// |   ^MSC   |   BRID   |   BRIU   |   VOLD   |   VOLU  |     |   MLFT   |   MDWN   |    MUP   |   MRGT   |   ^MSC   |
-// | SHF ^MSC |   RCLK   |   MCLK   |   LCLK   |   F12   |     |   F11    |   LCLK   |   MCLK   |   RCLK   | SHF ^MSC |
+// |   ^CFG   |   BRID   |   BRIU   |   VOLD   |   VOLU  |     |   MLFT   |   MDWN   |    MUP   |   MRGT   |   ^CFG   |
+// | SHF ^CFG |   RCLK   |   MCLK   |   LCLK   |   F12   |     |   F11    |   LCLK   |   MCLK   |   RCLK   | SHF ^CFG |
 //                       |   (H)    |          |         |     |          |          |    (H)   |
-                        display-name = "Mou Key";
+                        display-name = "Func";
                         bindings = <
    &kp F1         &kp F2        &kp F3        &kp F4        &kp F5            &kp F6      &kp F7      &kp F8      &kp F9      &kp F10
-   &tog MSC       &kp C_BRI_DN  &kp C_BRI_UP  &kp C_VOL_DN  &kp C_VOL_UP      &m_v MOU_L  &m_v MOU_D  &m_v MOU_U  &m_v MOU_R  &tog MSC
-   &kg LSHFT MSC  &mkp RCLK     &mkp MCLK     &mkp LCLK     &kp F12           &kp F11     &mkp LCLK   &mkp MCLK   &mkp RCLK   &kg RSHFT MSC
+   &tog CFG       &kp C_BRI_DN  &kp C_BRI_UP  &kp C_VOL_DN  &kp C_VOL_UP      &m_v MOU_L  &m_v MOU_D  &m_v MOU_U  &m_v MOU_R  &tog CFG
+   &kg LSHFT CFG  &mkp RCLK     &mkp MCLK     &mkp LCLK     &kp F12           &kp F11     &mkp LCLK   &mkp MCLK   &mkp RCLK   &kg RSHFT CFG
                                 &trans        &trans        &trans            &trans      &trans      &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
@@ -495,19 +531,19 @@
                         >;
                         sensor-bindings = <&rot_enc>;
                 };
-                MSC_layer {
+                CFG_layer {
 // +------------------------------------------------------+     +------------------------------------------------------+
 // |   DFU    |   BT_0   | (H) BT_1 | (H) BT_C |  RESET   |     |   RESET  |    (H)   |    (H)   |   ^GME   |    DFU   |
-// |   ^MSC   |  ISA_ON  |  ISA_OFF |  ISA_SLP |  STD_UL  |     |   SLFT   |   SDWN   |    SUP   |   SRGT   |   ^MSC   |
-// | SHF ^MSC |   RCLK   |   MCLK   |   LCLK   |  TEMPO   |     |          |   LCLK   |   MCLK   |   RCLK   | SHF ^MSC |
-//                       |   (H)    |   BATT   |  OUT_TOG |     |          |   BATT   |    (H)   |
-                        display-name = "Mou Scroll";
+// |   ^CFG   |  ISA_ON  |  ISA_OFF |  ISA_SLP |  TEMPO   |     |   SLFT   |   SDWN   |    SUP   |   SRGT   |   ^CFG   |
+// | SHF ^CFG |   RCLK   |   MCLK   |   LCLK   |  BATT    |     |   BATT   |   LCLK   |   MCLK   |   RCLK   | SHF ^CFG |
+//                       |   (H)    |          |  OUT_TOG |     |          |          |    (H)   |
+                        display-name = "Config";
                         bindings = <
    &bootloader    &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_CLR    &sys_reset        &sys_reset   &trans        &trans      &tog GME      &bootloader
-// &tog MSC       &isa ISA_ON   &isa ISA_OFF  &isa ISA_SLP  &trans.           &m_s SCL_L   &m_s SCL_D    &m_s SCL_U  &m_s SCL_R    &tog MSC
-   &tog MSC       &trans        &trans        &trans        &trans            &m_s SCL_L   &m_s SCL_D    &m_s SCL_U  &m_s SCL_R    &tog MSC
-   &kg RSHFT MSC  &mkp RCLK     &mkp MCLK     &mkp LCLK     &tempo            &trans       &mkp LCLK     &mkp MCLK   &mkp RCLK     &kg RSHFT MSC
-                                &trans        &bapp         &out OUT_TOG      &trans       &bapp         &trans
+// &tog CFG       &isa ISA_ON   &isa ISA_OFF  &isa ISA_SLP  &trans            &m_s SCL_L   &m_s SCL_D    &m_s SCL_U  &m_s SCL_R    &tog CFG
+   &tog CFG       &trans        &trans        &trans        &bapp             &m_s SCL_L   &m_s SCL_D    &m_s SCL_U  &m_s SCL_R    &tog CFG
+   &kg RSHFT CFG  &mkp RCLK     &mkp MCLK     &mkp LCLK     &tempo            &bapp        &mkp LCLK     &mkp MCLK   &mkp RCLK     &kg RSHFT CFG
+                                &trans        &trans        &out OUT_TOG      &trans       &trans         &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
    &trans   &trans   &trans

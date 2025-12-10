@@ -32,7 +32,7 @@
 	compatible = "nordic,nrf-spim";
 	status = "disabled"; // <<< disabled in main .dtsi, okay in .overlay
 	tball1: pd@0 {
-		compatible = "pixart,pmw3610";
+		compatible = "pixart,pmw3610-alt";
 		status = "disabled";
 		label = "TBALL1";
 		reg = <0>;
