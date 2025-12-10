@@ -38,13 +38,13 @@
 		reg = <0>;
 		spi-max-frequency = <4000000>;
 	};
-	// pd0a: pd@1 {
-	// 	compatible = "pixart,paw32xx";
-	// 	status = "disabled";
-	// 	label = "TRACKBALL2";
-	// 	reg = <1>;
-	// 	spi-max-frequency = <4000000>;
-	// };
+	pd0a: pd@1 {
+		compatible = "pixart,paw32xx";
+		status = "disabled";
+		label = "TRACKBALL2";
+		reg = <1>;
+		spi-max-frequency = <4000000>;
+	};
 };
 
 // Config custom gpios
@@ -53,8 +53,8 @@
 	pinctrl-0 = <&spi2_default>;
 	pinctrl-1 = <&spi2_sleep>;
 	pinctrl-names = "default", "sleep";
-	cs-gpios = <&gpio1 12 GPIO_ACTIVE_LOW>;
-					//  , <&gpio1 11 GPIO_ACTIVE_LOW>;
+	cs-gpios = <&gpio1 12 GPIO_ACTIVE_LOW>
+					 , <&gpio1 11 GPIO_ACTIVE_LOW>;
 };
 
 #include <zephyr/dt-bindings/input/input-event-codes.h>
@@ -68,12 +68,12 @@
 	invert-y;
 	// force-awake;
 };
-// &pd0a {
-//   status = "okay";
-//   motion-gpios = <&gpio0 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-// 	res-cpi = <1600>;
-// 	zephyr,axis-x = <INPUT_REL_X>;
-// 	zephyr,axis-y = <INPUT_REL_Y>;
-//  invert-y;
-// 	// force-awake;
-// };
+&pd0a {
+  status = "okay";
+  motion-gpios = <&gpio0 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+	res-cpi = <1600>;
+	zephyr,axis-x = <INPUT_REL_X>;
+	zephyr,axis-y = <INPUT_REL_Y>;
+ invert-y;
+	// force-awake;
+};

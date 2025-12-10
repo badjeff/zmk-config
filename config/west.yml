@@ -4,10 +4,10 @@ manifest:
     #   url-base: https://github.com/zmkfirmware
     # - name: nrfconnect
     #   url-base: https://github.com/nrfconnect
+    # - name: petejohanson
+    #   url-base: https://github.com/petejohanson
     - name: badjeff
       url-base: https://github.com/badjeff
-    - name: petejohanson
-      url-base: https://github.com/petejohanson
 
   projects:
 
@@ -16,12 +16,12 @@ manifest:
     #   revision: main
     #   import: app/west.yml
     # - name: zmk
-    #   remote: badjeff
-    #   revision: main
+    #   remote: petejohanson
+    #   revision: core/move-to-zephyr-4-1
     #   import: app/west.yml
     - name: zmk
-      remote: petejohanson
-      revision: core/move-to-zephyr-4-1
+      remote: badjeff
+      revision: main
       import: app/west.yml
 
     # - name: sdk-nrf
@@ -44,8 +44,8 @@ manifest:
 
     - name: zmk-pmw3610-driver
       remote: badjeff
-      # revision: main
-      revision: zmk-0.4
+      revision: main
+      # revision: zmk-0.4
 
     - name: zmk-paw3395-driver
       remote: badjeff

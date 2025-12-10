@@ -32,6 +32,7 @@
 	compatible = "nordic,nrf-spim";
 	status = "disabled"; // <<< disabled in main .dtsi, okay in .overlay
 	tball1: pd@0 {
+		// compatible = "pixart,pmw3610";
 		compatible = "pixart,pmw3610-alt";
 		status = "disabled";
 		label = "TBALL1";
@@ -53,6 +54,16 @@
 
 &tball1 {
   status = "okay";
+
+	// motion-gpios = <&gpio1 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+	// res-cpi = <650>;
+	// invert-x;
+	// invert-y;
+	// zephyr,axis-x = <INPUT_REL_X>;
+	// zephyr,axis-y = <INPUT_REL_Y>;
+	// force-awake;
+	// smart-mode;
+
 	irq-gpios = <&gpio1 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 	cpi = <550>;
 	swap-xy;

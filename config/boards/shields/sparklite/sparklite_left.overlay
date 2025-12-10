@@ -13,11 +13,12 @@
 		;
 };
 
+// #include "sparklite_touchpad_cirque.dtsi"
 // #include "sparklite_trackball_adns9800.dtsi"
 // #include "sparklite_trackball_pmw3610.dtsi"
 // #include "sparklite_trackball_paw3395.dtsi"
 #include "sparklite_trackball_paw3222.dtsi"
-#include "sparklite_trackball_pat9125.dtsi"
+// #include "sparklite_trackball_pat9125.dtsi"
 
 // / {
 // 	erm0: output_generic_0 {

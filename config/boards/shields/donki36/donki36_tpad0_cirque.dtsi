@@ -53,9 +53,7 @@
   status = "okay";
 	data-ready-gpios = <&gpio1 11 GPIO_ACTIVE_HIGH>;
 	primary-tap-enable;
-	// sleep;
-	// no-smoothing;
+	sleep-mode-enable;
 	sensitivity = "2x";
-	// no-taps;
 	// rotate-90;
 };
