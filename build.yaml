@@ -75,6 +75,11 @@ include:
   #   shield: nano18_right
 
   - board: xiao_ble
+    shield: puntero34_left
+  - board: xiao_ble
+    shield: puntero34_right
+
+  - board: xiao_ble
     shield: sparklite_left
   # - board: xiao_ble
   #   shield: sparklite_right
