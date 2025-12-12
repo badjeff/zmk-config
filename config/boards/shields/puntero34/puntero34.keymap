@@ -207,10 +207,6 @@
    &hl NUM A      &hl NUM S     &hl NUM D    &hl NUM F     &kp G               &kp H         &hl NUM J      &hl NUM K       &hl NUM L     &hl NUM SEMI
    &ht LSHFT Z    &hm LGUI X    &hm LGUI C   &hm LGUI V    &hm LGUI B          &lt NUM N     &hm RGUI M     &hm RGUI COMMA  &hm RGUI DOT  &ht RSHFT FSLH
                                              &kp LGUI      &ht LCTRL TAB       &ht LALT RET  &lt NUM SPACE
-   &mkp RCLK   &mkg MCLK CFG   &mkp LCLK
-   &mkp LCLK   &mo CFG         &mkg MCLK CFG
-   &mkp MCLK   &mkp MB5        &mkp MB5
-   &mkp RCLK   &mkp MB4        &mkp MB4
                         >;
                 };
                 GME_layer {
@@ -233,7 +229,7 @@
    &trans  &kp N7  &kp N8  &kp N9  &trans    &trans  &kp N7  &kp N8  &kp N9  &trans
    &kp N0  &kp N4  &kp N5  &kp N6  &trans    &trans  &kp N4  &kp N5  &kp N6  &kp N0
    &trans  &kp N1  &kp N2  &kp N3  &trans    &trans  &kp N1  &kp N2  &kp N3  &trans
-                   &trans  &trans  &trans    &trans  &trans  &trans
+                           &trans  &trans    &trans  &trans
                         >;
                 };
                 NUM_layer {
