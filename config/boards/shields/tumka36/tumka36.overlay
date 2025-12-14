@@ -1,9 +1,0 @@
-/*
- * Copyright (c) 2020 Pete Johanson
- *
- * SPDX-License-Identifier: MIT
- */
-
-#include "tumka36.dtsi"
-
-// #include "tumka36__trackpoint_ps2.dtsi"

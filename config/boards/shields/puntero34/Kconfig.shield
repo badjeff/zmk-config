@@ -1,8 +1,0 @@
-# Copyright (c) 2020 Pete Johanson
-# SPDX-License-Identifier: MIT
-
-config SHIELD_PUNTERO34_LEFT
-	def_bool $(shields_list_contains,puntero34_left)
-
-config SHIELD_PUNTERO34_RIGHT
-	def_bool $(shields_list_contains,puntero34_right)

@@ -1,8 +1,0 @@
-# Copyright (c) 2020 Pete Johanson
-# SPDX-License-Identifier: MIT
-
-config SHIELD_SPARKLITE_LEFT
-	def_bool $(shields_list_contains,sparklite_left)
-
-config SHIELD_SPARKLITE_RIGHT
-	def_bool $(shields_list_contains,sparklite_right)

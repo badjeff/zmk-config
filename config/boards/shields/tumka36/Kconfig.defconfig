@@ -1,6 +1,0 @@
-if SHIELD_TUMKA36
-
-config ZMK_KEYBOARD_NAME
-    default "TUMKA36"
-
-endif
