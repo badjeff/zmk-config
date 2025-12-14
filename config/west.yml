@@ -26,8 +26,8 @@ manifest:
 
     - name: zmk-feature-split-esb
       remote: badjeff
-      # revision: main
-      revision: zmk-0.4
+      revision: main
+      # revision: zmk-0.4
     - name: sdk-nrf
       remote: badjeff
       revision: v3.1-branch+zmk-fixes
