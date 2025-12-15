@@ -547,7 +547,7 @@
    &bapp       &bootloader     &bapp
    &trans      &bootloader     &trans
    &trans      &bapp           &trans
-   &trans      &mou1_cpi_cyc   &trans
+   &trans      &trans          &trans
                         >;
                         sensor-bindings = <&rot_enc>;
                 };

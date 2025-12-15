@@ -54,15 +54,3 @@
 		triggers-per-rotation = <12>;
 	};
 };
-
-/{
-	mou1_cpi_cyc: mou1_cpi_cyc {
-		compatible = "zmk,behavior-sensor-attr-cycle";
-		#binding-cells = <1>;
-		values = < 1650 3300 825 >;
-		attr = <0>;
-		sensor_device = <&mou1_split>;
-		display-name = "DPI cycle";
-		// persistant;
-	};
-};
