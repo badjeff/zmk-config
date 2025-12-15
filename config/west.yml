@@ -143,5 +143,9 @@ manifest:
     #   remote: badjeff
     #   revision: 1-47-inch-panel
 
+    - name: zmk-behavior-sensor-attr-cycle
+      remote: badjeff
+      revision: main
+
   self:
     path: config
