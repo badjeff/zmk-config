@@ -451,26 +451,12 @@
                         >;
                         sensor-bindings = <&rot_enc>;
                 };
-                LNP_layer {
-                        display-name = "L N P";
+                NUP_layer {
+                        display-name = "Num Pad";
                         bindings = <
-   &trans  &kp N7  &kp N8  &kp N9  &trans    &trans  &trans  &trans  &trans  &trans
-   &kp N0  &kp N4  &kp N5  &kp N6  &trans    &trans  &trans  &trans  &trans  &trans
-   &trans  &kp N1  &kp N2  &kp N3  &trans    &trans  &trans  &trans  &trans  &trans
-                   &trans  &trans  &trans    &trans  &trans  &trans
-   &trans   &trans   &trans
-   &trans   &trans   &trans
-   &trans   &trans   &trans
-   &trans   &trans   &trans
-                        >;
-                        sensor-bindings = <&rot_enc>;
-                };
-                RNP_layer {
-                        display-name = "R N P";
-                        bindings = <
-   &trans  &trans  &trans  &trans  &trans    &trans  &kp N7  &kp N8  &kp N9  &trans
-   &trans  &trans  &trans  &trans  &trans    &trans  &kp N4  &kp N5  &kp N6  &kp N0
-   &trans  &trans  &trans  &trans  &trans    &trans  &kp N1  &kp N2  &kp N3  &trans
+   &trans  &kp N7  &kp N8  &kp N9  &trans    &trans  &kp N7  &kp N8  &kp N9  &trans
+   &kp N0  &kp N4  &kp N5  &kp N6  &trans    &trans  &kp N4  &kp N5  &kp N6  &kp N0
+   &trans  &kp N1  &kp N2  &kp N3  &trans    &trans  &kp N1  &kp N2  &kp N3  &trans
                    &trans  &trans  &trans    &trans  &trans  &trans
    &trans   &trans   &trans
    &trans   &trans   &trans
