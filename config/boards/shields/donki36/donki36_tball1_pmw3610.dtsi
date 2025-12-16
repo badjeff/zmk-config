@@ -56,7 +56,7 @@
   status = "okay";
 
 	// motion-gpios = <&gpio1 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-	// res-cpi = <650>;
+	// res-cpi = <400>;
 	// invert-x;
 	// invert-y;
 	// zephyr,axis-x = <INPUT_REL_X>;
@@ -65,7 +65,7 @@
 	// smart-mode;
 
 	irq-gpios = <&gpio1 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-	cpi = <550>;
+	cpi = <400>;
 	swap-xy;
 	invert-x;
 	invert-y;
