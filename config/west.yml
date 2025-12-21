@@ -115,9 +115,9 @@ manifest:
       remote: badjeff
       revision: main
 
-    - name: zmk-input-processor-mixer
-      remote: badjeff
-      revision: main
+    # - name: zmk-input-processor-mixer
+    #   remote: badjeff
+    #   revision: main
 
     - name: zmk-input-processor-report-rate-limit
       remote: badjeff
