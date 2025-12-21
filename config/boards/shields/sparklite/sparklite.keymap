@@ -19,7 +19,8 @@
 #include <dt-bindings/zmk/input_transform.h>
 #include <input/processors.dtsi>
 
-// #include <input/processors/mixer.dtsi>
+#include <input/processors/mixer.dtsi>
+#include <input/processors/report_rate_limit.dtsi>
 
 #define DEFAULT 0
 #define RAISE   1
@@ -35,7 +36,10 @@
                 device = <&pd0>;
                 default {
                         layers = <DEFAULT>;
-                        // input-processors = <&zip_mixer 0>;
+                        // sensor at 6 o'clock pos
+                        input-processors = <&zip_xy_swap_mapper>
+                                         , <&zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)>
+                                         , <&zip_mixer 0>;
                 };
         };
         tball1_sec_mmv_il {
@@ -43,13 +47,15 @@
                 device = <&pd0a>;
                 default {
                         layers = <DEFAULT>;
-                        // input-processors = <&zip_mixer 1>;
+                        // sensor at 3 o'clock pos
+                        input-processors = <&zip_mixer 1>;
                 };
         };
-        // mixin_mmv_il {
-        //         compatible = "zmk,input-listener";
-        //         device = <&zip_mixer>;
-        // };
+        mixin_mmv_il {
+                compatible = "zmk,input-listener";
+                device = <&zip_mixer>;
+                // input-processors =  <&zip_report_rate_limit 1>;
+        };
 
         // tball1_mmv_il {
         //         compatible = "zmk,input-listener";
