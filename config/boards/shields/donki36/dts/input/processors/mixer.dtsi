@@ -1,0 +1,17 @@
+// Copyright (c) 2025, The ZMK Contributors
+// SPDX-License-Identifier: MIT
+
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+    /omit-if-no-ref/ zip_mixer: zip_mixer {
+        compatible = "zmk,input-processor-mixer";
+        #input-processor-cells = <1>;
+        sync-report-ms = <1>;
+        sync-report-yaw-ms = <30>;
+        yaw-div = <1>;
+        yaw-equator-threshold = <20>;
+        yaw-min-per-tick = <37>;
+        yaw-val-per-tick = <1>;
+    };
+};

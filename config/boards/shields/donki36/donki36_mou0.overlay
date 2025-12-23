@@ -61,6 +61,7 @@ RC(4,0) RC(4,1) RC(4,2)
 &tball0_split { status = "disabled"; };
 &tball1_split { status = "disabled"; };
 &tball2_split { status = "disabled"; };
+&tball3_split { status = "disabled"; };
 &tpoint0_split { status = "disabled"; };
 &tpad0_split { status = "disabled"; };
 &mou0_split { device = <&mou0>; input-processors = <&zip_xyz>; };
