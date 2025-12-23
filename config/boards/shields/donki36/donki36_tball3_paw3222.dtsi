@@ -64,7 +64,7 @@
 &pd0 {
   status = "okay";
 	motion-gpios = <&gpio1 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-	res-cpi = <1200>;
+	res-cpi = <1558>;
 	zephyr,axis-x = <INPUT_REL_X>;
 	zephyr,axis-y = <INPUT_REL_Y>;
 	force-awake;
@@ -72,7 +72,7 @@
 &pd0a {
   status = "okay";
   motion-gpios = <&gpio0 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-	res-cpi = <1200>;
+	res-cpi = <1558>;
 	zephyr,axis-x = <INPUT_REL_X>;
 	zephyr,axis-y = <INPUT_REL_Y>;
 	force-awake;
