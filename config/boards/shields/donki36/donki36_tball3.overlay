@@ -38,8 +38,8 @@ RC(7,0) RC(7,1) RC(7,2)
 		row-gpios
 			= <&gpio0 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 		col-gpios
-			= <&gpio0 28 GPIO_ACTIVE_HIGH>
-			, <&gpio0 29 GPIO_ACTIVE_HIGH>
+			= <&gpio0 29 GPIO_ACTIVE_HIGH>
+			, <&gpio0 28 GPIO_ACTIVE_HIGH>
 			, <&gpio0 4 GPIO_ACTIVE_HIGH>
 			;
 	};
@@ -59,9 +59,9 @@ RC(7,0) RC(7,1) RC(7,2)
 			compatible = "zmk,input-processor-mixer";
 			#input-processor-cells = <1>;
 			sync-report-ms = <1>;
-			sync-report-yaw-ms = <30>;
+			sync-report-yaw-ms = <20>;
 			yaw-div = <1>;
-			yaw-equator-threshold = <20>;
+			yaw-equator-threshold = <19>;
 			yaw-min-per-tick = <37>;
 			yaw-val-per-tick = <1>;
 	};
