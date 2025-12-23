@@ -30,6 +30,10 @@
 // #define OUTPUT_SOURCE_KEYCODE_STATE_CHANGE      3
 // #define OUTPUT_SOURCE_TRANSPORT                 4
 
+&zip_report_rate_limit {
+        limit-ble-only;
+};
+
 / {
         tball1_pri_mmv_il {
                 compatible = "zmk,input-listener";
@@ -54,7 +58,7 @@
         mixin_mmv_il {
                 compatible = "zmk,input-listener";
                 device = <&zip_mixer>;
-                // input-processors =  <&zip_report_rate_limit 1>;
+                input-processors = <&zip_report_rate_limit 12>;
         };
 
         // tball1_mmv_il {
@@ -125,14 +129,16 @@
                 compatible = "zmk,keymap";
                 default_layer {
                         bindings = <
-   &bt BT_CLR   &out OUT_TOG      &mkp LCLK   &mkp RCLK
-   &mkp LCLK    &mo RAISE         &mkp MCLK   &mktg MB4
+//    &bt BT_CLR   &out OUT_TOG      &mkp LCLK   &mkp RCLK
+//    &mkp LCLK    &mo RAISE         &mkp MCLK   &mktg MB4
+&mkp MCLK   &mkp RCLK   &mkp LCLK
                         >;
                 };
                 raise_layer {
                         bindings = <
-   &trans       &trans            &trans       &trans
-   &trans       &trans            &trans       &trans
+//    &trans       &trans            &trans       &trans
+//    &trans       &trans            &trans       &trans
+&trans       &trans       &trans
                         >;
                 };
        };

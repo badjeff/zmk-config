@@ -3,8 +3,6 @@
 
 zephyr_library()
 
-
 target_sources(app PRIVATE input_processor_mixer.c)
-
 
 zephyr_include_directories(include)
