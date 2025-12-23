@@ -35,6 +35,7 @@
 &tball0_split { status = "disabled"; };
 &tball1_split { status = "disabled"; };
 &tball2_split { status = "disabled"; };
+&tball3_split { status = "disabled"; };
 &tpoint0_split { status = "disabled"; };
 &tpad0_split { status = "disabled"; };
 &mou0_split { status = "disabled"; };

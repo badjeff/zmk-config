@@ -40,6 +40,9 @@ include:
     shield: donki36_tball2
 
   - board: xiao_ble
+    shield: donki36_tball3
+
+  - board: xiao_ble
     shield: donki36_tpoint0
 
   # - board: xiao_ble

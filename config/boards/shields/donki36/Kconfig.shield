@@ -22,6 +22,9 @@ config SHIELD_DONKI36_TBALL1
 config SHIELD_DONKI36_TBALL2
 	def_bool $(shields_list_contains,donki36_tball2)
 
+config SHIELD_DONKI36_TBALL3
+	def_bool $(shields_list_contains,donki36_tball3)
+
 config SHIELD_DONKI36_TPOINT0
 	def_bool $(shields_list_contains,donki36_tpoint0)
 
