@@ -70,11 +70,11 @@ static int sy_handle_event(const struct device *dev, struct input_event *event, 
     bool yawing = false;
 
     if (now - data->last_rpt_time_yaw > config->sync_report_yaw_ms) {
-        int16_t yaw1 = -data->yaw1;
-        int16_t yaw2 = data->yaw2;
+        int16_t yaw1 = data->yaw1;
+        int16_t yaw2 = -data->yaw2;
 
         int16_t ydiff = abs( abs(yaw1) - abs(yaw2) );
-        // LOG_WRN("yaw1: %d, yaw2: %d", yaw1, yaw2, ydiff);
+        // LOG_DBG("yaw1: %d, yaw2: %d", yaw1, yaw2, ydiff);
 
         int16_t yaw = ((yaw1 + yaw2) * 0.5) / config->yaw_div;
         if (ydiff > config->yaw_equator_threshold) {
