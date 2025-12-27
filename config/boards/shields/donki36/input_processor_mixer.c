@@ -74,7 +74,7 @@ static int sy_handle_event(const struct device *dev, struct input_event *event, 
         int16_t yaw2 = -data->yaw2;
 
         int16_t ydiff = abs( abs(yaw1) - abs(yaw2) );
-        LOG_WRN("yaw1: %d, yaw2: %d", yaw1, yaw2, ydiff);
+        // LOG_DBG("yaw1: %d, yaw2: %d", yaw1, yaw2, ydiff);
 
         int16_t yaw = ((yaw1 + yaw2) * 0.5) / config->yaw_div;
         if (ydiff > config->yaw_equator_threshold) {
@@ -104,7 +104,7 @@ static int sy_handle_event(const struct device *dev, struct input_event *event, 
         bool have_y = data->y != 0;
 
         if (have_x || have_y) {
-            LOG_DBG("x: %d, y: %d", data->x, data->y);
+            // LOG_DBG("x: %d, y: %d", data->x, data->y);
             data->last_rpt_time = now;
 
             if (have_x) {
