@@ -423,6 +423,9 @@
                 mkp_swap  { timeout-ms = <50>; key-positions = <36 38>; bindings = <&tog LHB>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
                 mou_swap  { timeout-ms = <50>; key-positions = <46 47>; bindings = <&tog LHB>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
 
+                m4_ptr    { timeout-ms = <50>; key-positions = <36 37>; bindings = <&mkp MB4>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                m5_ptr    { timeout-ms = <50>; key-positions = <37 38>; bindings = <&mkp MB5>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+
                 phs_swap_t { timeout-ms = <80>; key-positions = <36 37 38>; bindings = <&tog PHS>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
                 phs_swap_l { timeout-ms = <80>; key-positions = <43 46>; bindings = <&tog PHS>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
                 phs_swap_r { timeout-ms = <80>; key-positions = <44 47>; bindings = <&tog PHS>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
