@@ -126,7 +126,7 @@ static struct zmk_input_processor_driver_api sy_driver_api = {
 };
 
 static int sy_init(const struct device *dev) {
-    const struct zip_input_processor_mixer_config *config = dev->config;
+    // const struct zip_input_processor_mixer_config *config = dev->config;
     struct zip_input_processor_mixer_data *data = dev->data;
     data->dev = dev;
     return 0;
