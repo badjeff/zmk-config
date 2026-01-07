@@ -340,8 +340,8 @@
                 m5_l       { timeout-ms = <50>; key-positions = <14 24>; bindings = <&mkp MB5>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
                 rclk_l34       { timeout-ms = <50>; key-positions = <11 31>; bindings = <&mkp RCLK>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
                 mclk_l34       { timeout-ms = <50>; key-positions = <12 31>; bindings = <&mkp MCLK>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
-                m4_l34         { timeout-ms = <50>; key-positions = <13 31>; bindings = <&mkp MB4>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
-                m5_l34         { timeout-ms = <50>; key-positions = <14 31>; bindings = <&mkp MB5>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                // m4_l34         { timeout-ms = <50>; key-positions = <13 31>; bindings = <&mkp MB4>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                // m5_l34         { timeout-ms = <50>; key-positions = <14 31>; bindings = <&mkp MB5>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
 
                 lclk_r     { timeout-ms = <50>; key-positions = <17 18>; bindings = <&mkp LCLK>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
                 rclk_r     { timeout-ms = <50>; key-positions = <18 25>; bindings = <&mkp RCLK>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
@@ -352,8 +352,8 @@
                 m5_r       { timeout-ms = <50>; key-positions = <15 25>; bindings = <&mkp MB5>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
                 rclk_r34       { timeout-ms = <50>; key-positions = <18 34>; bindings = <&mkp RCLK>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
                 mclk_r34       { timeout-ms = <50>; key-positions = <17 34>; bindings = <&mkp MCLK>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
-                m4_r34         { timeout-ms = <50>; key-positions = <16 34>; bindings = <&mkp MB4>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
-                m5_r34         { timeout-ms = <50>; key-positions = <15 34>; bindings = <&mkp MB5>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                // m4_r34         { timeout-ms = <50>; key-positions = <16 34>; bindings = <&mkp MB4>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
+                // m5_r34         { timeout-ms = <50>; key-positions = <15 34>; bindings = <&mkp MB5>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
 
                 dfu_l     { timeout-ms = <50>; key-positions = <0 1>; bindings = <&bootloader>; layers = <CFG>; };
                 bt_clr    { timeout-ms = <50>; key-positions = <1 2 3>; bindings = <&bt BT_CLR>; layers = <CFG>; };
