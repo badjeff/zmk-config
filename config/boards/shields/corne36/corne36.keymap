@@ -310,6 +310,8 @@
                 spc_r     { timeout-ms = <50>; key-positions = <16 17>; bindings = <&kp SPC>; layers = <BAS GME NUP NUM FUN CFG>; };
                 spc_l2    { timeout-ms = <50>; key-positions = <22 23>; bindings = <&kp SPC>; layers = <BAS GME NUP NUM FUN CFG>; };
                 spc_r2    { timeout-ms = <50>; key-positions = <26 27>; bindings = <&kp SPC>; layers = <BAS GME NUP NUM FUN CFG>; };
+                spc_l3    { timeout-ms = <50>; key-positions = <12 23>; bindings = <&kp SPC>; layers = <BAS GME NUP NUM FUN CFG>; };
+                spc_r3    { timeout-ms = <50>; key-positions = <26 17>; bindings = <&kp SPC>; layers = <BAS GME NUP NUM FUN CFG>; };
 
                 ret_r     { timeout-ms = <50>; key-positions = <26 17 18>; bindings = <&kp RET>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
                 ret_l     { timeout-ms = <50>; key-positions = <11 12 23>; bindings = <&kp RET>; layers = <BAS GME NUP LHB NUM FUN CFG PHS>; };
