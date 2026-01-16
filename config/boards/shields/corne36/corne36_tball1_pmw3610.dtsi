@@ -54,7 +54,7 @@
 &tball1 {
   status = "okay";
 	irq-gpios = <&gpio1 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-	cpi = <400>;
+	cpi = <600>;
 	swap-xy;
 	invert-x;
 	invert-y;
