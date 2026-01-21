@@ -3,6 +3,22 @@
  * SPDX-License-Identifier: MIT
  */
 
+/*
+Initial log should look like below if initialization success.
+
+[00:00:00.629,150] <inf> input_mlx90393: Initializing MLX90393 at address 0x0C
+[00:00:00.629,730] <inf> input_mlx90393: exit status: 0x02
+[00:00:00.630,310] <inf> input_mlx90393: reset status: 0x06
+[00:00:00.631,195] <inf> input_mlx90393: read 0x00 config status: 0x02
+[00:00:00.632,080] <inf> input_mlx90393: read 0x02 config status: 0x02
+[00:00:01.032,257] <inf> input_mlx90393: woc threshold: XY:0 Z:0
+[00:00:01.033,142] <inf> input_mlx90393: read WOXY_THRESHOLD status: 0x02
+[00:00:01.034,027] <inf> input_mlx90393: read WOZ_THRESHOLD status: 0x02
+[00:00:01.034,912] <inf> input_mlx90393: read 0x01 config status: 0x02
+[00:00:01.035,491] <inf> input_mlx90393: wake-on change mode status: 0x42
+[00:00:01.035,522] <inf> input_mlx90393: MLX90393 input driver initialized successfully
+*/
+
 #define DT_DRV_COMPAT melexis_mlx90393_input
 
 #include <zephyr/device.h>
@@ -25,7 +41,10 @@ LOG_MODULE_REGISTER(input_mlx90393, CONFIG_ZMK_LOG_LEVEL);
 #define MLX90383_STATUS_ERR_BITS (BIT(4) | BIT(3))
 
 struct mlx90393_config {
-    struct i2c_dt_spec i2c;
+    union {
+        struct i2c_dt_spec i2c;
+        struct spi_dt_spec spi;
+    } bus;
 	const struct gpio_dt_spec irq_gpio;
     uint16_t calib_cycle;
     uint16_t woc_thd_xy_mul, woc_thd_z_mul;
@@ -45,14 +64,69 @@ struct mlx90393_data {
     int32_t max_x, max_y, max_z;
 };
 
-static int mlx90393_write(const struct device *dev, const uint8_t *data, size_t len) {
-    const struct mlx90393_config *config = dev->config;
-    return i2c_write_dt(&config->i2c, data, len);
-}
+static int mlx90393_cmd_read(const struct device *dev,
+                             const uint8_t *cmd, size_t cmd_len,
+                             uint8_t *resp, size_t resp_len) {
+#if DT_ANY_INST_ON_BUS_STATUS_OKAY(i2c)
 
-static int mlx90393_read(const struct device *dev, uint8_t *data, size_t len) {
     const struct mlx90393_config *config = dev->config;
-    return i2c_read_dt(&config->i2c, data, len);
+    int ret;
+    ret = i2c_write_dt(&config->bus.i2c, cmd, cmd_len);
+    if (!ret) {
+        ret = i2c_read_dt(&config->bus.i2c, resp, resp_len);
+    }
+    return ret;
+
+#elif DT_ANY_INST_ON_BUS_STATUS_OKAY(spi)
+
+    const struct mlx90393_config *config = dev->config;
+    int err = 0;
+
+    if (resp_len == 0) {
+        const struct spi_buf tx_buf = { .buf = (void *)cmd, .len = cmd_len };
+        const struct spi_buf_set tx_set = { .buffers = &tx_buf, .count = 1 };
+        err = spi_write_dt(&config->bus.spi, &tx_set);
+        if (err) {
+            LOG_ERR("SPI write failed: %d", err);
+        }
+        return err;
+    }
+
+    size_t total = cmd_len + resp_len;
+    uint8_t tx_total[total];
+    uint8_t rx_total[total];
+
+    if (cmd_len)
+        memcpy(tx_total, cmd, cmd_len);
+    if (resp_len)
+        memset(tx_total + cmd_len, 0x00, resp_len);
+
+    const struct spi_buf tx_buf = { .buf = tx_total, .len = total };
+    const struct spi_buf_set tx_set = { .buffers = &tx_buf, .count = 1 };
+    const struct spi_buf rx_buf = { .buf = rx_total, .len = total };
+    const struct spi_buf_set rx_set = { .buffers = &rx_buf, .count = 1 };
+
+    // const struct gpio_dt_spec cs_gpio = config->bus.spi.config.cs.gpio;
+    // gpio_pin_set_dt(&cs_gpio, GPIO_OUTPUT_ACTIVE);
+
+    err = spi_transceive_dt(&config->bus.spi, &tx_set, &rx_set);
+
+    // gpio_pin_set_dt(&cs_gpio, GPIO_OUTPUT_INACTIVE);
+
+    if (err) {
+        LOG_ERR("SPI transceive failed: %d", err);
+        return err;
+    }
+
+    /* debug: dump raw rx to inspect alignment / MISO line */
+    LOG_HEXDUMP_DBG(rx_total, total, "spi rx_total");
+
+    memcpy(resp, rx_total + cmd_len, resp_len);
+    return 0;
+
+#else
+    return -ENOTSUP;
+#endif
 }
 
 static void mlx90393_set_interrupt(const struct device *dev, const bool en) {
@@ -72,18 +146,14 @@ static int mlx90393_reset(const struct device *dev) {
     int ret;
 
     cmd = 0xF0; // Reset
-    ret = mlx90393_write(dev, &cmd, 1);
-    if (ret < 0) {
-        LOG_ERR("Failed to reset: %d", ret);
-        return ret;
-    }
-    ret = mlx90393_read(dev, &status, 1);
+    ret = mlx90393_cmd_read(dev, &cmd, 1, &status, 1);
+
     if (ret < 0) {
         LOG_WRN("Failed to read reset status: 0x%02X", ret);
         return ret;
     }
     else if (status & MLX90383_STATUS_ERR_BITS) {
-        LOG_ERR("rread eset status: 0x%02X", ret);
+        LOG_ERR("read eset status: 0x%02X", status);
         return -EINVAL;
     }
     LOG_INF("reset status: 0x%02x", status);
@@ -99,18 +169,14 @@ static int mlx90393_exit_burst_mode(const struct device *dev) {
     int ret;
 
     cmd = 0x80; // Exit mode
-    ret = mlx90393_write(dev, &cmd, 1);
-    if (ret < 0) {
-        LOG_ERR("Failed to exit: %d", ret);
-        return ret;
-    }
-    ret = mlx90393_read(dev, &status, 1);
+    ret = mlx90393_cmd_read(dev, &cmd, 1, &status, 1);
+
     if (ret < 0) {
         LOG_WRN("Failed to read exit status: 0x%02X", ret);
         return ret;
     }
     else if (status & MLX90383_STATUS_ERR_BITS) {
-        LOG_ERR("read exit status: 0x%02X", ret);
+        LOG_ERR("read exit status: 0x%02X", status);
         return -EINVAL;
     }
     LOG_INF("exit status: 0x%02x", status);
@@ -126,22 +192,17 @@ static int mlx90393_start_woc_mode(const struct device *dev) {
     int ret;
 
     cmd = 0x2E; // Start Wake-up on Change Mode for zyx
-    ret = mlx90393_write(dev, &cmd, 1);
-    if (ret < 0) {
-        LOG_ERR("Failed to start wake-on change mode: %d", ret);
-        return ret;
-    }
-    ret = mlx90393_read(dev, &status, 1);
+    ret = mlx90393_cmd_read(dev, &cmd, 1, &status, 1);
+
     if (ret < 0) {
         LOG_WRN("Failed to read wake-on change mode status: %d", ret);
         return ret;
     }
     else if (status & MLX90383_STATUS_ERR_BITS) {
-        LOG_ERR("read wake-on change mode: 0x%02X", ret);
+        LOG_ERR("read wake-on change mode: 0x%02X", status);
         return -EINVAL;
     }
     LOG_INF("wake-on change mode status: 0x%02x", status);
-    LOG_INF("wake-on change mode activated");
 
     return ret;
 }
@@ -157,18 +218,14 @@ static int mlx90393_set_config(const struct device *dev) {
     reg_config[1] = 0x00;  // AH: BIST disabled
     reg_config[2] = 0x1C;  // AL: GAIN_SEL = 1, Hall plate spinning rate = DEFAULT(0xC)
     reg_config[3] = 0x00 << 2;  // Select address register
-    ret = mlx90393_write(dev, reg_config, 4);
-    if (ret < 0) {
-        LOG_ERR("Failed to write 0x00 register config: %d", ret);
-        return ret;
-    }
-    ret = mlx90393_read(dev, &status, 1);
+    ret = mlx90393_cmd_read(dev, reg_config, 4, &status, 1);
+
     if (ret < 0) {
         LOG_ERR("Failed to read 0x00 config status: %d", ret);
         return ret;
     }
     else if (status & MLX90383_STATUS_ERR_BITS) {
-        LOG_ERR("read 0x00 config status: 0x%02X", ret);
+        LOG_ERR("read 0x00 config status: 0x%02X", status);
         return -EINVAL;
     }
     LOG_INF("read 0x00 config status: 0x%02x", status);
@@ -177,18 +234,14 @@ static int mlx90393_set_config(const struct device *dev) {
     reg_config[1] = 0x02;  // AH: 0x02
     reg_config[2] = 0xB4;  // AL: 0xB4, RES for magnetic measurement = 0
     reg_config[3] = 0x02 << 2;  // Select address register, (0x02 << 2)
-    ret = mlx90393_write(dev, reg_config, 4);
-    if (ret < 0) {
-        LOG_ERR("Failed to write 0x02 register config: %d", ret);
-        return ret;
-    }
-    ret = mlx90393_read(dev, &status, 1);
+    ret = mlx90393_cmd_read(dev, reg_config, 4, &status, 1);
+
     if (ret < 0) {
         LOG_ERR("Failed to read 0x02 config status: %d", ret);
         return ret;
     }
     else if (status & MLX90383_STATUS_ERR_BITS) {
-        LOG_ERR("read 0x02 config status: 0x%02X", ret);
+        LOG_ERR("read 0x02 config status: 0x%02X", status);
         return -EINVAL;
     }
     LOG_INF("read 0x02 config status: 0x%02x", status);
@@ -206,7 +259,7 @@ static int mlx90393_set_woc_threshold(const struct device *dev) {
         txy = MAX(data->max_x - data->min_x, data->max_y - data->min_y) * config->woc_thd_xy_mul;
         tz = (data->max_z - data->min_z) * config->woc_thd_z_mul;
         LOG_INF("m/m: X:%6d/%6d Y:%6d/%6d Z:%6d/%6d", 
-                data->min_x, data->max_x, data->min_y, data->max_y, data->min_z);
+                (int)data->min_x, (int)data->max_x, (int)data->min_y, (int)data->max_y, (int)data->min_z, (int)data->max_z);
     }
     LOG_INF("woc threshold: XY:%d Z:%d", txy, tz);
 
@@ -218,18 +271,14 @@ static int mlx90393_set_woc_threshold(const struct device *dev) {
     reg_config[1] = (txy & 0xF0) >> 8;  // AH
     reg_config[2] = (txy & 0x0F);  // AL
     reg_config[3] = 0x07 << 2;  // Select address register, WOXY_THRESHOLD
-    ret = mlx90393_write(dev, reg_config, 4);
-    if (ret < 0) {
-        LOG_ERR("Failed to write WOXY_THRESHOLD register config: %d", ret);
-        return ret;
-    }
-    ret = mlx90393_read(dev, &status, 1);
+    ret = mlx90393_cmd_read(dev, reg_config, 4, &status, 1);
+
     if (ret < 0) {
         LOG_ERR("Failed to read WOXY_THRESHOLD status: %d", ret);
         return ret;
     }
     else if (status & MLX90383_STATUS_ERR_BITS) {
-        LOG_ERR("read WOXY_THRESHOLD status: 0x%02X", ret);
+        LOG_ERR("read WOXY_THRESHOLD status: 0x%02X", status);
         return -EINVAL;
     }
     LOG_INF("read WOXY_THRESHOLD status: 0x%02x", status);
@@ -239,18 +288,14 @@ static int mlx90393_set_woc_threshold(const struct device *dev) {
     reg_config[1] = (tz & 0xF0) >> 8;  // AH
     reg_config[2] = (tz & 0x0F);  // AL
     reg_config[3] = 0x08 << 2;  // Select address register, WOZ_THRESHOLD
-    ret = mlx90393_write(dev, reg_config, 4);
-    if (ret < 0) {
-        LOG_ERR("Failed to write WOZ_THRESHOLD register config: %d", ret);
-        return ret;
-    }
-    ret = mlx90393_read(dev, &status, 1);
+    ret = mlx90393_cmd_read(dev, reg_config, 4, &status, 1);
+
     if (ret < 0) {
         LOG_ERR("Failed to read WOZ_THRESHOLD status: %d", ret);
         return ret;
     }
     else if (status & MLX90383_STATUS_ERR_BITS) {
-        LOG_ERR("read WOZ_THRESHOLD status: 0x%02X", ret);
+        LOG_ERR("read WOZ_THRESHOLD status: 0x%02X", status);
         return -EINVAL;
     }
     LOG_INF("read WOZ_THRESHOLD status: 0x%02x", status);
@@ -259,18 +304,14 @@ static int mlx90393_set_woc_threshold(const struct device *dev) {
     reg_config[1] = 0x10;  // AH: WOC_DIFF
     reg_config[2] = 0x00;  // AL: BURST_DATA_RATE = DEFAULT (0x0)
     reg_config[3] = 0x01 << 2;  // Select address register, (0x02 << 2)
-    ret = mlx90393_write(dev, reg_config, 4);
-    if (ret < 0) {
-        LOG_ERR("Failed to write 0x01 register config: %d", ret);
-        return ret;
-    }
-    ret = mlx90393_read(dev, &status, 1);
+    ret = mlx90393_cmd_read(dev, reg_config, 4, &status, 1);
+
     if (ret < 0) {
         LOG_ERR("Failed to read 0x01 config status: %d", ret);
         return ret;
     }
     else if (status & MLX90383_STATUS_ERR_BITS) {
-        LOG_ERR("read 0x01 config status: 0x%02X", ret);
+        LOG_ERR("read 0x01 config status: 0x%02X", status);
         return -EINVAL;
     }
     LOG_INF("read 0x01 config status: 0x%02x", status);
@@ -290,13 +331,8 @@ static void mlx90393_work_handler(struct k_work *work) {
 
     // Read measurement after conversion time
     cmd = 0x4E;
-    ret = mlx90393_write(dev, &cmd, 1);
-    if (ret < 0) {
-        LOG_ERR("Failed to send read command: %d", ret);
-        goto reenable_irq;
-    }
-    // Read 7 bytes of data (status + XYZ)
-    ret = mlx90393_read(dev, read_data, 7);
+    ret = mlx90393_cmd_read(dev, &cmd, 1, read_data, 7);
+
     if (ret < 0) {
         LOG_ERR("Failed to read measurement data: %d", ret);
         goto reenable_irq;
@@ -428,11 +464,22 @@ static int mlx90393_init(const struct device *dev) {
     struct mlx90393_data *data = dev->data;
     int ret;
 
-    if (!device_is_ready(config->i2c.bus)) {
+#if DT_ANY_INST_ON_BUS_STATUS_OKAY(i2c)
+    if (!device_is_ready(config->bus.i2c.bus)) {
         LOG_ERR("I2C bus not ready");
         return -ENODEV;
     }
-    LOG_INF("Initializing MLX90393 at address 0x%02X", config->i2c.addr);
+    LOG_INF("Initializing MLX90393 at address 0x%02X", config->bus.i2c.addr);
+#endif // DT_ANY_INST_ON_BUS_STATUS_OKAY(i2c)
+
+#if DT_ANY_INST_ON_BUS_STATUS_OKAY(spi)
+    if (!device_is_ready(config->bus.spi.bus)) {
+        LOG_ERR("SPI bus not ready");
+        return -ENODEV;
+    }
+    LOG_INF("Initializing MLX90393 on SPI bus");
+#endif // DT_ANY_INST_ON_BUS_STATUS_OKAY(spi)
+
     data->dev = dev;
     data->calibrated = false;
     data->calibra_cnt = 0;
@@ -492,8 +539,17 @@ static int mlx90393_init(const struct device *dev) {
 #define MLX90393_INST(n)                                                                          \
     static struct mlx90393_data mlx90393_data_##n;                                                \
     static const struct mlx90393_config mlx90393_config_##n = {                                   \
-        .i2c = I2C_DT_SPEC_INST_GET(n),                                                           \
-		.irq_gpio = GPIO_DT_SPEC_INST_GET_OR(n, irq_gpios, {}),                                   \
+        COND_CODE_1(DT_INST_ON_BUS(n, i2c),                                                       \
+                    (.bus = {.i2c = I2C_DT_SPEC_INST_GET(n)} ),                                   \
+                    (.bus = {.spi = SPI_DT_SPEC_INST_GET(n,                                       \
+                                                         SPI_OP_MODE_MASTER |                     \
+                                                         SPI_WORD_SET(8) |                        \
+                                                         SPI_MODE_CPOL | SPI_MODE_CPHA |          \
+                                                         /* SPI_HOLD_ON_CS | SPI_LOCK_ON | */     \
+                                                         SPI_TRANSFER_MSB,                        \
+                                                         0)} )                                    \
+        ),                                                                                        \
+        .irq_gpio = GPIO_DT_SPEC_INST_GET_OR(n, irq_gpios, {}),                                   \
         .calib_cycle = DT_INST_PROP(n, calib_cycle),                                              \
         .woc_thd_xy_mul = DT_INST_PROP(n, woc_thd_xy_mul),                                        \
         .woc_thd_z_mul = DT_INST_PROP(n, woc_thd_z_mul),                                          \

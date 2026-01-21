@@ -1,22 +1,5 @@
 # SPDX-License-Identifier: MIT
 
-description: |
-  MLX90393 magnetic sensor input driver
-
-  Reads magnetic field data from the MLX90393 via I2C and reports
-  relative X/Y/Z events.
-
-  Example usage:
-    mlx90393_input: mlx90393-input@0c {
-      compatible = "melexis,mlx90393-input";
-      reg = <0x0C>;
-      irq-gpios = <&gpio1 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
-    };
-
-compatible: "melexis,mlx90393-input"
-
-include: [base.yaml, i2c-device.yaml]
-
 properties:
   irq-gpios:
     type: phandle-array
