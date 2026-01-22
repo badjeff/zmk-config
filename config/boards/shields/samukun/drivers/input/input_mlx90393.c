@@ -81,46 +81,21 @@ static int mlx90393_cmd_read(const struct device *dev,
 
     const struct mlx90393_config *config = dev->config;
     int err = 0;
-
-    if (resp_len == 0) {
-        const struct spi_buf tx_buf = { .buf = (void *)cmd, .len = cmd_len };
-        const struct spi_buf_set tx_set = { .buffers = &tx_buf, .count = 1 };
-        err = spi_write_dt(&config->bus.spi, &tx_set);
-        if (err) {
-            LOG_ERR("SPI write failed: %d", err);
-        }
-        return err;
-    }
-
     size_t total = cmd_len + resp_len;
     uint8_t tx_total[total];
     uint8_t rx_total[total];
-
-    if (cmd_len)
-        memcpy(tx_total, cmd, cmd_len);
-    if (resp_len)
-        memset(tx_total + cmd_len, 0x00, resp_len);
-
+    memcpy(tx_total, cmd, cmd_len);
+    memset(tx_total + cmd_len, 0x00, resp_len);
     const struct spi_buf tx_buf = { .buf = tx_total, .len = total };
     const struct spi_buf_set tx_set = { .buffers = &tx_buf, .count = 1 };
     const struct spi_buf rx_buf = { .buf = rx_total, .len = total };
     const struct spi_buf_set rx_set = { .buffers = &rx_buf, .count = 1 };
-
-    // const struct gpio_dt_spec cs_gpio = config->bus.spi.config.cs.gpio;
-    // gpio_pin_set_dt(&cs_gpio, GPIO_OUTPUT_ACTIVE);
-
     err = spi_transceive_dt(&config->bus.spi, &tx_set, &rx_set);
-
-    // gpio_pin_set_dt(&cs_gpio, GPIO_OUTPUT_INACTIVE);
-
     if (err) {
         LOG_ERR("SPI transceive failed: %d", err);
         return err;
     }
-
-    /* debug: dump raw rx to inspect alignment / MISO line */
-    LOG_HEXDUMP_DBG(rx_total, total, "spi rx_total");
-
+    // LOG_HEXDUMP_DBG(rx_total, total, "spi rx_total");
     memcpy(resp, rx_total + cmd_len, resp_len);
     return 0;
 
@@ -470,15 +445,16 @@ static int mlx90393_init(const struct device *dev) {
         return -ENODEV;
     }
     LOG_INF("Initializing MLX90393 at address 0x%02X", config->bus.i2c.addr);
-#endif // DT_ANY_INST_ON_BUS_STATUS_OKAY(i2c)
-
-#if DT_ANY_INST_ON_BUS_STATUS_OKAY(spi)
+#elif DT_ANY_INST_ON_BUS_STATUS_OKAY(spi)
     if (!device_is_ready(config->bus.spi.bus)) {
         LOG_ERR("SPI bus not ready");
         return -ENODEV;
     }
     LOG_INF("Initializing MLX90393 on SPI bus");
-#endif // DT_ANY_INST_ON_BUS_STATUS_OKAY(spi)
+#else
+    LOG_ERR("Neither I2C or SPI bus is ready");
+    return -ENODEV;
+#endif
 
     data->dev = dev;
     data->calibrated = false;
