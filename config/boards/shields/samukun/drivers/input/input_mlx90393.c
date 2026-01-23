@@ -47,7 +47,7 @@ struct mlx90393_config {
     } bus;
 	const struct gpio_dt_spec irq_gpio;
     uint16_t calib_cycle;
-    uint16_t woc_thd_xy_mul, woc_thd_z_mul;
+    uint16_t woc_thd_xy, woc_thd_z;
     uint16_t rpt_dzn_x, rpt_dzn_y, rpt_dzn_z;
 };
 
@@ -57,11 +57,13 @@ struct mlx90393_data {
     struct k_work trigger_work;
     struct k_work read_work;
     bool calibrated;
-    uint32_t calibra_cnt;
+    uint16_t calibra_cnt;
     int16_t org_x, org_y, org_z;
     int32_t sum_x, sum_y, sum_z;
     int32_t min_x, min_y, min_z;
     int32_t max_x, max_y, max_z;
+    int16_t thd_xy; // 0x07h: WOXY_THRESHOLD [15:0] (signed)
+    int16_t thd_z;  // 0x08h: WOZ_THRESHOLD [15:0] (signed)
 };
 
 static int mlx90393_cmd_read(const struct device *dev,
@@ -225,26 +227,17 @@ static int mlx90393_set_config(const struct device *dev) {
 }
 
 static int mlx90393_set_woc_threshold(const struct device *dev) {
-    const struct mlx90393_config *config = dev->config;
+    // const struct mlx90393_config *config = dev->config;
     struct mlx90393_data *data = dev->data;
 
-    int32_t txy = 0;
-    int32_t tz = 0;
-    if (data->calibrated) {
-        txy = MAX(data->max_x - data->min_x, data->max_y - data->min_y) * config->woc_thd_xy_mul;
-        tz = (data->max_z - data->min_z) * config->woc_thd_z_mul;
-        LOG_INF("m/m: X:%6d/%6d Y:%6d/%6d Z:%6d/%6d", 
-                (int)data->min_x, (int)data->max_x, (int)data->min_y, (int)data->max_y, (int)data->min_z, (int)data->max_z);
-    }
-    LOG_INF("woc threshold: XY:%d Z:%d", txy, tz);
-
+    LOG_INF("setting woc threshold xy:%d z:%d", data->thd_xy, data->thd_z);
     uint8_t reg_config[4];
     uint8_t status;
     int ret;
 
     reg_config[0] = 0x60;  // Write command
-    reg_config[1] = (txy & 0xF0) >> 8;  // AH
-    reg_config[2] = (txy & 0x0F);  // AL
+    reg_config[1] = (data->thd_xy & 0xFF00) >> 8;   // Data [15:8]
+    reg_config[2] = (data->thd_xy & 0x00FF);        // Data [7:0]
     reg_config[3] = 0x07 << 2;  // Select address register, WOXY_THRESHOLD
     ret = mlx90393_cmd_read(dev, reg_config, 4, &status, 1);
 
@@ -258,10 +251,9 @@ static int mlx90393_set_woc_threshold(const struct device *dev) {
     }
     LOG_INF("read WOXY_THRESHOLD status: 0x%02x", status);
 
-
     reg_config[0] = 0x60;  // Write command
-    reg_config[1] = (tz & 0xF0) >> 8;  // AH
-    reg_config[2] = (tz & 0x0F);  // AL
+    reg_config[1] = (data->thd_z & 0xFF00) >> 8;    // Data [15:8]
+    reg_config[2] = (data->thd_z & 0x00FF);         // Data [7:0]
     reg_config[3] = 0x08 << 2;  // Select address register, WOZ_THRESHOLD
     ret = mlx90393_cmd_read(dev, reg_config, 4, &status, 1);
 
@@ -337,8 +329,24 @@ static void mlx90393_work_handler(struct k_work *work) {
             data->org_x = data->sum_x / config->calib_cycle;
             data->org_y = data->sum_y / config->calib_cycle;
             data->org_z = data->sum_z / config->calib_cycle;
-            data->calibrated = true;
             LOG_INF("calibrated org: x=%6d y=%6d z=%6d", data->org_x, data->org_y, data->org_z);
+
+            data->thd_xy = MAX(data->max_x - data->min_x, data->max_y - data->min_y);
+            data->thd_z = (data->max_z - data->min_z);
+            LOG_INF("min/max: X:%6d/%6d Y:%6d/%6d Z:%6d/%6d", 
+                    (int)data->min_x, (int)data->max_x, 
+                    (int)data->min_y, (int)data->max_y, 
+                    (int)data->min_z, (int)data->max_z);
+
+            //
+            // trim woc threshold to 2/3 of calibrated result
+            // dealing with 3 facts: noise reduction, resolution, power efficiency
+            //
+            data->thd_xy = ( data->thd_xy * 2/3 ) + config->woc_thd_xy;
+            data->thd_z = ( data->thd_z * 2/3 ) + config->woc_thd_z;
+            LOG_INF("thd xy:%6d z:%6d", data->thd_xy, data->thd_z);
+
+            data->calibrated = true;
 
             ret = mlx90393_exit_burst_mode(dev);
             if (ret < 0) {
@@ -372,25 +380,24 @@ static void mlx90393_work_handler(struct k_work *work) {
     if (abs(crd_y) < (int)config->rpt_dzn_y) crd_y = 0;
     if (abs(crd_z) < (int)config->rpt_dzn_z) crd_z = 0;
 
-    // LOG_DBG("raw: X:%6d Y:%6d Z:%6d | origin: X:%6d Y:%6d Z:%6d | abs: X:%6d Y:%6d Z:%6d", 
+    // LOG_DBG("raw: X:%6d Y:%6d Z:%6d | origin: X:%6d Y:%6d Z:%6d | crd: X:%6d Y:%6d Z:%6d", 
     //         x, y, z, data->org_x, data->org_y, data->org_z, crd_x, crd_y, crd_z);
+    // LOG_DBG("min/max: X:%6d/%6d Y:%6d/%6d Z:%6d/%6d", 
+    //         (int)data->min_x, (int)data->max_x, (int)data->min_y, (int)data->max_y, 
+    //         (int)data->min_z, (int)data->max_z);
+    // LOG_DBG("thd xy:%6d z:%6d", data->thd_xy, data->thd_z);
 
-    // Generate input events only if there's actual movement
-    bool have_mov = false;
-    if (crd_x) {
-        input_report_rel(dev, INPUT_ABS_X, crd_x, !crd_y && !crd_z, K_FOREVER);
-        have_mov = true;
-    }
-    if (crd_y) {
-        input_report_rel(dev, INPUT_ABS_Y, crd_y, !crd_z, K_FOREVER);
-        have_mov = true;
-    }
-    if (crd_z) {
-        input_report_rel(dev, INPUT_ABS_Z, crd_z, true, K_FOREVER);
-        have_mov = true;
-    }
-    if (have_mov) {
-        LOG_DBG("coordination x/y/z: %6d / %6d / %6d", crd_x, crd_y, crd_z);
+    if (crd_x || crd_y || crd_z) {
+        if (crd_x) {
+            input_report_rel(dev, INPUT_ABS_X, crd_x, !crd_y && !crd_z, K_FOREVER);
+        }
+        if (crd_y) {
+            input_report_rel(dev, INPUT_ABS_Y, crd_y, !crd_z, K_FOREVER);
+        }
+        if (crd_z) {
+            input_report_rel(dev, INPUT_ABS_Z, crd_z, true, K_FOREVER);
+        }
+        LOG_DBG("crd x/y/z: %6d / %6d / %6d", crd_x, crd_y, crd_z);
     }
 
 reenable_irq:
@@ -463,6 +470,7 @@ static int mlx90393_init(const struct device *dev) {
     data->sum_x = data->sum_y = data->sum_z = 0;
     data->min_x = data->min_y = data->min_z = INT32_MAX;
     data->max_x = data->max_y = data->max_z = INT32_MIN;
+    data->thd_xy = data->thd_z = 0;
 
     ret = mlx90393_exit_burst_mode(dev);
     if (ret < 0) {
@@ -527,8 +535,8 @@ static int mlx90393_init(const struct device *dev) {
         ),                                                                                        \
         .irq_gpio = GPIO_DT_SPEC_INST_GET_OR(n, irq_gpios, {}),                                   \
         .calib_cycle = DT_INST_PROP(n, calib_cycle),                                              \
-        .woc_thd_xy_mul = DT_INST_PROP(n, woc_thd_xy_mul),                                        \
-        .woc_thd_z_mul = DT_INST_PROP(n, woc_thd_z_mul),                                          \
+        .woc_thd_xy = DT_INST_PROP(n, woc_thd_xy),                                                \
+        .woc_thd_z = DT_INST_PROP(n, woc_thd_z),                                                  \
         .rpt_dzn_x = DT_INST_PROP(n, rpt_dzn_x),                                                  \
         .rpt_dzn_y = DT_INST_PROP(n, rpt_dzn_y),                                                  \
         .rpt_dzn_z = DT_INST_PROP(n, rpt_dzn_z),                                                  \

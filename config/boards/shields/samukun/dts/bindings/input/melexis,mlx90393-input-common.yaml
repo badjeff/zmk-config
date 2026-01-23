@@ -10,27 +10,27 @@ properties:
     default: 100
     description: count of auto calibration cycle
 
-  woc-thd-xy-mul:
+  woc-thd-xy:
     type: int
-    default: 30
-    description: X-axis wake-on-change threshold multiplier
+    default: 0
+    description: extra delta for XY-axis wake-on-change threshold
 
-  woc-thd-z-mul:
+  woc-thd-z:
     type: int
-    default: 30
-    description: X-axis wake-on-change threshold multiplier
+    default: 0
+    description: extra delta for Z-axis wake-on-change threshold
 
   rpt-dzn-x:
     type: int
-    default: 49
+    default: 199
     description: X-axis deadzone
 
   rpt-dzn-y:
     type: int
-    default: 49
+    default: 199
     description: Y-axis deadzone
 
   rpt-dzn-z:
     type: int
-    default: 49
+    default: 199
     description: Z-axis deadzone
