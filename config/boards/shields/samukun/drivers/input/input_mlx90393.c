@@ -339,11 +339,11 @@ static void mlx90393_work_handler(struct k_work *work) {
                     (int)data->min_z, (int)data->max_z);
 
             //
-            // trim woc threshold to 2/3 of calibrated result
+            // trim woc threshold to 1/2 of calibrated result
             // dealing with 3 facts: noise reduction, resolution, power efficiency
             //
-            data->thd_xy = ( data->thd_xy * 2/3 ) + config->woc_thd_xy;
-            data->thd_z = ( data->thd_z * 2/3 ) + config->woc_thd_z;
+            data->thd_xy = ( data->thd_xy * 1/2 ) + config->woc_thd_xy;
+            data->thd_z = ( data->thd_z * 1/2 ) + config->woc_thd_z;
             LOG_INF("thd xy:%6d z:%6d", data->thd_xy, data->thd_z);
 
             data->calibrated = true;

@@ -22,15 +22,15 @@ properties:
 
   rpt-dzn-x:
     type: int
-    default: 300
+    default: 250
     description: X-axis deadzone
 
   rpt-dzn-y:
     type: int
-    default: 250
+    default: 200
     description: Y-axis deadzone
 
   rpt-dzn-z:
     type: int
-    default: 250
+    default: 200
     description: Z-axis deadzone
