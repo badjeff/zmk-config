@@ -19,6 +19,27 @@
 #define DEF 0
 
 / {
+        xy_transf: xy_transf {
+                compatible = "zmk,input-processor-transform";
+                #input-processor-cells = <1>;
+                type = <INPUT_EV_REL>;
+                x-codes = <INPUT_REL_X>, <INPUT_REL_WHEEL>;
+                y-codes = <INPUT_REL_Y>, <INPUT_REL_HWHEEL>;
+        };
+        xy_scaler: xy_scaler {
+                compatible = "zmk,input-processor-scaler";
+                #input-processor-cells = <2>;
+                type = <INPUT_EV_REL>;
+                codes = <INPUT_REL_X>, <INPUT_REL_Y>;
+                track-remainders;
+        };
+        tpoint0_mmv_ibl {
+                compatible = "zmk,input-listener";
+                device = <&spi_mlx90393>;
+                input-processors = <&xy_transf (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>
+                                ,  <&xy_scaler 1 50>;
+        };
+
         // tpoint0_mmv_ibl {
         //         compatible = "zmk,input-behavior-listener";
         //         device = <&tpoint0>;
@@ -26,7 +47,8 @@
 	//         evt-type = <INPUT_EV_REL>;
 	//         x-input-code = <INPUT_REL_X>;
 	//         y-input-code = <INPUT_REL_Y>;
-        //         xy-swap; x-invert;
+        //         xy-swap;
+        //         x-invert;
         //         y-invert;
         //         // bindings = <&ib_tog_layer MSK>;
         // };
@@ -38,7 +60,8 @@
 	//         evt-type = <INPUT_EV_REL>;
 	//         x-input-code = <INPUT_REL_X>;
 	//         y-input-code = <INPUT_REL_Y>;
-        //         xy-swap; x-invert;
+        //         xy-swap; 
+        //         x-invert;
         //         y-invert;
         //         // bindings = <&ib_tog_layer MSK>;
         // };

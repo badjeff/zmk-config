@@ -372,32 +372,32 @@ static void mlx90393_work_handler(struct k_work *work) {
         goto reenable_irq; // Skip input during calibration
     }
 
-    int16_t crd_x = x - data->org_x;
-    int16_t crd_y = y - data->org_y;
-    int16_t crd_z = z - data->org_z;
+    int16_t dx = x - data->org_x;
+    int16_t dy = y - data->org_y;
+    int16_t dz = z - data->org_z;
     
-    if (abs(crd_x) < (int)config->rpt_dzn_x) crd_x = 0;
-    if (abs(crd_y) < (int)config->rpt_dzn_y) crd_y = 0;
-    if (abs(crd_z) < (int)config->rpt_dzn_z) crd_z = 0;
+    if (abs(dx) < (int)config->rpt_dzn_x) dx = 0;
+    if (abs(dy) < (int)config->rpt_dzn_y) dy = 0;
+    if (abs(dz) < (int)config->rpt_dzn_z) dz = 0;
 
     // LOG_DBG("raw: X:%6d Y:%6d Z:%6d | origin: X:%6d Y:%6d Z:%6d | crd: X:%6d Y:%6d Z:%6d", 
-    //         x, y, z, data->org_x, data->org_y, data->org_z, crd_x, crd_y, crd_z);
+    //         x, y, z, data->org_x, data->org_y, data->org_z, dx, dy, dz);
     // LOG_DBG("min/max: X:%6d/%6d Y:%6d/%6d Z:%6d/%6d", 
     //         (int)data->min_x, (int)data->max_x, (int)data->min_y, (int)data->max_y, 
     //         (int)data->min_z, (int)data->max_z);
     // LOG_DBG("thd xy:%6d z:%6d", data->thd_xy, data->thd_z);
 
-    if (crd_x || crd_y || crd_z) {
-        if (crd_x) {
-            input_report_rel(dev, INPUT_ABS_X, crd_x, !crd_y && !crd_z, K_FOREVER);
+    if (dx || dy || dz) {
+        if (dx) {
+            input_report_rel(dev, INPUT_REL_X, dx, !dy && !dz, K_FOREVER);
         }
-        if (crd_y) {
-            input_report_rel(dev, INPUT_ABS_Y, crd_y, !crd_z, K_FOREVER);
+        if (dy) {
+            input_report_rel(dev, INPUT_REL_Y, dy, !dz, K_FOREVER);
         }
-        if (crd_z) {
-            input_report_rel(dev, INPUT_ABS_Z, crd_z, true, K_FOREVER);
+        if (dz) {
+            input_report_rel(dev, INPUT_REL_Z, dz, true, K_FOREVER);
         }
-        LOG_DBG("crd x/y/z: %6d / %6d / %6d", crd_x, crd_y, crd_z);
+        LOG_DBG("delta x/y/z: %6d / %6d / %6d", dx, dy, dz);
     }
 
 reenable_irq:
