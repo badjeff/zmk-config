@@ -4,19 +4,20 @@
  */
 
 /*
-Initial log should look like below if initialization success.
+Sample initial log:
 
-[00:00:00.629,150] <inf> input_mlx90393: Initializing MLX90393 at address 0x0C
-[00:00:00.629,730] <inf> input_mlx90393: exit status: 0x02
-[00:00:00.630,310] <inf> input_mlx90393: reset status: 0x06
-[00:00:00.631,195] <inf> input_mlx90393: read 0x00 config status: 0x02
-[00:00:00.632,080] <inf> input_mlx90393: read 0x02 config status: 0x02
-[00:00:01.032,257] <inf> input_mlx90393: woc threshold: XY:0 Z:0
-[00:00:01.033,142] <inf> input_mlx90393: read WOXY_THRESHOLD status: 0x02
-[00:00:01.034,027] <inf> input_mlx90393: read WOZ_THRESHOLD status: 0x02
-[00:00:01.034,912] <inf> input_mlx90393: read 0x01 config status: 0x02
-[00:00:01.035,491] <inf> input_mlx90393: wake-on change mode status: 0x42
-[00:00:01.035,522] <inf> input_mlx90393: MLX90393 input driver initialized successfully
+[00:00:00.554,382] <inf> input_mlx90393: Initializing MLX90393 on SPI bus
+[00:00:00.554,412] <inf> input_mlx90393: set mask_zyxt: 0xF6
+[00:00:00.554,504] <inf> input_mlx90393: exit status: 0x01
+[00:00:00.554,565] <inf> input_mlx90393: reset status: 0x05
+[00:00:00.554,687] <inf> input_mlx90393: read 0x00 config status: 0x01
+[00:00:00.554,809] <inf> input_mlx90393: read 0x02 config status: 0x01
+[00:00:00.954,986] <inf> input_mlx90393: setting woc threshold xy:0 z:0
+[00:00:00.955,108] <inf> input_mlx90393: read WOXY_THRESHOLD status: 0x01
+[00:00:00.955,230] <inf> input_mlx90393: read WOZ_THRESHOLD status: 0x01
+[00:00:00.955,322] <inf> input_mlx90393: read 0x01 config status: 0x01
+[00:00:00.955,413] <inf> input_mlx90393: wake-on change mode status: 0x41
+[00:00:00.955,413] <inf> input_mlx90393: MLX90393 input driver initialized successfully
 */
 
 #define DT_DRV_COMPAT melexis_mlx90393_input
@@ -46,6 +47,7 @@ struct mlx90393_config {
         struct spi_dt_spec spi;
     } bus;
 	const struct gpio_dt_spec irq_gpio;
+    bool no_x, no_y, no_z;
     uint16_t calib_cycle;
     uint16_t woc_thd_xy, woc_thd_z;
     uint16_t rpt_dzn_x, rpt_dzn_y, rpt_dzn_z;
@@ -56,6 +58,7 @@ struct mlx90393_data {
     struct gpio_callback irq_gpio_cb;
     struct k_work trigger_work;
     struct k_work read_work;
+    uint8_t mask_zyxt;
     bool calibrated;
     uint16_t calibra_cnt;
     int16_t org_x, org_y, org_z;
@@ -163,12 +166,12 @@ static int mlx90393_exit_burst_mode(const struct device *dev) {
 
 static int mlx90393_start_woc_mode(const struct device *dev) {
     // const struct mlx90393_config *config = dev->config;
-    // struct mlx90393_data *data = dev->data;
+    struct mlx90393_data *data = dev->data;
     uint8_t cmd;
     uint8_t status;
     int ret;
 
-    cmd = 0x2E; // Start Wake-up on Change Mode for zyx
+    cmd = 0x2E & data->mask_zyxt; // Start Wake-up on Change Mode for zyx
     ret = mlx90393_cmd_read(dev, &cmd, 1, &status, 1);
 
     if (ret < 0) {
@@ -297,7 +300,7 @@ static void mlx90393_work_handler(struct k_work *work) {
     int16_t x, y, z;
 
     // Read measurement after conversion time
-    cmd = 0x4E;
+    cmd = 0x4E & data->mask_zyxt;
     ret = mlx90393_cmd_read(dev, &cmd, 1, read_data, 7);
 
     if (ret < 0) {
@@ -305,9 +308,9 @@ static void mlx90393_work_handler(struct k_work *work) {
         goto reenable_irq;
     }
     // Convert the data (big endian MSB:LSB for each axis)
-    x = (int16_t)sys_get_be16(&read_data[1]);
-    y = (int16_t)sys_get_be16(&read_data[3]);
-    z = (int16_t)sys_get_be16(&read_data[5]);
+    x = data->mask_zyxt & BIT(1) ? (int16_t)sys_get_be16(&read_data[1]) : 0;
+    y = data->mask_zyxt & BIT(2) ? (int16_t)sys_get_be16(&read_data[3]) : 0;
+    z = data->mask_zyxt & BIT(3) ? (int16_t)sys_get_be16(&read_data[5]) : 0;
     
     if (!data->calibrated) {
         data->sum_x += x;
@@ -339,7 +342,7 @@ static void mlx90393_work_handler(struct k_work *work) {
                     (int)data->min_z, (int)data->max_z);
 
             //
-            // trim woc threshold to 1/2 of calibrated result
+            // trim woc threshold to calibrated result
             // dealing with 3 facts: noise reduction, resolution, power efficiency
             //
             data->thd_xy = ( data->thd_xy * 1/2 ) + config->woc_thd_xy;
@@ -472,6 +475,13 @@ static int mlx90393_init(const struct device *dev) {
     data->max_x = data->max_y = data->max_z = INT32_MIN;
     data->thd_xy = data->thd_z = 0;
 
+    uint8_t mask_zyxt = 0xFE;
+    if (config->no_x) mask_zyxt ^= BIT(1);
+    if (config->no_y) mask_zyxt ^= BIT(2);
+    if (config->no_z) mask_zyxt ^= BIT(3);
+    data->mask_zyxt = mask_zyxt;
+    LOG_INF("set mask_zyxt: 0x%02X", data->mask_zyxt);
+
     ret = mlx90393_exit_burst_mode(dev);
     if (ret < 0) {
         LOG_ERR("Failed to exit burst mode: %d", ret);
@@ -534,6 +544,9 @@ static int mlx90393_init(const struct device *dev) {
                                                          0)} )                                    \
         ),                                                                                        \
         .irq_gpio = GPIO_DT_SPEC_INST_GET_OR(n, irq_gpios, {}),                                   \
+        .no_x = DT_INST_PROP(n, no_x),                                                            \
+        .no_y = DT_INST_PROP(n, no_y),                                                            \
+        .no_z = DT_INST_PROP(n, no_z),                                                            \
         .calib_cycle = DT_INST_PROP(n, calib_cycle),                                              \
         .woc_thd_xy = DT_INST_PROP(n, woc_thd_xy),                                                \
         .woc_thd_z = DT_INST_PROP(n, woc_thd_z),                                                  \

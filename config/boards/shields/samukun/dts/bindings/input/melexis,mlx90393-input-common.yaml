@@ -5,6 +5,18 @@ properties:
     type: phandle-array
     description: Data ready gpio, INT pin on MLX90393
 
+  no-x:
+    type: boolean
+    description: skip measure x axis on chip (default read xyz)
+ 
+  no-y:
+    type: boolean
+    description: skip measure y axis on chip (default read xyz)
+
+  no-z:
+    type: boolean
+    description: skip measure z axis on chip (default read xyz)
+
   calib-cycle:
     type: int
     default: 100
