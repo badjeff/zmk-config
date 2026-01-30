@@ -22,27 +22,35 @@ properties:
     default: 100
     description: count of auto calibration cycle
 
-  woc-thd-xy:
+  ex-woc-thd-xy:
     type: int
     default: 0
     description: extra delta for XY-axis wake-on-change threshold
 
-  woc-thd-z:
+  ex-woc-thd-z:
     type: int
     default: 0
     description: extra delta for Z-axis wake-on-change threshold
 
+  downshift:
+    type: int
+    default: 75
+    description: |
+      Maximum in-deadzone-reading allow in burst mode interrupts before 
+      downshift to wake-on change mode.
+      Interrupt interval is hardcode to ~20ms, default 75 * ~20ms = 1500ms downshift
+
   rpt-dzn-x:
     type: int
-    default: 250
+    default: 150
     description: X-axis deadzone
 
   rpt-dzn-y:
     type: int
-    default: 200
+    default: 150
     description: Y-axis deadzone
 
   rpt-dzn-z:
     type: int
-    default: 200
+    default: 150
     description: Z-axis deadzone

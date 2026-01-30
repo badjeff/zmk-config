@@ -37,7 +37,7 @@
                 compatible = "zmk,input-listener";
                 device = <&spi_mlx90393>;
                 input-processors = <&xy_transf (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>
-                                ,  <&xy_scaler 1 99>;
+                                ,  <&xy_scaler 1 45>;
         };
 
         // tpoint0_mmv_ibl {
