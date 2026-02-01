@@ -102,6 +102,7 @@ struct mlx90393_config {
 	const struct gpio_dt_spec irq_gpio;
     bool no_x, no_y, no_z;
     uint16_t calib_cycle;
+    uint8_t woc_thd_trim_pctg;
     uint16_t ex_woc_thd_xy, ex_woc_thd_z;
     uint16_t downshift;
     uint16_t rpt_dzn_x, rpt_dzn_y, rpt_dzn_z;
@@ -447,9 +448,9 @@ static void mlx90393_work_handler(struct k_work *work) {
             // convert woc threshold to calibrated result
             // tune `thd_trim` with 3 facts: noise reduction, resolution, power efficiency
             //
-            float thd_trim = 0.89; // normal distribution trim
-            data->thd_xy = ( data->thd_xy * thd_trim ) + config->ex_woc_thd_xy;
-            data->thd_z = ( data->thd_z * thd_trim ) + config->ex_woc_thd_z;
+            float thd_trim_pctg = config->woc_thd_trim_pctg / 100;
+            data->thd_xy = ( data->thd_xy * thd_trim_pctg ) + config->ex_woc_thd_xy;
+            data->thd_z = ( data->thd_z * thd_trim_pctg ) + config->ex_woc_thd_z;
             LOG_INF("thd xy:%6d z:%6d", data->thd_xy, data->thd_z);
 
             data->calibrated = true;
@@ -711,6 +712,7 @@ static int mlx90393_init(const struct device *dev) {
         .no_y = DT_INST_PROP(n, no_y),                                                            \
         .no_z = DT_INST_PROP(n, no_z),                                                            \
         .calib_cycle = DT_INST_PROP(n, calib_cycle),                                              \
+        .woc_thd_trim_pctg = DT_INST_PROP(n, woc_thd_trim_pctg),                                  \
         .ex_woc_thd_xy = DT_INST_PROP(n, ex_woc_thd_xy),                                          \
         .ex_woc_thd_z = DT_INST_PROP(n, ex_woc_thd_z),                                            \
         .downshift = DT_INST_PROP(n, downshift),                                                  \

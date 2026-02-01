@@ -22,6 +22,13 @@ properties:
     default: 100
     description: count of auto calibration cycle
 
+  woc-thd-trim-pctg:
+    type: int
+    default: 75
+    description: |
+      Percentage to trim calibration results before setup wake-on-change threshold.
+      Adjust this to filter extreme cases on both ends of normal distributed readings.
+
   ex-woc-thd-xy:
     type: int
     default: 0
