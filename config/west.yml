@@ -111,6 +111,10 @@ manifest:
       remote: badjeff
       revision: main
 
+    - name: zmk-mlx90393-driver
+      remote: badjeff
+      revision: main
+
     - name: zmk-kscan-blackout
       remote: badjeff
       revision: main

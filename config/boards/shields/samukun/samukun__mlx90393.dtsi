@@ -31,12 +31,12 @@
     pinctrl-names = "default", "sleep";
     cs-gpios = <&gpio1 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
     spi_mlx90393: mlx90393@0 {
-        compatible = "melexis,mlx90393-input";
+        compatible = "melexis,mlx90393";
         status = "okay";
         spi-max-frequency = <1000000>;
         reg = <0>;
         irq-gpios = <&gpio1 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
-        // no-z;
+        no-z;
     };
 };
 
@@ -66,7 +66,7 @@
 //     pinctrl-names = "default", "sleep";
 //     clock-frequency = <100000>;
 //     i2c_mlx90393: mlx90393@c {
-//         compatible = "melexis,mlx90393-input";
+//         compatible = "melexis,mlx90393";
 //         status = "okay";
 //         reg = <0x0c>;
 //         irq-gpios = <&gpio1 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
