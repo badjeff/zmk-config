@@ -33,43 +33,44 @@
                 codes = <INPUT_REL_X>, <INPUT_REL_Y>;
                 track-remainders;
         };
+        z_scaler: z_scaler {
+                compatible = "zmk,input-processor-scaler";
+                #input-processor-cells = <2>;
+                type = <INPUT_EV_REL>;
+                codes = <INPUT_REL_Z>;
+                track-remainders;
+        };
+        r_transf: r_transf {
+                compatible = "zmk,input-processor-transform";
+                #input-processor-cells = <1>;
+                type = <INPUT_EV_REL>;
+                x-codes = <INPUT_REL_X>, <INPUT_REL_Y>, <INPUT_REL_Z>;
+                y-codes = <INPUT_REL_RX>, <INPUT_REL_RY>, <INPUT_REL_RZ>;
+        };
         tpoint0_mmv_ibl {
                 compatible = "zmk,input-listener";
                 device = <&spi_mlx90393>;
                 input-processors = <&xy_transf (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>
-                                ,  <&xy_scaler 1 45>;
+                                // ,  <&xy_scaler 1 45>, <&z_scaler 1 55>;
+                                ,  <&xy_scaler 1 25>, <&z_scaler 1 35>
+                                // ,  <&r_transf (INPUT_TRANSFORM_XY_SWAP)>
+                                ,  <&zip_fwd_to_hid_joystick>;
         };
 
-        // tpoint0_mmv_ibl {
-        //         compatible = "zmk,input-behavior-listener";
-        //         device = <&tpoint0>;
-        //         layers = <DEF>;
-	//         evt-type = <INPUT_EV_REL>;
-	//         x-input-code = <INPUT_REL_X>;
-	//         y-input-code = <INPUT_REL_Y>;
-        //         xy-swap;
-        //         x-invert;
-        //         y-invert;
-        //         // bindings = <&ib_tog_layer MSK>;
-        // };
+        zip_fwd_to_hid_joystick: zip_forward_fwd_to_hid_joystick {
+                compatible = "zmk,input-processor-fwd-to-hid-joystick";
+                #input-processor-cells = <0>;
+        };
 
-        // tpoint1_mmv_ibl {
-        //         compatible = "zmk,input-behavior-listener";
-        //         device = <&tpoint1>;
-        //         layers = <DEF>;
-	//         evt-type = <INPUT_EV_REL>;
-	//         x-input-code = <INPUT_REL_X>;
-	//         y-input-code = <INPUT_REL_Y>;
-        //         xy-swap; 
-        //         x-invert;
-        //         y-invert;
-        //         // bindings = <&ib_tog_layer MSK>;
-        // };
-
-        // ib_fwd_to_hid_io: ib_forward_fwd_to_hid_io {
-        //         compatible = "zmk,input-behavior-fwd-to-hid-io";
-        //         #binding-cells = <0>;
-        // };
+        jskp: hid_joystick_key_press {
+                compatible = "zmk,behavior-hid-joystick-key-press";
+                #binding-cells = <1>;
+        };
+	jskp_il {
+		compatible = "zmk,input-listener";
+		device = <&jskp>;
+                input-processors = <&zip_fwd_to_hid_joystick>;
+	};
 
         // behaviors {
         //         ec_s: mouse_scroll {
@@ -94,14 +95,16 @@
                 DEF_layer {
                         bindings = <
 
-&kp LSHFT  &kp N2  &kp N3  &kp N4  &kp N5  &kp N6  &kp N7  &kp N8
-&kp A  &kp B  &kp C  &kp D  &kp E  &kp F  &kp G  &kp H
-&kp LS(A)  &kp LS(B)  &kp LS(C)  &kp LS(D)  &kp LS(E)  &kp LS(F)  &kp LS(G)  &kp LS(H)
+&jskp 0
 
-&kp N1   &kp N2   &kp N3   &kp N4
-&kp N5   &kp N6   &kp N7   &kp N8
-&kp N9   &kp N0   &kp A    &kp B
-&kp C    &kp D    &kp E    &kp F
+// &kp LSHFT  &kp N2  &kp N3  &kp N4  &kp N5  &kp N6  &kp N7  &kp N8
+// &kp A  &kp B  &kp C  &kp D  &kp E  &kp F  &kp G  &kp H
+// &kp LS(A)  &kp LS(B)  &kp LS(C)  &kp LS(D)  &kp LS(E)  &kp LS(F)  &kp LS(G)  &kp LS(H)
+
+// &kp N1   &kp N2   &kp N3   &kp N4
+// &kp N5   &kp N6   &kp N7   &kp N8
+// &kp N9   &kp N0   &kp A    &kp B
+// &kp C    &kp D    &kp E    &kp F
 
                         >;
                         // sensor-bindings = < &rot_enc >;

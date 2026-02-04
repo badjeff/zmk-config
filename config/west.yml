@@ -87,6 +87,10 @@ manifest:
     #   remote: badjeff
     #   revision: main
 
+    - name: zmk-hid-joystick
+      remote: badjeff
+      revision: main
+
     # - name: zmk-split-peripheral-input-relay
     #   remote: badjeff
     #   revision: main

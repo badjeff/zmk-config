@@ -95,5 +95,5 @@ include:
   # - board: nologo_nano33_ble
   #   shield: m330
 
-  # - board: nice_nano@2.0.0
-  #   shield: samukun
+  - board: nice_nano@2.0.0
+    shield: samukun
