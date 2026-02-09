@@ -36,6 +36,7 @@ struct zip_input_processor_mixer_data {
     int64_t last_rpt_time_yaw;
     int16_t yaw1;
     int16_t yaw2;
+    int16_t z;
 };
 
 static int sy_handle_event(const struct device *dev, struct input_event *event, uint32_t param1,
@@ -100,20 +101,34 @@ static int sy_handle_event(const struct device *dev, struct input_event *event, 
     }
 
     if (now - data->last_rpt_time > config->sync_report_ms) {
+
+        // int16_t yaw1 = data->yaw1;
+        // int16_t yaw2 = -data->yaw2;
+        // int16_t ydiff = abs( abs(yaw1) - abs(yaw2) );
+        // // LOG_DBG("yaw1: %d, yaw2: %d", yaw1, yaw2, ydiff);
+        // int16_t yaw = ((yaw1 + yaw2) * 0.5) / config->yaw_div;
+        // // LOG_WRN("###### yaw: %d", yaw);
+        // data->z += yaw;
+        // data->yaw1 = data->yaw2 = 0;
+
         bool have_x = data->x != 0;
         bool have_y = data->y != 0;
+        bool have_z = false; // data->z != 0;
 
-        if (have_x || have_y) {
+        if (have_x || have_y || have_z) {
             // LOG_DBG("x: %d, y: %d", data->x, data->y);
             data->last_rpt_time = now;
 
             if (have_x) {
-                input_report(dev, INPUT_EV_REL, INPUT_REL_X, data->x, !have_y, K_NO_WAIT);
+                input_report(dev, INPUT_EV_REL, INPUT_REL_X, data->x, !have_y && !have_z, K_NO_WAIT);
             }
             if (have_y) {
-                input_report(dev, INPUT_EV_REL, INPUT_REL_Y, data->y, true, K_NO_WAIT);
+                input_report(dev, INPUT_EV_REL, INPUT_REL_Y, data->y, !have_z, K_NO_WAIT);
             }
-            data->x = data->y = 0;
+            if (have_z) {
+                input_report(dev, INPUT_EV_REL, INPUT_REL_Z, data->z, true, K_NO_WAIT);
+            }
+            data->x = data->y = data->z = 0;
         }
     }
 
