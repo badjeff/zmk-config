@@ -2,9 +2,9 @@ name: zmk-module-template
 build:
   # depends:
   #   - zmk-example-dependency
-  cmake: .
-  kconfig: Kconfig
+  # cmake: .
+  # kconfig: Kconfig
   settings:
     board_root: .
-    dts_root: .
-    snippet_root:  .
+    # dts_root: .
+    # snippet_root:  .
