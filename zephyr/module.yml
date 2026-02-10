@@ -1,4 +1,3 @@
-name: zmk-module-template
 build:
   # depends:
   #   - zmk-example-dependency
