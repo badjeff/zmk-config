@@ -54,3 +54,11 @@
 		triggers-per-rotation = <12>;
 	};
 };
+
+// #####
+// ##### For NCS 3.2
+// #####
+
+// &timer2 {
+//     status = "okay";
+// };

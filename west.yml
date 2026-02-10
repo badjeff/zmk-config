@@ -1,0 +1,11 @@
+manifest:
+  remotes:
+    - name: badjeff
+      url-base: https://github.com/badjeff
+  projects:
+    # Together with the above defined remote, this refers to a module located at
+    # https://github.com/badjeff/zmk-config
+    - name: zmk-config
+      remote: badjeff
+      # This points to a west manifest file in the remote module for further imports
+      import: west.yml
