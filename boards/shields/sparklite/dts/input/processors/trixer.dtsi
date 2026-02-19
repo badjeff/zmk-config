@@ -1,0 +1,22 @@
+// Copyright (c) 2025, The ZMK Contributors
+// SPDX-License-Identifier: MIT
+
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+    /omit-if-no-ref/ zip_trixer: zip_trixer {
+        compatible = "zmk,input-processor-trixer";
+        #input-processor-cells = <1>;
+        sync-report-ms = <20>;
+        radius-um = <18500>;
+        xy-sensitivity-num = <1>;
+        xy-sensitivity-denom = <1>;
+        z-sensitivity-num = <1>;
+        z-sensitivity-denom = <2>;
+        rotation-scale-num = <1>;
+        rotation-scale-denom = <2>;
+        yaw-scale-num = <3>;
+        yaw-scale-denom = <2>;
+        neutral-timeout-ms = <100>;
+    };
+};

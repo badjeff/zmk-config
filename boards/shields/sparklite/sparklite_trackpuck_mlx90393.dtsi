@@ -1,0 +1,68 @@
+/*
+ * Copyright (c) 2020 Pete Johanson
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+&pinctrl {
+	spi2_default: spi2_default {
+		group1 {
+			psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
+							<NRF_PSEL(SPIM_MOSI, 1, 15)>,
+							<NRF_PSEL(SPIM_MISO, 1, 15)>;
+		};
+	};
+	spi2_sleep: spi2_sleep {
+		group1 {
+			psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
+							<NRF_PSEL(SPIM_MOSI, 1, 15)>,
+							<NRF_PSEL(SPIM_MISO, 1, 15)>;
+			low-power-enable;
+		};
+	};
+};
+
+#include <dt-bindings/spi/spi.h>
+&spi2 {
+    compatible = "nordic,nrf-spim";
+    status = "okay";
+    pinctrl-0 = <&spi2_default>;
+    pinctrl-1 = <&spi2_sleep>;
+    pinctrl-names = "default", "sleep";
+    cs-gpios = <&gpio1 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&gpio1 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+    mlxpuck1: mlx90393@0 {
+        compatible = "melexis,mlx90393";
+        status = "okay";
+        spi-max-frequency = <1000000>;
+        reg = <0>;
+        irq-gpios = <&gpio0 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+        woc-thd-trim-pctg = <75>;
+        rpt-dzn-x = <150>;
+        rpt-dzn-y = <150>;
+        rpt-dzn-z = <150>;
+    };
+    mlxpuck2: mlx90393@1 {
+        compatible = "melexis,mlx90393";
+        status = "okay";
+        spi-max-frequency = <1000000>;
+        reg = <1>;
+        irq-gpios = <&gpio0 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+        woc-thd-trim-pctg = <75>;
+        rpt-dzn-x = <150>;
+        rpt-dzn-y = <150>;
+        rpt-dzn-z = <150>;
+    };
+    mlxpuck3: mlx90393@2 {
+        compatible = "melexis,mlx90393";
+        status = "okay";
+        spi-max-frequency = <1000000>;
+        reg = <2>;
+        irq-gpios = <&gpio0 29 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+        woc-thd-trim-pctg = <75>;
+        rpt-dzn-x = <150>;
+        rpt-dzn-y = <150>;
+        rpt-dzn-z = <150>;
+    };
+};

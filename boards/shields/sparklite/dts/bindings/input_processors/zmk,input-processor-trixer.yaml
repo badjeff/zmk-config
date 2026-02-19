@@ -1,0 +1,75 @@
+# Copyright (c) 2025, The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+description: 6-DOF Spacemouse input processor for 3 magnetometers on circular PCB
+
+compatible: "zmk,input-processor-trixer"
+
+include: ip_one_param.yaml
+
+properties:
+
+  sync-report-ms:
+    type: int
+    required: true
+    default: 1
+
+  radius-um:
+    type: int
+    required: false
+    default: 18500
+    description: Radius of magnet circle in micrometers (default 18.5mm)
+
+  xy-sensitivity-num:
+    type: int
+    required: false
+    default: 1
+    description: XY sensitivity numerator for scaling raw to mm
+
+  xy-sensitivity-denom:
+    type: int
+    required: false
+    default: 1
+    description: XY sensitivity denominator for scaling raw to mm
+
+  z-sensitivity-num:
+    type: int
+    required: false
+    default: 1
+    description: Z sensitivity numerator for scaling raw to mm
+
+  z-sensitivity-denom:
+    type: int
+    required: false
+    default: 1
+    description: Z sensitivity denominator for scaling raw to mm
+
+  rotation-scale-num:
+    type: int
+    required: false
+    default: 1
+    description: Rotation output scale numerator
+
+  rotation-scale-denom:
+    type: int
+    required: false
+    default: 1
+    description: Rotation output scale denominator (pitch/roll)
+
+  yaw-scale-num:
+    type: int
+    required: false
+    default: 1
+    description: Yaw output scale numerator
+
+  yaw-scale-denom:
+    type: int
+    required: false
+    default: 1
+    description: Yaw output scale denominator
+
+  neutral-timeout-ms:
+    type: int
+    required: false
+    default: 50
+    description: Timeout in milliseconds before reporting neutral when all sensors are idle

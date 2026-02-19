@@ -8,9 +8,10 @@
 
 &kscan0 {
 	col-gpios
-		= <&gpio0 28 GPIO_ACTIVE_HIGH>
-		, <&gpio0 29 GPIO_ACTIVE_HIGH>
-		, <&gpio0 4 GPIO_ACTIVE_HIGH>
+		// = <&gpio0 28 GPIO_ACTIVE_HIGH>
+		// , <&gpio0 29 GPIO_ACTIVE_HIGH>
+		// , <&gpio0 3 GPIO_ACTIVE_HIGH>
+		= <&gpio0 3 GPIO_ACTIVE_HIGH>
 		;
 };
 
@@ -18,8 +19,10 @@
 // #include "sparklite_trackball_adns9800.dtsi"
 // #include "sparklite_trackball_pmw3610.dtsi"
 // #include "sparklite_trackball_paw3395.dtsi"
-#include "sparklite_trackball_paw3222.dtsi"
+// #include "sparklite_trackball_paw3222.dtsi"
 // #include "sparklite_trackball_pat9125.dtsi"
+#include "sparklite_trackpuck_mlx90393.dtsi"
+// #include "sparklite_trackpuck_pat9125.dtsi"
 
 // / {
 // 	erm0: output_generic_0 {

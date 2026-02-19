@@ -20,6 +20,9 @@
 #include <input/processors.dtsi>
 
 #include <input/processors/mixer.dtsi>
+#include <input/processors/trixer.dtsi>
+#include <input/processors/quadixer.dtsi>
+#include <input/processors/neutral.dtsi>
 #include <input/processors/report_rate_limit.dtsi>
 
 #define DEFAULT 0
@@ -35,31 +38,150 @@
 };
 
 / {
-        tball1_pri_mmv_il {
-                compatible = "zmk,input-listener";
-                device = <&pd0>;
-                default {
-                        layers = <DEFAULT>;
-                        // sensor at 6 o'clock pos
-                        input-processors = <&zip_xy_swap_mapper>
-                                         , <&zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)>
-                                         , <&zip_mixer 0>;
-                };
+        xy_transf: xy_transf {
+                compatible = "zmk,input-processor-transform";
+                #input-processor-cells = <1>;
+                type = <INPUT_EV_REL>;
+                x-codes = <INPUT_REL_X>, <INPUT_REL_WHEEL>;
+                y-codes = <INPUT_REL_Y>, <INPUT_REL_HWHEEL>;
         };
-        tball1_sec_mmv_il {
-                compatible = "zmk,input-listener";
-                device = <&pd0a>;
-                default {
-                        layers = <DEFAULT>;
-                        // sensor at 3 o'clock pos
-                        input-processors = <&zip_mixer 1>;
-                };
+        xy_scaler: xy_scaler {
+                compatible = "zmk,input-processor-scaler";
+                #input-processor-cells = <2>;
+                type = <INPUT_EV_REL>;
+                codes = <INPUT_REL_X>, <INPUT_REL_Y>;
+                track-remainders;
         };
-        mixin_mmv_il {
-                compatible = "zmk,input-listener";
-                device = <&zip_mixer>;
-                input-processors = <&zip_report_rate_limit 12>;
+        z_scaler: z_scaler {
+                compatible = "zmk,input-processor-scaler";
+                #input-processor-cells = <2>;
+                type = <INPUT_EV_REL>;
+                codes = <INPUT_REL_Z>;
+                track-remainders;
         };
+
+        mlxpuck1_il {
+                compatible = "zmk,input-listener";
+                device = <&mlxpuck1>;
+                input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
+                                ,  <&xy_scaler 1 30>, <&z_scaler 1 30>
+                                ,  <&zip_trixer 0>;
+        };
+        mlxpuck2_il {
+                compatible = "zmk,input-listener";
+                device = <&mlxpuck2>;
+                input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
+                                ,  <&xy_scaler 1 30>, <&z_scaler 1 30>
+                                ,  <&zip_trixer 1>;
+        };
+        mlxpuck3_il {
+                compatible = "zmk,input-listener";
+                device = <&mlxpuck3>;
+                input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
+                                ,  <&xy_scaler 1 30>, <&z_scaler 1 30>
+                                ,  <&zip_trixer 2>;
+        };
+        trixer_il {
+		compatible = "zmk,input-listener";
+		device = <&zip_trixer>;
+                input-processors = <&zip_fwd_to_hid_joystick>;
+	};
+
+        // patpuck1_il {
+        //         compatible = "zmk,input-listener";
+        //         device = <&patpuck1>;
+        //         input-processors = <&xy_transf (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>
+        //                         ,  <&xy_scaler 1 25>
+        //                         ,  <&zip_neutral_pat1>
+        //                         ,  <&zip_quadixer 0>;
+        // };
+        // patpuck2_il {
+        //         compatible = "zmk,input-listener";
+        //         device = <&patpuck2>;
+        //         input-processors = <&xy_transf (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>
+        //                         ,  <&xy_scaler 1 25>
+        //                         ,  <&zip_neutral_pat2>
+        //                         ,  <&zip_quadixer 1>;
+        // };
+        // patpuck3_il {
+        //         compatible = "zmk,input-listener";
+        //         device = <&patpuck3>;
+        //         input-processors = <&xy_transf (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>
+        //                         ,  <&xy_scaler 1 25>
+        //                         ,  <&zip_neutral_pat3>
+        //                         ,  <&zip_quadixer 2>;
+        // };
+        // patpuck4_il {
+        //         compatible = "zmk,input-listener";
+        //         device = <&patpuck4>;
+        //         input-processors = <&xy_transf (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>
+        //                         ,  <&xy_scaler 1 25>
+        //                         ,  <&zip_neutral_pat4>
+        //                         ,  <&zip_quadixer 3>;
+        // };
+        // zip_neutral_pat1: zip_neutral_pat1 {
+        //         compatible = "zmk,input-processor-neutral";
+        //         #input-processor-cells = <0>;
+        // };
+        // zip_neutral_pat2: zip_neutral_pat2 {
+        //         compatible = "zmk,input-processor-neutral";
+        //         #input-processor-cells = <0>;
+        // };
+        // zip_neutral_pat3: zip_neutral_pat3 {
+        //         compatible = "zmk,input-processor-neutral";
+        //         #input-processor-cells = <0>;
+        // };
+        // zip_neutral_pat4: zip_neutral_pat4 {
+        //         compatible = "zmk,input-processor-neutral";
+        //         #input-processor-cells = <0>;
+        // };
+        // quadixer_il {
+	// 	compatible = "zmk,input-listener";
+	// 	device = <&zip_quadixer>;
+        //         input-processors = <&zip_fwd_to_hid_joystick>;
+	// };
+
+
+        zip_fwd_to_hid_joystick: zip_forward_fwd_to_hid_joystick {
+                compatible = "zmk,input-processor-fwd-to-hid-joystick";
+                #input-processor-cells = <0>;
+        };
+        jskp: hid_joystick_key_press {
+                compatible = "zmk,behavior-hid-joystick-key-press";
+                #binding-cells = <1>;
+        };
+	jskp_il {
+		compatible = "zmk,input-listener";
+		device = <&jskp>;
+                input-processors = <&zip_fwd_to_hid_joystick>;
+	};
+
+
+        // tball1_pri_mmv_il {
+        //         compatible = "zmk,input-listener";
+        //         device = <&pd0>;
+        //         default {
+        //                 layers = <DEFAULT>;
+        //                 // sensor at 6 o'clock pos
+        //                 input-processors = <&zip_xy_swap_mapper>
+        //                                  , <&zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)>
+        //                                  , <&zip_mixer 0>;
+        //         };
+        // };
+        // tball1_sec_mmv_il {
+        //         compatible = "zmk,input-listener";
+        //         device = <&pd0a>;
+        //         default {
+        //                 layers = <DEFAULT>;
+        //                 // sensor at 3 o'clock pos
+        //                 input-processors = <&zip_mixer 1>;
+        //         };
+        // };
+        // mixin_mmv_il {
+        //         compatible = "zmk,input-listener";
+        //         device = <&zip_mixer>;
+        //         input-processors = <&zip_report_rate_limit 12>;
+        // };
 
         // tball1_mmv_il {
         //         compatible = "zmk,input-listener";
@@ -129,17 +251,23 @@
                 compatible = "zmk,keymap";
                 default_layer {
                         bindings = <
+&jskp 0
+// &trans
+
 //    &bt BT_CLR   &out OUT_TOG      &mkp LCLK   &mkp RCLK
 //    &mkp LCLK    &mo RAISE         &mkp MCLK   &mktg MB4
-&mkp MCLK   &mkp RCLK   &mkp LCLK
-                        >;
+//    &mkp MCLK   &mkp RCLK   &mkp LCLK
+                                >;
                 };
                 raise_layer {
                         bindings = <
+&jskp 0
+// &trans
+
 //    &trans       &trans            &trans       &trans
 //    &trans       &trans            &trans       &trans
-&trans       &trans       &trans
-                        >;
+//    &trans       &trans       &trans
+                                >;
                 };
        };
 };

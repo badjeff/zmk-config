@@ -4,5 +4,6 @@
 zephyr_library()
 
 target_sources(app PRIVATE input_processor_mixer.c)
+target_sources(app PRIVATE input_processor_trixer.c)
 
 zephyr_include_directories(include)

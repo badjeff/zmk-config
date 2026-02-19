@@ -52,9 +52,10 @@
                 device = <&spi_mlx90393>;
                 input-processors = <&xy_transf (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>
                                 // ,  <&xy_scaler 1 45>, <&z_scaler 1 55>;
-                                ,  <&xy_scaler 1 25>, <&z_scaler 1 35>
-                                // ,  <&r_transf (INPUT_TRANSFORM_XY_SWAP)>
-                                ,  <&zip_fwd_to_hid_joystick>;
+                                ,  <&xy_scaler 1 90>, <&z_scaler 1 110>;
+                                // ,  <&xy_scaler 1 25>, <&z_scaler 1 35>
+                                // // ,  <&r_transf (INPUT_TRANSFORM_XY_SWAP)>
+                                // ,  <&zip_fwd_to_hid_joystick>;
         };
 
         zip_fwd_to_hid_joystick: zip_forward_fwd_to_hid_joystick {
