@@ -21,8 +21,8 @@
 
 #include <input/processors/mixer.dtsi>
 #include <input/processors/trixer.dtsi>
-#include <input/processors/quadixer.dtsi>
-#include <input/processors/neutral.dtsi>
+// #include <input/processors/quadixer.dtsi>
+// #include <input/processors/neutral.dtsi>
 #include <input/processors/report_rate_limit.dtsi>
 
 #define DEFAULT 0
