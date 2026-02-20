@@ -15,8 +15,8 @@
         z-sensitivity-denom = <15>;
         rotation-scale-num = <1>;
         rotation-scale-denom = <1>;
-        yaw-scale-num = <3>;
-        yaw-scale-denom = <2>;
+        yaw-scale-num = <1>;
+        yaw-scale-denom = <1>;
         neutral-timeout-ms = <50>;
     };
 };
