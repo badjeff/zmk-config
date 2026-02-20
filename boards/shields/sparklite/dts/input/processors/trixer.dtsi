@@ -12,11 +12,11 @@
         xy-sensitivity-num = <1>;
         xy-sensitivity-denom = <1>;
         z-sensitivity-num = <1>;
-        z-sensitivity-denom = <2>;
+        z-sensitivity-denom = <15>;
         rotation-scale-num = <1>;
-        rotation-scale-denom = <2>;
+        rotation-scale-denom = <1>;
         yaw-scale-num = <3>;
         yaw-scale-denom = <2>;
-        neutral-timeout-ms = <100>;
+        neutral-timeout-ms = <50>;
     };
 };

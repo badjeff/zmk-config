@@ -58,7 +58,7 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 #define IDX_SEN_BETA    1
 #define IDX_SEN_GAMMA   2
 #define NUM_SENSORS     3
-#define MIN_SENSOR_NEUTRAL 1  /* Min sensors in neutral to trigger device neutral (1-3) */
+#define MIN_SENSOR_NEUTRAL 2  /* Min sensors in neutral to trigger device neutral (1-3) */
 
 #ifndef M_PI
 #define M_PI (3.14159265358979323846f)
@@ -208,7 +208,6 @@ static int trixer_handle_event(const struct device *dev, struct input_event *eve
 
     /* Transform chip-local readings to world coordinates */
     struct vec3 magnet_world[NUM_SENSORS];  /* XY in world frame, Z remains local */
-    float z_mm[NUM_SENSORS];                 /* Z scaled to millimeters */
     
     float radius_mm = config->radius_um / 1000.0f;
     float xy_scale = (float)config->xy_sensitivity_num / (float)config->xy_sensitivity_denom;
@@ -228,25 +227,24 @@ static int trixer_handle_event(const struct device *dev, struct input_event *eve
         magnet_world[i].x = world_x;
         magnet_world[i].y = world_y;
         magnet_world[i].z = local_z;
-        
-        z_mm[i] = local_z * z_scale;
     }
 
     struct vec3 centroid;
     centroid.x = (magnet_world[0].x + magnet_world[1].x + magnet_world[2].x) / 3.0f;
     centroid.y = (magnet_world[0].y + magnet_world[1].y + magnet_world[2].y) / 3.0f;
-    centroid.z = (z_mm[0] + z_mm[1] + z_mm[2]) / 3.0f;
+    centroid.z = (magnet_world[0].z + magnet_world[1].z + magnet_world[2].z) / 3.0f;
 
     data->x = (int16_t)roundf(centroid.x * xy_scale);
     data->y = (int16_t)roundf(centroid.y * xy_scale);
     data->z = (int16_t)roundf(centroid.z);
 
-    float z_alpha_rel = z_mm[IDX_SEN_ALPHA] - centroid.z;
-    float z_beta_rel = z_mm[IDX_SEN_BETA] - centroid.z;
-    float z_gamma_rel = z_mm[IDX_SEN_GAMMA] - centroid.z;
+    /* Pitch / Roll calculation using relative differential of altitude of magnets */
+    float z_alpha_rel = (magnet_world[IDX_SEN_ALPHA].z - centroid.z) * z_scale;
+    float z_beta_rel = (magnet_world[IDX_SEN_BETA].z - centroid.z) * z_scale;
+    float z_gamma_rel = (magnet_world[IDX_SEN_GAMMA].z - centroid.z) * z_scale;
 
-    float sin_pitch = (z_gamma_rel - z_beta_rel) / (radius_mm * SQRT3);
-    float sin_roll = (-z_alpha_rel + z_beta_rel + z_gamma_rel) / (2.0f * radius_mm);
+    float sin_pitch = (z_alpha_rel - ((z_beta_rel + z_gamma_rel) / 2.0f)) / radius_mm;
+    float sin_roll = (z_beta_rel - z_gamma_rel) / radius_mm;
 
     if (sin_pitch > 1.0f) sin_pitch = 1.0f;
     if (sin_pitch < -1.0f) sin_pitch = -1.0f;
