@@ -38,10 +38,12 @@
         spi-max-frequency = <1000000>;
         reg = <0>;
         irq-gpios = <&gpio0 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
-        woc-thd-trim-pctg = <75>;
-        rpt-dzn-x = <150>;
-        rpt-dzn-y = <150>;
-        rpt-dzn-z = <150>;
+        woc-thd-trim-pctg = <33>;
+        smooth-len = <5>;
+        downshift = <50>;
+        rpt-dzn-x = <71>;
+        rpt-dzn-y = <71>;
+        rpt-dzn-z = <71>;
     };
     mlxpuck2: mlx90393@1 {
         compatible = "melexis,mlx90393";
@@ -49,10 +51,12 @@
         spi-max-frequency = <1000000>;
         reg = <1>;
         irq-gpios = <&gpio0 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
-        woc-thd-trim-pctg = <75>;
-        rpt-dzn-x = <150>;
-        rpt-dzn-y = <150>;
-        rpt-dzn-z = <150>;
+        woc-thd-trim-pctg = <33>;
+        smooth-len = <5>;
+        downshift = <50>;
+        rpt-dzn-x = <71>;
+        rpt-dzn-y = <71>;
+        rpt-dzn-z = <71>;
     };
     mlxpuck3: mlx90393@2 {
         compatible = "melexis,mlx90393";
@@ -60,9 +64,11 @@
         spi-max-frequency = <1000000>;
         reg = <2>;
         irq-gpios = <&gpio0 29 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
-        woc-thd-trim-pctg = <75>;
-        rpt-dzn-x = <150>;
-        rpt-dzn-y = <150>;
-        rpt-dzn-z = <150>;
+        woc-thd-trim-pctg = <33>;
+        smooth-len = <5>;
+        downshift = <50>;
+        rpt-dzn-x = <71>;
+        rpt-dzn-y = <71>;
+        rpt-dzn-z = <71>;
     };
 };

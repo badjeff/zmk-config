@@ -90,6 +90,9 @@ struct zip_trixer_config {
     uint32_t yaw_scale_num;
     uint32_t yaw_scale_denom;
     uint32_t neutral_timeout_ms;
+    uint8_t smooth_len;
+    uint16_t rpt_dzn_x, rpt_dzn_y, rpt_dzn_z;
+    uint16_t rpt_dzn_rx, rpt_dzn_ry, rpt_dzn_rz;
 };
 
 struct zip_trixer_sensor_rel {
@@ -110,6 +113,12 @@ struct zip_trixer_data {
     /* Accumulated output values (scaled and ready to report) */
     int16_t x, y, z;        /* Translation: centroid of three magnet positions */
     int16_t rx, ry, rz;     /* Rotation: pitch (X), roll (Y), yaw (Z) in degrees */
+
+    /* Smoothed output history for delta smoothing */
+    int16_t *smooth_x, *smooth_y, *smooth_z;
+    int16_t *smooth_rx, *smooth_ry, *smooth_rz;
+    uint8_t smooth_filled;
+    uint8_t smooth_idx;
 };
 
 /* Rotate 2D vector counter-clockwise by given angle (radians) */
@@ -175,7 +184,7 @@ static int trixer_handle_event(const struct device *dev, struct input_event *eve
 
         /* Exit neutral state if we were in it */
         if (data->in_neutral_state) {
-            LOG_DBG("NEUTRAL exited (motion detected)");
+            // LOG_DBG("NEUTRAL exited (motion detected)");
             data->in_neutral_state = false;
         }
     } else if (neutral_count >= MIN_SENSOR_NEUTRAL) {
@@ -306,6 +315,57 @@ static int trixer_handle_event(const struct device *dev, struct input_event *eve
     event->value = 0;
     event->sync = false;
 
+    /* smooth with recent */
+    data->smooth_x[data->smooth_idx] = data->x;
+    data->smooth_y[data->smooth_idx] = data->y;
+    data->smooth_z[data->smooth_idx] = data->z;
+    data->smooth_rx[data->smooth_idx] = data->rx;
+    data->smooth_ry[data->smooth_idx] = data->ry;
+    data->smooth_rz[data->smooth_idx] = data->rz;
+    data->smooth_filled = MAX(data->smooth_filled, data->smooth_idx + 1);
+    float sum_x = 0, sum_y = 0, sum_z = 0;
+    float sum_rx = 0, sum_ry = 0, sum_rz = 0;
+    for (int i = 0; i < data->smooth_filled; i++) {
+        sum_x += (float)data->smooth_x[i];
+        sum_y += (float)data->smooth_y[i];
+        sum_z += (float)data->smooth_z[i];
+        sum_rx += (float)data->smooth_rx[i];
+        sum_ry += (float)data->smooth_ry[i];
+        sum_rz += (float)data->smooth_rz[i];
+    }
+    data->x = (int16_t)roundf(sum_x / data->smooth_filled);
+    data->y = (int16_t)roundf(sum_y / data->smooth_filled);
+    data->z = (int16_t)roundf(sum_z / data->smooth_filled);
+    data->rx = (int16_t)roundf(sum_rx / data->smooth_filled);
+    data->ry = (int16_t)roundf(sum_ry / data->smooth_filled);
+    data->rz = (int16_t)roundf(sum_rz / data->smooth_filled);
+    data->smooth_idx = (data->smooth_idx + 1) % config->smooth_len;
+
+    /* apply deadzones */
+    bool x_in_dz = abs(data->x) < (int)config->rpt_dzn_x;
+    bool y_in_dz = abs(data->y) < (int)config->rpt_dzn_y;
+    bool z_in_dz = abs(data->z) < (int)config->rpt_dzn_z;
+    bool rx_in_dz = abs(data->rx) < (int)config->rpt_dzn_rx;
+    bool ry_in_dz = abs(data->ry) < (int)config->rpt_dzn_ry;
+    bool rz_in_dz = abs(data->rz) < (int)config->rpt_dzn_rz;
+    bool in_deadzone = x_in_dz && y_in_dz && z_in_dz && rx_in_dz && ry_in_dz && rz_in_dz;
+    // LOG_DBG("%d %d %d %d %d %d", 
+    //     abs(data->x), abs(data->y), abs(data->z),
+    //     abs(data->rx), abs(data->ry), abs(data->rz));
+    if (in_deadzone) { 
+         if (!data->neutral_pending && !data->in_neutral_state) {
+            k_work_schedule(&data->neutral_work, K_MSEC(0));
+            data->neutral_pending = true;
+        }
+        return ZMK_INPUT_PROC_STOP;
+    }
+    data->x = (x_in_dz) ? 0 : data->x;
+    data->y = (y_in_dz) ? 0 : data->y;
+    data->z = (z_in_dz) ? 0 : data->z;
+    data->rx = (rx_in_dz) ? 0 : data->rx;
+    data->ry = (ry_in_dz) ? 0 : data->ry;
+    data->rz = (rz_in_dz) ? 0 : data->rz;
+
     int64_t now = k_uptime_get();
 
     /* Report accumulated values at configured interval */
@@ -362,6 +422,7 @@ static void neutral_work_handler(struct k_work *work)
     struct k_work_delayable *dwork = k_work_delayable_from_work(work);
     struct zip_trixer_data *data = CONTAINER_OF(dwork, struct zip_trixer_data, neutral_work);
     const struct device *dev = data->dev;
+    const struct zip_trixer_config *config = dev->config;
 
     /* Mark neutral as no longer pending but we are now in neutral state */
     data->neutral_pending = false;
@@ -374,8 +435,19 @@ static void neutral_work_handler(struct k_work *work)
     input_report(dev, INPUT_EV_REL, INPUT_REL_RX, 0, false, K_NO_WAIT);
     input_report(dev, INPUT_EV_REL, INPUT_REL_RY, 0, false, K_NO_WAIT);
     input_report(dev, INPUT_EV_REL, INPUT_REL_RZ, 0, true, K_NO_WAIT);
-    
-    LOG_DBG("NEUTRAL report sent (all axes zero)");
+    // LOG_DBG("NEUTRAL report sent (all axes zero)");
+
+    /* reset all smoothing on neutral */
+    for (int i = 0; i < config->smooth_len; i++) {
+        data->smooth_x[i] = 0;
+        data->smooth_y[i] = 0;
+        data->smooth_z[i] = 0;
+        data->smooth_rx[i] = 0;
+        data->smooth_ry[i] = 0;
+        data->smooth_rz[i] = 0;
+    }
+    data->smooth_filled = 0;
+    data->smooth_idx = 0;
 }
 
 static struct zmk_input_processor_driver_api trixer_driver_api = {
@@ -385,12 +457,36 @@ static struct zmk_input_processor_driver_api trixer_driver_api = {
 static int trixer_init(const struct device *dev)
 {
     struct zip_trixer_data *data = dev->data;
+    const struct zip_trixer_config *config = dev->config;
     data->dev = dev;
 
     /* Initialize work item for neutral timeout */
     k_work_init_delayable(&data->neutral_work, neutral_work_handler);
     data->neutral_pending = false;
     data->in_neutral_state = false;
+
+    /* Initialize smoothing history */
+    data->smooth_x = malloc(config->smooth_len * sizeof(int16_t));
+    data->smooth_y = malloc(config->smooth_len * sizeof(int16_t));
+    data->smooth_z = malloc(config->smooth_len * sizeof(int16_t));
+    data->smooth_rx = malloc(config->smooth_len * sizeof(int16_t));
+    data->smooth_ry = malloc(config->smooth_len * sizeof(int16_t));
+    data->smooth_rz = malloc(config->smooth_len * sizeof(int16_t));
+    if (!data->smooth_x || !data->smooth_y || !data->smooth_z
+    || !data->smooth_rx || !data->smooth_ry || !data->smooth_rz) {
+        LOG_ERR("Failed to allocate smoothing history slots");
+        return -ENOMEM;
+    }
+    for (int i = 0; i < config->smooth_len; i++) {
+        data->smooth_x[i] = 0;
+        data->smooth_y[i] = 0;
+        data->smooth_z[i] = 0;
+        data->smooth_rx[i] = 0;
+        data->smooth_ry[i] = 0;
+        data->smooth_rz[i] = 0;
+    }
+    data->smooth_filled = 0;
+    data->smooth_idx = 0;
 
     /* Clear sensor caches */
     for (int i = 0; i < NUM_SENSORS; i++) {
@@ -417,6 +513,13 @@ static int trixer_init(const struct device *dev)
         .yaw_scale_num = DT_INST_PROP_OR(n, yaw_scale_num, 1),                                 \
         .yaw_scale_denom = DT_INST_PROP_OR(n, yaw_scale_denom, 1),                             \
         .neutral_timeout_ms = DT_INST_PROP_OR(n, neutral_timeout_ms, 50),                      \
+        .smooth_len = DT_INST_PROP(n, smooth_len),                                             \
+        .rpt_dzn_x = DT_INST_PROP(n, rpt_dzn_x),                                               \
+        .rpt_dzn_y = DT_INST_PROP(n, rpt_dzn_y),                                               \
+        .rpt_dzn_z = DT_INST_PROP(n, rpt_dzn_z),                                               \
+        .rpt_dzn_rx = DT_INST_PROP(n, rpt_dzn_rx),                                             \
+        .rpt_dzn_ry = DT_INST_PROP(n, rpt_dzn_ry),                                             \
+        .rpt_dzn_rz = DT_INST_PROP(n, rpt_dzn_rz),                                             \
     };                                                                                         \
     DEVICE_DT_INST_DEFINE(n, &trixer_init, NULL, &data_##n, &config_##n, POST_KERNEL,          \
                           CONFIG_KERNEL_INIT_PRIORITY_DEFAULT, &trixer_driver_api);
