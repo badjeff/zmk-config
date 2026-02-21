@@ -316,30 +316,45 @@ static int trixer_handle_event(const struct device *dev, struct input_event *eve
     event->sync = false;
 
     /* smooth with recent */
-    data->smooth_x[data->smooth_idx] = data->x;
-    data->smooth_y[data->smooth_idx] = data->y;
-    data->smooth_z[data->smooth_idx] = data->z;
-    data->smooth_rx[data->smooth_idx] = data->rx;
-    data->smooth_ry[data->smooth_idx] = data->ry;
-    data->smooth_rz[data->smooth_idx] = data->rz;
-    data->smooth_filled = MAX(data->smooth_filled, data->smooth_idx + 1);
-    float sum_x = 0, sum_y = 0, sum_z = 0;
-    float sum_rx = 0, sum_ry = 0, sum_rz = 0;
-    for (int i = 0; i < data->smooth_filled; i++) {
-        sum_x += (float)data->smooth_x[i];
-        sum_y += (float)data->smooth_y[i];
-        sum_z += (float)data->smooth_z[i];
-        sum_rx += (float)data->smooth_rx[i];
-        sum_ry += (float)data->smooth_ry[i];
-        sum_rz += (float)data->smooth_rz[i];
+    if (config->smooth_len > 0) {
+        data->smooth_x[data->smooth_idx] = data->x;
+        data->smooth_y[data->smooth_idx] = data->y;
+        data->smooth_z[data->smooth_idx] = data->z;
+        data->smooth_rx[data->smooth_idx] = data->rx;
+        data->smooth_ry[data->smooth_idx] = data->ry;
+        data->smooth_rz[data->smooth_idx] = data->rz;
+        data->smooth_filled = MAX(data->smooth_filled, data->smooth_idx + 1);
+        float sum_x = 0, sum_y = 0, sum_z = 0;
+        float sum_rx = 0, sum_ry = 0, sum_rz = 0;
+        float sum_w = 0;
+        for (int i = 0; i < data->smooth_filled; i++) {
+
+            /* variants of weight distribution by index distance
+            int d = abs(i - data->smooth_idx);
+            float w = 0.5f + 0.5f * cosf(M_PI * d / (float)(data->smooth_filled));
+            float w = 0.65f + 0.35f * cosf(M_PI * d / (float)(data->smooth_filled));
+            float w = 0.75f + 0.25f * cosf(M_PI * d / (float)(data->smooth_filled));
+            float w = 1.0f;
+            */
+            int d = abs(i - data->smooth_idx);
+            float w = 0.75f + 0.25f * cosf(M_PI * d / (float)(data->smooth_filled));
+
+            sum_x += w * (float)data->smooth_x[i];
+            sum_y += w * (float)data->smooth_y[i];
+            sum_z += w * (float)data->smooth_z[i];
+            sum_rx += w * (float)data->smooth_rx[i];
+            sum_ry += w * (float)data->smooth_ry[i];
+            sum_rz += w * (float)data->smooth_rz[i];
+            sum_w += w;
+        }
+        data->x = (int16_t)roundf(sum_x / sum_w);
+        data->y = (int16_t)roundf(sum_y / sum_w);
+        data->z = (int16_t)roundf(sum_z / sum_w);
+        data->rx = (int16_t)roundf(sum_rx / sum_w);
+        data->ry = (int16_t)roundf(sum_ry / sum_w);
+        data->rz = (int16_t)roundf(sum_rz / sum_w);
+        data->smooth_idx = (data->smooth_idx + 1) % config->smooth_len;
     }
-    data->x = (int16_t)roundf(sum_x / data->smooth_filled);
-    data->y = (int16_t)roundf(sum_y / data->smooth_filled);
-    data->z = (int16_t)roundf(sum_z / data->smooth_filled);
-    data->rx = (int16_t)roundf(sum_rx / data->smooth_filled);
-    data->ry = (int16_t)roundf(sum_ry / data->smooth_filled);
-    data->rz = (int16_t)roundf(sum_rz / data->smooth_filled);
-    data->smooth_idx = (data->smooth_idx + 1) % config->smooth_len;
 
     /* apply deadzones */
     bool x_in_dz = abs(data->x) < (int)config->rpt_dzn_x;
@@ -359,12 +374,6 @@ static int trixer_handle_event(const struct device *dev, struct input_event *eve
         }
         return ZMK_INPUT_PROC_STOP;
     }
-    data->x = (x_in_dz) ? 0 : data->x;
-    data->y = (y_in_dz) ? 0 : data->y;
-    data->z = (z_in_dz) ? 0 : data->z;
-    data->rx = (rx_in_dz) ? 0 : data->rx;
-    data->ry = (ry_in_dz) ? 0 : data->ry;
-    data->rz = (rz_in_dz) ? 0 : data->rz;
 
     int64_t now = k_uptime_get();
 
@@ -438,16 +447,18 @@ static void neutral_work_handler(struct k_work *work)
     // LOG_DBG("NEUTRAL report sent (all axes zero)");
 
     /* reset all smoothing on neutral */
-    for (int i = 0; i < config->smooth_len; i++) {
-        data->smooth_x[i] = 0;
-        data->smooth_y[i] = 0;
-        data->smooth_z[i] = 0;
-        data->smooth_rx[i] = 0;
-        data->smooth_ry[i] = 0;
-        data->smooth_rz[i] = 0;
+    if (config->smooth_len > 0) {
+        for (int i = 0; i < config->smooth_len; i++) {
+            data->smooth_x[i] = 0;
+            data->smooth_y[i] = 0;
+            data->smooth_z[i] = 0;
+            data->smooth_rx[i] = 0;
+            data->smooth_ry[i] = 0;
+            data->smooth_rz[i] = 0;
+        }
+        data->smooth_filled = 0;
+        data->smooth_idx = 0;
     }
-    data->smooth_filled = 0;
-    data->smooth_idx = 0;
 }
 
 static struct zmk_input_processor_driver_api trixer_driver_api = {
@@ -466,27 +477,29 @@ static int trixer_init(const struct device *dev)
     data->in_neutral_state = false;
 
     /* Initialize smoothing history */
-    data->smooth_x = malloc(config->smooth_len * sizeof(int16_t));
-    data->smooth_y = malloc(config->smooth_len * sizeof(int16_t));
-    data->smooth_z = malloc(config->smooth_len * sizeof(int16_t));
-    data->smooth_rx = malloc(config->smooth_len * sizeof(int16_t));
-    data->smooth_ry = malloc(config->smooth_len * sizeof(int16_t));
-    data->smooth_rz = malloc(config->smooth_len * sizeof(int16_t));
-    if (!data->smooth_x || !data->smooth_y || !data->smooth_z
-    || !data->smooth_rx || !data->smooth_ry || !data->smooth_rz) {
-        LOG_ERR("Failed to allocate smoothing history slots");
-        return -ENOMEM;
+    if (config->smooth_len > 0) {
+        data->smooth_x = malloc(config->smooth_len * sizeof(int16_t));
+        data->smooth_y = malloc(config->smooth_len * sizeof(int16_t));
+        data->smooth_z = malloc(config->smooth_len * sizeof(int16_t));
+        data->smooth_rx = malloc(config->smooth_len * sizeof(int16_t));
+        data->smooth_ry = malloc(config->smooth_len * sizeof(int16_t));
+        data->smooth_rz = malloc(config->smooth_len * sizeof(int16_t));
+        if (!data->smooth_x || !data->smooth_y || !data->smooth_z
+        || !data->smooth_rx || !data->smooth_ry || !data->smooth_rz) {
+            LOG_ERR("Failed to allocate smoothing history slots");
+            return -ENOMEM;
+        }
+        for (int i = 0; i < config->smooth_len; i++) {
+            data->smooth_x[i] = 0;
+            data->smooth_y[i] = 0;
+            data->smooth_z[i] = 0;
+            data->smooth_rx[i] = 0;
+            data->smooth_ry[i] = 0;
+            data->smooth_rz[i] = 0;
+        }
+        data->smooth_filled = 0;
+        data->smooth_idx = 0;
     }
-    for (int i = 0; i < config->smooth_len; i++) {
-        data->smooth_x[i] = 0;
-        data->smooth_y[i] = 0;
-        data->smooth_z[i] = 0;
-        data->smooth_rx[i] = 0;
-        data->smooth_ry[i] = 0;
-        data->smooth_rz[i] = 0;
-    }
-    data->smooth_filled = 0;
-    data->smooth_idx = 0;
 
     /* Clear sensor caches */
     for (int i = 0; i < NUM_SENSORS; i++) {
