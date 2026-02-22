@@ -44,17 +44,29 @@ properties:
     default: 1
     description: Z sensitivity denominator for scaling raw to mm
 
-  rotation-scale-num:
+  pitch-scale-num:
     type: int
     required: false
     default: 1
-    description: Rotation output scale numerator
+    description: Pitch output scale numerator
 
-  rotation-scale-denom:
+  pitch-scale-denom:
     type: int
     required: false
     default: 1
-    description: Rotation output scale denominator (pitch/roll)
+    description: Pitch output scale denominator
+
+  roll-scale-num:
+    type: int
+    required: false
+    default: 1
+    description: Roll output scale numerator
+
+  roll-scale-denom:
+    type: int
+    required: false
+    default: 1
+    description: Roll output scale denominator
 
   yaw-scale-num:
     type: int

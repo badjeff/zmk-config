@@ -85,8 +85,10 @@ struct zip_trixer_config {
     uint32_t xy_sensitivity_denom;
     uint32_t z_sensitivity_num;
     uint32_t z_sensitivity_denom;
-    uint32_t rotation_scale_num;
-    uint32_t rotation_scale_denom;
+    uint32_t pitch_scale_num;
+    uint32_t pitch_scale_denom;
+    uint32_t roll_scale_num;
+    uint32_t roll_scale_denom;
     uint32_t yaw_scale_num;
     uint32_t yaw_scale_denom;
     uint32_t neutral_timeout_ms;
@@ -221,7 +223,8 @@ static int trixer_handle_event(const struct device *dev, struct input_event *eve
     float radius_mm = config->radius_um / 1000.0f;
     float xy_scale = (float)config->xy_sensitivity_num / (float)config->xy_sensitivity_denom;
     float z_scale = (float)config->z_sensitivity_num / (float)config->z_sensitivity_denom;
-    float rot_scale = (float)config->rotation_scale_num / (float)config->rotation_scale_denom;
+    float pitch_scale = (float)config->pitch_scale_num / (float)config->pitch_scale_denom;
+    float roll_scale = (float)config->roll_scale_num / (float)config->roll_scale_denom;
     float yaw_scale = (float)config->yaw_scale_num / (float)config->yaw_scale_denom;
     
     for (int i = 0; i < NUM_SENSORS; i++) {
@@ -263,6 +266,9 @@ static int trixer_handle_event(const struct device *dev, struct input_event *eve
     float pitch_rad = asinf(sin_pitch);
     float roll_rad = asinf(sin_roll);
 
+    data->rx = (int16_t)roundf(pitch_rad * RAD_TO_DEG * pitch_scale);
+    data->ry = (int16_t)roundf(roll_rad * RAD_TO_DEG * roll_scale);
+
     /*
      * Yaw calculation using cross product method.
      *
@@ -288,9 +294,9 @@ static int trixer_handle_event(const struct device *dev, struct input_event *eve
     float dy_gamma = magnet_world[IDX_SEN_GAMMA].y;
 
     /* Cross products: radial × displacement (Z-component only) */
-    float cross_alpha = 0.0f * dy_alpha - 1.0f * dx_alpha;                  /* Alpha: (0, 1) */
-    float cross_beta = (-SQRT3 / 2.0f) * dy_beta - (-0.5f) * dx_beta;       /* Beta: (-√3/2, -1/2) */
-    float cross_gamma = (SQRT3 / 2.0f) * dy_gamma - (-0.5f) * dx_gamma;     /* Gamma: (√3/2, -1/2) */
+    float cross_alpha = 0.0f * dy_alpha - 1.0f * dx_alpha;
+    float cross_beta = -((-SQRT3 / 2.0f) * dy_beta - (-0.5f) * dx_beta);
+    float cross_gamma = -((SQRT3 / 2.0f) * dy_gamma - (-0.5f) * dx_gamma);
 
     /* Average tangential displacement and convert to yaw angle */
     float avg_cross = (cross_alpha + cross_beta + cross_gamma) / 3.0f;
@@ -300,8 +306,6 @@ static int trixer_handle_event(const struct device *dev, struct input_event *eve
     if (yaw_rad > M_PI) yaw_rad = M_PI;
     if (yaw_rad < -M_PI) yaw_rad = -M_PI;
 
-    data->rx = (int16_t)roundf(pitch_rad * RAD_TO_DEG * rot_scale);
-    data->ry = (int16_t)roundf(roll_rad * RAD_TO_DEG * rot_scale);
     data->rz = (int16_t)roundf(yaw_rad * RAD_TO_DEG * yaw_scale);
 
     /* Reset caches for next sensor cycle */
@@ -521,8 +525,10 @@ static int trixer_init(const struct device *dev)
         .xy_sensitivity_denom = DT_INST_PROP_OR(n, xy_sensitivity_denom, 1),                   \
         .z_sensitivity_num = DT_INST_PROP_OR(n, z_sensitivity_num, 1),                         \
         .z_sensitivity_denom = DT_INST_PROP_OR(n, z_sensitivity_denom, 1),                     \
-        .rotation_scale_num = DT_INST_PROP_OR(n, rotation_scale_num, 1),                       \
-        .rotation_scale_denom = DT_INST_PROP_OR(n, rotation_scale_denom, 1),                   \
+        .pitch_scale_num = DT_INST_PROP_OR(n, pitch_scale_num, 1),                             \
+        .pitch_scale_denom = DT_INST_PROP_OR(n, pitch_scale_denom, 1),                         \
+        .roll_scale_num = DT_INST_PROP_OR(n, roll_scale_num, 1),                               \
+        .roll_scale_denom = DT_INST_PROP_OR(n, roll_scale_denom, 1),                           \
         .yaw_scale_num = DT_INST_PROP_OR(n, yaw_scale_num, 1),                                 \
         .yaw_scale_denom = DT_INST_PROP_OR(n, yaw_scale_denom, 1),                             \
         .neutral_timeout_ms = DT_INST_PROP_OR(n, neutral_timeout_ms, 50),                      \

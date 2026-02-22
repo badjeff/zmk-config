@@ -85,6 +85,7 @@
 		compatible = "zmk,input-listener";
 		device = <&zip_trixer>;
                 input-processors = <&zip_fwd_to_hid_joystick>;
+                // input-processors = <&xy_scaler 3 7>, <&z_scaler 3 7>;
 	};
 
         // patpuck1_il {

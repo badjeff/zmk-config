@@ -13,10 +13,12 @@
         xy-sensitivity-denom = <1>;
         z-sensitivity-num = <1>;
         z-sensitivity-denom = <15>;
-        rotation-scale-num = <1>;
-        rotation-scale-denom = <1>;
+        pitch-scale-num = <2>;
+        pitch-scale-denom = <3>;
+        roll-scale-num = <2>;
+        roll-scale-denom = <3>;
         yaw-scale-num = <1>;
-        yaw-scale-denom = <1>;
+        yaw-scale-denom = <4>;
         neutral-timeout-ms = <20>;
         smooth-len = <5>;
         rpt-dzn-x = <9>;
