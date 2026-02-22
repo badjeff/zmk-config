@@ -39,14 +39,16 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
  * 1. Cache sensor readings from all three chips until sync
  * 2. Transform chip-local XY to world coordinates using rotation angles
  * 3. Calculate centroid (x, y, z translation) from averaged sensor positions
- * 4. Calculate Z-differentials for pitch/roll using geometric constraints
- * 5. Calculate yaw from XY displacement cross products with radial vectors
- * 6. Report relative motion events at configured interval
+ * 4. Calculate pitch/roll from Z-differentials relative to centroid
+ * 5. Calculate yaw from average cross product of radial and displacement vectors
+ * 6. Apply weighted smoothing over recent samples (if configured)
+ * 7. Apply per-axis deadzones and neutral state detection
+ * 8. Report relative motion events at configured interval
  *
  * Rotation Calculations:
- *   - Pitch (around X): arcsin((z_gamma - z_beta) / (radius * sqrt(3)))
- *   - Roll (around Y): arcsin((-z_alpha + z_beta + z_gamma) / (2 * radius))
- *   - Yaw (around Z): atan2(cross product of radial and displacement vectors) / radius
+ *   - Pitch (around X): arcsin((z_alpha - (z_beta + z_gamma)/2) / radius)
+ *   - Roll (around Y): arcsin((z_beta - z_gamma) / radius)
+ *   - Yaw (around Z): avg(cross(radial, displacement)) / radius
  *
  * Chip mounting angles (for local-to-world transform):
  *   - Alpha: 0°
