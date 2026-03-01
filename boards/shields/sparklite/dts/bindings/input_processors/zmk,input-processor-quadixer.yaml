@@ -1,7 +1,7 @@
 # Copyright (c) 2025, The ZMK Contributors
 # SPDX-License-Identifier: MIT
 
-description: 6-DOF Spacemouse input processor for 4 PAT9125 optical sensors on circular cylinder
+description: Input processor for 4 optical sensors Trackpuck
 
 compatible: "zmk,input-processor-quadixer"
 

@@ -1,7 +1,7 @@
 # Copyright (c) 2025, The ZMK Contributors
 # SPDX-License-Identifier: MIT
 
-description: Input Processor for mixing values after input events
+description: Input Processor for dual optical sensors Trackball
 
 compatible: "zmk,input-processor-mixer"
 
