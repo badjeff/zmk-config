@@ -21,8 +21,7 @@
 
 #include <input/processors/mixer.dtsi>
 #include <input/processors/trixer.dtsi>
-// #include <input/processors/quadixer.dtsi>
-// #include <input/processors/neutral.dtsi>
+#include <input/processors/quadixer.dtsi>
 #include <input/processors/report_rate_limit.dtsi>
 
 #define DEFAULT 0
@@ -91,50 +90,22 @@
         // patpuck1_il {
         //         compatible = "zmk,input-listener";
         //         device = <&patpuck1>;
-        //         input-processors = <&xy_transf (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>
-        //                         ,  <&xy_scaler 1 25>
-        //                         ,  <&zip_neutral_pat1>
-        //                         ,  <&zip_quadixer 0>;
+        //         input-processors = <&zip_quadixer 0>;
         // };
         // patpuck2_il {
         //         compatible = "zmk,input-listener";
         //         device = <&patpuck2>;
-        //         input-processors = <&xy_transf (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>
-        //                         ,  <&xy_scaler 1 25>
-        //                         ,  <&zip_neutral_pat2>
-        //                         ,  <&zip_quadixer 1>;
+        //         input-processors = <&zip_quadixer 1>;
         // };
         // patpuck3_il {
         //         compatible = "zmk,input-listener";
         //         device = <&patpuck3>;
-        //         input-processors = <&xy_transf (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>
-        //                         ,  <&xy_scaler 1 25>
-        //                         ,  <&zip_neutral_pat3>
-        //                         ,  <&zip_quadixer 2>;
+        //         input-processors = <&zip_quadixer 2>;
         // };
         // patpuck4_il {
         //         compatible = "zmk,input-listener";
         //         device = <&patpuck4>;
-        //         input-processors = <&xy_transf (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>
-        //                         ,  <&xy_scaler 1 25>
-        //                         ,  <&zip_neutral_pat4>
-        //                         ,  <&zip_quadixer 3>;
-        // };
-        // zip_neutral_pat1: zip_neutral_pat1 {
-        //         compatible = "zmk,input-processor-neutral";
-        //         #input-processor-cells = <0>;
-        // };
-        // zip_neutral_pat2: zip_neutral_pat2 {
-        //         compatible = "zmk,input-processor-neutral";
-        //         #input-processor-cells = <0>;
-        // };
-        // zip_neutral_pat3: zip_neutral_pat3 {
-        //         compatible = "zmk,input-processor-neutral";
-        //         #input-processor-cells = <0>;
-        // };
-        // zip_neutral_pat4: zip_neutral_pat4 {
-        //         compatible = "zmk,input-processor-neutral";
-        //         #input-processor-cells = <0>;
+        //         input-processors = <&zip_quadixer 3>;
         // };
         // quadixer_il {
 	// 	compatible = "zmk,input-listener";

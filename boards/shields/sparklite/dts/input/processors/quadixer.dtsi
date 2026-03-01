@@ -1,0 +1,32 @@
+// Copyright (c) 2025, The ZMK Contributors
+// SPDX-License-Identifier: MIT
+
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+    /omit-if-no-ref/ zip_quadixer: zip_quadixer {
+        compatible = "zmk,input-processor-quadixer";
+        #input-processor-cells = <1>;
+        sync-report-ms = <1>;
+        sensor-radius-um = <8285>;
+        tracker-radius-um = <14000>;
+        xy-sensitivity-num = <1>;
+        xy-sensitivity-denom = <1>;
+        z-sensitivity-num = <1>;
+        z-sensitivity-denom = <1>;
+        pitch-scale-num = <1>;
+        pitch-scale-denom = <1>;
+        roll-scale-num = <1>;
+        roll-scale-denom = <1>;
+        yaw-scale-num = <1>;
+        yaw-scale-denom = <1>;
+        neutral-timeout-ms = <20>;
+        smooth-len = <5>;
+        rpt-dzn-x = <0>;
+        rpt-dzn-y = <0>;
+        rpt-dzn-z = <0>;
+        rpt-dzn-rx = <0>;
+        rpt-dzn-ry = <0>;
+        rpt-dzn-rz = <0>;
+    };
+};
