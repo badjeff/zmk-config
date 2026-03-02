@@ -62,6 +62,12 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 #define NUM_SENSORS     3
 #define MIN_SENSOR_NEUTRAL 2  /* Min sensors in neutral to trigger device neutral (1-3) */
 
+/* Chip sensor position */
+#define ALPHA_AT_SOUTH 1      /* Chip Alpha on South (6 o'clock) */
+#define ALPHA_AT_NORTH 0      /* Chip Alpha on North (12 o'clock) */
+BUILD_ASSERT((ALPHA_AT_SOUTH || ALPHA_AT_NORTH) && ALPHA_AT_SOUTH != ALPHA_AT_NORTH,
+            "Must choose either ALPHA_AT_SOUTH or ALPHA_AT_NORTH");
+
 #ifndef M_PI
 #define M_PI (3.14159265358979323846f)
 #endif
@@ -240,6 +246,11 @@ static int trixer_handle_event(const struct device *dev, struct input_event *eve
         float world_y = local_y;
         rotate2d(&world_x, &world_y, chip_angles_rad[i]);
         
+#if ALPHA_AT_NORTH
+        world_x = -world_x;
+        world_y = -world_y;
+#endif
+
         magnet_world[i].x = world_x;
         magnet_world[i].y = world_y;
         magnet_world[i].z = local_z;
@@ -259,8 +270,13 @@ static int trixer_handle_event(const struct device *dev, struct input_event *eve
     float z_beta_rel = (magnet_world[IDX_SEN_BETA].z - centroid.z) * z_scale;
     float z_gamma_rel = (magnet_world[IDX_SEN_GAMMA].z - centroid.z) * z_scale;
 
+#if ALPHA_AT_SOUTH
     float sin_pitch = (z_alpha_rel - ((z_beta_rel + z_gamma_rel) / 2.0f)) / radius_mm;
     float sin_roll = (z_beta_rel - z_gamma_rel) / radius_mm;
+#elif ALPHA_AT_NORTH
+    float sin_pitch = (((z_beta_rel + z_gamma_rel) / 2.0f) - z_alpha_rel) / radius_mm;
+    float sin_roll = (z_gamma_rel - z_beta_rel) / radius_mm;
+#endif
 
     if (sin_pitch > 1.0f) sin_pitch = 1.0f;
     if (sin_pitch < -1.0f) sin_pitch = -1.0f;
@@ -296,16 +312,22 @@ static int trixer_handle_event(const struct device *dev, struct input_event *eve
 
     /* XY displacements from calibrated origin */
     float dx_alpha = magnet_world[IDX_SEN_ALPHA].x;
-    float dy_alpha = magnet_world[IDX_SEN_ALPHA].y;
+    // float dy_alpha = magnet_world[IDX_SEN_ALPHA].y;
     float dx_beta = magnet_world[IDX_SEN_BETA].x;
     float dy_beta = magnet_world[IDX_SEN_BETA].y;
     float dx_gamma = magnet_world[IDX_SEN_GAMMA].x;
     float dy_gamma = magnet_world[IDX_SEN_GAMMA].y;
 
     /* Cross products: radial × displacement (Z-component only) */
-    float cross_alpha = 0.0f * dy_alpha - 1.0f * dx_alpha;
+#if ALPHA_AT_SOUTH
+    float cross_alpha = -1.0f * dx_alpha;
     float cross_beta = -((-SQRT3 / 2.0f) * dy_beta - (-0.5f) * dx_beta);
     float cross_gamma = -((SQRT3 / 2.0f) * dy_gamma - (-0.5f) * dx_gamma);
+#elif ALPHA_AT_NORTH
+    float cross_alpha = 1.0f * dx_alpha;
+    float cross_beta = ((-SQRT3 / 2.0f) * dy_beta - (-0.5f) * dx_beta);
+    float cross_gamma = ((SQRT3 / 2.0f) * dy_gamma - (-0.5f) * dx_gamma);
+#endif
 
     /* Average tangential displacement */
     float avg_cross = (cross_alpha + cross_beta + cross_gamma) / 3.0f;
@@ -318,7 +340,11 @@ static int trixer_handle_event(const struct device *dev, struct input_event *eve
     // LOG_DBG("yaw comp: x=%.3f trans_comp=%.3f centroid.x=%.1f centroid.y=%.1f",
     //         yaw_comp_x, trans_comp, centroid.x, centroid.y);
 
+#if ALPHA_AT_SOUTH
     float yaw_rad = (avg_cross + trans_comp) / radius_mm;
+#elif ALPHA_AT_NORTH
+    float yaw_rad = (avg_cross - trans_comp) / radius_mm;
+#endif
 
     /* Clamp to [-π, π] range */
     if (yaw_rad > M_PI) yaw_rad = M_PI;
@@ -549,8 +575,8 @@ static int trixer_init(const struct device *dev)
         .roll_scale_denom = DT_INST_PROP_OR(n, roll_scale_denom, 1),                           \
         .yaw_scale_num = DT_INST_PROP_OR(n, yaw_scale_num, 1),                                 \
         .yaw_scale_denom = DT_INST_PROP_OR(n, yaw_scale_denom, 1),                             \
-        .yaw_comp_x_num = DT_INST_PROP_OR(n, yaw_comp_x_num, 0),                              \
-        .yaw_comp_x_denom = DT_INST_PROP_OR(n, yaw_comp_x_denom, 1),                          \
+        .yaw_comp_x_num = DT_INST_PROP_OR(n, yaw_comp_x_num, 0),                               \
+        .yaw_comp_x_denom = DT_INST_PROP_OR(n, yaw_comp_x_denom, 1),                           \
         .neutral_timeout_ms = DT_INST_PROP_OR(n, neutral_timeout_ms, 50),                      \
         .smooth_len = DT_INST_PROP(n, smooth_len),                                             \
         .rpt_dzn_x = DT_INST_PROP(n, rpt_dzn_x),                                               \
