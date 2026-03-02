@@ -1,4 +1,4 @@
-// Copyright (c) 2025, The ZMK Contributors
+// Copyright (c) 2026, The ZMK Contributors
 // SPDX-License-Identifier: MIT
 
 #include <zephyr/dt-bindings/input/input-event-codes.h>
@@ -19,6 +19,8 @@
         roll-scale-denom = <3>;
         yaw-scale-num = <1>;
         yaw-scale-denom = <4>;
+        yaw-comp-x-num = <3>;
+        yaw-comp-x-denom = <7>;
         neutral-timeout-ms = <20>;
         smooth-len = <5>;
         rpt-dzn-x = <9>;

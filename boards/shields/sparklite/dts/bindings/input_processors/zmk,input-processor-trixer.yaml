@@ -1,4 +1,4 @@
-# Copyright (c) 2025, The ZMK Contributors
+# Copyright (c) 2026, The ZMK Contributors
 # SPDX-License-Identifier: MIT
 
 description: Input processor for 3 magnetometers Trackpuck
@@ -79,6 +79,18 @@ properties:
     required: false
     default: 1
     description: Yaw output scale denominator
+
+  yaw-comp-x-num:
+    type: int
+    required: false
+    default: 0
+    description: Yaw compensation for X translation numerator
+
+  yaw-comp-x-denom:
+    type: int
+    required: false
+    default: 1
+    description: Yaw compensation for X translation denominator
 
   neutral-timeout-ms:
     type: int

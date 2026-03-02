@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 The ZMK Contributors
+ * Copyright (c) 2026 The ZMK Contributors
  *
  * SPDX-License-Identifier: MIT
  */
@@ -93,6 +93,8 @@ struct zip_trixer_config {
     uint32_t roll_scale_denom;
     uint32_t yaw_scale_num;
     uint32_t yaw_scale_denom;
+    uint32_t yaw_comp_x_num;
+    uint32_t yaw_comp_x_denom;
     uint32_t neutral_timeout_ms;
     uint8_t smooth_len;
     uint16_t rpt_dzn_x, rpt_dzn_y, rpt_dzn_z;
@@ -272,11 +274,16 @@ static int trixer_handle_event(const struct device *dev, struct input_event *eve
     data->ry = (int16_t)roundf(roll_rad * RAD_TO_DEG * roll_scale);
 
     /*
-     * Yaw calculation using cross product method.
+     * Yaw calculation using weighted cross product method.
      *
      * Yaw rotation moves each magnet tangentially around the Z axis. The tangential
      * displacement is measured by cross(radial_vector, displacement_vector), which
      * gives radius * yaw_angle for pure rotation while canceling pure translation.
+     *
+     * TRANSLATION COMPENSATION: When the centroid translates (X/Y), the magnetic
+     * interference pattern shifts asymmetrically, causing unintended yaw rotation.
+     * Configurable compensation factor (yaw_comp_x) adds the
+     * translation influence to the average cross product.
      *
      * Radial vectors (unit vectors from center to each chip position):
      *   - Alpha (0°):       (0, 1)
@@ -284,7 +291,7 @@ static int trixer_handle_event(const struct device *dev, struct input_event *eve
      *   - Gamma (+120°):    (√3/2, -1/2)
      *
      * For each sensor: cross_z = radial_x * dy - radial_y * dx
-     * Then: yaw = avg(cross_z) / radius
+     * Then: yaw = (avg(cross_z) + trans_comp) / radius
      */
 
     /* XY displacements from calibrated origin */
@@ -300,9 +307,18 @@ static int trixer_handle_event(const struct device *dev, struct input_event *eve
     float cross_beta = -((-SQRT3 / 2.0f) * dy_beta - (-0.5f) * dx_beta);
     float cross_gamma = -((SQRT3 / 2.0f) * dy_gamma - (-0.5f) * dx_gamma);
 
-    /* Average tangential displacement and convert to yaw angle */
+    /* Average tangential displacement */
     float avg_cross = (cross_alpha + cross_beta + cross_gamma) / 3.0f;
-    float yaw_rad = avg_cross / radius_mm;
+
+    /* Translation compensation: add centroid X influence to yaw
+     * When centroid translates, magnetic interference shifts and causes
+     * unintended rotation. Compensation factor tunes this correction. */
+    float yaw_comp_x = (float)config->yaw_comp_x_num / (float)config->yaw_comp_x_denom;
+    float trans_comp = yaw_comp_x * centroid.x;
+    LOG_DBG("yaw comp: x=%.3f trans_comp=%.3f centroid.x=%.1f centroid.y=%.1f",
+            yaw_comp_x, trans_comp, centroid.x, centroid.y);
+
+    float yaw_rad = (avg_cross + trans_comp) / radius_mm;
 
     /* Clamp to [-π, π] range */
     if (yaw_rad > M_PI) yaw_rad = M_PI;
@@ -533,6 +549,8 @@ static int trixer_init(const struct device *dev)
         .roll_scale_denom = DT_INST_PROP_OR(n, roll_scale_denom, 1),                           \
         .yaw_scale_num = DT_INST_PROP_OR(n, yaw_scale_num, 1),                                 \
         .yaw_scale_denom = DT_INST_PROP_OR(n, yaw_scale_denom, 1),                             \
+        .yaw_comp_x_num = DT_INST_PROP_OR(n, yaw_comp_x_num, 0),                              \
+        .yaw_comp_x_denom = DT_INST_PROP_OR(n, yaw_comp_x_denom, 1),                          \
         .neutral_timeout_ms = DT_INST_PROP_OR(n, neutral_timeout_ms, 50),                      \
         .smooth_len = DT_INST_PROP(n, smooth_len),                                             \
         .rpt_dzn_x = DT_INST_PROP(n, rpt_dzn_x),                                               \
