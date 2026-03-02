@@ -315,8 +315,8 @@ static int trixer_handle_event(const struct device *dev, struct input_event *eve
      * unintended rotation. Compensation factor tunes this correction. */
     float yaw_comp_x = (float)config->yaw_comp_x_num / (float)config->yaw_comp_x_denom;
     float trans_comp = yaw_comp_x * centroid.x;
-    LOG_DBG("yaw comp: x=%.3f trans_comp=%.3f centroid.x=%.1f centroid.y=%.1f",
-            yaw_comp_x, trans_comp, centroid.x, centroid.y);
+    // LOG_DBG("yaw comp: x=%.3f trans_comp=%.3f centroid.x=%.1f centroid.y=%.1f",
+    //         yaw_comp_x, trans_comp, centroid.x, centroid.y);
 
     float yaw_rad = (avg_cross + trans_comp) / radius_mm;
 
