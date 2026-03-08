@@ -38,6 +38,12 @@
 
 };
 
+// release gpio1 11 & 12 from xiao_ble-pinctrl.dtsi
+// for &trackball { irq-gpios }
+&uart0 {
+	status = "disabled";
+};
+
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 
 &i2c0 {

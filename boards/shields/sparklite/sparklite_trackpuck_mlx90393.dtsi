@@ -22,6 +22,12 @@
     };
 };
 
+// release gpio1 11 & 12 from xiao_ble-pinctrl.dtsi
+// for &trackball { irq-gpios }
+&uart0 {
+	status = "disabled";
+};
+
 #include <dt-bindings/spi/spi.h>
 &spi2 {
     compatible = "nordic,nrf-spim";
