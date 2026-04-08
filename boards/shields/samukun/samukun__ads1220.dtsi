@@ -1,0 +1,118 @@
+/*
+ * Copyright (c) 2026 badjeff
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+&pinctrl {
+    spi2_default: spi2_default {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 0, 8)>,
+                    <NRF_PSEL(SPIM_MOSI, 0, 17)>,
+                    <NRF_PSEL(SPIM_MISO, 0, 20)>;
+        };
+    };
+    spi2_sleep: spi2_sleep {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 0, 8)>,
+                    <NRF_PSEL(SPIM_MOSI, 0, 17)>,
+                    <NRF_PSEL(SPIM_MISO, 0, 20)>;
+            low-power-enable;
+        };
+    };
+};
+
+#include <dt-bindings/spi/spi.h>
+
+&spi2 {
+    compatible = "nordic,nrf-spim";
+    status = "okay";
+    pinctrl-0 = <&spi2_default>;
+    pinctrl-1 = <&spi2_sleep>;
+    pinctrl-names = "default", "sleep";
+    cs-gpios = <&gpio1 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+
+    adc_ads1220: adc_ads1220@0 {
+        compatible = "ti,ads1220";
+        status = "okay";
+        spi-max-frequency = <1000000>;
+        reg = <0>;
+        #io-channel-cells = <1>;
+
+        /*
+        Enable to wait for DRDY irq (Optional)
+        If disabled, fallback to estimated delay time base on (Data Rate + 10%)
+        */
+        // drdy-gpios = <&gpio1 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        
+        /* enable closing low side power switch during a measurement */
+        low-side-power-switch;
+
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        /*
+        Setup for Wheatstone bridges
+        ref: https://wolles-elektronikkiste.de/en/ads1220-part-2-applications
+        REFP1: Load cell Wire RED & 3v3
+        AIN1:  Load cell Wire Green
+        AIN2:  Load cell Wire White
+        REFN1: Load cell Wire Black
+        */
+        adc_ads1220_ch0: channel@0 {
+            reg = <0>;
+            zephyr,resolution = <24>;
+            zephyr,gain = "ADC_GAIN_128";
+            zephyr,reference = "ADC_REF_EXTERNAL1";
+            zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+            zephyr,input-positive = <2>;
+            zephyr,input-negative = <3>;
+        };
+    };
+};
+
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/{
+    /*
+    Setup the forked version of Zephyr's `analog-axis` input driver,
+    'hires' means 24 bit buffering.
+    Literally, enlarged all int16_t to int32_t.
+    */
+    anin0: analog_axis_hires_0 {
+        compatible = "analog-axis-hires";
+        status = "okay";
+        poll-period-ms = <100>;
+        axis-y {
+            io-channels = <&adc_ads1220 0>;
+
+            /* netural raw value from Wheatstone bridges via ADS1220 */
+            /* NOTE: depends on zephyr,gain in adc_ads1220_ch0 */
+            in-min = <328000>;
+            in-max = <921000>;
+
+            /* in-deadzone = <5>; // dont't need for load cell */
+
+            /* clamp max output to 12 bit */
+            out-min = <0>;
+            out-max = <4095>;
+
+            zephyr,axis = <INPUT_ABS_Y>;
+        };
+    };
+};
+
+
+
+/* Some usual CONFIG_* needs in proj.conf */
+
+// # Enable ADS1220
+// CONFIG_SPI=y
+// CONFIG_GPIO=y
+// CONFIG_ADC=y
+// CONFIG_ADC_ADS1220=y
+// CONFIG_ADC_LOG_LEVEL_DBG=y
+
+// # Enable analog axis hires input
+// CONFIG_INPUT=y
+// CONFIG_INPUT_LOG_LEVEL_DBG=y

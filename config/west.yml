@@ -151,5 +151,9 @@ manifest:
       remote: badjeff
       revision: 1-47-inch-panel
 
+    - name: ads1220-zephyr-module
+      remote: badjeff
+      revision: main
+
   self:
     path: config

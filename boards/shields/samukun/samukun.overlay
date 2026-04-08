@@ -10,4 +10,6 @@
 
 // #include "samukun__gpio0.dtsi"
 
-#include "samukun__mlx90393.dtsi"
+// #include "samukun__mlx90393.dtsi"
+
+#include "samukun__ads1220.dtsi"
