@@ -41,7 +41,7 @@
 
         /*
         Enable to wait for DRDY irq (Optional)
-        If disabled, fallback to estimated delay time base on (Data Rate + 10%)
+        If disabled, fallback to estimated sampling time base on data rate
         */
         // drdy-gpios = <&gpio1 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         
@@ -64,7 +64,7 @@
             zephyr,resolution = <24>;
             zephyr,gain = "ADC_GAIN_128";
             zephyr,reference = "ADC_REF_EXTERNAL1";
-            zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+            zephyr,acquisition-time = <175>; // 175 SPS > 125 Hz
             zephyr,input-positive = <2>;
             zephyr,input-negative = <3>;
         };
@@ -82,20 +82,23 @@
     anin0: analog_axis_hires_0 {
         compatible = "analog-axis-hires";
         status = "okay";
-        poll-period-ms = <100>;
+
+        /* Set polling for bluetooth (max rate: 7.5ms) */
+        poll-period-ms = <8>; // 8ms = ~125 Hz < 175 SPS
+
         axis-y {
             io-channels = <&adc_ads1220 0>;
 
             /* netural raw value from Wheatstone bridges via ADS1220 */
             /* NOTE: depends on zephyr,gain in adc_ads1220_ch0 */
-            in-min = <328000>;
-            in-max = <921000>;
+            in-min = <263100>;
+            in-max = <1730000>;
 
             /* in-deadzone = <5>; // dont't need for load cell */
 
-            /* clamp max output to 12 bit */
+            /* clamp max output to 16 bit */
             out-min = <0>;
-            out-max = <4095>;
+            out-max = <65535>;
 
             zephyr,axis = <INPUT_ABS_Y>;
         };
