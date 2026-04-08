@@ -91,10 +91,9 @@
 
             /* netural raw value from Wheatstone bridges via ADS1220 */
             /* NOTE: depends on zephyr,gain in adc_ads1220_ch0 */
-            in-min = <263100>;
+            in-min = <273100>;
             in-max = <1730000>;
-
-            /* in-deadzone = <5>; // dont't need for load cell */
+            in-deadzone = <5>;
 
             /* clamp max output to 16 bit */
             out-min = <0>;
