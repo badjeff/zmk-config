@@ -12,4 +12,4 @@
 
 // #include "samukun__mlx90393.dtsi"
 
-#include "samukun__ads1220.dtsi"
+#include "samukun__ads1220_load_cell.dtsi"

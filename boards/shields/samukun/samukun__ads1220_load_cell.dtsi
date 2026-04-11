@@ -65,8 +65,8 @@
             zephyr,gain = "ADC_GAIN_128";
             zephyr,reference = "ADC_REF_EXTERNAL1";
             zephyr,acquisition-time = <175>; // 175 SPS > 125 Hz
-            zephyr,input-positive = <2>;
-            zephyr,input-negative = <3>;
+            zephyr,input-positive = <1>; // AIN1
+            zephyr,input-negative = <2>; // AIN2
         };
     };
 };
@@ -91,14 +91,16 @@
 
             /* netural raw value from Wheatstone bridges via ADS1220 */
             /* NOTE: depends on zephyr,gain in adc_ads1220_ch0 */
-            in-min = <273100>;
-            in-max = <1730000>;
+            in-min = <329030>;
+            in-max = <1930010>;
             in-deadzone = <5>;
 
             /* clamp max output to 16 bit */
             out-min = <0>;
             out-max = <65535>;
+            // skip-change-comparator; /* uncomment this to debug */
 
+            zephyr,axis-type = <INPUT_EV_ABS>;
             zephyr,axis = <INPUT_ABS_Y>;
         };
     };
