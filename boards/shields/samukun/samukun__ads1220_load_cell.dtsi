@@ -46,7 +46,10 @@
         // drdy-gpios = <&gpio1 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         
         /* enable closing low side power switch during a measurement */
-        low-side-power-switch;
+        // low-side-power-switch;
+
+        /* IDAC excitation current in microamperes (0/10/50/100/250/500/1000/2000) */
+        // idac-ua = <500>;
 
         #address-cells = <1>;
         #size-cells = <0>;
@@ -54,10 +57,10 @@
         /*
         Setup for Wheatstone bridges
         ref: https://wolles-elektronikkiste.de/en/ads1220-part-2-applications
-        REFP1: Load cell Wire RED & 3v3
+        REFP1: Load cell Wire RED & AVCC
         AIN1:  Load cell Wire Green
         AIN2:  Load cell Wire White
-        REFN1: Load cell Wire Black
+        REFN1: Load cell Wire Black & GND
         */
         adc_ads1220_ch0: channel@0 {
             reg = <0>;
@@ -67,6 +70,12 @@
             zephyr,acquisition-time = <175>; // 175 SPS > 125 Hz
             zephyr,input-positive = <1>; // AIN1
             zephyr,input-negative = <2>; // AIN2
+            /*
+            IDAC1/IDAC2 output pin configuration per channel.
+            Requires CONFIG_ADC_CONFIGURABLE_EXCITATION_CURRENT_SOURCE_PIN.
+            Example: IDAC1 to AIN0 (01), IDAC2 disabled (00)
+            */
+            // zephyr,current-source-pin = [01 00];
         };
     };
 };
