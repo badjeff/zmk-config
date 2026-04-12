@@ -19,13 +19,13 @@
 #define DEF 0
 
 / {
-        // xy_transf: xy_transf {
-        //         compatible = "zmk,input-processor-transform";
-        //         #input-processor-cells = <1>;
-        //         type = <INPUT_EV_REL>;
-        //         x-codes = <INPUT_REL_X>, <INPUT_REL_WHEEL>;
-        //         y-codes = <INPUT_REL_Y>, <INPUT_REL_HWHEEL>;
-        // };
+        xy_transf: xy_transf {
+                compatible = "zmk,input-processor-transform";
+                #input-processor-cells = <1>;
+                type = <INPUT_EV_REL>;
+                x-codes = <INPUT_REL_X>, <INPUT_REL_WHEEL>;
+                y-codes = <INPUT_REL_Y>, <INPUT_REL_HWHEEL>;
+        };
         // xy_scaler: xy_scaler {
         //         compatible = "zmk,input-processor-scaler";
         //         #input-processor-cells = <2>;
@@ -72,6 +72,12 @@
 	// 	device = <&jskp>;
         //         input-processors = <&zip_fwd_to_hid_joystick>;
 	// };
+
+        tpoint0_mmv_ibl {
+                compatible = "zmk,input-listener";
+                device = <&anin0>;
+                input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>;
+        };
 
         // behaviors {
         //         ec_s: mouse_scroll {
