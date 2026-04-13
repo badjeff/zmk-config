@@ -1,0 +1,161 @@
+/*
+ * Copyright (c) 2026 badjeff
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+&pinctrl {
+    spi2_default: spi2_default {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 0, 8)>,
+                    <NRF_PSEL(SPIM_MOSI, 0, 17)>,
+                    <NRF_PSEL(SPIM_MISO, 0, 20)>;
+        };
+    };
+    spi2_sleep: spi2_sleep {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 0, 8)>,
+                    <NRF_PSEL(SPIM_MOSI, 0, 17)>,
+                    <NRF_PSEL(SPIM_MISO, 0, 20)>;
+            low-power-enable;
+        };
+    };
+};
+
+#include <dt-bindings/spi/spi.h>
+
+&spi2 {
+    compatible = "nordic,nrf-spim";
+    status = "okay";
+    pinctrl-0 = <&spi2_default>;
+    pinctrl-1 = <&spi2_sleep>;
+    pinctrl-names = "default", "sleep";
+    cs-gpios = <&gpio1 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+
+    adc_ads1220: adc_ads1220@0 {
+        compatible = "ti,ads1220";
+        status = "okay";
+        spi-max-frequency = <1000000>;
+        reg = <0>;
+        #io-channel-cells = <1>;
+        #address-cells = <1>;
+        #size-cells = <0>;
+        // drdy-gpios = <&gpio1 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        // low-side-power-switch;
+
+        /* IDAC excitation current in microamperes (0/10/50/100/250/500/1000/2000) */
+        // idac-ua = <500>;
+
+        /*
+        Setup for dual half wheatstone bridges on T440 trackpoint sensor board
+        
+        Pinout of 4-wire trackpoint sensor board:
+        (bottom view, pins on bottom, left to right): [x] [y] [a] [b]
+        (NOTES: there are 2 version for T440. 4-wire & 5-wire.)
+        +-----------------------------+
+        |             (y)             |
+        |             G1              |
+        |             (a)             |
+        | (x) G4 (a)   +   (b) G2 (x) |
+        |             (b)             |
+        |             G3              |
+        |             (y)             |
+        |                             |
+        |    [x]   [y]    [a]   [b]   |
+        +-----------------------------+
+
+        Wiring:
+        [x] <--> [AIN0]
+        [y] <--> [AIN1]
+        [a] <--> <--(a resistor)--> [avdd-gpios: P0.11]
+        [b] <--> [REFN0] & [AVSS]
+        [AIN2] <--( 2400ohm resistor)--> [REFP0]
+        [AIN2] <--( 2400ohm resistor)--> [REFN0]
+
+        */
+        adc_ads1220_ch0: channel@0 {
+            reg = <0>;
+            zephyr,resolution = <24>;
+            zephyr,gain = "ADC_GAIN_16";
+            zephyr,reference = "ADC_REF_EXTERNAL0"; // REFP0/REFN0
+            zephyr,acquisition-time = <175>; // 175 SPS > 125 Hz
+            zephyr,input-positive = <0>; // AIN0
+            zephyr,input-negative = <2>; // AIN2
+        };
+        adc_ads1220_ch1: channel@1 {
+            reg = <1>;
+            zephyr,resolution = <24>;
+            zephyr,gain = "ADC_GAIN_16";
+            zephyr,reference = "ADC_REF_EXTERNAL0"; // REFP0/REFN0
+            zephyr,acquisition-time = <175>; // 175 SPS > 125 Hz
+            zephyr,input-positive = <1>; // AIN1
+            zephyr,input-negative = <2>; // AIN2
+        };
+    };
+};
+
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/{
+    /*
+    Setup the forked version of Zephyr's `analog-axis` input driver,
+    'hires' means 24 bit buffering.
+    Literally, enlarged all int16_t to int32_t.
+    */
+    anin0: analog_axis_hires_0 {
+        compatible = "analog-axis-hires";
+        status = "okay";
+
+        /*
+        polls at 8ms on init, then after
+        5000ms idle switches to 20ms, then after 
+        9000ms more idle switches to 100ms, then after 
+        11000ms more idle switches to 1300ms
+        */
+        poll-period-downshift-ms = <8 5000 20 9000 100 11000 1300>;
+
+        axis-x {
+            io-channels = <&adc_ads1220 0>;
+            avdd-gpios = <&gpio0 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+            /* netural raw value from ADS1220 */
+            in-min = <( 131622 - 655300 )>;
+            in-max = <( 131622 + 655300 )>;
+            in-calib-cycle = <100>;
+            in-deadzone-calib-scale-pctg = <110>; /* or, in-deadzone = <750>; */
+            out-min = <( -127 )>;
+            out-max = <(  127 )>;
+            skip-change-comparator; /* Keep reporting x-val while holding steady */
+            zephyr,axis-type = <INPUT_EV_REL>;
+            zephyr,axis = <INPUT_REL_X>;
+        };
+        axis-y {
+            io-channels = <&adc_ads1220 1>;
+            avdd-gpios = <&gpio0 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+            /* netural raw value from ADS1220 */
+            in-min = <( -21 - 655300 )>;
+            in-max = <( -21 + 655300 )>;
+            in-calib-cycle = <100>;
+            in-deadzone-calib-scale-pctg = <110>; /* or, in-deadzone = <750>; */
+            out-min = <( -127 )>;
+            out-max = <(  127 )>;
+            skip-change-comparator; /* Keep reporting y-val while holding steady */
+            zephyr,axis-type = <INPUT_EV_REL>;
+            zephyr,axis = <INPUT_REL_Y>;
+        };
+    };
+};
+
+
+
+/* Some usual CONFIG_* needs in proj.conf */
+
+// # Enable ADS1220
+// CONFIG_SPI=y
+// CONFIG_GPIO=y
+// CONFIG_ADC=y
+// CONFIG_ADC_ADS1220=y
+// CONFIG_ADC_LOG_LEVEL_DBG=y
+
+// # Enable analog axis hires input
+// CONFIG_INPUT=y
+// CONFIG_INPUT_LOG_LEVEL_DBG=y
