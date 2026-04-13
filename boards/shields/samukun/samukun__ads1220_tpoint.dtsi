@@ -107,7 +107,15 @@
     anin0: analog_axis_hires_0 {
         compatible = "analog-axis-hires";
         status = "okay";
-        poll-period-ms = <8>;
+
+        /*
+        polls at 8ms on init, then after
+        5000ms idle switches to 20ms, then after 
+        9000ms more idle switches to 100ms, then after 
+        11000ms more idle switches to 1300ms
+        */
+        poll-period-downshift-ms = <8 5000 20 9000 100 11000 1300>;
+
         axis-x {
             io-channels = <&adc_ads1220 0>;
             /* netural raw value from ADS1220 */
@@ -117,7 +125,7 @@
             in-deadzone-calib-scale-pctg = <110>; /* or, in-deadzone = <750>; */
             out-min = <( -127 )>;
             out-max = <(  127 )>;
-            skip-change-comparator;
+            skip-change-comparator; /* Keep reporting x-val while holding steady */
             zephyr,axis-type = <INPUT_EV_REL>;
             zephyr,axis = <INPUT_REL_X>;
         };
@@ -130,7 +138,7 @@
             in-deadzone-calib-scale-pctg = <110>; /* or, in-deadzone = <750>; */
             out-min = <( -127 )>;
             out-max = <(  127 )>;
-            skip-change-comparator;
+            skip-change-comparator; /* Keep reporting y-val while holding steady */
             zephyr,axis-type = <INPUT_EV_REL>;
             zephyr,axis = <INPUT_REL_Y>;
         };
