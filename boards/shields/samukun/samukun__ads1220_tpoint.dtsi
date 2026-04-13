@@ -113,8 +113,8 @@
             /* netural raw value from ADS1220 */
             in-min = <( 131622 - 655300 )>;
             in-max = <( 131622 + 655300 )>;
-            in-deadzone = <750>;
             in-calib-cycle = <100>;
+            in-deadzone-calib-scale-pctg = <110>; /* or, in-deadzone = <750>; */
             out-min = <( -127 )>;
             out-max = <(  127 )>;
             skip-change-comparator;
@@ -126,8 +126,8 @@
             /* netural raw value from ADS1220 */
             in-min = <( -21 - 655300 )>;
             in-max = <( -21 + 655300 )>;
-            in-deadzone = <750>;
             in-calib-cycle = <100>;
+            in-deadzone-calib-scale-pctg = <110>; /* or, in-deadzone = <750>; */
             out-min = <( -127 )>;
             out-max = <(  127 )>;
             skip-change-comparator;
