@@ -122,7 +122,6 @@
 // CONFIG_SPI=y
 // CONFIG_GPIO=y
 // CONFIG_ADC=y
-// CONFIG_ADC_ADS1220=y
 // CONFIG_ADC_LOG_LEVEL_DBG=y
 
 // # Enable analog axis hires input

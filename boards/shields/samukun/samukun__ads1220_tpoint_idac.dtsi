@@ -44,7 +44,8 @@
         // low-side-power-switch;
 
         /* IDAC excitation current in microamperes (0/10/50/100/250/500/1000/2000) */
-        idac-ua = <500>;
+        /* NOTE: or, use `ti,ads1220-idac` alternatively */
+        // idac-ua = <500>;
 
         /*
         Setup for dual half wheatstone bridges on T440 trackpoint sensor board
@@ -67,7 +68,7 @@
         Wiring:
         [x] <--> [AIN0]
         [y] <--> [AIN1]
-        [a] <--> [REFP0] (500uA sources, via `idac-ua;` & `zephyr,current-source-pin;`)
+        [a] <--> [REFP0] (setup via `zephyr,current-source-pin;` and &gpio_ads1220_idac)
         [b] <--> [REFN0] & [AVSS]
         [AIN2] <--( 2400ohm resistor)--> [REFP0]
         [AIN2] <--( 2400ohm resistor)--> [REFN0]
@@ -78,21 +79,40 @@
             zephyr,resolution = <24>;
             zephyr,gain = "ADC_GAIN_64";
             zephyr,reference = "ADC_REF_EXTERNAL0"; // REFP0/REFN0
-            zephyr,acquisition-time = <175>; // 175 SPS > 125 Hz
+            zephyr,acquisition-time = <330>;
             zephyr,input-positive = <0>; // AIN0
             zephyr,input-negative = <2>; // AIN2
-            zephyr,current-source-pin = [05 00]; // IDAC1 to REFP0 (05), IDAC2 disabled (00)
+            /* IDAC1 to REFP0 (05), IDAC2 disabled (00) */
+            /* NOTE: or, use `ti,ads1220-idac` alternatively */
+            zephyr,current-source-pin = [05 00];
         };
         adc_ads1220_ch1: channel@1 {
             reg = <1>;
             zephyr,resolution = <24>;
             zephyr,gain = "ADC_GAIN_64";
             zephyr,reference = "ADC_REF_EXTERNAL0"; // REFP0/REFN0
-            zephyr,acquisition-time = <175>; // 175 SPS > 125 Hz
+            zephyr,acquisition-time = <330>;
             zephyr,input-positive = <1>; // AIN1
             zephyr,input-negative = <2>; // AIN2
-            zephyr,current-source-pin = [05 00]; // IDAC1 to REFP0 (05), IDAC2 disabled (00)
+            /* IDAC1 to REFP0 (05), IDAC2 disabled (00) */
+            /* NOTE: or, use `ti,ads1220-idac` alternatively */
+            zephyr,current-source-pin = [05 00];
         };
+    };
+};
+
+/{
+    /*
+    Setup GPIO wrapper of ADS1220 IDAC for constant current supply.
+    */
+    gpio_ads1220_idac: gpio_ads1220_idac {
+        compatible = "ti,ads1220-idac";
+        gpio-controller;
+        #gpio-cells = <2>;
+        dev-reg = <0>; /* refer to adc_ads1220 { reg = <0>; }; */
+        idac-ua-high = <250>;
+        idac-ua-low = <0>;
+        skip-reg-write-high; /* skip writing on high, rely on channel setup */
     };
 };
 
@@ -113,11 +133,13 @@
         5000ms idle switches to 20ms, then after 
         9000ms more idle switches to 100ms, then after 
         11000ms more idle switches to 1300ms
+        17000 more idle switches to 2700ms         
         */
-        poll-period-downshift-ms = <8 5000 20 9000 100 11000 1300>;
+        poll-period-downshift-ms = <8 5000 20 9000 100 11000 1300 17000 2700>;
 
         axis-x {
             io-channels = <&adc_ads1220 0>;
+            avdd-gpios = <&gpio_ads1220_idac 0 0>;
             /* netural raw value from ADS1220 */
             in-min = <( 131622 - 655300 )>;
             in-max = <( 131622 + 655300 )>;
@@ -131,6 +153,7 @@
         };
         axis-y {
             io-channels = <&adc_ads1220 1>;
+            avdd-gpios = <&gpio_ads1220_idac 0 0>;
             /* netural raw value from ADS1220 */
             in-min = <( -21 - 655300 )>;
             in-max = <( -21 + 655300 )>;
@@ -153,8 +176,11 @@
 // CONFIG_SPI=y
 // CONFIG_GPIO=y
 // CONFIG_ADC=y
-// CONFIG_ADC_ADS1220=y
 // CONFIG_ADC_LOG_LEVEL_DBG=y
+
+// # Enable ADS1220 IDAC
+// CONFIG_GPIO=y
+// CONFIG_GPIO_LOG_LEVEL_DBG=y
 
 // # Enable analog axis hires input
 // CONFIG_INPUT=y

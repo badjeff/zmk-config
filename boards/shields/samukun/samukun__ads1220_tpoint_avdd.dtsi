@@ -67,7 +67,7 @@
         Wiring:
         [x] <--> [AIN0]
         [y] <--> [AIN1]
-        [a] <--> <--(a resistor)--> [avdd-gpios: P0.11]
+        [a] <--> <--(a resistor to reduce current)--> [avdd-gpios: P0.11]
         [b] <--> [REFN0] & [AVSS]
         [AIN2] <--( 2400ohm resistor)--> [REFP0]
         [AIN2] <--( 2400ohm resistor)--> [REFN0]
@@ -153,7 +153,6 @@
 // CONFIG_SPI=y
 // CONFIG_GPIO=y
 // CONFIG_ADC=y
-// CONFIG_ADC_ADS1220=y
 // CONFIG_ADC_LOG_LEVEL_DBG=y
 
 // # Enable analog axis hires input
