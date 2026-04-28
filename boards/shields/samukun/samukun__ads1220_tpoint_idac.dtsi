@@ -130,10 +130,10 @@
 
         /*
         polls at 8ms on init, then after
-        5000ms idle switches to 20ms, then after 
-        9000ms more idle switches to 100ms, then after 
+        5000ms idle switches to 20ms, then after
+        9000ms more idle switches to 100ms, then after
         11000ms more idle switches to 1300ms
-        17000 more idle switches to 2700ms         
+        17000ms more idle switches to 2700ms
         */
         poll-period-downshift-ms = <8 5000 20 9000 100 11000 1300 17000 2700>;
 
