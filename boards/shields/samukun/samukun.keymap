@@ -16,6 +16,8 @@
 #include <dt-bindings/zmk/input_transform.h>
 #include <input/processors.dtsi>
 
+#include <zephyr/dt-bindings/input/input_analog_axis_hires.h>
+
 #define DEF 0
 
 / {
@@ -78,6 +80,16 @@
                 device = <&anin0>;
                 input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
                                 , <&xy_scaler 3 7>;
+        };
+        zip_ping: zip_ping {
+                compatible = "zmk,input-processor-ping";
+                #input-processor-cells = <1>;
+                analog-axis-hires-dev = <&anin0>;
+        };
+        tpoint0_ping_listener {
+                compatible = "zmk,input-listener";
+                device = <&mkp>;
+                input-processors = <&zip_ping ANALOG_AXIS_HIRES_ATTR_RESUME>;
         };
 
         // touchpad_listener {
