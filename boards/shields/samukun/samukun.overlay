@@ -13,5 +13,7 @@
 // #include "samukun__mlx90393.dtsi"
 
 // #include "samukun__ads1220_load_cell.dtsi"
-#include "samukun__ads1220_tpoint_idac.dtsi"
 // #include "samukun__ads1220_tpoint_avdd.dtsi"
+#include "samukun__ads1220_tpoint_idac.dtsi"
+
+// #include "samukun__maxtouch.dtsi"

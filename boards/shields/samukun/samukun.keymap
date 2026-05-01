@@ -80,6 +80,11 @@
                                 , <&xy_scaler 3 7>;
         };
 
+        // touchpad_listener {
+        //         compatible = "zmk,input-listener";
+        //         device = <&i2c_mxt144u>;
+        // };
+
         // behaviors {
         //         ec_s: mouse_scroll {
         //                 compatible = "zmk,behavior-input-two-axis";

@@ -1,0 +1,50 @@
+/*
+ * Copyright (c) 2020 Pete Johanson
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+&pinctrl {
+    i2c0_default: i2c0_default {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
+                    <NRF_PSEL(TWIM_SCL, 0, 20)>;
+        };
+    };
+    i2c0_sleep: i2c0_sleep {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
+                    <NRF_PSEL(TWIM_SCL, 0, 20)>;
+            low-power-enable;
+        };
+    };
+};
+
+&i2c0 {
+    status = "okay";
+    compatible = "nordic,nrf-twim";
+    pinctrl-0 = <&i2c0_default>;
+    pinctrl-1 = <&i2c0_sleep>;
+    pinctrl-names = "default", "sleep";
+    clock-frequency = <100000>;
+
+    i2c_mxt144u: mxt144u@4a {
+        compatible = "microchip,maxtouch";
+        status = "okay";
+        reg = <0x4a>;
+
+        chg-gpios = <&gpio0 24 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        reset-gpios = <&gpio0 22 (GPIO_ACTIVE_LOW)>;
+
+        /* Configuration based on your driver properties */
+        max-touch-points = <5>;
+        active-acq-time-ms = <10>;
+        idle-acq-time-ms = <32>;
+        active-to-idle-timeout-ms = <50>;
+
+        /* Optional Orientation Tweaks */
+        /* swap-xy; */
+        /* invert-x; */
+        /* invert-y; */
+    };
+};

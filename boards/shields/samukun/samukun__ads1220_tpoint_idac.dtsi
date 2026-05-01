@@ -68,7 +68,7 @@
         Wiring:
         [x] <--> [AIN0]
         [y] <--> [AIN1]
-        [a] <--> [REFP0] (setup via `zephyr,current-source-pin;` and &gpio_ads1220_idac)
+        [a] <--> [REFP0] (setup via `zephyr,current-source-pin;` and &gpio_ads1220)
         [b] <--> [REFN0] & [AVSS]
         [AIN2] <--( 2400ohm resistor)--> [REFP0]
         [AIN2] <--( 2400ohm resistor)--> [REFN0]
@@ -101,12 +101,15 @@
     };
 };
 
+#include <zephyr/dt-bindings/gpio/gpio_ads1220.h>
+
 /{
     /*
     Setup GPIO wrapper of ADS1220 IDAC for constant current supply.
     */
-    gpio_ads1220_idac: gpio_ads1220_idac {
-        compatible = "ti,ads1220-idac";
+    gpio_ads1220: gpio_ads1220 {
+        compatible = "ti,ads1220-gpio";
+        status = "okay";
         gpio-controller;
         #gpio-cells = <2>;
         dev-reg = <0>; /* refer to adc_ads1220 { reg = <0>; }; */
@@ -135,11 +138,20 @@
         11000ms more idle switches to 1300ms
         17000ms more idle switches to 2700ms
         */
-        poll-period-downshift-ms = <8 5000 20 9000 100 11000 1300 17000 2700>;
+        // poll-period-downshift-ms = <8 5000 20 9000 100 11000 1300 17000 2700>;
+
+        /*
+        polls at 8ms on init, then after 
+        5000ms idle switches to 100ms, then after
+        5000ms idle switches to 0ms (suspend polling), then set
+        poll-period-en-gpios to INACTIVE (powerdown command)
+        */
+        poll-period-downshift-ms = <8 5000 100 7000 0>;
+        poll-period-en-gpios = <&gpio_ads1220 ADS1220_GPIO_PIN_EN GPIO_ACTIVE_HIGH>;
 
         axis-x {
             io-channels = <&adc_ads1220 0>;
-            avdd-gpios = <&gpio_ads1220_idac 0 0>;
+            avdd-gpios = <&gpio_ads1220 ADS1220_GPIO_PIN_IDAC GPIO_ACTIVE_HIGH>;
             /* netural raw value from ADS1220 */
             in-min = <( 131622 - 655300 )>;
             in-max = <( 131622 + 655300 )>;
@@ -153,7 +165,7 @@
         };
         axis-y {
             io-channels = <&adc_ads1220 1>;
-            avdd-gpios = <&gpio_ads1220_idac 0 0>;
+            avdd-gpios = <&gpio_ads1220 ADS1220_GPIO_PIN_IDAC GPIO_ACTIVE_HIGH>;
             /* netural raw value from ADS1220 */
             in-min = <( -21 - 655300 )>;
             in-max = <( -21 + 655300 )>;
