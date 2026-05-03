@@ -44,7 +44,7 @@
         // low-side-power-switch;
 
         /* IDAC excitation current in microamperes (0/10/50/100/250/500/1000/2000) */
-        /* NOTE: or, use `ti,ads1220-idac` alternatively */
+        /* NOTE: or, use `ti,ads1220-gpio` alternatively */
         // idac-ua = <500>;
 
         /*
@@ -83,7 +83,7 @@
             zephyr,input-positive = <0>; // AIN0
             zephyr,input-negative = <2>; // AIN2
             /* IDAC1 to REFP0 (05), IDAC2 disabled (00) */
-            /* NOTE: or, use `ti,ads1220-idac` alternatively */
+            /* NOTE: or, use `ti,ads1220-gpio` alternatively */
             zephyr,current-source-pin = [05 00];
         };
         adc_ads1220_ch1: channel@1 {
@@ -95,7 +95,7 @@
             zephyr,input-positive = <1>; // AIN1
             zephyr,input-negative = <2>; // AIN2
             /* IDAC1 to REFP0 (05), IDAC2 disabled (00) */
-            /* NOTE: or, use `ti,ads1220-idac` alternatively */
+            /* NOTE: or, use `ti,ads1220-gpio` alternatively */
             zephyr,current-source-pin = [05 00];
         };
     };
