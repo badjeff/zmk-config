@@ -1,0 +1,12 @@
+file_format: "1"
+id: chlorotaro34
+name: chlorotaro34
+type: shield
+url: https://github.com/badjeff/chlorotaro34/
+requires: [xiao_ble]
+exposes: []
+features:
+  - keys
+siblings:
+  - chlorotaro34_left
+  - chlorotaro34_right

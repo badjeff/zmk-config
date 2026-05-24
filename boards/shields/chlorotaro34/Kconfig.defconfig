@@ -1,0 +1,16 @@
+if SHIELD_CHLOROTARO4_LEFT
+
+config ZMK_KEYBOARD_NAME
+    default "chlorotaro4"
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+
+endif
+
+if SHIELD_CHLOROTARO4_LEFT || SHIELD_CHLOROTARO4_RIGHT
+
+config ZMK_SPLIT
+    default y
+
+endif

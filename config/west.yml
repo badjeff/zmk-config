@@ -155,5 +155,9 @@ manifest:
       remote: badjeff
       revision: main
 
+    - name: chloroplast-zmk-module
+      remote: badjeff
+      revision: main
+
   self:
     path: config
