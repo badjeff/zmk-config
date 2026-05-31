@@ -1,0 +1,23 @@
+file_format: "1"
+id: donble36
+name: donble36
+type: shield
+url: https://github.com/badjeff/donble36/
+requires: [pro_micro]
+exposes: []
+features:
+  - keys
+siblings:
+  - donble36_dongle
+  - donble36_donglx
+  - donble36_left
+  - donble36_right
+  - donble36_tball0
+  - donble36_tball1
+  - donble36_tball2
+  - donble36_tball3
+  - donble36_tpoint0
+  - donble36_tpad0
+  - donble36_mou0
+  - donble36_mou1
+  - donble36_mou2

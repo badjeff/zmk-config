@@ -1,0 +1,40 @@
+# Copyright (c) 2025, The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+description: Input Processor for mixing values after input events
+
+compatible: "zmk,input-processor-mixer"
+
+include: ip_one_param.yaml
+
+properties:
+
+  sync-report-ms:
+    type: int
+    required: true
+    default: 1
+
+  sync-report-yaw-ms:
+    type: int
+    required: true
+    default: 30
+
+  yaw-div:
+    type: int
+    required: true
+    default: 1
+
+  yaw-equator-threshold:
+    type: int
+    required: true
+    default: 20
+
+  yaw-min-per-tick:
+    type: int
+    required: true
+    default: 40
+
+  yaw-val-per-tick:
+    type: int
+    required: true
+    default: 1

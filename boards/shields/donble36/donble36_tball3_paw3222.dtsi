@@ -1,0 +1,79 @@
+/*
+ * Copyright (c) 2020 Pete Johanson
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+&pinctrl {
+	spi2_default: spi2_default {
+		group1 {
+			psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
+							<NRF_PSEL(SPIM_MOSI, 1, 15)>,
+							<NRF_PSEL(SPIM_MISO, 1, 15)>;
+		};
+	};
+	spi2_sleep: spi2_sleep {
+		group1 {
+			psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
+							<NRF_PSEL(SPIM_MOSI, 1, 15)>,
+							<NRF_PSEL(SPIM_MISO, 1, 15)>;
+			low-power-enable;
+		};
+	};
+};
+
+// release gpio1 11 & 12 from xiao_ble-pinctrl.dtsi
+// for &trackball { irq-gpios }
+&uart0 {
+	status = "disabled";
+};
+
+&spi2 {
+	compatible = "nordic,nrf-spim";
+	status = "disabled"; // <<< disabled in main .dtsi, okay in .overlay
+	pd0: pd@0 {
+		compatible = "pixart,paw32xx";
+		status = "disabled";
+		label = "TRACKBALL0";
+		reg = <0>;
+		// spi-max-frequency = <4000000>;
+		spi-max-frequency = <800000>;
+	};
+	pd0a: pd@1 {
+		compatible = "pixart,paw32xx";
+		status = "disabled";
+		label = "TRACKBALL2";
+		reg = <1>;
+		// spi-max-frequency = <4000000>;
+		spi-max-frequency = <800000>;
+	};
+};
+
+// Config custom gpios
+&spi2 {
+  status = "okay";
+	pinctrl-0 = <&spi2_default>;
+	pinctrl-1 = <&spi2_sleep>;
+	pinctrl-names = "default", "sleep";
+	cs-gpios = <&gpio1 12 GPIO_ACTIVE_LOW>
+					 , <&gpio1 11 GPIO_ACTIVE_LOW>;
+};
+
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+&pd0 {
+  status = "okay";
+	motion-gpios = <&gpio1 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+	res-cpi = <1558>;
+	zephyr,axis-x = <INPUT_REL_X>;
+	zephyr,axis-y = <INPUT_REL_Y>;
+	force-awake;
+};
+&pd0a {
+  status = "okay";
+  motion-gpios = <&gpio0 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+	res-cpi = <1558>;
+	zephyr,axis-x = <INPUT_REL_X>;
+	zephyr,axis-y = <INPUT_REL_Y>;
+	force-awake;
+};
