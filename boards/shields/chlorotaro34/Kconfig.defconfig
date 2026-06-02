@@ -1,14 +1,14 @@
-if SHIELD_CHLOROTARO4_LEFT
+if SHIELD_CHLOROTARO34_LEFT
 
 config ZMK_KEYBOARD_NAME
-    default "chlorotaro4"
+    default "chlorotaro34"
 
 config ZMK_SPLIT_ROLE_CENTRAL
     default y
 
 endif
 
-if SHIELD_CHLOROTARO4_LEFT || SHIELD_CHLOROTARO4_RIGHT
+if SHIELD_CHLOROTARO34_LEFT || SHIELD_CHLOROTARO34_RIGHT
 
 config ZMK_SPLIT
     default y
