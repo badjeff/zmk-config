@@ -26,8 +26,8 @@
 #include <behaviors/insomnia.dtsi>
 #include <dt-bindings/zmk/insomnia.h>
 
-// #include <input/processors/report_rate_limit.dtsi>
-// #include <input/processors/xyz.dtsi>
+#include <input/processors/report_rate_limit.dtsi>
+#include <input/processors/xyz.dtsi>
 
 #define BAS 0
 #define GME 1
@@ -36,38 +36,38 @@
 #define FUN 4
 #define CFG 5
 
-// &zip_report_rate_limit {
-//         limit-ble-only;
-// };
+&zip_report_rate_limit {
+        limit-ble-only;
+};
 
 / {
-        // xy_transf: xy_transf {
-        //         compatible = "zmk,input-processor-transform";
-        //         #input-processor-cells = <1>;
-        //         type = <INPUT_EV_REL>;
-        //         x-codes = <INPUT_REL_X>, <INPUT_REL_WHEEL>;
-        //         y-codes = <INPUT_REL_Y>, <INPUT_REL_HWHEEL>;
-        // };
-        // xy_scaler: xy_scaler {
-        //         compatible = "zmk,input-processor-scaler";
-        //         #input-processor-cells = <2>;
-        //         type = <INPUT_EV_REL>;
-        //         codes = <INPUT_REL_X>, <INPUT_REL_Y>;
-        //         track-remainders;
-        // };
-        // x_scaler: x_scaler {
-        //         compatible = "zmk,input-processor-scaler";
-        //         #input-processor-cells = <2>;
-        //         type = <INPUT_EV_REL>;
-        //         codes = <INPUT_REL_X>;
-        // };
-        // to_wheel: to_wheel {
-        //         compatible = "zmk,input-processor-code-mapper";
-        //         #input-processor-cells = <0>;
-        //         type = <INPUT_EV_REL>;
-        //         map = <INPUT_REL_X INPUT_REL_HWHEEL>
-        //             , <INPUT_REL_Y INPUT_REL_WHEEL>;
-        // };
+        xy_transf: xy_transf {
+                compatible = "zmk,input-processor-transform";
+                #input-processor-cells = <1>;
+                type = <INPUT_EV_REL>;
+                x-codes = <INPUT_REL_X>, <INPUT_REL_WHEEL>;
+                y-codes = <INPUT_REL_Y>, <INPUT_REL_HWHEEL>;
+        };
+        xy_scaler: xy_scaler {
+                compatible = "zmk,input-processor-scaler";
+                #input-processor-cells = <2>;
+                type = <INPUT_EV_REL>;
+                codes = <INPUT_REL_X>, <INPUT_REL_Y>;
+                track-remainders;
+        };
+        x_scaler: x_scaler {
+                compatible = "zmk,input-processor-scaler";
+                #input-processor-cells = <2>;
+                type = <INPUT_EV_REL>;
+                codes = <INPUT_REL_X>;
+        };
+        to_wheel: to_wheel {
+                compatible = "zmk,input-processor-code-mapper";
+                #input-processor-cells = <0>;
+                type = <INPUT_EV_REL>;
+                map = <INPUT_REL_X INPUT_REL_HWHEEL>
+                    , <INPUT_REL_Y INPUT_REL_WHEEL>;
+        };
 
         // tball0_mmv_il {
         //         compatible = "zmk,input-listener";
@@ -82,18 +82,18 @@
         //         };
         // };
 
-        // tball0_s_mmv_il {
-        //         compatible = "zmk,input-listener";
-        //         device = <&tball0_split>;
-        //         input-processors = <&zip_zxy>, <&zip_report_rate_limit 14>;
-        //         scroll {
-        //                 layers = <NUM>;
-        //                 process-next;
-        //                 input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
-        //                                 , <&xy_scaler 1 25>, <&x_scaler 0 1>
-        //                                 , <&to_wheel>;
-        //         };
-        // };
+        tball0_s_mmv_il {
+                compatible = "zmk,input-listener";
+                device = <&tball0_split>;
+                input-processors = <&zip_zxy>, <&zip_report_rate_limit 14>;
+                scroll {
+                        layers = <NUM>;
+                        process-next;
+                        input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
+                                        , <&xy_scaler 1 25>, <&x_scaler 0 1>
+                                        , <&to_wheel>;
+                };
+        };
 
         behaviors {
                 ht: hold_tap_mods {

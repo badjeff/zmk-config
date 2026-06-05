@@ -4,15 +4,15 @@
  * SPDX-License-Identifier: MIT
  */
 
-// /{
-//   split_inputs {
-//     #address-cells = <1>;
-//     #size-cells = <0>;
+/{
+  split_inputs {
+    #address-cells = <1>;
+    #size-cells = <0>;
 
-//     tball0_split: tball0@0 {
-//       compatible = "zmk,input-split";
-//       reg = <0>;
-//     };
+    tball0_split: tball0@0 {
+      compatible = "zmk,input-split";
+      reg = <0>;
+    };
 
-//   };
-// };
+  };
+};
