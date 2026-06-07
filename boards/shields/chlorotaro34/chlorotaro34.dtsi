@@ -7,6 +7,10 @@
 #include <dt-bindings/zmk/matrix_transform.h>
 #include <physical_layouts.dtsi>
 
+&bq25186 {
+			constant-charge-current-max-microamp = <100000>; // 100mA
+};
+
 / {
 	chosen {
 		zmk,kscan = &kscan0;
