@@ -7,7 +7,7 @@
 #include "chlorotaro34.dtsi"
 
 // #include "chlorotaro34_trackball_pat9125.dtsi"
-#include "chlorotaro34_zplit.dtsi"
+// #include "chlorotaro34_zplit.dtsi"
 
 &kscan0 {
 	col-gpios
