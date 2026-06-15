@@ -8,7 +8,7 @@
 #include <physical_layouts.dtsi>
 
 &bq25186 {
-			constant-charge-current-max-microamp = <100000>; // 100mA
+			constant-charge-current-max-microamp = <200000>; // 200mA
 };
 
 / {
