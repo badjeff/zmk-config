@@ -59,33 +59,33 @@
                 track-remainders;
         };
 
-        mlxpuck1_il {
-                compatible = "zmk,input-listener";
-                device = <&mlxpuck1>;
-                input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
-                                ,  <&xy_scaler 1 30>, <&z_scaler 1 30>
-                                ,  <&zip_trixer 0>;
-        };
-        mlxpuck2_il {
-                compatible = "zmk,input-listener";
-                device = <&mlxpuck2>;
-                input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
-                                ,  <&xy_scaler 1 30>, <&z_scaler 1 30>
-                                ,  <&zip_trixer 1>;
-        };
-        mlxpuck3_il {
-                compatible = "zmk,input-listener";
-                device = <&mlxpuck3>;
-                input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
-                                ,  <&xy_scaler 1 30>, <&z_scaler 1 30>
-                                ,  <&zip_trixer 2>;
-        };
-        trixer_il {
-		compatible = "zmk,input-listener";
-		device = <&zip_trixer>;
-                input-processors = <&zip_fwd_to_hid_joystick>;
-                // input-processors = <&xy_scaler 3 7>, <&z_scaler 3 7>;
-	};
+        // mlxpuck1_il {
+        //         compatible = "zmk,input-listener";
+        //         device = <&mlxpuck1>;
+        //         input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
+        //                         ,  <&xy_scaler 1 30>, <&z_scaler 1 30>
+        //                         ,  <&zip_trixer 0>;
+        // };
+        // mlxpuck2_il {
+        //         compatible = "zmk,input-listener";
+        //         device = <&mlxpuck2>;
+        //         input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
+        //                         ,  <&xy_scaler 1 30>, <&z_scaler 1 30>
+        //                         ,  <&zip_trixer 1>;
+        // };
+        // mlxpuck3_il {
+        //         compatible = "zmk,input-listener";
+        //         device = <&mlxpuck3>;
+        //         input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
+        //                         ,  <&xy_scaler 1 30>, <&z_scaler 1 30>
+        //                         ,  <&zip_trixer 2>;
+        // };
+        // trixer_il {
+	// 	compatible = "zmk,input-listener";
+	// 	device = <&zip_trixer>;
+        //         input-processors = <&zip_fwd_to_hid_joystick>;
+        //         // input-processors = <&xy_scaler 3 7>, <&z_scaler 3 7>;
+	// };
 
         // patpuck1_il {
         //         compatible = "zmk,input-listener";
@@ -114,19 +114,19 @@
 	// };
 
 
-        zip_fwd_to_hid_joystick: zip_forward_fwd_to_hid_joystick {
-                compatible = "zmk,input-processor-fwd-to-hid-joystick";
-                #input-processor-cells = <0>;
-        };
-        jskp: hid_joystick_key_press {
-                compatible = "zmk,behavior-hid-joystick-key-press";
-                #binding-cells = <1>;
-        };
-	jskp_il {
-		compatible = "zmk,input-listener";
-		device = <&jskp>;
-                input-processors = <&zip_fwd_to_hid_joystick>;
-	};
+        // zip_fwd_to_hid_joystick: zip_forward_fwd_to_hid_joystick {
+        //         compatible = "zmk,input-processor-fwd-to-hid-joystick";
+        //         #input-processor-cells = <0>;
+        // };
+        // jskp: hid_joystick_key_press {
+        //         compatible = "zmk,behavior-hid-joystick-key-press";
+        //         #binding-cells = <1>;
+        // };
+	// jskp_il {
+	// 	compatible = "zmk,input-listener";
+	// 	device = <&jskp>;
+        //         input-processors = <&zip_fwd_to_hid_joystick>;
+	// };
 
 
         // tball1_pri_mmv_il {
@@ -155,17 +155,18 @@
         //         input-processors = <&zip_report_rate_limit 12>;
         // };
 
-        // tball1_mmv_il {
-        //         compatible = "zmk,input-listener";
-        //         device = <&pd0>;
-        //         default {
-        //                 layers = <DEFAULT>;
-        //                 // input-processors 
-        //                 //         = <&zip_xy_swap_mapper>
-        //                 //         , <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>
-        //                 //         ;
-        //         };
-        // };
+        tball1_mmv_il {
+                compatible = "zmk,input-listener";
+                device = <&pd0>;
+                default {
+                        layers = <DEFAULT>;
+                        // input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>;
+                        // input-processors 
+                        //         = <&zip_xy_swap_mapper>
+                        //         , <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>
+                        //         ;
+                };
+        };
 
         // tball2_mmv_il {
         //         compatible = "zmk,input-listener";
@@ -223,8 +224,8 @@
                 compatible = "zmk,keymap";
                 default_layer {
                         bindings = <
-&jskp 0
-// &trans
+// &jskp 0
+&trans
 
 //    &bt BT_CLR   &out OUT_TOG      &mkp LCLK   &mkp RCLK
 //    &mkp LCLK    &mo RAISE         &mkp MCLK   &mktg MB4
@@ -233,8 +234,8 @@
                 };
                 raise_layer {
                         bindings = <
-&jskp 0
-// &trans
+// &jskp 0
+&trans
 
 //    &trans       &trans            &trans       &trans
 //    &trans       &trans            &trans       &trans

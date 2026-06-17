@@ -19,9 +19,10 @@
 // #include "sparklite_trackball_adns9800.dtsi"
 // #include "sparklite_trackball_pmw3610.dtsi"
 // #include "sparklite_trackball_paw3395.dtsi"
+#include "sparklite_trackball_paw3950.dtsi"
 // #include "sparklite_trackball_paw3222.dtsi"
 // #include "sparklite_trackball_pat9125.dtsi"
-#include "sparklite_trackpuck_mlx90393.dtsi"
+// #include "sparklite_trackpuck_mlx90393.dtsi"
 // #include "sparklite_trackpuck_pat9125.dtsi"
 
 // / {
