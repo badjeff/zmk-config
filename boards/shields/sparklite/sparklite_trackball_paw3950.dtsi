@@ -67,7 +67,7 @@
 	x-input-code = <INPUT_REL_X>;
 	y-input-code = <INPUT_REL_Y>;
 	invert-x;
-	force-awake;
+	// force-awake;
 };
 // &pd0a {
 //   status = "okay";

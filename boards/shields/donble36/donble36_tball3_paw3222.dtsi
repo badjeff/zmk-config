@@ -67,7 +67,7 @@
 	res-cpi = <1558>;
 	zephyr,axis-x = <INPUT_REL_X>;
 	zephyr,axis-y = <INPUT_REL_Y>;
-	force-awake;
+	// force-awake;
 };
 &pd0a {
   status = "okay";
@@ -75,5 +75,5 @@
 	res-cpi = <1558>;
 	zephyr,axis-x = <INPUT_REL_X>;
 	zephyr,axis-y = <INPUT_REL_Y>;
-	force-awake;
+	// force-awake;
 };
