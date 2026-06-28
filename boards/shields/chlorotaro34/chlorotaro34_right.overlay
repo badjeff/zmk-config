@@ -20,17 +20,17 @@
 		;
 };
 
-// #include <input/processors/report_rate_limit.dtsi>
-// #include <input/processors/xyz.dtsi>
+#include <input/processors/report_rate_limit.dtsi>
+#include <input/processors/xyz.dtsi>
 
-// #include "chlorotaro34_trackball_pat9125.dtsi"
-// &tball0 {
-// 	// invert-x;
-// 	// invert-y;
-// };
+#include "chlorotaro34_trackball_pat9125.dtsi"
+&tball0 {
+	invert-x;
+	invert-y;
+};
 
-// #include "chlorotaro34_zplit.dtsi"
-// &tball0_split {
-// 	device = <&tball0>;
-// 	input-processors = <&zip_report_rate_limit 8>, <&zip_xyz>;
-// };
+#include "chlorotaro34_zplit.dtsi"
+&tball0_split {
+	device = <&tball0>;
+	input-processors = <&zip_report_rate_limit 8>, <&zip_xyz>;
+};
