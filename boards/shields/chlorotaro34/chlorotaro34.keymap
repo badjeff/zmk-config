@@ -264,13 +264,13 @@
 // +------------------------------------------------------+     +------------------------------------------------------+
 // |   DFU    |   BT_0   |   BT_1   |   BT_2   |  RESET   |     |   RESET  |          |          |   ^GME   |    DFU   |
 // |   ^CFG   |  ISA_ON  |  ISA_OFF |  ISA_SLP |  OUT_TOG |     |   TEMPO  |          |          |          |   ^CFG   |
-// | SHF ^CFG |          |          |  EPW_TOG |  BATT    |     |   BATT   |  EPW_TOG |          |          | SHF ^CFG |
+// | SHF ^CFG |          |          |          |  BATT    |     |   BATT   |          |          |          | SHF ^CFG |
 //                                  |          |          |     |          |          |
                         display-name = "Config";
                         bindings = <
    &bootloader    &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2       &sys_reset        &sys_reset   &trans             &trans      &tog GME      &bootloader
    &tog CFG       &isa ISA_ON   &isa ISA_OFF  &isa ISA_SLP       &out OUT_TOG      &tempo       &trans             &trans      &trans        &tog CFG
-   &kg RSHFT CFG  &trans        &trans        &ext_power EP_TOG  &bapp             &bapp        &ext_power EP_TOG  &trans      &trans        &kg RSHFT CFG
+   &kg RSHFT CFG  &trans        &trans        &trans             &bapp             &bapp        &trans             &trans      &trans        &kg RSHFT CFG
                                               &trans             &trans            &trans       &trans
                         >;
                 };
