@@ -69,18 +69,18 @@
                     , <INPUT_REL_Y INPUT_REL_WHEEL>;
         };
 
-        tball0_mmv_il {
-                compatible = "zmk,input-listener";
-                device = <&tball0>;
-                input-processors = <&zip_report_rate_limit 14>;
-                scroll {
-                        layers = <NUM>;
-                        process-next;
-                        input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
-                                        , <&xy_scaler 1 15>, <&x_scaler 0 1>
-                                        , <&to_wheel>;
-                };
-        };
+        // tball0_mmv_il {
+        //         compatible = "zmk,input-listener";
+        //         device = <&tball0>;
+        //         input-processors = <&zip_report_rate_limit 14>;
+        //         scroll {
+        //                 layers = <NUM>;
+        //                 process-next;
+        //                 input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
+        //                                 , <&xy_scaler 1 15>, <&x_scaler 0 1>
+        //                                 , <&to_wheel>;
+        //         };
+        // };
 
         tball0_s_mmv_il {
                 compatible = "zmk,input-listener";
