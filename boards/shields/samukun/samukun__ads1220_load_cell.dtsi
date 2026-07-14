@@ -50,7 +50,7 @@
         /* enable closing low side power switch during a measurement */
         // low-side-power-switch;
 
-        /* IDAC excitation current in microamperes (0/10/50/100/250/500/1000/2000) */
+        /* IDAC excitation current in microamperes (0/10/50/100/250/500/1000/1500) */
         // idac-ua = <500>;
 
         /*

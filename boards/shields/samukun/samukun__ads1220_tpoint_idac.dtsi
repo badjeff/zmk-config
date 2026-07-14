@@ -43,7 +43,7 @@
         // drdy-gpios = <&gpio1 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         // low-side-power-switch;
 
-        /* IDAC excitation current in microamperes (0/10/50/100/250/500/1000/2000) */
+        /* IDAC excitation current in microamperes (0/10/50/100/250/500/1000/1500) */
         /* NOTE: or, use `ti,ads1220-gpio` alternatively */
         // idac-ua = <500>;
 
