@@ -56,3 +56,6 @@ include:
 
   - board: xiao_ble//zmk
     shield: donki36_mou2
+
+  - board: xiao_ble//zmk
+    shield: donki36_mou3

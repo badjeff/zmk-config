@@ -63,3 +63,4 @@ RC(7,0) RC(7,1) RC(7,2)
 &mou1_split { status = "disabled"; };
 &mou2_split { status = "disabled"; };
 &mou2_split_alt { status = "disabled"; };
+&mou3_split { status = "disabled"; };

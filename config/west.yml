@@ -51,6 +51,10 @@ manifest:
       remote: badjeff
       revision: main
 
+    - name: zmk-paw3950-driver
+      remote: badjeff
+      revision: main
+
     - name: zmk-analog-input-driver
       remote: badjeff
       revision: main

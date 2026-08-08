@@ -68,6 +68,7 @@ RC(4,0) RC(4,1) RC(4,2)
 &mou1_split { device = <&mou1>; input-processors = <&zip_xyz>; };
 &mou2_split { status = "disabled"; };
 &mou2_split_alt { status = "disabled"; };
+&mou3_split { status = "disabled"; };
 
 &uicr {
    nfct-pins-as-gpios;

@@ -104,6 +104,7 @@ RC(7,0) RC(7,1) RC(7,2)
     mou1_split: mou1@5 { compatible = "zmk,input-split"; reg = <5>; status = "disabled"; };
     mou2_split: mou2@7 { compatible = "zmk,input-split"; reg = <7>; status = "disabled"; };
     mou2_split_alt: mou2_alt@8 { compatible = "zmk,input-split"; reg = <8>; status = "disabled"; };
+    mou3_split: mou3@10 { compatible = "zmk,input-split"; reg = <10>; status = "disabled"; };
 
 	};
 };
