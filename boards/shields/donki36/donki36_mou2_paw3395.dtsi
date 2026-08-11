@@ -85,3 +85,16 @@
 	force-awake;
 	// force-awake-4ms-mode;
 };
+
+/{
+	dpi_cycle: dpi_cycle {
+		compatible = "zmk,behavior-sensor-attr-cycle";
+		status = "okay";
+		#binding-cells = <1>;
+		values = < 1650 800 >;
+		attr = <0>;
+		sensor_device = <&mou2>;
+		display-name = "DPI cycle";
+		// persistant;
+	};
+};

@@ -64,3 +64,16 @@ RC(7,0) RC(7,1) RC(7,2)
 &mou2_split { status = "disabled"; };
 &mou2_split_alt { status = "disabled"; };
 &mou3_split { status = "disabled"; };
+
+/{
+	dpi_cycle: dpi_cycle {
+		compatible = "zmk,behavior-sensor-attr-cycle";
+		status = "disabled";
+		#binding-cells = <1>;
+		values = < 0 >;
+		attr = <0>;
+		sensor_device = <&tpoint0>;
+		display-name = "DPI cycle";
+		// persistant;
+	};
+};

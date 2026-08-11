@@ -75,3 +75,16 @@
 	// force-awake;
 	// force-awake-4ms-mode;
 };
+
+/{
+	dpi_cycle: dpi_cycle {
+		compatible = "zmk,behavior-sensor-attr-cycle";
+		status = "disabled";
+		#binding-cells = <1>;
+		values = < 0 >;
+		attr = <0>;
+		sensor_device = <&tball1>;
+		display-name = "DPI cycle";
+		// persistant;
+	};
+};

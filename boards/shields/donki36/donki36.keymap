@@ -586,7 +586,7 @@
    &bapp       &bootloader     &bapp
    &trans      &bootloader     &trans
    &trans      &bapp           &trans
-   &trans      &trans          &trans
+   &trans      &dpi_cycle(1)   &trans
                         >;
                         sensor-bindings = <&rot_enc>;
                 };

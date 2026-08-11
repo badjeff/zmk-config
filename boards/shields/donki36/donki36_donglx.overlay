@@ -41,6 +41,16 @@
 		sensors = <&s_encoder>;
 		triggers-per-rotation = <12>;
 	};
+	dpi_cycle: dpi_cycle {
+ 		compatible = "zmk,behavior-sensor-attr-cycle";
+		status = "okay";
+		#binding-cells = <1>;
+		values = < 0 >; // dummy list on central, put actual DPI on peripheral side
+		attr = <0>;
+		sensor_device = <&s_encoder>; // dummy device, put actual device on peripheral side
+		display-name = "DPI cycle";
+		// persistant;
+	};
 };
 
 // #####

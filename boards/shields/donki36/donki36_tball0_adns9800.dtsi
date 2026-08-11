@@ -59,3 +59,16 @@
 	x-input-code = <INPUT_REL_X>;
 	y-input-code = <INPUT_REL_Y>;
 };
+
+/{
+	dpi_cycle: dpi_cycle {
+		compatible = "zmk,behavior-sensor-attr-cycle";
+		status = "okay";
+		#binding-cells = <1>;
+		values = < 500 >;
+		attr = <0>;
+		sensor_device = <&tball0>;
+		display-name = "DPI cycle";
+		// persistant;
+	};
+};
