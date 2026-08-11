@@ -83,7 +83,7 @@
 /{
 	dpi_cycle: dpi_cycle {
 		compatible = "zmk,behavior-sensor-attr-cycle";
-		status = "disable";
+		status = "disabled";
 		#binding-cells = <1>;
 		values = < 0 >;
 		attr = <0>;
