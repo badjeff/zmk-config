@@ -54,7 +54,7 @@
 &mou3 {
   status = "okay";
 	irq-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-	cpi = <1400>;
+	cpi = <1350>;
 	invert-y;
 	evt-type = <INPUT_EV_REL>;
 	x-input-code = <INPUT_REL_X>;
