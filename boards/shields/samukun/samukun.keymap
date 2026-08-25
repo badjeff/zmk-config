@@ -21,6 +21,15 @@
 #define DEF 0
 
 / {
+        to_wheel: to_wheel {
+                compatible = "zmk,input-processor-code-mapper";
+                #input-processor-cells = <0>;
+                type = <INPUT_EV_REL>;
+                map = 
+                    <INPUT_REL_X INPUT_REL_HWHEEL>,
+                    <INPUT_REL_Y INPUT_REL_WHEEL>;
+        };
+
         xy_transf: xy_transf {
                 compatible = "zmk,input-processor-transform";
                 #input-processor-cells = <1>;
@@ -33,6 +42,13 @@
                 #input-processor-cells = <2>;
                 type = <INPUT_EV_REL>;
                 codes = <INPUT_REL_X>, <INPUT_REL_Y>;
+                track-remainders;
+        };
+        x_scaler: x_scaler {
+                compatible = "zmk,input-processor-scaler";
+                #input-processor-cells = <2>;
+                type = <INPUT_EV_REL>;
+                codes = <INPUT_REL_X>;
                 track-remainders;
         };
         // z_scaler: z_scaler {
@@ -79,7 +95,10 @@
                 compatible = "zmk,input-listener";
                 device = <&anin0>;
                 input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
-                                , <&xy_scaler 3 7>;
+                                , <&xy_scaler 3 7>
+                                // , <&xy_scaler 1 55> , <&to_wheel>, <&xy_transf (INPUT_TRANSFORM_X_INVERT)>
+                                // , <&zip_fwd_to_hid_mou2nd>
+                                ;
         };
         zip_ping: zip_ping {
                 compatible = "zmk,input-processor-ping";
@@ -91,6 +110,21 @@
                 device = <&mkp>;
                 input-processors = <&zip_ping ANALOG_AXIS_HIRES_ATTR_RESUME>;
         };
+
+        // zip_fwd_to_hid_mou2nd: zip_forward_fwd_to_hid_mou2nd {
+        //         compatible = "zmk,input-processor-fwd-to-hid-mou2nd";
+        //         #input-processor-cells = <0>;
+        // };
+
+        // mokp: hid_mou2nd_key_press {
+        //         compatible = "zmk,behavior-hid-mou2nd-key-press";
+        //         #binding-cells = <1>;
+        // };
+	// mokp_il {
+	// 	compatible = "zmk,input-listener";
+	// 	device = <&mokp>;
+        //         input-processors = <&zip_fwd_to_hid_mou2nd>;
+	// };
 
         // touchpad_listener {
         //         compatible = "zmk,input-listener";
@@ -122,6 +156,7 @@
 
 &mkp LCLK
 // &jskp 0
+// &mokp 0
 
 // &kp LSHFT  &kp N2  &kp N3  &kp N4  &kp N5  &kp N6  &kp N7  &kp N8
 // &kp A  &kp B  &kp C  &kp D  &kp E  &kp F  &kp G  &kp H

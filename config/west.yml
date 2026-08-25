@@ -95,6 +95,10 @@ manifest:
       remote: badjeff
       revision: main
 
+    - name: zmk-hid-mou2nd
+      remote: badjeff
+      revision: main
+
     # - name: zmk-split-peripheral-input-relay
     #   remote: badjeff
     #   revision: main

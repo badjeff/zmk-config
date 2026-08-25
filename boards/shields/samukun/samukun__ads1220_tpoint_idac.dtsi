@@ -146,7 +146,8 @@
         5000ms idle switches to 0ms (suspend polling), then set
         poll-period-en-gpios to INACTIVE (powerdown command)
         */
-        poll-period-downshift-ms = <8 5000 100 7000 0>;
+        // poll-period-downshift-ms = <8 5000 100 7000 0>;
+        poll-period-downshift-ms = <8 5000 100 7000 300>; // disable suspending
         poll-period-en-gpios = <&gpio_ads1220 ADS1220_GPIO_PIN_EN GPIO_ACTIVE_HIGH>;
 
         axis-x {
