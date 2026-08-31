@@ -236,13 +236,13 @@
 // +------------------------------------------------------+     +-------------------------------------------------------+
 // |    1!    | LCTRL:2@  |    3#    | LALT:4$  |    5%   |     |    6^    |  RALT:7& |    8&    |  RCTRL 9( |    0)    |
 // |    `~    |   TAB     |    {[    |    ]}    |         |     |    LFT   |   DWN    |    UP    |    RGT    |    '"    |
-// |  SHFT \| |    /?     |          |          |         |     |          |    -_    |    =+    |    \|     |  SHFT /? |
+// |  SHFT \| |    /?     |          |          |         |     |   HOME   |    -_    |    =+    |    \|     |  SHFT /? |
 //                                   |          |         |     |          |    (H)   |
                         display-name = "Num";
                         bindings = <
    &kp N1             &hm LCTRL N2   &kp N3     &hm LALT N4   &kp N5              &kp N6      &hm RALT N7   &kp N8      &hm RCTRL N9   &kp N0
    &kp GRAVE          &kp TAB        &kp LBKT   &kp RBKT      &trans              &kp LEFT    &kp DOWN      &kp UP      &kp RIGHT      &kp SQT
-   &ht LSHFT BSLH     &kp FSLH       &trans     &trans        &trans              &trans      &kp MINUS     &kp EQUAL   &kp BSLH       &ht RSHFT FSLH
+   &ht LSHFT BSLH     &kp FSLH       &trans     &trans        &trans              &kp HOME    &kp MINUS     &kp EQUAL   &kp BSLH       &ht RSHFT FSLH
                                                 &trans        &trans              &trans      &trans
                         >;
                 };
