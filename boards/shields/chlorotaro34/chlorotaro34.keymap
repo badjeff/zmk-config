@@ -21,13 +21,13 @@
 #include <dt-bindings/zmk/mouse.h>
 #include <dt-bindings/zmk/input_transform.h>
 
-#include <behaviors/key_press_lip.dtsi>
-#include <behaviors/tempo.dtsi>
-#include <behaviors/insomnia.dtsi>
-#include <dt-bindings/zmk/insomnia.h>
+#include <behaviors/key_press_lip.dtsi> // &kpws
+#include <behaviors/tempo.dtsi> // &tempo
+#include <behaviors/insomnia.dtsi> // &isa
+#include <dt-bindings/zmk/insomnia.h> // &isa params
 
-#include <input/processors/report_rate_limit.dtsi>
-#include <input/processors/xyz.dtsi>
+#include <input/processors/report_rate_limit.dtsi> // &zip_report_rate_limit
+#include <input/processors/xyz.dtsi> // &zip_zxy
 
 #define BAS 0
 #define XCV 1
