@@ -79,7 +79,7 @@
             zephyr,resolution = <24>;
             zephyr,gain = "ADC_GAIN_16";
             zephyr,reference = "ADC_REF_EXTERNAL0"; // REFP0/REFN0
-            zephyr,acquisition-time = <600>;
+            zephyr,acquisition-time = <1000>;
             zephyr,input-positive = <0>; // AIN0
             zephyr,input-negative = <2>; // AIN2
             /* IDAC1 to REFP0 (05), IDAC2 disabled (00) */
@@ -91,7 +91,7 @@
             zephyr,resolution = <24>;
             zephyr,gain = "ADC_GAIN_16";
             zephyr,reference = "ADC_REF_EXTERNAL0"; // REFP0/REFN0
-            zephyr,acquisition-time = <600>;
+            zephyr,acquisition-time = <1000>;
             zephyr,input-positive = <1>; // AIN1
             zephyr,input-negative = <2>; // AIN2
             /* IDAC1 to REFP0 (05), IDAC2 disabled (00) */
@@ -146,8 +146,8 @@
         5000ms idle switches to 0ms (suspend polling), then set
         poll-period-en-gpios to INACTIVE (powerdown command)
         */
-        // poll-period-downshift-ms = <8 5000 100 7000 0>; // enable suspending
-        poll-period-downshift-ms = <8 5000 100 7000 500>; // disable suspending
+        // poll-period-downshift-ms = <8 200 100 7000 0>; // enable suspending
+        poll-period-downshift-ms = <8 200 100 7000 700>; // disable suspending
         poll-period-en-gpios = <&gpio_ads1220 ADS1220_GPIO_PIN_EN GPIO_ACTIVE_HIGH>;
 
         axis-x {
