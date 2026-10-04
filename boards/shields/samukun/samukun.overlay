@@ -16,4 +16,14 @@
 // #include "samukun__ads1220_tpoint_avdd.dtsi"
 #include "samukun__ads1220_tpoint_idac.dtsi"
 
+// fine tune for 6-wire trackpoint sensor board
+&adc_ads1220_ch0 {
+        zephyr,gain = "ADC_GAIN_32";
+        zephyr,acquisition-time = <600>;
+};
+&adc_ads1220_ch1 {
+        zephyr,gain = "ADC_GAIN_32";
+        zephyr,acquisition-time = <600>;
+};
+
 // #include "samukun__maxtouch.dtsi"

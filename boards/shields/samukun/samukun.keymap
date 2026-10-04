@@ -94,9 +94,18 @@
         tpoint0_mmv_ibl {
                 compatible = "zmk,input-listener";
                 device = <&anin0>;
-                input-processors = <&xy_transf (INPUT_TRANSFORM_X_INVERT)>
-                                , <&xy_scaler 5 11>
-                                // , <&xy_scaler 1 137> , <&to_wheel>, <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
+
+                // // 4-wire strain gauge sensor board
+                // input-processors = <&xy_transf (INPUT_TRANSFORM_X_INVERT)>
+                //                 , <&xy_scaler 5 11>
+                //                 // , <&xy_scaler 1 137> , <&to_wheel>, <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
+                //                 // , <&zip_fwd_to_hid_mou2nd>
+                //                 ;
+
+                // 6-wire strain gauge sensor board
+                input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
+                                , <&xy_scaler 5 13>
+                                // , <&xy_scaler 1 55> , <&to_wheel>, <&xy_transf (INPUT_TRANSFORM_X_INVERT)>
                                 // , <&zip_fwd_to_hid_mou2nd>
                                 ;
         };
