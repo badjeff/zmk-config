@@ -63,6 +63,7 @@
         |                             |
         |    [x]   [y]    [a]   [b]   |
         +-----------------------------+
+        (schematic: `example-tpoint.kicad_sch`)
 
         Wiring:
         [x] <--> [AIN0]
