@@ -166,7 +166,8 @@
                 compatible = "zmk,input-listener";
                 device = <&tpoint0_split>;
                 input-processors = <&zip_zxy>, <&zip_report_rate_limit 1>
-                                 , <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>;
+                                 , <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
+                                 , <&xy_scaler 5 11>;
                 precise {
                         layers = <NUM>;
                         process-next;
@@ -175,7 +176,7 @@
                 scroll {
                         layers = <CFG>;
                         process-next;
-                        input-processors = <&xy_scaler 1 22>, <&x_scaler 0 1>
+                        input-processors = <&xy_scaler 1 70>, <&x_scaler 0 1>
                                          , <&to_wheel>;
                 };
         };
