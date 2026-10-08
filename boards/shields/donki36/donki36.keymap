@@ -176,7 +176,9 @@
                 scroll {
                         layers = <CFG>;
                         process-next;
-                        input-processors = <&xy_scaler 1 70>, <&x_scaler 0 1>
+                        input-processors = <&xy_scaler 1 76>
+                                        // , <&x_scaler 0 1>
+                                        , <&xy_transf (INPUT_TRANSFORM_X_INVERT)>
                                          , <&to_wheel>;
                 };
         };
