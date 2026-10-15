@@ -163,6 +163,10 @@ manifest:
       remote: badjeff
       revision: main
 
+    - name: analog-axis-hires-input-zephyr-module
+      remote: badjeff
+      revision: main
+
     - name: chloroplast-zmk-module
       remote: badjeff
       revision: main
