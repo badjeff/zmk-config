@@ -52,10 +52,9 @@
 &tpad0 {
   status = "okay";
 	data-ready-gpios = <&gpio1 11 GPIO_ACTIVE_HIGH>;
-	// primary-tap-enable;
 	sleep-mode-enable;
 	sensitivity = "2x";
-	// rotate-90;
+	data-mode = "absolute";
 };
 
 /{

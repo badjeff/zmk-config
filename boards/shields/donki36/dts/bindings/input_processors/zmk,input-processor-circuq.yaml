@@ -1,0 +1,18 @@
+# Copyright (c) 2025, The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+description: Input Processor for cirque pinnacle touch pad
+
+compatible: "zmk,input-processor-cirque"
+
+include: ip_zero_param.yaml
+
+properties:
+
+  sync-report-ms:
+    type: int
+    default: 1
+
+  session-end-idle-ms:
+    type: int
+    default: 20

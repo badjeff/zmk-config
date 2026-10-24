@@ -1,0 +1,11 @@
+// Copyright (c) 2025, The ZMK Contributors
+// SPDX-License-Identifier: MIT
+
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+    /omit-if-no-ref/ zip_cirque: zip_cirque {
+        compatible = "zmk,input-processor-cirque";
+        #input-processor-cells = <0>;
+    };
+};
