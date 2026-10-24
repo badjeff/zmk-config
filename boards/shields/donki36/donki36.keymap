@@ -82,6 +82,13 @@
                 type = <INPUT_EV_REL>;
                 codes = <INPUT_REL_X>;
         };
+        y_scaler: y_scaler {
+                compatible = "zmk,input-processor-scaler";
+                #input-processor-cells = <2>;
+                type = <INPUT_EV_REL>;
+                codes = <INPUT_REL_Y>;
+                track-remainders;
+        };
         to_wheel: to_wheel {
                 compatible = "zmk,input-processor-code-mapper";
                 #input-processor-cells = <0>;
@@ -187,7 +194,8 @@
                 compatible = "zmk,input-listener";
                 device = <&tpad0_split>;
                 input-processors = <&zip_zxy>, <&zip_report_rate_limit 1>
-                                 , <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>;
+                                 , <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
+                                 , <&x_scaler 4 3>, <&y_scaler 5 3>;
                 precise {
                         layers = <NUM>;
                         process-next;
