@@ -151,10 +151,6 @@ manifest:
       remote: badjeff
       revision: main
 
-    - name: cirque-input-module
-      remote: badjeff
-      revision: tweak
-
     - name: prospector-zmk-module
       remote: badjeff
       revision: 1-47-inch-panel

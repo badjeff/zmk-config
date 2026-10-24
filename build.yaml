@@ -34,8 +34,8 @@ include:
     shield: corne36_tball2
   - board: xiao_ble//zmk
     shield: corne36_tpoint0
-  # - board: xiao_ble//zmk
-  #   shield: corne36_tpad0
+  - board: xiao_ble//zmk
+    shield: corne36_tpad0
   - board: xiao_ble//zmk
     shield: corne36_mou0
   - board: xiao_ble//zmk
@@ -67,8 +67,8 @@ include:
     shield: donble36_tball3
   - board: xiao_ble//zmk
     shield: donble36_tpoint0
-  # - board: xiao_ble//zmk
-  #   shield: donble36_tpad0
+  - board: xiao_ble//zmk
+    shield: donble36_tpad0
   - board: xiao_ble//zmk
     shield: donble36_mou0
   - board: xiao_ble//zmk
