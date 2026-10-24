@@ -6,18 +6,18 @@
 
 #include "sparklite.dtsi"
 
-&kscan0 {
-	col-gpios
-		// = <&gpio0 28 GPIO_ACTIVE_HIGH>
-		// , <&gpio0 29 GPIO_ACTIVE_HIGH>
-		// , <&gpio0 3 GPIO_ACTIVE_HIGH>
-		= <&gpio0 3 GPIO_ACTIVE_HIGH>
-		;
-};
+// &kscan0 {
+// 	col-gpios
+// 		// = <&gpio0 28 GPIO_ACTIVE_HIGH>
+// 		// , <&gpio0 29 GPIO_ACTIVE_HIGH>
+// 		// , <&gpio0 3 GPIO_ACTIVE_HIGH>
+// 		= <&gpio0 3 GPIO_ACTIVE_HIGH>
+// 		;
+// };
 
-// #include "sparklite_touchpad_cirque.dtsi"
+#include "sparklite_touchpad_cirque.dtsi"
 // #include "sparklite_trackball_adns9800.dtsi"
-#include "sparklite_trackball_pmw3610.dtsi"
+// #include "sparklite_trackball_pmw3610.dtsi"
 // #include "sparklite_trackball_paw3395.dtsi"
 // #include "sparklite_trackball_paw3950.dtsi"
 // #include "sparklite_trackball_paw3222.dtsi"

@@ -3,6 +3,7 @@
 
 zephyr_library()
 
+target_sources(app PRIVATE input_processor_cirque.c)
 target_sources(app PRIVATE input_processor_mixer.c)
 target_sources(app PRIVATE input_processor_trixer.c)
 target_sources(app PRIVATE input_processor_quadixer.c)

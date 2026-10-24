@@ -19,6 +19,7 @@
 #include <dt-bindings/zmk/input_transform.h>
 #include <input/processors.dtsi>
 
+#include <input/processors/cirque.dtsi>
 #include <input/processors/mixer.dtsi>
 #include <input/processors/trixer.dtsi>
 #include <input/processors/quadixer.dtsi>
@@ -56,6 +57,20 @@
                 #input-processor-cells = <2>;
                 type = <INPUT_EV_REL>;
                 codes = <INPUT_REL_Z>;
+                track-remainders;
+        };
+        x_scaler: x_scaler {
+                compatible = "zmk,input-processor-scaler";
+                #input-processor-cells = <2>;
+                type = <INPUT_EV_REL>;
+                codes = <INPUT_REL_X>;
+                track-remainders;
+        };
+        y_scaler: y_scaler {
+                compatible = "zmk,input-processor-scaler";
+                #input-processor-cells = <2>;
+                type = <INPUT_EV_REL>;
+                codes = <INPUT_REL_Y>;
                 track-remainders;
         };
 
@@ -155,18 +170,18 @@
         //         input-processors = <&zip_report_rate_limit 12>;
         // };
 
-        tball1_mmv_il {
-                compatible = "zmk,input-listener";
-                device = <&pd0>;
-                default {
-                        layers = <DEFAULT>;
-                        // input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>;
-                        // input-processors 
-                        //         = <&zip_xy_swap_mapper>
-                        //         , <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>
-                        //         ;
-                };
-        };
+        // tball1_mmv_il {
+        //         compatible = "zmk,input-listener";
+        //         device = <&pd0>;
+        //         default {
+        //                 layers = <DEFAULT>;
+        //                 // input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>;
+        //                 // input-processors 
+        //                 //         = <&zip_xy_swap_mapper>
+        //                 //         , <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>
+        //                 //         ;
+        //         };
+        // };
 
         // tball2_mmv_il {
         //         compatible = "zmk,input-listener";
@@ -176,13 +191,20 @@
         //         };
         // };
 
-        // tpad0_mmv_il {
-        //         compatible = "zmk,input-listener";
-        //         device = <&tpad0>;
-        //         default {
-        //                 layers = <DEFAULT>;
-        //         };
-        // };
+        tpad0_mmv_il {
+                compatible = "zmk,input-listener";
+                device = <&tpad0>;
+                default {
+                        // input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>, <&x_scaler 4 3>, <&y_scaler 5 3>;
+                        input-processors = <&zip_cirque>;
+                        layers = <DEFAULT>;
+                };
+        };
+        cirque_il {
+		compatible = "zmk,input-listener";
+		device = <&zip_cirque>;
+                input-processors = <&xy_scaler 3 5>;
+	};
 
         // erm0_obl__enter_raise_layer {
         //         compatible = "zmk,output-behavior-listener";
@@ -224,8 +246,10 @@
                 compatible = "zmk,keymap";
                 default_layer {
                         bindings = <
+
+&mkp RCLK   &mkp MCLK   &mkp LCLK
 // &jskp 0
-&trans
+// &trans
 
 //    &bt BT_CLR   &out OUT_TOG      &mkp LCLK   &mkp RCLK
 //    &mkp LCLK    &mo RAISE         &mkp MCLK   &mktg MB4
@@ -234,8 +258,9 @@
                 };
                 raise_layer {
                         bindings = <
+&mkp RCLK   &mkp MCLK   &mkp LCLK
 // &jskp 0
-&trans
+// &trans
 
 //    &trans       &trans            &trans       &trans
 //    &trans       &trans            &trans       &trans
