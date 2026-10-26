@@ -54,5 +54,5 @@
 	data-ready-gpios = <&gpio1 11 GPIO_ACTIVE_HIGH>;
 	sleep-mode-enable;
 	sensitivity = "2x";
-	data-mode = "absolute";
+	primary-tap-enable;
 };

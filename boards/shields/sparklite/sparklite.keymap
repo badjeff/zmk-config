@@ -195,16 +195,11 @@
                 compatible = "zmk,input-listener";
                 device = <&tpad0>;
                 default {
-                        // input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>, <&x_scaler 4 3>, <&y_scaler 5 3>;
-                        input-processors = <&zip_cirque>;
+                        input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
+                                         , <&x_scaler 4 3>, <&y_scaler 5 3>;
                         layers = <DEFAULT>;
                 };
         };
-        cirque_il {
-		compatible = "zmk,input-listener";
-		device = <&zip_cirque>;
-                input-processors = <&xy_scaler 3 5>;
-	};
 
         // erm0_obl__enter_raise_layer {
         //         compatible = "zmk,output-behavior-listener";
