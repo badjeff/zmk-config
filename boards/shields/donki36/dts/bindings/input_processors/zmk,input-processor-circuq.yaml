@@ -9,10 +9,22 @@ include: ip_zero_param.yaml
 
 properties:
 
-  sync-report-ms:
+  edge-scroll-margin:
     type: int
-    default: 1
+    default: 266
+
+  edge-scroll-segment:
+    type: int
+    default: 48
 
   session-end-idle-ms:
     type: int
     default: 20
+
+  sync-rel-xy-ms:
+    type: int
+    default: 1
+
+  sync-rel-v-ms:
+    type: int
+    default: 15
