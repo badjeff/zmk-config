@@ -25,7 +25,8 @@ enum cirque_gesture_mode {
 };
 
 struct zip_input_processor_cirque_config {
-    uint32_t edge_scroll_margin;
+    uint32_t edge_scroll_margin_h_pct;
+    uint32_t edge_scroll_margin_v_pct;
     uint32_t edge_scroll_segment;
     uint32_t session_end_idle_ms;
     uint32_t sync_rel_xy_ms;
@@ -48,28 +49,58 @@ struct zip_input_processor_cirque_data {
     int16_t gx, gy;     // gesture start coord
 };
 
+/* X-axis value range: [0..2047] (left to right) */
+/* Y-axis value range: [0..1535] (top to bottom) */
+/* Z-axis value range: [0..63] (hover to touch down) */
+/* Circle center for Cirque trackpad (2047 x 1535 range) */
+static const int16_t cx = 1024;
+static const int16_t cy = 768;
+static const float pi = 3.14159265358979323846f;
+
+static float cirque_ellipse_dist(const struct zip_input_processor_cirque_config *config,
+                                   int16_t x, int16_t y) {
+    /*
+     * Touch pad is a perfect circle but coordinates are reported in a rectangle.
+     * The circular coordination of the center region maps to an ellipse in rectangular coordinates.
+     * Detect center region by radius distance to the center of the circle touch pad
+     * using an elliptical boundary; horizontal/vertical margins are percentages.
+     */
+    float margin_h_pct = (float)config->edge_scroll_margin_h_pct;
+    float margin_v_pct = (float)config->edge_scroll_margin_v_pct;
+    float a = MAX(1.0f, (float)cx * (1.0f - margin_h_pct * 0.01f));
+    float b = MAX(1.0f, (float)cy * (1.0f - margin_v_pct * 0.01f));
+    int16_t rx = x - cx;
+    int16_t ry = y - cy;
+    return ((float)rx * (float)rx) / (a * a) + ((float)ry * (float)ry) / (b * b);
+}
+
 static void cirque_session_end_work(struct k_work *work) {
     struct k_work_delayable *d_work = k_work_delayable_from_work(work);
     struct zip_input_processor_cirque_data *data =
         CONTAINER_OF(d_work, struct zip_input_processor_cirque_data, session_end_work);
 
     bool is_a_tap = false;
-    if (data->gesture_mode == CIRQUE_GESTURE_CURSOR) {
+    if (data->gesture_mode != CIRQUE_GESTURE_NONE) {
         int64_t gt = data->gesture_last_ts - data->gesture_start_ts;
         int16_t gx = abs(data->gx - data->hx);
         int16_t gy = abs(data->gy - data->hy);
-        // LOG_DBG("TAP? gt: %lld, gx: %d, gy: %d", gt, gx, gy);
+        LOG_DBG("TAP? gt: %lld, gx: %d, gy: %d", gt, gx, gy);
         is_a_tap = (gt < 139 && gx < 31 && gy < 31);
     }
 
     data->gesture_mode = CIRQUE_GESTURE_NONE;
     data->hx = data->hy = data->hs = -1;
-    LOG_DBG("");
+    // LOG_DBG("");
 
     if (is_a_tap) {
-        input_report_key(data->dev, INPUT_BTN_TOUCH, true, true, K_FOREVER);
+        const struct device *dev = data->dev;
+        const struct zip_input_processor_cirque_config *config = dev->config;
+        float d = cirque_ellipse_dist(config, data->gx, data->gy);
+        uint16_t btn = (d <= 1.0f) ? INPUT_BTN_TOUCH : INPUT_BTN_1;
+        LOG_DBG("TAP: %f", d);
+        input_report_key(data->dev, btn, true, true, K_FOREVER);
         k_sleep(K_MSEC(21));
-        input_report_key(data->dev, INPUT_BTN_TOUCH, false, true, K_FOREVER);
+        input_report_key(data->dev, btn, false, true, K_FOREVER);
     }
 }
 
@@ -88,22 +119,17 @@ static int sy_handle_event(const struct device *dev, struct input_event *event, 
 
     /* on all axis value ready */
     if (event->sync) {
-        /* X-axis value range: [0..2047] (left to right) */
-        /* Y-axis value range: [0..1535] (top to bottom) */
-        /* Z-axis value range: [0..63] (hover to touch down) */
         // LOG_DBG("Z: %d, X: %d, Y: %d", data->sz, data->sx, data->sy);
 
-        int16_t cord_es_l = config->edge_scroll_margin;
-        int16_t cord_es_r = 2047 - cord_es_l;
-
         if (data->gesture_mode == CIRQUE_GESTURE_NONE) {
-            /* touch on center region */
-            if (data->sx >= cord_es_l && data->sx <= cord_es_r) {
+            float d = cirque_ellipse_dist(config, data->sx, data->sy);
+            // LOG_DBG("d: %f, X: %d, Y: %d", d, data->sx, data->sy);
+            if (d <= 1.0f) {
+                /* touch on center region */
                 data->gesture_mode = CIRQUE_GESTURE_CURSOR;
                 // LOG_DBG("CURSOR");
-            }
-            /* touch on edge region */
-            else if (data->sx < cord_es_l || data->sx > cord_es_r) {
+            } else {
+                /* touch on edge region (outside elliptical center region) */
                 data->gesture_mode = CIRQUE_GESTURE_SCROLL;
                 LOG_DBG("SCROLL");
             }
@@ -139,10 +165,6 @@ static int sy_handle_event(const struct device *dev, struct input_event *event, 
             /* Split circle into segments */
             int n_sgmt = (int)config->edge_scroll_segment;
             if (n_sgmt >= 2) {
-                /* Circle center for Cirque trackpad (2047 x 1535 range) */
-                static const int16_t cx = 1024;
-                static const int16_t cy = 768;
-                static const float pi = 3.14159265358979323846f;
 
                 /* Vector from center to current finger position */
                 int16_t rx = data->sx - cx;
@@ -246,7 +268,8 @@ static int sy_init(const struct device *dev) {
 #define TL_INST(n)                                                                        \
     static struct zip_input_processor_cirque_data data_##n = {};                          \
     static struct zip_input_processor_cirque_config config_##n = {                        \
-        .edge_scroll_margin = DT_INST_PROP(n, edge_scroll_margin),                        \
+        .edge_scroll_margin_h_pct = DT_INST_PROP(n, edge_scroll_margin_h_pct),            \
+        .edge_scroll_margin_v_pct = DT_INST_PROP(n, edge_scroll_margin_v_pct),            \
         .edge_scroll_segment = DT_INST_PROP(n, edge_scroll_segment),                      \
         .session_end_idle_ms = DT_INST_PROP(n, session_end_idle_ms),                      \
         .sync_rel_xy_ms = DT_INST_PROP(n, sync_rel_xy_ms),                                \

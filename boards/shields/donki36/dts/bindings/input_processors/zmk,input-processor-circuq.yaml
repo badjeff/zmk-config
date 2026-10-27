@@ -9,9 +9,13 @@ include: ip_zero_param.yaml
 
 properties:
 
-  edge-scroll-margin:
+  edge-scroll-margin-h-pct:
     type: int
-    default: 266
+    default: 22
+
+  edge-scroll-margin-v-pct:
+    type: int
+    default: 16
 
   edge-scroll-segment:
     type: int
