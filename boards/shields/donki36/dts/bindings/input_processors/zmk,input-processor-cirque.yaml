@@ -1,0 +1,76 @@
+# Copyright (c) 2025, The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+description: Input Processor for cirque pinnacle touch pad
+
+compatible: "zmk,input-processor-cirque"
+
+include: ip_zero_param.yaml
+
+properties:
+
+  edge-scroll-margin-h-pct:
+    type: int
+    default: 22
+    description: >-
+      Horizontal margin of the center (cursor) region, percent of the pad
+      half-width. Touches inside the ellipse fall in the center (cursor)
+      region; touches outside fall into the edge-scroll ring. Larger values
+      shrink the cursor region.
+
+  edge-scroll-margin-v-pct:
+    type: int
+    default: 16
+    description: >-
+      Vertical margin of the center (cursor) region, percent of the pad
+      half-height. Similar to edge-scroll-margin-h-pct, but in vertical.
+
+  edge-scroll-segment:
+    type: int
+    default: 48
+    description: >-
+      Number of angular segments the edge-scroll ring is split into. Crossing
+      a segment boundary emits one wheel tick. Values < 2 fall back to a
+      simple swipe up/down heuristic.
+
+  session-end-idle-ms:
+    type: int
+    default: 20
+    description: >-
+      Idle time after the last touch frame before a gesture session is
+      considered ended: runs tap detection and, for cursor sessions, starts
+      the inertial glide.
+
+  sync-rel-xy-ms:
+    type: int
+    default: 1
+    description: >-
+      Rate limit for emitting accumulated REL_X/REL_Y cursor deltas,
+      milliseconds between reports.
+
+  sync-rel-v-ms:
+    type: int
+    default: 15
+    description: >-
+      Rate limit for emitting accumulated REL_WHEEL scroll ticks,
+      milliseconds between reports.
+
+  inertial-disable:
+    type: boolean
+    description: >-
+      Inertial cursor motion (flick then coast) is enabled by default.
+      Set this property to disable the feature.
+
+  inertial-decay-pct:
+    type: int
+    default: 90
+    description: >-
+      Glide velocity decay rate per tick, percent.
+      Percentage of velocity to pass to next tick.
+
+  inertial-start-velocity:
+    type: int
+    default: 500
+    description: >-
+      Minimum release velocity to start coasting, counts/s.
+      0 = coast on every non-tap release.

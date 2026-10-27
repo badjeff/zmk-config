@@ -10,6 +10,8 @@
 #include <math.h>
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
+#include <zephyr/spinlock.h>
+#include <zephyr/sys/util.h>
 #include <drivers/input_processor.h>
 
 #include <zephyr/logging/log.h>
@@ -24,16 +26,42 @@ enum cirque_gesture_mode {
     CIRQUE_GESTURE_SCROLL,
 };
 
-struct zip_input_processor_cirque_config {
+/*
+ * Inertial cursor motion ("flick then coast").
+ * Launch velocity and glide tick are both derived from a small history ring of
+ * samples (x, y, ts) rather than more configured timings.
+ */
+#define CIRQUE_HISTORY_LEN 6      /* history ring length (samples of x/y/ts) */
+#define CIRQUE_TICK_MIN_MS 4      /* clamp bounds for the glide tick derived from history */
+#define CIRQUE_TICK_MAX_MS 40
+#define CIRQUE_GLIDE_MAX_MS 2000  /* fail-safe cap so a glide can never run forever */
+#define CIRQUE_VEL_CAP 16384      /* sanity cap on launch velocity, counts/s */
+#define CIRQUE_MOV_SHIFT 8        /* fixed point shift for sub-count glide distance */
+#define CIRQUE_MOV_MASK ((1 << CIRQUE_MOV_SHIFT) - 1)
+
+/* Tap detection: quick, small gestures click instead of dragging or coasting */
+#define CIRQUE_TAP_MAX_MS 139     /* max gesture duration */
+#define CIRQUE_TAP_MAX_DRIFT 31   /* max gesture movement per axis, counts */
+
+struct zip_cirque_config {
     uint32_t edge_scroll_margin_h_pct;
     uint32_t edge_scroll_margin_v_pct;
     uint32_t edge_scroll_segment;
     uint32_t session_end_idle_ms;
     uint32_t sync_rel_xy_ms;
     uint32_t sync_rel_v_ms;
+    bool inertial_enable;            // true = coast on non-tap cursor release (DT default)
+                                     // set `inertial-disable` in DT to turn off
+    uint32_t inertial_decay_pct;     // glide velocity decay per tick, percent
+    int32_t inertial_start_velocity; // counts/s; 0 = coast on every non-tap release
 };
 
-struct zip_input_processor_cirque_data {
+struct zip_cirque_sample {
+    int16_t x, y;
+    int64_t ts;
+};
+
+struct zip_cirque_data {
     const struct device *dev;
     int64_t last_sync_rel_xy_ts;
     int64_t last_sync_rel_v_ts;
@@ -43,10 +71,18 @@ struct zip_input_processor_cirque_data {
     int16_t dx, dy;     // cursor pending delta
     int16_t dv;         // scroll wheel pending delta
     enum cirque_gesture_mode gesture_mode;
-    struct k_work_delayable session_end_work;
-    int64_t gesture_start_ts;
+    struct k_work_delayable session_work; // session end and inertial glide tick
+    struct zip_cirque_sample gesture_start; // gesture start sample
     int64_t gesture_last_ts;
-    int16_t gx, gy;     // gesture start coord
+    /* inertial glide state (flick then coast, cursor mode only) */
+    struct k_spinlock lock; // protects the glide handoff between input thread and worker
+    struct zip_cirque_sample hist[CIRQUE_HISTORY_LEN]; // history ring of samples (x, y, ts)
+    uint8_t hist_head, hist_len; // ring window start / number of valid samples
+    bool gliding;
+    int32_t gvx, gvy;    // glide velocity, counts/s
+    int32_t accx, accy;  // accumulated sub-count glide distance (fixed point)
+    uint16_t tick_ms;    // glide tick, derived from history at launch
+    int64_t glide_start_ts;
 };
 
 /* X-axis value range: [0..2047] (left to right) */
@@ -57,7 +93,7 @@ static const int16_t cx = 1024;
 static const int16_t cy = 768;
 static const float pi = 3.14159265358979323846f;
 
-static float cirque_ellipse_dist(const struct zip_input_processor_cirque_config *config,
+static float cirque_ellipse_dist(const struct zip_cirque_config *config,
                                    int16_t x, int16_t y) {
     /*
      * Touch pad is a perfect circle but coordinates are reported in a rectangle.
@@ -74,41 +110,175 @@ static float cirque_ellipse_dist(const struct zip_input_processor_cirque_config 
     return ((float)rx * (float)rx) / (a * a) + ((float)ry * (float)ry) / (b * b);
 }
 
-static void cirque_session_end_work(struct k_work *work) {
+static void cirque_hist_push(struct zip_cirque_data *data, int16_t x, int16_t y,
+                             int64_t ts) {
+    uint8_t idx = (uint8_t)((data->hist_head + data->hist_len) % CIRQUE_HISTORY_LEN);
+    data->hist[idx].x = x;
+    data->hist[idx].y = y;
+    data->hist[idx].ts = ts;
+    if (data->hist_len < CIRQUE_HISTORY_LEN) {
+        data->hist_len++;
+    } else {
+        data->hist_head = (uint8_t)((data->hist_head + 1) % CIRQUE_HISTORY_LEN);
+    }
+}
+
+static bool cirque_glide_launch(struct zip_cirque_data *data,
+                                const struct zip_cirque_config *config) {
+    if (!config->inertial_enable) {
+        return false;
+    }
+    if (data->hist_len < 2) {
+        return false;
+    }
+
+    uint8_t newest =
+        (uint8_t)((data->hist_head + data->hist_len + CIRQUE_HISTORY_LEN - 1) % CIRQUE_HISTORY_LEN);
+
+    /* glide tick: mean frame interval over the recorded window, clamped to sane bounds */
+    int64_t span = data->hist[newest].ts - data->hist[data->hist_head].ts;
+    if (span <= 0) {
+        return false;
+    }
+    uint16_t tick =
+        (uint16_t)CLAMP(span / (data->hist_len - 1), CIRQUE_TICK_MIN_MS, CIRQUE_TICK_MAX_MS);
+
+    /* launch velocity from the newest interval only, so pre-flick
+     * hesitation does not blunt it */
+    uint8_t prev = (uint8_t)((newest + CIRQUE_HISTORY_LEN - 1) % CIRQUE_HISTORY_LEN);
+    int64_t dt = data->hist[newest].ts - data->hist[prev].ts;
+    if (dt < 1) {
+        dt = 1;
+    }
+    int32_t vx = (int32_t)(((int64_t)(data->hist[newest].x - data->hist[prev].x) * 1000) / dt);
+    int32_t vy = (int32_t)(((int64_t)(data->hist[newest].y - data->hist[prev].y) * 1000) / dt);
+
+    /* flick threshold; 0 = coast on every non-tap release */
+    if (config->inertial_start_velocity > 0 &&
+        (int64_t)vx * vx + (int64_t)vy * vy <
+            (int64_t)config->inertial_start_velocity * config->inertial_start_velocity) {
+        return false;
+    }
+
+    /* the caller already ended the gesture; the tick now owns the cursor */
+    k_spinlock_key_t key = k_spin_lock(&data->lock);
+    data->gvx = CLAMP(vx, -CIRQUE_VEL_CAP, CIRQUE_VEL_CAP);
+    data->gvy = CLAMP(vy, -CIRQUE_VEL_CAP, CIRQUE_VEL_CAP);
+    data->accx = data->accy = 0;
+    data->tick_ms = tick;
+    data->glide_start_ts = k_uptime_get();
+    data->gliding = true;
+    k_spin_unlock(&data->lock, key);
+
+    LOG_DBG("v: (%d, %d), tick: %u, span: %lld", vx, vy, tick, span);
+    return true;
+}
+
+static void cirque_glide_tick(struct zip_cirque_data *data,
+                              const struct zip_cirque_config *config) {
+    k_spinlock_key_t key = k_spin_lock(&data->lock);
+
+    if (!data->gliding) {
+        /* cancelled by a new touch between reschedule and tick */
+        k_spin_unlock(&data->lock, key);
+        return;
+    }
+
+    /* geometric decay: velocity remains decay_pct per tick */
+    data->gvx = (int32_t)((int64_t)data->gvx * (int64_t)config->inertial_decay_pct / 100);
+    data->gvy = (int32_t)((int64_t)data->gvy * (int64_t)config->inertial_decay_pct / 100);
+
+    /* distance for this tick; sub-count remainder carries over in fixed point */
+    int32_t fx =
+        data->accx + (int32_t)(((int64_t)data->gvx * (1 << CIRQUE_MOV_SHIFT) * data->tick_ms) / 1000);
+    int32_t fy =
+        data->accy + (int32_t)(((int64_t)data->gvy * (1 << CIRQUE_MOV_SHIFT) * data->tick_ms) / 1000);
+    data->accx = fx & CIRQUE_MOV_MASK;
+    data->accy = fy & CIRQUE_MOV_MASK;
+    int16_t mx = (int16_t)(fx >> CIRQUE_MOV_SHIFT); // arithmetic shift: floor division
+    int16_t my = (int16_t)(fy >> CIRQUE_MOV_SHIFT);
+    bool have_mx = mx != 0;
+    bool have_my = my != 0;
+
+    /* stop when a whole tick moves less than one count, or on the fail-safe cap */
+    if ((!have_mx && !have_my) || k_uptime_get() - data->glide_start_ts > CIRQUE_GLIDE_MAX_MS) {
+        data->gliding = false;
+        k_spin_unlock(&data->lock, key);
+        LOG_DBG("GLIDE end. v: (%d, %d)", data->gvx, data->gvy);
+        return;
+    }
+    k_spin_unlock(&data->lock, key);
+
+    /* same emission pattern as the cursor path: sync flag on the last event */
+    if (have_mx) {
+        input_report(data->dev, INPUT_EV_REL, INPUT_REL_X, mx, !have_my, K_NO_WAIT);
+    }
+    if (have_my) {
+        input_report(data->dev, INPUT_EV_REL, INPUT_REL_Y, my, true, K_NO_WAIT);
+    }
+
+    k_work_reschedule(&data->session_work, K_MSEC(data->tick_ms));
+}
+
+static void cirque_session_work(struct k_work *work) {
     struct k_work_delayable *d_work = k_work_delayable_from_work(work);
-    struct zip_input_processor_cirque_data *data =
-        CONTAINER_OF(d_work, struct zip_input_processor_cirque_data, session_end_work);
+    struct zip_cirque_data *data =
+        CONTAINER_OF(d_work, struct zip_cirque_data, session_work);
+    const struct device *dev = data->dev;
+    const struct zip_cirque_config *config = dev->config;
+
+    if (data->gliding) {
+        /* inertia owns the cursor; the tick decides whether the work re-arms */
+        cirque_glide_tick(data, config);
+        return;
+    }
+
+    if (data->gesture_mode == CIRQUE_GESTURE_NONE) {
+        /* spurious wake after a glide or a reset */
+        return;
+    }
+
+    /* re-arm guard: the session must actually have gone idle; a frame that
+     * raced the work reschedule must not end a live gesture */
+    if (k_uptime_get() - data->gesture_last_ts < config->session_end_idle_ms) {
+        k_work_reschedule(&data->session_work, K_MSEC(config->session_end_idle_ms));
+        return;
+    }
 
     bool is_a_tap = false;
-    if (data->gesture_mode != CIRQUE_GESTURE_NONE) {
-        int64_t gt = data->gesture_last_ts - data->gesture_start_ts;
-        int16_t gx = abs(data->gx - data->hx);
-        int16_t gy = abs(data->gy - data->hy);
-        LOG_DBG("TAP? gt: %lld, gx: %d, gy: %d", gt, gx, gy);
-        is_a_tap = (gt < 139 && gx < 31 && gy < 31);
-    }
+    int64_t gt = data->gesture_last_ts - data->gesture_start.ts;
+    int16_t gx = abs(data->gesture_start.x - data->hx);
+    int16_t gy = abs(data->gesture_start.y - data->hy);
+    // LOG_DBG("TAP? gt: %lld, gx: %d, gy: %d", gt, gx, gy);
+    is_a_tap = (gt < CIRQUE_TAP_MAX_MS && gx < CIRQUE_TAP_MAX_DRIFT && gy < CIRQUE_TAP_MAX_DRIFT);
+
+    bool cursor_session = data->gesture_mode == CIRQUE_GESTURE_CURSOR;
 
     data->gesture_mode = CIRQUE_GESTURE_NONE;
     data->hx = data->hy = data->hs = -1;
     // LOG_DBG("");
 
     if (is_a_tap) {
-        const struct device *dev = data->dev;
-        const struct zip_input_processor_cirque_config *config = dev->config;
-        float d = cirque_ellipse_dist(config, data->gx, data->gy);
+        float d = cirque_ellipse_dist(config, data->gesture_start.x, data->gesture_start.y);
         uint16_t btn = (d <= 1.0f) ? INPUT_BTN_TOUCH : INPUT_BTN_1;
-        LOG_DBG("TAP: %f", d);
+        // LOG_DBG("TAP: %f", d);
         input_report_key(data->dev, btn, true, true, K_FOREVER);
         k_sleep(K_MSEC(21));
         input_report_key(data->dev, btn, false, true, K_FOREVER);
+        return;
+    }
+
+    /* non-tap session ended (finger lifted): a cursor drag may coast */
+    if (cursor_session && cirque_glide_launch(data, config)) {
+        k_work_reschedule(&data->session_work, K_MSEC(data->tick_ms));
     }
 }
 
-static int sy_handle_event(const struct device *dev, struct input_event *event, uint32_t param1,
+static int zip_handle_event(const struct device *dev, struct input_event *event, uint32_t param1,
                            uint32_t param2, struct zmk_input_processor_state *state) {
 
-    const struct zip_input_processor_cirque_config *config = dev->config;
-    struct zip_input_processor_cirque_data *data = dev->data;
+    const struct zip_cirque_config *config = dev->config;
+    struct zip_cirque_data *data = dev->data;
 
     /* fetch all axis values from input sub-sys */
     if (event->code == INPUT_ABS_X) data->sx = event->value;
@@ -120,6 +290,20 @@ static int sy_handle_event(const struct device *dev, struct input_event *event, 
     /* on all axis value ready */
     if (event->sync) {
         // LOG_DBG("Z: %d, X: %d, Y: %d", data->sz, data->sx, data->sy);
+
+        if (data->gliding) {
+            if (data->sz > 0) {
+                /* finger re-contacted: cancel the glide, treat as a new session */
+                k_spinlock_key_t key = k_spin_lock(&data->lock);
+                data->gliding = false;
+                k_spin_unlock(&data->lock, key);
+            } else {
+                /* lift frames while gliding: swallowed, the glide owns the cursor */
+                event->value = 0;
+                event->sync = false;
+                return ZMK_INPUT_PROC_STOP; // 1;
+            }
+        }
 
         if (data->gesture_mode == CIRQUE_GESTURE_NONE) {
             float d = cirque_ellipse_dist(config, data->sx, data->sy);
@@ -134,9 +318,10 @@ static int sy_handle_event(const struct device *dev, struct input_event *event, 
                 LOG_DBG("SCROLL");
             }
             if (data->gesture_mode != CIRQUE_GESTURE_NONE) {
-                data->gesture_start_ts = now;
-                data->gx = data->sx;
-                data->gy = data->sy;
+                data->gesture_start.ts = now;
+                data->gesture_start.x = data->sx;
+                data->gesture_start.y = data->sy;
+                data->hist_head = data->hist_len = 0;
             }
         }
 
@@ -151,15 +336,14 @@ static int sy_handle_event(const struct device *dev, struct input_event *event, 
             data->hy = data->sy;
             data->dx += x;
             data->dy += y;
+            cirque_hist_push(data, data->sx, data->sy, now);
             data->gesture_last_ts = now;
-            k_work_reschedule(&data->session_end_work, K_MSEC(config->session_end_idle_ms));
+            k_work_reschedule(&data->session_work, K_MSEC(config->session_end_idle_ms));
         }
         else if (data->gesture_mode == CIRQUE_GESTURE_SCROLL) {
             /* convert to wheel input */
             x = data->sx - (data->hx >= 0 ? data->hx : data->sx);
             y = data->sy - (data->hy >= 0 ? data->hy : data->sy);
-
-            /* Convert tangential movement around circle to scroll */
             int16_t v = 0;
 
             /* Split circle into segments */
@@ -203,7 +387,7 @@ static int sy_handle_event(const struct device *dev, struct input_event *event, 
             data->hy = data->sy;
             data->dv += v;
             data->gesture_last_ts = now;
-            k_work_reschedule(&data->session_end_work, K_MSEC(config->session_end_idle_ms));
+            k_work_reschedule(&data->session_work, K_MSEC(config->session_end_idle_ms));
         }
         else if (data->gesture_mode == CIRQUE_GESTURE_NONE) {
             data->hx = data->hy = data->hs = -1;
@@ -250,32 +434,36 @@ static int sy_handle_event(const struct device *dev, struct input_event *event, 
     return ZMK_INPUT_PROC_STOP; // 1;
 }
 
-static struct zmk_input_processor_driver_api sy_driver_api = {
-    .handle_event = sy_handle_event,
+static struct zmk_input_processor_driver_api zip_driver_api = {
+    .handle_event = zip_handle_event,
 };
 
-static int sy_init(const struct device *dev) {
-    // const struct zip_input_processor_cirque_config *config = dev->config;
-    struct zip_input_processor_cirque_data *data = dev->data;
+static int zip_init(const struct device *dev) {
+    struct zip_cirque_data *data = dev->data;
     data->dev = dev;
     data->hx = data->hy = data->hs = -1;
     data->dx = data->dy = data->dv = 0;
     data->gesture_mode = CIRQUE_GESTURE_NONE;
-    k_work_init_delayable(&data->session_end_work, cirque_session_end_work);
+    data->hist_head = data->hist_len = 0;
+    data->gliding = false;
+    k_work_init_delayable(&data->session_work, cirque_session_work);
     return 0;
 }
 
-#define TL_INST(n)                                                                        \
-    static struct zip_input_processor_cirque_data data_##n = {};                          \
-    static struct zip_input_processor_cirque_config config_##n = {                        \
+#define ZIP_INST(n)                                                                        \
+    static struct zip_cirque_data data_##n = {};                                          \
+    static struct zip_cirque_config config_##n = {                                        \
         .edge_scroll_margin_h_pct = DT_INST_PROP(n, edge_scroll_margin_h_pct),            \
         .edge_scroll_margin_v_pct = DT_INST_PROP(n, edge_scroll_margin_v_pct),            \
         .edge_scroll_segment = DT_INST_PROP(n, edge_scroll_segment),                      \
         .session_end_idle_ms = DT_INST_PROP(n, session_end_idle_ms),                      \
         .sync_rel_xy_ms = DT_INST_PROP(n, sync_rel_xy_ms),                                \
         .sync_rel_v_ms = DT_INST_PROP(n, sync_rel_v_ms),                                  \
+        .inertial_enable = !DT_INST_PROP(n, inertial_disable),                            \
+        .inertial_decay_pct = DT_INST_PROP(n, inertial_decay_pct),                        \
+        .inertial_start_velocity = DT_INST_PROP(n, inertial_start_velocity),              \
     };                                                                                    \
-    DEVICE_DT_INST_DEFINE(n, &sy_init, NULL, &data_##n, &config_##n, POST_KERNEL,         \
-                          CONFIG_KERNEL_INIT_PRIORITY_DEFAULT, &sy_driver_api);
+    DEVICE_DT_INST_DEFINE(n, &zip_init, NULL, &data_##n, &config_##n, POST_KERNEL,         \
+                          CONFIG_KERNEL_INIT_PRIORITY_DEFAULT, &zip_driver_api);
 
-DT_INST_FOREACH_STATUS_OKAY(TL_INST)
+DT_INST_FOREACH_STATUS_OKAY(ZIP_INST)
