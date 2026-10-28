@@ -9,9 +9,38 @@ include: ip_zero_param.yaml
 
 properties:
 
+  primary-tap-disable:
+    type: boolean
+    description: >-
+      Primary tap detection is enabled by default.
+      Set this property to disable the feature.
+
+  secondary-tap-disable:
+    type: boolean
+    description: >-
+      Secondary tap detection is enabled by default.
+      Set this property to disable the feature.
+      Tap on the edge-scroll ring as mouse right click.
+      Depends on primary-tap.
+
+  tap-max-ms:
+    type: int
+    default: 139
+    description: >-
+      Max gesture duration for tap detection, milliseconds.
+      A gesture shorter than this can click instead of dragging or coasting.
+
+  tap-max-drift:
+    type: int
+    default: 31
+    description: >-
+      Max gesture movement per axis for tap detection, counts.
+      A gesture that drifted less than this per axis can click instead of
+      dragging or coasting.
+
   edge-scroll-margin-h-pct:
     type: int
-    default: 22
+    default: 25
     description: >-
       Horizontal margin of the center (cursor) region, percent of the pad
       half-width. Touches inside the ellipse fall in the center (cursor)
@@ -20,7 +49,7 @@ properties:
 
   edge-scroll-margin-v-pct:
     type: int
-    default: 16
+    default: 19
     description: >-
       Vertical margin of the center (cursor) region, percent of the pad
       half-height. Similar to edge-scroll-margin-h-pct, but in vertical.
@@ -32,6 +61,24 @@ properties:
       Number of angular segments the edge-scroll ring is split into. Crossing
       a segment boundary emits one wheel tick. Values < 2 fall back to a
       simple swipe up/down heuristic.
+
+  edge-scroll-gesture-delay-ms:
+    type: int
+    default: 175
+    description: >-
+      Hold-on-edge delay before an edge touch qualifies as a scroll gesture,
+      milliseconds. The rim touch must stay within
+      edge-scroll-gesture-delay-drift for this long before wheel output
+      starts and the haptic pulse fires. 0 = no hold, scroll starts
+      immediately.
+
+  edge-scroll-gesture-delay-drift:
+    type: int
+    default: 20
+    description: >-
+      Max movement per axis during the hold-on-edge window, counts.
+      A touch that drifts beyond the threshold breaks the hold and stays
+      silent until it comes to rest and holds again.
 
   session-end-idle-ms:
     type: int
@@ -74,3 +121,21 @@ properties:
     description: >-
       Minimum release velocity to start coasting, counts/s.
       0 = coast on every non-tap release.
+
+  feedback-gpios:
+    type: phandle-array
+    description: |
+      Haptic feedback GPIO pin.
+      Pin is driven high while feedback is triggered.
+
+  feedback-edge-scroll-start-ms:
+    type: int
+    default: 19
+    description: >-
+      Duration of haptic feedback on scroll gesture recognised.
+
+  feedback-edge-scroll-trigger-ms:
+    type: int
+    default: 12
+    description: >-
+      Duration of haptic feedback on dragging across edge-scroll segments.
