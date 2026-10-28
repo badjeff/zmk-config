@@ -123,6 +123,10 @@ manifest:
       remote: badjeff
       revision: main
 
+    - name: zmk-input-processor-cirque
+      remote: badjeff
+      revision: main
+
     # - name: zmk-input-processor-mixer
     #   remote: badjeff
     #   revision: main

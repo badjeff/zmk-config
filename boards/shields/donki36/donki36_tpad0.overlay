@@ -49,7 +49,6 @@ RC(7,0) RC(7,1) RC(7,2)
 
 #include <input/processors/report_rate_limit.dtsi>
 #include <input/processors/xyz.dtsi>
-#include <input/processors/cirque.dtsi>
 
 #include "donki36_tpad0_cirque.dtsi"
 // #include "donki36_zplit.dtsi"

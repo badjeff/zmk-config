@@ -101,14 +101,16 @@
 		#gpio-cells = <2>;
 		dev-reg = <0x5a>;
 	};
-	gpio_drv2605_2: gpio_drv2605_2 {
-		compatible = "ti,drv2605-alt-gpio";
-		status = "okay";
-		gpio-controller;
-		#gpio-cells = <2>;
-		dev-reg = <0x5a>;
-	};
+	// gpio_drv2605_2: gpio_drv2605_2 {
+	// 	compatible = "ti,drv2605-alt-gpio";
+	// 	status = "okay";
+	// 	gpio-controller;
+	// 	#gpio-cells = <2>;
+	// 	dev-reg = <0x5a>;
+	// };
 };
+
+#include <input/processors/cirque.dtsi>
 
 &zip_cirque {
 	feedback-edge-scroll-start-gpios = <&gpio_drv2605_0 0 9>;
