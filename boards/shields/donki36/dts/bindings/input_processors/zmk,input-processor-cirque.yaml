@@ -64,7 +64,7 @@ properties:
 
   edge-scroll-gesture-delay-ms:
     type: int
-    default: 175
+    default: 135
     description: >-
       Hold-on-edge delay before an edge touch qualifies as a scroll gesture,
       milliseconds. The rim touch must stay within
@@ -122,20 +122,48 @@ properties:
       Minimum release velocity to start coasting, counts/s.
       0 = coast on every non-tap release.
 
-  feedback-gpios:
+  feedback-edge-scroll-start-gpios:
     type: phandle-array
     description: |
-      Haptic feedback GPIO pin.
-      Pin is driven high while feedback is triggered.
+      Haptic feedback GPIO pin for the start of edge-scroll.
+      Pin is driven high while the scroll-start pulse plays.
 
   feedback-edge-scroll-start-ms:
     type: int
-    default: 19
+    default: 5
     description: >-
       Duration of haptic feedback on scroll gesture recognised.
+      Pulse plays on feedback-edge-scroll-start-gpios.
+
+  feedback-edge-scroll-trigger-gpios:
+    type: phandle-array
+    description: |
+      Haptic feedback GPIO pin for edge-scroll wheel output.
+      Pin is driven high while the segment-crossing pulse plays.
 
   feedback-edge-scroll-trigger-ms:
     type: int
-    default: 12
+    default: 2
     description: >-
       Duration of haptic feedback on dragging across edge-scroll segments.
+      Pulse plays on feedback-edge-scroll-trigger-gpios.
+
+  feedback-glide-gpios:
+    type: phandle-array
+    description: |
+      Haptic feedback GPIO pin for cursor output.
+      Pin is driven high while the cursor pulse plays.
+
+  feedback-glide-ms:
+    type: int
+    default: 2
+    description: >-
+      Duration of haptic feedback on dragging across cursor segments.
+      Pulse plays on feedback-glide-gpios.
+
+  feedback-glide-interval-ms:
+    type: int
+    default: 25
+    description: >-
+      Min interval between two cursor haptic feedback pulses, milliseconds.
+      0 = no throttling.

@@ -22,13 +22,6 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 #include <zmk/keymap.h>
 
-enum cirque_gesture_mode {
-    CIRQUE_GESTURE_NONE = 0,
-    CIRQUE_GESTURE_PENDING, // rim touch during the hold-on-edge window, not scroll yet
-    CIRQUE_GESTURE_CURSOR,
-    CIRQUE_GESTURE_SCROLL,
-};
-
 /*
  * Inertial cursor motion ("flick then coast").
  * Launch velocity and glide tick are both derived from a small history ring of
@@ -37,32 +30,50 @@ enum cirque_gesture_mode {
 #define CIRQUE_HISTORY_LEN 6      /* history ring length (samples of x/y/ts) */
 #define CIRQUE_TICK_MIN_MS 4      /* clamp bounds for the glide tick derived from history */
 #define CIRQUE_TICK_MAX_MS 40
-#define CIRQUE_GLIDE_MAX_MS 2000  /* fail-safe cap so a glide can never run forever */
+#define CIRQUE_GLIDE_MAX_MS 2200  /* fail-safe cap so a glide can never run forever */
 #define CIRQUE_VEL_CAP 16384      /* sanity cap on launch velocity, counts/s */
 #define CIRQUE_MOV_SHIFT 8        /* fixed point shift for sub-count glide distance */
 #define CIRQUE_MOV_MASK ((1 << CIRQUE_MOV_SHIFT) - 1)
 
+enum cirque_gesture_mode {
+    CIRQUE_GESTURE_NONE = 0,
+    CIRQUE_GESTURE_PENDING, // rim touch during the hold-on-edge window, not scroll yet
+    CIRQUE_GESTURE_CURSOR,
+    CIRQUE_GESTURE_SCROLL,
+};
+
+enum cirque_feedback_pulse {
+    CIRQUE_PULSE_SCROLL_START,   // on scroll gesture recognised
+    CIRQUE_PULSE_SCROLL_TRIGGER, // on each segment-crossing wheel tick
+    CIRQUE_PULSE_GLIDE,          // on inertial glide launch
+};
+
 struct zip_cirque_config {
     bool primary_tap_enable;
     bool secondary_tap_enable;
-    uint32_t tap_max_ms;         // tap detection: max gesture duration
-    uint32_t tap_max_drift;      // tap detection: max gesture movement per axis, counts
+    uint32_t tap_max_ms;
+    uint32_t tap_max_drift;
     uint32_t edge_scroll_margin_h_pct;
     uint32_t edge_scroll_margin_v_pct;
     uint32_t edge_scroll_segment;
-    uint32_t edge_scroll_gesture_delay_ms;    // hold-on-edge: qualify rim touch as scroll
-    uint32_t edge_scroll_gesture_delay_drift; // hold-on-edge: max drift during the hold
+    uint32_t edge_scroll_gesture_delay_ms;
+    uint32_t edge_scroll_gesture_delay_drift;
     uint32_t session_end_idle_ms;
     uint32_t sync_rel_xy_ms;
     uint32_t sync_rel_v_ms;
-    bool inertial_enable;            // true = coast on non-tap cursor release (DT default)
-                                     // set `inertial-disable` in DT to turn off
-    uint32_t inertial_decay_pct;     // glide velocity decay per tick, percent
-    int32_t inertial_start_velocity; // counts/s; 0 = coast on every non-tap release
-    struct gpio_dt_spec feedback_gpio; // haptic pin, driven high while a pulse plays
-    bool has_feedback_gpio;            // true when feedback-gpios is present in DT
-    uint32_t feedback_edge_scroll_start_ms;   // pulse duration on scroll gesture recognised
-    uint32_t feedback_edge_scroll_trigger_ms; // pulse duration on segment-crossing wheel tick
+    bool inertial_enable;
+    uint32_t inertial_decay_pct;
+    int32_t inertial_start_velocity;
+    struct gpio_dt_spec feedback_edge_scroll_start_gpio;
+    bool has_feedback_edge_scroll_start_gpio;
+    uint32_t feedback_edge_scroll_start_ms;
+    struct gpio_dt_spec feedback_edge_scroll_trigger_gpio;
+    bool has_feedback_edge_scroll_trigger_gpio;
+    uint32_t feedback_edge_scroll_trigger_ms;
+    struct gpio_dt_spec feedback_glide_gpio;
+    bool has_feedback_glide_gpio;
+    uint32_t feedback_glide_ms;
+    uint32_t feedback_glide_interval_ms;
 };
 
 struct zip_cirque_sample {
@@ -74,23 +85,27 @@ struct zip_cirque_data {
     const struct device *dev;
     int64_t last_sync_rel_xy_ts;
     int64_t last_sync_rel_v_ts;
+    int64_t last_feedback_glide_ts;
     int16_t sx, sy, sz; // sampling coord
     int16_t hs;         // historial segment coord
     int16_t dx, dy;     // cursor pending delta
     int16_t dv;         // scroll wheel pending delta
     enum cirque_gesture_mode gesture_mode;
     struct k_work_delayable session_work; // session end and inertial glide tick
+    struct k_work feedback_on_work; // plays the requested haptic feedback pulse
     struct k_work_delayable feedback_work; // ends the current haptic feedback pulse
+    const struct gpio_dt_spec *feedback_req_gpio; // pending pulse request pin; NULL = none
+    uint32_t feedback_req_ms;                     // duration of the pending pulse request
+    const struct gpio_dt_spec *feedback_active_gpio; // pin currently driven high; NULL = idle
     struct zip_cirque_sample gesture_start; // gesture start sample
     struct zip_cirque_sample gesture_last; // gesture last sample; x/y = -1 when not sampled
-    /* inertial glide state (flick then coast, cursor mode only) */
-    struct k_spinlock lock; // protects the glide handoff between input thread and worker
+    struct k_spinlock lock; // protects the glide handoff and the feedback pulse request
     struct zip_cirque_sample hist[CIRQUE_HISTORY_LEN]; // history ring of samples (x, y, ts)
     uint8_t hist_head, hist_len; // ring window start / number of valid samples
     bool gliding;
     int32_t gvx, gvy;    // glide velocity, counts/s
-    int32_t accx, accy;  // accumulated sub-count glide distance (fixed point)
-    uint16_t tick_ms;    // glide tick, derived from history at launch
+    int32_t accx, accy;  // accumulated sub-count glide distance (to fixed point)
+    uint16_t tick_ms;    // glide tick (derived from history at glide launch)
     int64_t glide_start_ts;
 };
 
@@ -132,6 +147,50 @@ static void cirque_hist_push(struct zip_cirque_data *data, int16_t x, int16_t y,
     }
 }
 
+static void cirque_feedback_pulse(struct zip_cirque_data *data,
+                                  enum cirque_feedback_pulse pulse) {
+    const struct zip_cirque_config *config = data->dev->config;
+    const struct gpio_dt_spec *gpio = NULL;
+    uint32_t duration_ms = 0;
+
+    switch (pulse) {
+    case CIRQUE_PULSE_SCROLL_START:
+        if (config->has_feedback_edge_scroll_start_gpio) {
+            gpio = &config->feedback_edge_scroll_start_gpio;
+        }
+        duration_ms = config->feedback_edge_scroll_start_ms;
+        break;
+    case CIRQUE_PULSE_SCROLL_TRIGGER:
+        if (config->has_feedback_edge_scroll_trigger_gpio) {
+            gpio = &config->feedback_edge_scroll_trigger_gpio;
+        }
+        duration_ms = config->feedback_edge_scroll_trigger_ms;
+        break;
+    case CIRQUE_PULSE_GLIDE:
+        int64_t now = k_uptime_get();
+        if (now - data->last_feedback_glide_ts > config->feedback_glide_interval_ms) {
+            data->last_feedback_glide_ts = now;
+        } else {
+            return;
+        }
+        if (config->has_feedback_glide_gpio) {
+            gpio = &config->feedback_glide_gpio;
+        }
+        duration_ms = config->feedback_glide_ms;
+        break;
+    }
+    if (gpio == NULL) {
+        return;
+    }
+
+    k_spinlock_key_t key = k_spin_lock(&data->lock);
+    data->feedback_req_ms = duration_ms;
+    data->feedback_req_gpio = gpio; // non-NULL flags a pending request
+    k_spin_unlock(&data->lock, key);
+
+    k_work_submit(&data->feedback_on_work);
+}
+
 static bool cirque_glide_launch(struct zip_cirque_data *data,
                                 const struct zip_cirque_config *config) {
     if (!config->inertial_enable) {
@@ -144,7 +203,6 @@ static bool cirque_glide_launch(struct zip_cirque_data *data,
     uint8_t newest =
         (uint8_t)((data->hist_head + data->hist_len + CIRQUE_HISTORY_LEN - 1) % CIRQUE_HISTORY_LEN);
 
-    /* glide tick: mean frame interval over the recorded window, clamped to sane bounds */
     int64_t span = data->hist[newest].ts - data->hist[data->hist_head].ts;
     if (span <= 0) {
         return false;
@@ -152,8 +210,6 @@ static bool cirque_glide_launch(struct zip_cirque_data *data,
     uint16_t tick =
         (uint16_t)CLAMP(span / (data->hist_len - 1), CIRQUE_TICK_MIN_MS, CIRQUE_TICK_MAX_MS);
 
-    /* launch velocity from the newest interval only, so pre-flick
-     * hesitation does not blunt it */
     uint8_t prev = (uint8_t)((newest + CIRQUE_HISTORY_LEN - 1) % CIRQUE_HISTORY_LEN);
     int64_t dt = data->hist[newest].ts - data->hist[prev].ts;
     if (dt < 1) {
@@ -162,14 +218,12 @@ static bool cirque_glide_launch(struct zip_cirque_data *data,
     int32_t vx = (int32_t)(((int64_t)(data->hist[newest].x - data->hist[prev].x) * 1000) / dt);
     int32_t vy = (int32_t)(((int64_t)(data->hist[newest].y - data->hist[prev].y) * 1000) / dt);
 
-    /* flick threshold; 0 = coast on every non-tap release */
     if (config->inertial_start_velocity > 0 &&
         (int64_t)vx * vx + (int64_t)vy * vy <
             (int64_t)config->inertial_start_velocity * config->inertial_start_velocity) {
         return false;
     }
 
-    /* the caller already ended the gesture; the tick now owns the cursor */
     k_spinlock_key_t key = k_spin_lock(&data->lock);
     data->gvx = CLAMP(vx, -CIRQUE_VEL_CAP, CIRQUE_VEL_CAP);
     data->gvy = CLAMP(vy, -CIRQUE_VEL_CAP, CIRQUE_VEL_CAP);
@@ -188,20 +242,17 @@ static void cirque_glide_tick(struct zip_cirque_data *data,
     k_spinlock_key_t key = k_spin_lock(&data->lock);
 
     if (!data->gliding) {
-        /* cancelled by a new touch between reschedule and tick */
         k_spin_unlock(&data->lock, key);
         return;
     }
 
-    /* geometric decay: velocity remains decay_pct per tick */
     data->gvx = (int32_t)((int64_t)data->gvx * (int64_t)config->inertial_decay_pct / 100);
     data->gvy = (int32_t)((int64_t)data->gvy * (int64_t)config->inertial_decay_pct / 100);
 
-    /* distance for this tick; sub-count remainder carries over in fixed point */
-    int32_t fx =
-        data->accx + (int32_t)(((int64_t)data->gvx * (1 << CIRQUE_MOV_SHIFT) * data->tick_ms) / 1000);
-    int32_t fy =
-        data->accy + (int32_t)(((int64_t)data->gvy * (1 << CIRQUE_MOV_SHIFT) * data->tick_ms) / 1000);
+    int32_t fx = data->accx 
+                + (int32_t)(((int64_t)data->gvx * (1 << CIRQUE_MOV_SHIFT) * data->tick_ms) / 1000);
+    int32_t fy = data->accy 
+                + (int32_t)(((int64_t)data->gvy * (1 << CIRQUE_MOV_SHIFT) * data->tick_ms) / 1000);
     data->accx = fx & CIRQUE_MOV_MASK;
     data->accy = fy & CIRQUE_MOV_MASK;
     int16_t mx = (int16_t)(fx >> CIRQUE_MOV_SHIFT); // arithmetic shift: floor division
@@ -209,8 +260,9 @@ static void cirque_glide_tick(struct zip_cirque_data *data,
     bool have_mx = mx != 0;
     bool have_my = my != 0;
 
-    /* stop when a whole tick moves less than one count, or on the fail-safe cap */
-    if ((!have_mx && !have_my) || k_uptime_get() - data->glide_start_ts > CIRQUE_GLIDE_MAX_MS) {
+    if ((!have_mx && !have_my) 
+        || k_uptime_get() - data->glide_start_ts > CIRQUE_GLIDE_MAX_MS
+    ) {
         data->gliding = false;
         k_spin_unlock(&data->lock, key);
         LOG_DBG("GLIDE end. v: (%d, %d)", data->gvx, data->gvy);
@@ -218,34 +270,51 @@ static void cirque_glide_tick(struct zip_cirque_data *data,
     }
     k_spin_unlock(&data->lock, key);
 
-    /* same emission pattern as the cursor path: sync flag on the last event */
     if (have_mx) {
         input_report(data->dev, INPUT_EV_REL, INPUT_REL_X, mx, !have_my, K_NO_WAIT);
     }
     if (have_my) {
         input_report(data->dev, INPUT_EV_REL, INPUT_REL_Y, my, true, K_NO_WAIT);
     }
-
+    cirque_feedback_pulse(data, CIRQUE_PULSE_GLIDE);
     k_work_reschedule(&data->session_work, K_MSEC(data->tick_ms));
 }
 
-/* haptic feedback: one-shot pulse, pin driven high for duration_ms */
 static void cirque_feedback_off(struct k_work *work) {
     struct k_work_delayable *d_work = k_work_delayable_from_work(work);
     struct zip_cirque_data *data =
         CONTAINER_OF(d_work, struct zip_cirque_data, feedback_work);
-    const struct zip_cirque_config *config = data->dev->config;
+    const struct gpio_dt_spec *gpio = data->feedback_active_gpio;
 
-    gpio_pin_set_dt(&config->feedback_gpio, 0);
+    data->feedback_active_gpio = NULL;
+    if (gpio != NULL) {
+        gpio_pin_set_dt(gpio, 0);
+    }
 }
 
-static void cirque_feedback_pulse(struct zip_cirque_data *data, uint32_t duration_ms) {
-    const struct zip_cirque_config *config = data->dev->config;
+static void cirque_feedback_on(struct k_work *work) {
+    struct zip_cirque_data *data =
+        CONTAINER_OF(work, struct zip_cirque_data, feedback_on_work);
 
-    if (!config->has_feedback_gpio) {
+    k_spinlock_key_t key = k_spin_lock(&data->lock);
+    const struct gpio_dt_spec *gpio = data->feedback_req_gpio;
+    data->feedback_req_gpio = NULL;
+    const struct gpio_dt_spec *prev = NULL;
+    uint32_t duration_ms = data->feedback_req_ms;
+    if (gpio != NULL) {
+        prev = data->feedback_active_gpio;
+        data->feedback_active_gpio = gpio;
+    }
+    k_spin_unlock(&data->lock, key);
+
+    if (gpio == NULL) {
         return;
     }
-    gpio_pin_set_dt(&config->feedback_gpio, 1);
+
+    if (prev != NULL && prev != gpio) {
+        gpio_pin_set_dt(prev, 0);
+    }
+    gpio_pin_set_dt(gpio, 1);
     k_work_reschedule(&data->feedback_work, K_MSEC(MAX(duration_ms, 1u)));
 }
 
@@ -257,18 +326,12 @@ static void cirque_session_work(struct k_work *work) {
     const struct zip_cirque_config *config = dev->config;
 
     if (data->gliding) {
-        /* inertia owns the cursor; the tick decides whether the work re-arms */
         cirque_glide_tick(data, config);
         return;
     }
-
     if (data->gesture_mode == CIRQUE_GESTURE_NONE) {
-        /* spurious wake after a glide or a reset */
         return;
     }
-
-    /* re-arm guard: the session must actually have gone idle; a frame that
-     * raced the work reschedule must not end a live gesture */
     if (k_uptime_get() - data->gesture_last.ts < config->session_end_idle_ms) {
         k_work_reschedule(&data->session_work, K_MSEC(config->session_end_idle_ms));
         return;
@@ -285,7 +348,7 @@ static void cirque_session_work(struct k_work *work) {
         && gy < config->tap_max_drift
     );
 
-    bool cursor_session = data->gesture_mode == CIRQUE_GESTURE_CURSOR;
+    bool is_cursor_session = data->gesture_mode == CIRQUE_GESTURE_CURSOR;
 
     data->gesture_mode = CIRQUE_GESTURE_NONE;
     data->hs = -1;
@@ -309,8 +372,7 @@ static void cirque_session_work(struct k_work *work) {
         return;
     }
 
-    /* non-tap session ended (finger lifted): a cursor drag may coast */
-    if (cursor_session && cirque_glide_launch(data, config)) {
+    if (is_cursor_session && cirque_glide_launch(data, config)) {
         k_work_reschedule(&data->session_work, K_MSEC(data->tick_ms));
     }
 }
@@ -334,7 +396,7 @@ static int zip_handle_event(const struct device *dev, struct input_event *event,
 
         if (data->gliding) {
             if (data->sz > 0) {
-                /* finger re-contacted: cancel the glide, treat as a new session */
+                /* touch down interrupted: cancel the glide */
                 k_spinlock_key_t key = k_spin_lock(&data->lock);
                 data->gliding = false;
                 k_spin_unlock(&data->lock, key);
@@ -361,7 +423,7 @@ static int zip_handle_event(const struct device *dev, struct input_event *event,
                 /* touch on edge region (outside elliptical center region) */
                 data->gesture_mode = CIRQUE_GESTURE_SCROLL;
                 LOG_DBG("SCROLL");
-                cirque_feedback_pulse(data, config->feedback_edge_scroll_start_ms);
+                cirque_feedback_pulse(data, CIRQUE_PULSE_SCROLL_START);
             }
             if (data->gesture_mode != CIRQUE_GESTURE_NONE) {
                 data->gesture_start.ts = now;
@@ -397,19 +459,20 @@ static int zip_handle_event(const struct device *dev, struct input_event *event,
             if (now - data->gesture_start.ts >= config->edge_scroll_gesture_delay_ms) {
                 data->gesture_mode = CIRQUE_GESTURE_SCROLL;
                 LOG_DBG("SCROLL");
-                cirque_feedback_pulse(data, config->feedback_edge_scroll_start_ms);
+                cirque_feedback_pulse(data, CIRQUE_PULSE_SCROLL_START);
             } else if (gx >= config->edge_scroll_gesture_delay_drift ||
                        gy >= config->edge_scroll_gesture_delay_drift) {
                 /* finger moved during the hold */
                 LOG_DBG("HOLD BROKEN on %lld ms", now - data->gesture_start.ts);
-                if (config->has_feedback_gpio) {
-                    /* haptics can announce scroll onset at the right moment:
-                     * drop the attempt, hold again from rest */
+                if (config->has_feedback_edge_scroll_start_gpio) {
+                    /* the scroll-start haptic can announce scroll onset at
+                     * the right moment: drop the attempt, hold again
+                     * from rest */
                     data->gesture_mode = CIRQUE_GESTURE_NONE;
                 }
                 else if (cirque_ellipse_dist(config, data->sx, data->sy) <= 1.0f) {
-                    /* no haptic cue, but the finger left the rim into the
-                     * center region: the scroll attempt ends immediately */
+                    /* no scroll-start cue, but the finger left the rim into
+                     * the center region: the scroll attempt ends immediately */
                     data->gesture_mode = CIRQUE_GESTURE_NONE;
                 }
                 /* otherwise: stay in PENDING, the attempt is not
@@ -451,9 +514,7 @@ static int zip_handle_event(const struct device *dev, struct input_event *event,
                     // ignore first touch in scroll session
                     if (data->hs != -1) {
                         v += diff > 0 ? -1 : 1;
-                        cirque_feedback_pulse(data, config->feedback_edge_scroll_trigger_ms);
                     }
-
                     data->hs = sgmt_idx;
                     LOG_DBG("seg: %d, v: %d", sgmt_idx, v);
                 }
@@ -497,6 +558,7 @@ static int zip_handle_event(const struct device *dev, struct input_event *event,
                 input_report(dev, INPUT_EV_REL, INPUT_REL_Y, data->dy, 
                     true, K_NO_WAIT);
             }
+            cirque_feedback_pulse(data, CIRQUE_PULSE_GLIDE);
             data->dx = data->dy = 0;
         }
     }
@@ -508,6 +570,7 @@ static int zip_handle_event(const struct device *dev, struct input_event *event,
             data->last_sync_rel_v_ts = now;
             input_report(dev, INPUT_EV_REL, INPUT_REL_WHEEL, 
                 data->dv > 0 ? 1 : -1, true, K_NO_WAIT);
+            cirque_feedback_pulse(data, CIRQUE_PULSE_SCROLL_TRIGGER);
             data->dv = 0;
         }
     }
@@ -521,6 +584,18 @@ static struct zmk_input_processor_driver_api zip_driver_api = {
     .handle_event = zip_handle_event,
 };
 
+static int cirque_feedback_gpio_init(const struct gpio_dt_spec *gpio, const char *name) {
+    if (!gpio_is_ready_dt(gpio)) {
+        LOG_ERR("feedback GPIO %s not ready", name);
+        return -ENODEV;
+    }
+    int ret = gpio_pin_configure_dt(gpio, GPIO_OUTPUT_LOW);
+    if (ret < 0) {
+        LOG_ERR("feedback GPIO %s configure failed: %d", name, ret);
+    }
+    return ret;
+}
+
 static int zip_init(const struct device *dev) {
     struct zip_cirque_data *data = dev->data;
     const struct zip_cirque_config *config = dev->config;
@@ -531,16 +606,28 @@ static int zip_init(const struct device *dev) {
     data->gesture_mode = CIRQUE_GESTURE_NONE;
     data->hist_head = data->hist_len = 0;
     data->gliding = false;
+    data->feedback_req_gpio = NULL;
+    data->feedback_active_gpio = NULL;
     k_work_init_delayable(&data->session_work, cirque_session_work);
+    k_work_init(&data->feedback_on_work, cirque_feedback_on);
     k_work_init_delayable(&data->feedback_work, cirque_feedback_off);
-    if (config->has_feedback_gpio) {
-        if (!gpio_is_ready_dt(&config->feedback_gpio)) {
-            LOG_ERR("feedback GPIO not ready");
-            return -ENODEV;
-        }
-        int ret = gpio_pin_configure_dt(&config->feedback_gpio, GPIO_OUTPUT_LOW);
+    if (config->has_feedback_edge_scroll_start_gpio) {
+        int ret = cirque_feedback_gpio_init(&config->feedback_edge_scroll_start_gpio,
+                                            "edge-scroll-start");
         if (ret < 0) {
-            LOG_ERR("feedback GPIO configure failed: %d", ret);
+            return ret;
+        }
+    }
+    if (config->has_feedback_edge_scroll_trigger_gpio) {
+        int ret = cirque_feedback_gpio_init(&config->feedback_edge_scroll_trigger_gpio,
+                                            "edge-scroll-trigger");
+        if (ret < 0) {
+            return ret;
+        }
+    }
+    if (config->has_feedback_glide_gpio) {
+        int ret = cirque_feedback_gpio_init(&config->feedback_glide_gpio, "glide");
+        if (ret < 0) {
             return ret;
         }
     }
@@ -567,14 +654,28 @@ static int zip_init(const struct device *dev) {
         .inertial_enable = !DT_INST_PROP(n, inertial_disable),                            \
         .inertial_decay_pct = DT_INST_PROP(n, inertial_decay_pct),                        \
         .inertial_start_velocity = DT_INST_PROP(n, inertial_start_velocity),              \
-        COND_CODE_1(DT_INST_NODE_HAS_PROP(n, feedback_gpios),                             \
-            (.feedback_gpio = GPIO_DT_SPEC_INST_GET(n, feedback_gpios),                   \
-             .has_feedback_gpio = true,),                                                 \
+        COND_CODE_1(DT_INST_NODE_HAS_PROP(n, feedback_edge_scroll_start_gpios),           \
+            (.feedback_edge_scroll_start_gpio =                                           \
+                 GPIO_DT_SPEC_INST_GET(n, feedback_edge_scroll_start_gpios),              \
+             .has_feedback_edge_scroll_start_gpio = true,),                               \
             ())                                                                           \
         .feedback_edge_scroll_start_ms =                                                  \
             DT_INST_PROP(n, feedback_edge_scroll_start_ms),                               \
+        COND_CODE_1(DT_INST_NODE_HAS_PROP(n, feedback_edge_scroll_trigger_gpios),         \
+            (.feedback_edge_scroll_trigger_gpio =                                         \
+                 GPIO_DT_SPEC_INST_GET(n, feedback_edge_scroll_trigger_gpios),            \
+             .has_feedback_edge_scroll_trigger_gpio = true,),                             \
+            ())                                                                           \
         .feedback_edge_scroll_trigger_ms =                                                \
             DT_INST_PROP(n, feedback_edge_scroll_trigger_ms),                             \
+        COND_CODE_1(DT_INST_NODE_HAS_PROP(n, feedback_glide_gpios),                       \
+            (.feedback_glide_gpio = GPIO_DT_SPEC_INST_GET(n, feedback_glide_gpios),       \
+             .has_feedback_glide_gpio = true,),                                           \
+            ())                                                                           \
+        .feedback_glide_ms =                                                              \
+            DT_INST_PROP(n, feedback_glide_ms),                                           \
+        .feedback_glide_interval_ms =                                                     \
+            DT_INST_PROP(n, feedback_glide_interval_ms),                                  \
     };                                                                                    \
     DEVICE_DT_INST_DEFINE(n, &zip_init, NULL, &data_##n, &config_##n, POST_KERNEL,        \
                           CONFIG_KERNEL_INIT_PRIORITY_DEFAULT, &zip_driver_api);
