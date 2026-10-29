@@ -113,17 +113,21 @@
 #include <input/processors/cirque.dtsi>
 
 &zip_cirque {
-	feedback-edge-scroll-start-gpios = <&gpio_drv2605_0 0 9>;
+	feedback-edge-scroll-start-gpios = <&gpio_drv2605_0 0 9>; // waveform: 9
 	feedback-edge-scroll-start-ms = <5>;
-	feedback-edge-scroll-trigger-gpios = <&gpio_drv2605_1 0 9>;
+	feedback-edge-scroll-trigger-gpios = <&gpio_drv2605_1 0 9>; // waveform: 9
 	feedback-edge-scroll-trigger-ms = <2>;
 
 	/* Enable haptic feedback on touching/gliding
 	 * (Steam Deck / Steam Controller favor)
 	 */
-	// feedback-glide-gpios = <&gpio_drv2605_2 0 9>;
+	// feedback-glide-gpios = <&gpio_drv2605_2 0 9>; // waveform: 9
 	// feedback-glide-ms = <2>;
 	// feedback-glide-interval-ms = <25>;
+
+	/* Finetune scrolling edge margin for feedback enabled */
+  edge-scroll-margin-h-pct = <29>; // default: 25
+  edge-scroll-margin-v-pct = <22>; // default: 19
 };
 
 /{

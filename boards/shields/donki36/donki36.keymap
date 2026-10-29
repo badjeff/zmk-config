@@ -194,7 +194,8 @@
                 compatible = "zmk,input-listener";
                 device = <&tpad0_split>;
                 input-processors = <&zip_zxy>, <&zip_report_rate_limit 1>
-                                , <&xy_scaler 3 7>;
+                                ;
+                                // , <&xy_scaler 4 7>;
                                 //  , <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
                                 //  , <&x_scaler 4 3>, <&y_scaler 5 3>;
                 precise {
