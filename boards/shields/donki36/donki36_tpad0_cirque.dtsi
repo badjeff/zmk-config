@@ -113,8 +113,12 @@
 #include <input/processors/cirque.dtsi>
 
 &zip_cirque {
+	feedback-tap-drag-gpios = <&gpio_drv2605_0 0 9>; // waveform: 9
+	feedback-tap-drag-ms = <5>;
+
 	feedback-edge-scroll-start-gpios = <&gpio_drv2605_0 0 9>; // waveform: 9
 	feedback-edge-scroll-start-ms = <5>;
+
 	feedback-edge-scroll-trigger-gpios = <&gpio_drv2605_1 0 9>; // waveform: 9
 	feedback-edge-scroll-trigger-ms = <2>;
 
