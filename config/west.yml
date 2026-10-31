@@ -131,6 +131,10 @@ manifest:
       remote: badjeff
       revision: main
 
+    - name: zmk-input-processor-cirque
+      remote: badjeff
+      revision: main
+
     # - name: zmk-input-processor-mixer
     #   remote: badjeff
     #   revision: main
@@ -164,6 +168,10 @@ manifest:
       revision: main
 
     - name: chloroplast-zmk-module
+      remote: badjeff
+      revision: main
+
+    - name: zmk-behavior-sensor-attr-cycle
       remote: badjeff
       revision: main
 

@@ -20,6 +20,8 @@
 #include <input/processors.dtsi>
 
 #include <input/processors/cirque.dtsi>
+#include <dt-bindings/zmk/zip_cirque_attr.h>
+
 #include <input/processors/mixer.dtsi>
 #include <input/processors/trixer.dtsi>
 #include <input/processors/quadixer.dtsi>
@@ -191,15 +193,44 @@
         //         };
         // };
 
-        tpad0_mmv_il {
+        tpad0_abs_il: tpad0_abs_il {
                 compatible = "zmk,input-listener";
                 device = <&tpad0>;
+                input-processors = <&zip_cirque>;
+        };
+        tpad0_mmv_il {
+                compatible = "zmk,input-listener";
+                device = <&zip_cirque>;
                 default {
-                        input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
-                                         , <&x_scaler 4 3>, <&y_scaler 5 3>;
+                        // input-processors = <&xy_transf (INPUT_TRANSFORM_Y_INVERT)>
+                        //                  , <&x_scaler 4 3>, <&y_scaler 5 3>;
+                        input-processors = <&xy_scaler 4 7>;
                         layers = <DEFAULT>;
                 };
         };
+        // behaviors {
+        //         cirque_inertial: cirque_inertial {
+        //                 compatible = "zmk,behavior-sensor-attr-cycle";
+        //                 #binding-cells = <1>;
+        //                 sensor_device = <&zip_cirque_setter>;
+        //                 attr = <ZIP_CIRQUE_ATTR_INERTIAL_ENABLE>;
+        //                 values = <1 0>;
+        //         };
+        //         cirque_scroll_trigger_haptic: cirque_scroll_trigger_haptic {
+        //                 compatible = "zmk,behavior-sensor-attr-cycle";
+        //                 #binding-cells = <1>;
+        //                 sensor_device = <&zip_cirque_setter>;
+        //                 attr = <ZIP_CIRQUE_ATTR_FEEDBACK_EDGE_SCROLL_TRIGGER_ENABLE>;
+        //                 values = <1 0>;
+        //         };
+        //         cirque_inertial_decay: cirque_inertial_decay {
+        //                 compatible = "zmk,behavior-sensor-attr-cycle";
+        //                 #binding-cells = <1>;
+        //                 sensor_device = <&zip_cirque_setter>;
+        //                 attr = <ZIP_CIRQUE_ATTR_INERTIAL_DECAY_PCT>;
+        //                 values = <100 97 93 90 85 80>;
+        //         };
+        // };
 
         // erm0_obl__enter_raise_layer {
         //         compatible = "zmk,output-behavior-listener";
@@ -242,6 +273,7 @@
                 default_layer {
                         bindings = <
 
+// &cirque_inertial 1  &cirque_scroll_trigger_haptic 1  &cirque_inertial_decay 1
 &mkp RCLK   &mkp MCLK   &mkp LCLK
 // &jskp 0
 // &trans
@@ -253,6 +285,8 @@
                 };
                 raise_layer {
                         bindings = <
+
+// &cirque_inertial 1  &cirque_scroll_trigger_haptic 1  &cirque_inertial_decay 1
 &mkp RCLK   &mkp MCLK   &mkp LCLK
 // &jskp 0
 // &trans
